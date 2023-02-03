@@ -102,10 +102,10 @@
         data-bs-parent="#sidebar-nav"
       >
         <li>
-          <a href="{{ '#' }}"><i class="bi bi-circle"></i><span>Create Cohort</span></a>
+          <a href="{{ route('cohorts.create') }}"><i class="bi bi-circle"></i><span>Create Cohort</span></a>
         </li>
         <li>
-          <a href="{{ '#' }}"><i class="bi bi-circle"></i><span>Manage Cohorts</span></a>
+          <a href="{{ route('cohorts.index') }}"><i class="bi bi-circle"></i><span>Manage Cohorts</span></a>
         </li>
       </ul>
     </li>

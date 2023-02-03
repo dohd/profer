@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\action_plan\ActionPlanController;
+use App\Http\Controllers\cohort\CohortController;
 use App\Http\Controllers\CoreController;
 use App\Http\Controllers\donor\DonorController;
 use App\Http\Controllers\participant\ParticipantController;
@@ -38,6 +39,9 @@ Route::resource('programmes', ProgrammeController::class);
 
 // regions
 Route::resource('regions', RegionController::class);
+
+// cohorts
+Route::resource('cohorts', CohortController::class);
 
 // proposals
 Route::resource('proposals', ProposalController::class);
