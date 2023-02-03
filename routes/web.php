@@ -6,6 +6,7 @@ use App\Http\Controllers\donor\DonorController;
 use App\Http\Controllers\participant\ParticipantController;
 use App\Http\Controllers\programme\ProgrammeController;
 use App\Http\Controllers\proposal\ProposalController;
+use App\Http\Controllers\region\RegionController;
 use App\Http\Controllers\user_profile\UserProfileController;
 
 use Illuminate\Support\Facades\Route;
@@ -34,6 +35,9 @@ Route::resource('donors', DonorController::class);
 
 // programmes
 Route::resource('programmes', ProgrammeController::class);
+
+// regions
+Route::resource('regions', RegionController::class);
 
 // proposals
 Route::resource('proposals', ProposalController::class);

@@ -77,10 +77,10 @@
         data-bs-parent="#sidebar-nav"
       >
         <li>
-          <a href="{{ '#' }}"><i class="bi bi-circle"></i><span>Create Region</span></a>
+          <a href="{{ route('regions.create') }}"><i class="bi bi-circle"></i><span>Create Region</span></a>
         </li>
         <li>
-          <a href="{{ '#' }}"><i class="bi bi-circle"></i><span>Manage Regions</span></a>
+          <a href="{{ route('regions.index') }}"><i class="bi bi-circle"></i><span>Manage Regions</span></a>
         </li>
       </ul>
     </li>

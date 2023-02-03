@@ -58,13 +58,13 @@ class Region extends Model
         parent::boot();
 
         static::creating(function ($instance) {
-            // $instance->user_id = 1;
-            // $instance->ins = 1;
+            $instance->user_id = 1;
+            $instance->ins = 1;
             return $instance;
         });
 
-        // static::addGlobalScope('ins', function ($builder) {
-        //     $builder->where('ins', '=', auth()->user()->ins);
-        // });
+        static::addGlobalScope('ins', function ($builder) {
+            // $builder->where('ins', '=', auth()->user()->ins);
+        });
     }
 }
