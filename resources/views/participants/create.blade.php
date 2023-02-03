@@ -11,7 +11,7 @@
                 {{ Form::open(['route' => 'participants.store', 'method' => 'POST', 'class' => 'form']) }}
                     @include('participants.form')
                     <div class="text-center">
-                        <button type="button" class="btn btn-secondary">Cancel</button>
+                        <a href="{{ route('participants.index') }}" class="btn btn-secondary">Cancel</a>
                         {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
                     </div>
                 {{ Form::close() }}
