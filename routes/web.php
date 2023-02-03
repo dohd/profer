@@ -45,11 +45,11 @@ Route::resource('cohorts', CohortController::class);
 
 // proposals
 Route::resource('proposals', ProposalController::class);
-Route::post('proposals/items', [ProposalController::class, 'proposal_items'])->name('proposal_items');
+Route::post('proposals/items', [ProposalController::class, 'proposal_items'])->name('proposals.items');
 
 // action plans
 Route::resource('action_plans', ActionPlanController::class);
-Route::post('action_plans/proposal_items', [ActionPlanController::class, 'plan_proposal_items'])->name('plan_proposal_items');
+Route::post('action_plans/proposal_items', [ActionPlanController::class, 'proposal_items'])->name('action_plans.proposal_items');
 
 // participants
 Route::resource('participants', ParticipantController::class);

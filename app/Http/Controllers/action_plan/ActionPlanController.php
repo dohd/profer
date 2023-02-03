@@ -4,10 +4,13 @@ namespace App\Http\Controllers\action_plan;
 
 use App\Http\Controllers\Controller;
 use App\Models\action_plan\ActionPlan;
+use App\Models\cohort\Cohort;
 use App\Models\item\ActionPlanItem;
 use App\Models\item\ProposalItem;
+use App\Models\programme\Programme;
 use App\Models\proposal\Proposal;
 use App\Models\region\ProposalItemRegion;
+use App\Models\region\Region;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -33,7 +36,7 @@ class ActionPlanController extends Controller
     public function create()
     {
         $proposals = Proposal::get(['id', 'title']);
-        $programmes = DB::table('programmes')->get();
+        $programmes = Programme::get(['id', 'name']);
             
         return view('action_plans.create', compact('proposals', 'programmes'));
     }
@@ -48,7 +51,7 @@ class ActionPlanController extends Controller
     {
         // dd($request->all());
         $data = $request->only(['proposal_id', 'programme_id', 'main_assigned_to']);
-        $data_items = $request->only(['proposal_item_id', 'start_date', 'end_date', 'resources', 'assigned_to', 'target_group_id']);
+        $data_items = $request->only(['proposal_item_id', 'start_date', 'end_date', 'resources', 'assigned_to', 'cohort_id']);
         $data_item_regions = $request->region_id;
 
         DB::beginTransaction();
@@ -124,15 +127,17 @@ class ActionPlanController extends Controller
         //
     }
 
-    // plan proposal items
-    public function plan_proposal_items()
+    /**
+     * Proposal items
+     */
+    public function proposal_items()
     {
         $proposal_items = ProposalItem::where('proposal_id', request('proposal_id'))
             ->orderBy('row_index', 'asc')->get();
 
-        $target_groups = DB::table('target_groups')->get();
-        $regions = DB::table('regions')->get();
+        $cohorts = Cohort::get(['id', 'name']);
+        $regions = Region::get(['id', 'name']);
     
-        return view('action_plans.partials.proposal_items', compact('proposal_items', 'target_groups', 'regions'));
+        return view('action_plans.partials.proposal_items', compact('proposal_items', 'cohorts', 'regions'));
     }
 }

@@ -1,9 +1,8 @@
 @extends('layouts.core')
 
-@section('title', 'Create Action Plan')
+@section('title', 'Create | Action Plan Management')
     
 @section('content')
-{{-- <div id="main" class="main"> --}}
     @include('action_plans.header')
     <div class="card">
         <div class="card-body">
@@ -12,12 +11,11 @@
                 {{ Form::open(['route' => 'action_plans.store', 'method' => 'POST', 'class' => 'form']) }}
                     @include('action_plans.form')
                     <div class="text-center">
-                        <button type="button" class="btn btn-secondary">Cancel</button>
+                        <a href="{{ route('regions.index') }}" class="btn btn-secondary">Cancel</a>
                         {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
                     </div>
                 {{ Form::close() }}
             </div>
         </div>
     </div>
-{{-- </div> --}}
 @stop

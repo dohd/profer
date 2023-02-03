@@ -3,15 +3,14 @@
 namespace App\Models\item\Traits;
 
 use App\Models\action_plan\ActionPlan;
+use App\Models\cohort\Cohort;
 use App\Models\item\ProposalItem;
-use Illuminate\Support\Facades\DB;
 
 trait ActionPlanItemRelationship
 {
-    
-    public function target_group()
+    public function cohort()
     {
-        return DB::table('target_groups')->find($this->target_group_id);
+        return $this->belongsTo(Cohort::class);
     }
 
     public function proposal_item()

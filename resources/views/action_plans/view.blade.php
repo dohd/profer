@@ -57,7 +57,7 @@
                                         <div>{{ dateFormat($item->start_date) }}</div>
                                         <div>{{ dateFormat($item->end_date) }}</div>
                                     </td>
-                                    <td>{{ $item->target_group()? $item->target_group()->name : '' }}</td>
+                                    <td>{{ $item->cohort? $item->cohort->name : '' }}</td>
                                     <td>
                                         @php
                                             $regions = [];

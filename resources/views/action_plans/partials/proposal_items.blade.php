@@ -12,7 +12,7 @@
         <td colspan="5"></td>
         <input type="hidden" name="start_date[]">
         <input type="hidden" name="end_date[]">
-        <input type="hidden" name="target_group_id[]">
+        <input type="hidden" name="cohort_id[]">
         <input type="hidden" name="region_id[]" value="0-{{ $item->id }}">
         <input type="hidden" name="resources[]">
         <input type="hidden" name="assigned_to[]">
@@ -23,10 +23,10 @@
             {{ Form::date('end_date[]', null, ['class' => 'form-control']) }}
         </td>
         <td>
-            <select name="target_group_id[]" class="form-control target-group">
-                <option value="">-- group --</option>
-                @foreach ($target_groups as $group)
-                    <option value="{{ $group->id }}">{{ $group->name }}</option>
+            <select name="cohort_id[]" class="form-control target-group">
+                <option value="">-- cohort --</option>
+                @foreach ($cohorts as $cohort)
+                    <option value="{{ $cohort->id }}">{{ $cohort->name }}</option>
                 @endforeach
             </select>
         </td>

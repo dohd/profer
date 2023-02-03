@@ -44,14 +44,11 @@
 <script>
     // on proposal change
     $('#proposal').change(function() {
-        let url = @json(route('plan_proposal_items'));
+        const url = @json(route('action_plans.proposal_items'));
         $.post(url, {method: 'POST', proposal_id: $(this).val()}, data => {
             $('#objectivesTbl tbody').html(data);
         });
-    }).val(1).change();
-
-
-
+    });
 
     let objectiveIndex = 0;
     let activityIndex = 0;
