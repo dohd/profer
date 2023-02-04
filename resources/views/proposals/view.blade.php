@@ -3,11 +3,12 @@
 @section('title', 'View | Proposal Management')
     
 @section('content')
-{{-- <div id="main" class="main"> --}}
     @include('proposals.header')
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Proposal Details</h5>
+            <div class="card-title h5">Proposal Details 
+                <span class="badge bg-secondary text-white float-end"><i class="bi bi-pencil-fill"></i> Status</span>
+            </div>
             <div class="card-content p-2">
                 <table class="table table-bordered">
                     @php
@@ -17,18 +18,24 @@
                             'Region' => $proposal->region,
                             'Sector' => $proposal->sector,
                             'Donor' => $proposal->donor,
-                            'Date (start-end)' => date('d-m-Y', strtotime($proposal->start_date)) . ' to ' . date('d-m-Y', strtotime($proposal->end_date)),
+                            'Date (start-end)' => date('d-m-Y', strtotime($proposal->start_date)) . ' || ' . date('d-m-Y', strtotime($proposal->end_date)),
                             'Estimated Budget' => number_format($proposal->budget, 2),
                         ];
                     @endphp
                     @foreach ($details as $key => $val)
                         <tr>
                             <th width="30%">{{ $key }}</th>
-                            <td>{{ $val}}</td>
+                            <td>
+                                @if ($key == 'Title')
+                                    {{ $val }} || <span class="badge bg-{{ $proposal->status == 'approved'? 'success' : 'secondary' }}">{{ $proposal->status }}</span>
+                                @else
+                                    {{ $val }}
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 </table>
-
+                <!-- Proposal items -->
                 <table class="table table-striped" id="objectivesTbl">
                     <thead>
                         <tr class="">
@@ -56,5 +63,4 @@
             </div>
         </div>
     </div>
-{{-- </div> --}}
 @stop
