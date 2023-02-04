@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\action_plan\ActionPlanController;
+use App\Http\Controllers\age_group\AgeGroupController;
 use App\Http\Controllers\cohort\CohortController;
 use App\Http\Controllers\CoreController;
+use App\Http\Controllers\disability\DisabilityController;
 use App\Http\Controllers\donor\DonorController;
 use App\Http\Controllers\participant\ParticipantController;
 use App\Http\Controllers\programme\ProgrammeController;
@@ -31,28 +33,28 @@ Route::get('error_404', [CoreController::class, 'error_404'])->name('error_404')
 
 Route::resource('user_profiles', UserProfileController::class);
 
-// donors
+/**
+ * key indicators
+ */
 Route::resource('donors', DonorController::class);
-
-// programmes
 Route::resource('programmes', ProgrammeController::class);
-
-// regions
 Route::resource('regions', RegionController::class);
-
-// cohorts
 Route::resource('cohorts', CohortController::class);
+Route::resource('disabilities', DisabilityController::class);
+Route::resource('age_groups', AgeGroupController::class);
 
+/**
+ * project management
+ */
 // proposals
 Route::resource('proposals', ProposalController::class);
 Route::post('proposals/items', [ProposalController::class, 'proposal_items'])->name('proposals.items');
-
 // action plans
 Route::resource('action_plans', ActionPlanController::class);
 Route::post('action_plans/proposal_items', [ActionPlanController::class, 'proposal_items'])->name('action_plans.proposal_items');
-
 // participants
 Route::resource('participants', ParticipantController::class);
+
 
 
 if (env('APP_ENV') == 'production') {

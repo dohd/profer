@@ -127,13 +127,39 @@
         data-bs-parent="#sidebar-nav"
       >
         <li>
-          <a href="{{ '#' }}"><i class="bi bi-circle"></i><span>Create Disability</span></a>
+          <a href="{{ route('disabilities.create') }}"><i class="bi bi-circle"></i><span>Create Disability</span></a>
         </li>
         <li>
-          <a href="{{ '#' }}"><i class="bi bi-circle"></i><span>Manage Disabilities</span></a>
+          <a href="{{ route('disabilities.index') }}"><i class="bi bi-circle"></i><span>Manage Disabilities</span></a>
         </li>
       </ul>
     </li>
+
+    {{-- age group --}}
+    <li class="nav-item">
+      <a
+        class="nav-link collapsed"
+        data-bs-target="#agegroup-nav"
+        data-bs-toggle="collapse"
+        href="#"
+      >
+        <i class="bi bi-journal-text"></i><span>Age Group</span
+        ><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul
+        id="agegroup-nav"
+        class="nav-content collapse"
+        data-bs-parent="#sidebar-nav"
+      >
+        <li>
+          <a href="{{ route('age_groups.create') }}"><i class="bi bi-circle"></i><span>Create Age Group</span></a>
+        </li>
+        <li>
+          <a href="{{ route('age_groups.index') }}"><i class="bi bi-circle"></i><span>Manage Age Groups</span></a>
+        </li>
+      </ul>
+    </li>
+
 
     <li class="nav-heading">Project Management</li>
 
