@@ -187,7 +187,31 @@
         </li>
       </ul>
     </li>
-    <!-- End Components Nav -->
+
+    {{-- log frame --}}
+    <li class="nav-item">
+      <a
+        class="nav-link collapsed"
+        data-bs-target="#logframe-nav"
+        data-bs-toggle="collapse"
+        href="#"
+      >
+        <i class="bi bi-menu-button-wide"></i><span>Log Frame</span
+        ><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul
+        id="logframe-nav"
+        class="nav-content collapse"
+        data-bs-parent="#sidebar-nav"
+      >
+        <li>
+          <a href="{{ '#' }}"><i class="bi bi-circle"></i><span>Create Log Frame</span></a>
+        </li>
+        <li>
+          <a href="{{ '#' }}"><i class="bi bi-circle"></i><span>Manage Log Frames</span></a>
+        </li>
+      </ul>
+    </li>
 
     {{-- action plan --}}
     <li class="nav-item">
