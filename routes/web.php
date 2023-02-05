@@ -11,6 +11,7 @@ use App\Http\Controllers\participant\ParticipantController;
 use App\Http\Controllers\programme\ProgrammeController;
 use App\Http\Controllers\proposal\ProposalController;
 use App\Http\Controllers\region\RegionController;
+use App\Http\Controllers\report\ReportController;
 use App\Http\Controllers\user_profile\UserProfileController;
 
 use Illuminate\Support\Facades\Route;
@@ -62,6 +63,9 @@ Route::resource('participants', ParticipantController::class);
 // narratives
 Route::resource('narratives', NarrativeController::class);
 
+// reports
+Route::get('indicator_narrative', [ReportController::class, 'indicator_narrative'])->name('reports.indicator_narrative');
+Route::post('indicator_narrative_datatable', [ReportController::class, 'indicator_narrative_datatable'])->name('reports.indicator_narrative_datatable');
 
 
 if (env('APP_ENV') == 'production') {

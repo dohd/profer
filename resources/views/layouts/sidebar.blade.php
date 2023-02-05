@@ -18,7 +18,7 @@
         data-bs-toggle="collapse"
         href="#"
       >
-        <i class="bi bi-journal-text"></i><span>Donor</span
+        <i class="bi bi-journal-text"></i><span>Donor (Sponsor)</span
         ><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul
@@ -287,8 +287,68 @@
         </li>
       </ul>
     </li>
-    <!-- End Forms Nav -->
 
+    <li class="nav-heading">Reports</li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ route('reports.indicator_narrative') }}">
+        <i class="bi bi-card-list"></i>
+        <span>Indicator Narrative</span>
+      </a>
+    </li>
+
+    <li class="nav-heading">Authorization</li>
+
+    {{-- roles --}}
+    <li class="nav-item">
+      <a
+        class="nav-link collapsed"
+        data-bs-target="#account-nav"
+        data-bs-toggle="collapse"
+        href="#"
+      >
+        <i class="bi bi-journal-text"></i><span>Roles</span
+        ><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul
+        id="account-nav"
+        class="nav-content collapse"
+        data-bs-parent="#sidebar-nav"
+      >
+        <li>
+          <a href="{{ '#' }}"><i class="bi bi-circle"></i><span>Create Role</span></a>
+        </li>
+        <li>
+          <a href="{{ '#' }}"><i class="bi bi-circle"></i><span>Manage Roles</span></a>
+        </li>
+      </ul>
+    </li>
+
+    {{-- users --}}
+    <li class="nav-item">
+      <a
+        class="nav-link collapsed"
+        data-bs-target="#users-nav"
+        data-bs-toggle="collapse"
+        href="#"
+      >
+        <i class="bi bi-journal-text"></i><span>Users</span
+        ><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul
+        id="users-nav"
+        class="nav-content collapse"
+        data-bs-parent="#sidebar-nav"
+      >
+        <li>
+          <a href="{{ '#' }}"><i class="bi bi-circle"></i><span>Create User</span></a>
+        </li>
+        <li>
+          <a href="{{ '#' }}"><i class="bi bi-circle"></i><span>Manage Users</span></a>
+        </li>
+      </ul>
+    </li>
+    
     <li class="nav-heading">Pages</li>
 
     <li class="nav-item">
