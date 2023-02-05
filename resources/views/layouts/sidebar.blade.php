@@ -280,10 +280,10 @@
         data-bs-parent="#sidebar-nav"
       >
         <li>
-          <a href="{{ route('action_plans.create') }}"><i class="bi bi-circle"></i><span>Create Narrative</span></a>
+          <a href="{{ route('narratives.create') }}"><i class="bi bi-circle"></i><span>Create Narrative</span></a>
         </li>
         <li>
-          <a href="{{ route('action_plans.index') }}"><i class="bi bi-circle"></i><span>Manage Narratives</span></a>
+          <a href="{{ route('narratives.index') }}"><i class="bi bi-circle"></i><span>Manage Narratives</span></a>
         </li>
       </ul>
     </li>

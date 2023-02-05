@@ -6,6 +6,7 @@ use App\Http\Controllers\cohort\CohortController;
 use App\Http\Controllers\CoreController;
 use App\Http\Controllers\disability\DisabilityController;
 use App\Http\Controllers\donor\DonorController;
+use App\Http\Controllers\narrative\NarrativeController;
 use App\Http\Controllers\participant\ParticipantController;
 use App\Http\Controllers\programme\ProgrammeController;
 use App\Http\Controllers\proposal\ProposalController;
@@ -54,8 +55,12 @@ Route::post('proposals/datatable', [ProposalController::class, 'datatable'])->na
 // action plans
 Route::resource('action_plans', ActionPlanController::class);
 Route::post('action_plans/proposal_items', [ActionPlanController::class, 'proposal_items'])->name('action_plans.proposal_items');
+
 // participants
 Route::resource('participants', ParticipantController::class);
+
+// narratives
+Route::resource('narratives', NarrativeController::class);
 
 
 
