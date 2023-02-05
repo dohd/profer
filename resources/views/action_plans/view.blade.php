@@ -3,7 +3,6 @@
 @section('title', 'View | Action Plan Management')
     
 @section('content')
-{{-- <div id="main" class="main"> --}}
     @include('action_plans.header')
     <div class="card">
         <div class="card-body">
@@ -32,11 +31,11 @@
                         <tr>
                             <th scope="col" width="8%">#</th>
                             <th scope="col">Activity Description</th>
-                            <th scope="col">Date(start-end)</th>
-                            <th>Target Group</th>
+                            <th scope="col" width="12%">Dates</th>
+                            <th>Cohort</th>
                             <th>Regions</th>
                             <th>Resources</th>
-                            <th>Assigned To</th>
+                            <th width="15%">Assigned To</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -76,5 +75,4 @@
             </div>
         </div>
     </div>
-{{-- </div> --}}
 @stop
