@@ -60,7 +60,7 @@ class Proposal extends Model
         static::creating(function ($instance) {
             $instance->user_id = 1;
             $instance->ins = 1;
-            $instance->tid = Proposal::getTid();
+            $instance->tid = Proposal::getTid()+1;
             return $instance;
         });
 

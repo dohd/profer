@@ -132,6 +132,6 @@ class ProposalController extends Controller
         $proposal_items = ProposalItem::where('proposal_id', request('proposal_id'))
             ->orderBy('row_index', 'asc')->get();
     
-        return view('action_plans.partials.proposal_items', compact('proposal_items'));
+        return $proposal_items->toArray();
     }
 }
