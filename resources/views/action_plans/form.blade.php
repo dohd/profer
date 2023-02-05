@@ -44,8 +44,7 @@
 <script>
     // on proposal change
     $('#proposal').change(function() {
-        const url = @json(route('action_plans.proposal_items'));
-        $.post(url, {method: 'POST', proposal_id: $(this).val()}, data => {
+        $.post("{{ route('action_plans.proposal_items') }}", {proposal_id: $(this).val()}, data => {
             $('#objectivesTbl tbody').html(data);
         });
     });

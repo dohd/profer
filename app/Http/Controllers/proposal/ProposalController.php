@@ -23,6 +23,14 @@ class ProposalController extends Controller
         return view('proposals.index', compact('proposals'));
     }
 
+    // proposal datatable
+    public function datatable()
+    {
+        $proposals = Proposal::all();
+
+        return view('proposals.partial.proposal_datatable', compact('proposals'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -48,12 +56,10 @@ class ProposalController extends Controller
         DB::beginTransaction();
 
         try {
-            $data = inputClean($data);
-            $data_items = databaseArray($data_items);
-            // dd($data, $data_items);
-            
+            $data = inputClean($data);            
             $proposal = Proposal::create($data);
 
+            $data_items = databaseArray($data_items);
             $data_items = fillArrayRecurse($data_items, ['proposal_id' => $proposal->id]);
             ProposalItem::insert($data_items);
 
@@ -95,9 +101,18 @@ class ProposalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Proposal $proposal)
     {
-        //
+        // dd($request->all());
+        $status = request('status');
+        if ($status) {
+            try {
+                $proposal->update(['status' => $status]);
+                return redirect()->back()->with('success', 'Status updated successfully');
+            } catch (\Throwable $th) {
+                throw GeneralException('Error updating status!');
+            }
+        }
     }
 
     /**

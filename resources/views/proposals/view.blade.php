@@ -7,7 +7,9 @@
     <div class="card">
         <div class="card-body">
             <div class="card-title h5">Proposal Details 
-                <span class="badge bg-secondary text-white float-end"><i class="bi bi-pencil-fill"></i> Status</span>
+                <span class="badge bg-secondary text-white float-end" role="button" data-bs-toggle="modal" data-bs-target="#status_modal">
+                    <i class="bi bi-pencil-fill"></i> Status
+                </span>
             </div>
             <div class="card-content p-2">
                 <table class="table table-bordered">
@@ -35,13 +37,13 @@
                         </tr>
                     @endforeach
                 </table>
+                
                 <!-- Proposal items -->
                 <table class="table table-striped" id="objectivesTbl">
                     <thead>
                         <tr class="">
                             <th scope="col" width="8%">#</th>
-                            <th scope="col" width="10%">Item</th>
-                            <th scope="col">Description</th>
+                            <th scope="col">Item Description</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -54,8 +56,7 @@
                                         <ul><li></li></ul>
                                     @endif
                                 </th>
-                                <td>{{ $item->is_obj? 'objective' : 'activity' }}</td>
-                                <td>{{ $item->name }}</td>
+                                <td>{{ $item->is_obj? 'Obj' : 'Act' }} : {{ $item->name }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -63,4 +64,5 @@
             </div>
         </div>
     </div>
+    @include('proposals.partial.proposal_status')
 @stop
