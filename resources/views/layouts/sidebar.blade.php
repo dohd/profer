@@ -246,7 +246,7 @@
         data-bs-toggle="collapse"
         href="#"
       >
-        <i class="bi bi-journal-text"></i><span>Implimentation</span
+        <i class="bi bi-journal-text"></i><span>Implementation</span
         ><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul
