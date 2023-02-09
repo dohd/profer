@@ -291,9 +291,16 @@
     <li class="nav-heading">Reports</li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="{{ route('reports.indicator_narrative') }}">
+      <a class="nav-link collapsed" href="{{ route('reports.narrative_indicator') }}">
         <i class="bi bi-card-list"></i>
-        <span>Indicator Narrative</span>
+        <span>Narrative Indicator</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ route('reports.participant_analysis') }}">
+        <i class="bi bi-card-list"></i>
+        <span>Participant Analysis</span>
       </a>
     </li>
 

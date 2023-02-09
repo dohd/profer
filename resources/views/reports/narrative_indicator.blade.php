@@ -1,14 +1,22 @@
 @extends('layouts.core')
 
-@section('title', 'Indicator Narrative Report')
+@section('title', 'Narrative Indicator')
     
 @section('content')
-    @include('reports.partial.indicator_narrative_header')
+    @include('reports.partials.narrative_indicator_header')
     <div class="card">
         <div class="card-body">
             <div class="card-content p2">
                 <div class="row">
-                    <div class="col-7">
+                    <div class="col-4">
+                        <select name="narrative_pointer_id" id="indicator" class="form-select mt-3">
+                            <option value="">-- Choose Narrative No. --</option>
+                            @foreach (range(1,5) as $item)
+                                <option value="{{ $item }}">{{ $item }}/2023 </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-8">
                         <select name="narrative_pointer_id" id="indicator" class="form-select mt-3">
                             <option value="">-- Choose Narrative Indicator --</option>
                             @foreach ($narrative_pointers as $item)
@@ -26,7 +34,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-3">
+                    <div class="col-4">
                         <select name="region_id" id="region" class="form-select mt-3">
                             <option value="">-- Choose Region --</option>
                             @foreach ($regions as $item)
@@ -34,7 +42,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-3">
+                    <div class="col-4">
                         <select name="cohort_id" id="cohort" class="form-select mt-3">
                             <option value="">-- Choose Cohort --</option>
                             @foreach ($cohorts as $item)
@@ -50,7 +58,7 @@
     <div class="card">
         <div class="card-body">
             <div class="card-content p-2">
-                <table class="table table-borderless" id="indicator_narrative_tbl">
+                {{-- <table class="table table-borderless" id="indicator_narrative_tbl">
                     <thead>
                       <tr>
                         <th scope="col">#No</th>
@@ -66,7 +74,7 @@
                     <tbody>
                         
                     </tbody>
-                  </table>
+                  </table> --}}
             </div>
         </div>
     </div>
@@ -76,19 +84,19 @@
 <script>
     // initialize datatable
     let dataTable;
-    $.post("{{ route('reports.indicator_narrative_datatable') }}", {}, data => {
-        $('#indicator_narrative_tbl tbody').html(data);
-        dataTable = new simpleDatatables.DataTable($('#indicator_narrative_tbl')[0]);
-    });
+    // $.post("{{ '#' }}", {}, data => {
+    //     $('#indicator_narrative_tbl tbody').html(data);
+    //     dataTable = new simpleDatatables.DataTable($('#indicator_narrative_tbl')[0]);
+    // });
 
     // indicator on change
-    $('#indicator').change(function() {
-        $.post("{{ route('reports.indicator_narrative_datatable') }}", {narrative_pointer_id: $(this).val()}, data => {
-            dataTable.destroy();
-            $('#indicator_narrative_tbl tbody').html(data);
-            dataTable = new simpleDatatables.DataTable($('#indicator_narrative_tbl')[0]);
-        });
-    });
+    // $('#indicator').change(function() {
+    //     $.post("{{ '#' }}", {narrative_pointer_id: $(this).val()}, data => {
+    //         dataTable.destroy();
+    //         $('#indicator_narrative_tbl tbody').html(data);
+    //         dataTable = new simpleDatatables.DataTable($('#indicator_narrative_tbl')[0]);
+    //     });
+    // });
 </script>
 @stop
 
