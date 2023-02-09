@@ -3,40 +3,49 @@
 namespace App\Http\Controllers\report;
 
 use App\Http\Controllers\Controller;
+use App\Models\age_group\AgeGroup;
 use App\Models\cohort\Cohort;
+use App\Models\disability\Disability;
+use App\Models\donor\Donor;
 use App\Models\item\NarrativeItem;
 use App\Models\narrative_pointer\NarrativePointer;
 use App\Models\programme\Programme;
+use App\Models\proposal\Proposal;
 use App\Models\region\Region;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
     /**
-     * Indicator narrative index
+     * Indicator narrative page
      */
-    public function indicator_narrative()
+    public function narrative_indicator()
     {
         // filters
+        $proposals = Proposal::get(['id', 'title']);
         $narrative_pointers = NarrativePointer::get(['id', 'value']);
         $programmes = Programme::get(['id', 'name']);
         $regions = Region::get(['id', 'name']);
         $cohorts = Cohort::get(['id', 'name']);
 
-
-        return view('reports.indicator_narrative', compact('narrative_pointers', 'programmes', 'regions', 'cohorts'));
+        return view('reports.narrative_indicator', compact('proposals', 'narrative_pointers', 'programmes', 'regions', 'cohorts'));
     }
-    // datatable
-    public function indicator_narrative_datatable()
+
+    /**
+     * Participant analysis page
+     */
+    public function participant_analysis()
     {
-        $q = NarrativeItem::query();
+        $donors = Donor::get(['id', 'name']);
+        $programmes = Programme::get(['id', 'name']);
+        $regions = Region::get(['id', 'name']);
+        $cohorts = Cohort::get(['id', 'name']);
+        $disabilities = Disability::get(['id', 'name']);
+        $age_groups = AgeGroup::get(['id', 'bracket']);
 
-        $narrative_pointer_id = request('narrative_pointer_id');
-        $q->when($narrative_pointer_id, function($q) {
-            $q->where('narrative_pointer_id', request('narrative_pointer_id'));
-        }); 
-        
-        $narrative_items = $q->get();
-        return view('reports.partial.indicator_narrative_datatable', compact('narrative_items'));
+        return view('reports.participant_analysis', 
+            compact('donors', 'programmes', 'regions', 'cohorts', 'disabilities', 'age_groups')
+        );
     }
+
 }
