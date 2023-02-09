@@ -92,8 +92,9 @@ class DonorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Donor $donor)
     {
-        //
+        // dd('dd');
+        return redirect(route('donors.index'))->with(['success' => 'Donor deleted successfully']);
     }
 }
