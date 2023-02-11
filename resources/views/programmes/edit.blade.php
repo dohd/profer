@@ -1,6 +1,6 @@
 @extends('layouts.core')
 
-@section('title', 'Create Programme')
+@section('title', 'Edit | Programme Management')
     
 @section('content')
     @include('programmes.header')
@@ -8,7 +8,7 @@
         <div class="card-body">
             <h5 class="card-title">Programme Details</h5>
             <div class="card-content p-2">
-                {{ Form::open(['route' => 'programmes.store', 'method' => 'POST', 'class' => 'form']) }}
+                {{ Form::model($programme, ['route' => ['programmes.update', $programme], 'method' => 'PATCH', 'class' => 'form']) }}
                     @include('programmes.form')
                     <div class="text-center">
                         <a href="{{ route('programmes.index') }}" class="btn btn-secondary">Cancel</a>

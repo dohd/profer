@@ -39,6 +39,7 @@ class ProgrammeController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
+        $request->validate(['name' => 'required']);
         $data = $request->only(['name']);
 
         try {            
@@ -80,9 +81,18 @@ class ProgrammeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Programme $programme)
     {
-        //
+        // dd($request->all());
+        $request->validate(['name' => 'required']);
+        $data = $request->only(['name']);
+
+        try {            
+            if ($programme->update($data)) 
+            return redirect(route('programmes.index'))->with(['success' => 'Programme updated successfully']);
+        } catch (\Throwable $th) {
+            errorHandler('Error updating programme!');
+        }
     }
 
     /**
@@ -91,8 +101,13 @@ class ProgrammeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Programme $programme)
     {
-        //
+        try {            
+            if ($programme->delete()) 
+            return redirect(route('programmes.index'))->with(['success' => 'Programme deleted successfully']);
+        } catch (\Throwable $th) {
+            errorHandler('Error deleting programme!');
+        }
     }
 }
