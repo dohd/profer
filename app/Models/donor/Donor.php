@@ -2,11 +2,13 @@
 
 namespace App\Models\donor;
 
+use App\Models\donor\Traits\DonorAttribute;
+use App\Models\ModelTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class Donor extends Model
 {
-    // use ParticipantRelationship;    
+    use ModelTrait, DonorAttribute;
 
     /**
      * The database table used by the model.
