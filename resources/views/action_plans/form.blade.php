@@ -29,10 +29,10 @@
     <thead>
         <tr class="">
             <th scope="col" width="8%">#</th>
-            <th scope="col">Activity Description</th>
+            <th scope="col">Project Activity</th>
             <th scope="col">Date(start-end)</th>
-            <th>Target Group</th>
-            <th>Regions</th>
+            <th>Cohort</th>
+            <th>Region</th>
             <th>Resources</th>
             <th>Assigned To</th>
         </tr>
