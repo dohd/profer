@@ -6,7 +6,7 @@
     @include('participants.header')
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Create Participant</h5>
+            <h5 class="card-title">Create Participant List</h5>
             <div class="card-content p-2">
                 {{ Form::open(['route' => 'participants.store', 'method' => 'POST', 'class' => 'form']) }}
                     @include('participants.form')
