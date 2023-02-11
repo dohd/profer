@@ -39,6 +39,14 @@ class DonorController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
+        $request->validate([
+            'name' => 'required',
+            'phone' => 'required',
+            'email' => 'required',
+            'contact_person' => 'required',
+            'alternative_phone' => 'required',
+            'alternative_email' => 'required',
+        ]);
         $data = $request->only(['name', 'phone', 'email', 'contact_person', 'alternative_phone', 'alternative_email']);
 
         try {            
@@ -81,6 +89,14 @@ class DonorController extends Controller
     public function update(Request $request, Donor $donor)
     {
         // dd($request->all());
+        $request->validate([
+            'name' => 'required',
+            'phone' => 'required',
+            'email' => 'required',
+            'contact_person' => 'required',
+            'alternative_phone' => 'required',
+            'alternative_email' => 'required',
+        ]);
         $data = $request->only(['name', 'phone', 'email', 'contact_person', 'alternative_phone', 'alternative_email']);
 
         try {            
