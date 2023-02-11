@@ -7,15 +7,25 @@
 <div class="row mb-3">
     <div class="col-3">
         <label for="region">Region*</label>
-        {{ Form::text('region', null, ['class' => 'form-control']) }}
+        <select name="region_id" id="region" class="form-select">
+            <option value="">-- Choose Region --</option>
+            @foreach ([] as $item)
+                <option value="{{ $item->id }}">{{ $item->name }}</option>
+            @endforeach
+        </select>
     </div>
     <div class="col-4">
         <label for="sector">Sector*</label>
         {{ Form::text('sector', null, ['class' => 'form-control']) }}
     </div>
     <div class="col-5">
-        <label for="donor">Donor*</label>
-        {{ Form::text('donor', null, ['class' => 'form-control']) }}
+        <label for="sector">Donor*</label>
+        <select name="donor_id" id="donor" class="form-select">
+            <option value="">-- Choose Donor --</option>
+            @foreach ([] as $item)
+                <option value="{{ $item->id }}">{{ $item->name }}</option>
+            @endforeach
+        </select>
     </div>
 </div>
 <div class="row mb-3">
@@ -32,13 +42,13 @@
         {{ Form::text('budget', null, ['class' => 'form-control', 'id' => 'budget']) }}
     </div>
 </div>
-<br>
+
 <table class="table table-striped" id="objectivesTbl">
     <thead>
-        <tr class="">
+        <tr>
             <th scope="col" width="8%">#</th>
             <th scope="col" width="10%">Item</th>
-            <th scope="col">Description</th>
+            <th scope="col" width="70%">Description</th>
             <th>Action</th>
         </tr>
     </thead>
