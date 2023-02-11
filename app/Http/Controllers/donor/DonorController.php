@@ -5,7 +5,6 @@ namespace App\Http\Controllers\donor;
 use App\Http\Controllers\Controller;
 use App\Models\donor\Donor;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class DonorController extends Controller
 {
@@ -43,10 +42,8 @@ class DonorController extends Controller
         $data = $request->only(['name', 'phone', 'email', 'contact_person', 'alternative_phone', 'alternative_email']);
 
         try {            
-            $donor = Donor::create($data);
-            if ($donor) {
-                return redirect(route('donors.index'))->with(['success' => 'Donor created successfully']);
-            }
+            if (Donor::create($data)) 
+            return redirect(route('donors.index'))->with(['success' => 'Donor created successfully']);
         } catch (\Throwable $th) {
             throw GeneralException('Error creating donor!');
         }
@@ -81,9 +78,17 @@ class DonorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Donor $donor)
     {
-        //
+        // dd($request->all());
+        $data = $request->only(['name', 'phone', 'email', 'contact_person', 'alternative_phone', 'alternative_email']);
+
+        try {            
+            if ($donor->update($data)) 
+            return redirect(route('donors.index'))->with(['success' => 'Donor updated successfully']);
+        } catch (\Throwable $th) {
+            throw GeneralException('Error updating donor!');
+        }
     }
 
     /**
@@ -94,7 +99,11 @@ class DonorController extends Controller
      */
     public function destroy(Donor $donor)
     {
-        // dd('dd');
-        return redirect(route('donors.index'))->with(['success' => 'Donor deleted successfully']);
+        try {
+            if ($donor->delete())
+            return redirect(route('donors.index'))->with(['success' => 'Donor deleted successfully']);
+        } catch (\Throwable $th) {
+            throw GeneralException('Error deleting donor!');
+        }
     }
 }
