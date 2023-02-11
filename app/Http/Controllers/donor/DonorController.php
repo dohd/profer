@@ -45,7 +45,7 @@ class DonorController extends Controller
             if (Donor::create($data)) 
             return redirect(route('donors.index'))->with(['success' => 'Donor created successfully']);
         } catch (\Throwable $th) {
-            throw GeneralException('Error creating donor!');
+            return errorHandler('Error creating donor!');
         }
     }
 
@@ -87,7 +87,7 @@ class DonorController extends Controller
             if ($donor->update($data)) 
             return redirect(route('donors.index'))->with(['success' => 'Donor updated successfully']);
         } catch (\Throwable $th) {
-            throw GeneralException('Error updating donor!');
+            return errorHandler('Error updating donor!');
         }
     }
 
@@ -103,7 +103,7 @@ class DonorController extends Controller
             if ($donor->delete())
             return redirect(route('donors.index'))->with(['success' => 'Donor deleted successfully']);
         } catch (\Throwable $th) {
-            throw GeneralException('Error deleting donor!');
+            return errorHandler('Error deleting donor!');
         }
     }
 }
