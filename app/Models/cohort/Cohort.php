@@ -2,12 +2,14 @@
 
 namespace App\Models\cohort;
 
+use App\Models\cohort\Traits\CohortAttribute;
 use App\Models\cohort\Traits\CohortRelationship;
+use App\Models\ModelTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class Cohort extends Model
 {
-    use CohortRelationship;    
+    use ModelTrait, CohortAttribute, CohortRelationship;    
 
     /**
      * The database table used by the model.

@@ -8,7 +8,7 @@
         <div class="card-body">
             <h5 class="card-title">Disability Details</h5>
             <div class="card-content p-2">
-                {{ Form::open(['route' => 'disabilities.store', 'method' => 'POST', 'class' => 'form']) }}
+                {{ Form::model($disability, ['route' => ['disabilities.update', $disability], 'method' => 'PATCH', 'class' => 'form']) }}
                     @include('disabilities.form')
                     <div class="text-center">
                         <a href="{{ route('disabilities.index') }}" class="btn btn-secondary">Cancel</a>

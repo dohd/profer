@@ -2,12 +2,14 @@
 
 namespace App\Models\disability;
 
+use App\Models\disability\Traits\DisabilityAttribute;
 use App\Models\disability\Traits\DisabilityRelationship;
+use App\Models\ModelTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class Disability extends Model
 {
-    use DisabilityRelationship;    
+    use ModelTrait, DisabilityAttribute, DisabilityRelationship;    
 
     /**
      * The database table used by the model.

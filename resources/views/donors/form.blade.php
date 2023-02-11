@@ -5,12 +5,12 @@
     </div>
 
     <div class="col-3">
-        <label for="name">Contact Person*</label>
-        {{ Form::text('contact_person', null, ['class' => 'form-control', 'required']) }}
+        <label for="name">Contact Person</label>
+        {{ Form::text('contact_person', null, ['class' => 'form-control']) }}
     </div>
     <div class="col-3">
-        <label for="phone">Alternative Phone*</label>
-        {{ Form::text('alternative_phone', null, ['class' => 'form-control', 'required']) }}
+        <label for="phone">Alternative Phone</label>
+        {{ Form::text('alternative_phone', null, ['class' => 'form-control']) }}
     </div>
     
 </div>
@@ -26,7 +26,7 @@
     </div>
     
     <div class="col-3">
-        <label for="email">Alternative Email*</label>
-        {{ Form::text('alternative_email', null, ['class' => 'form-control', 'required']) }}
+        <label for="email">Alternative Email</label>
+        {{ Form::text('alternative_email', null, ['class' => 'form-control']) }}
     </div>
 </div>

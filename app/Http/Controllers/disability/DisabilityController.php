@@ -39,15 +39,14 @@ class DisabilityController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        $data = $request->only(['name']);
+        $request->validate(['name' => 'required', 'code' => 'required']);
+        $data = $request->only(['name', 'code']);
 
         try {            
-            $disability = Disability::create($data);
-            if ($disability) {
-                return redirect(route('disabilities.index'))->with(['success' => 'Disability created successfully']);
-            }
+            if (Disability::create($data)) 
+            return redirect(route('disabilities.index'))->with(['success' => 'Disability created successfully']);
         } catch (\Throwable $th) {
-            throw GeneralException('Error creating disability!');
+            errorHandler('Error creating disability!');
         }
     }
 
@@ -80,9 +79,18 @@ class DisabilityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Disability $disability)
     {
-        //
+        // dd($request->all());
+        $request->validate(['name' => 'required', 'code' => 'required']);
+        $data = $request->only(['name', 'code']);
+
+        try {            
+            if ($disability->update($data)) 
+            return redirect(route('disabilities.index'))->with(['success' => 'Disability updated successfully']);
+        } catch (\Throwable $th) {
+            errorHandler('Error updating disability!');
+        }
     }
 
     /**
@@ -91,8 +99,13 @@ class DisabilityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Disability $disability)
     {
-        //
+        try {            
+            if ($disability->delete()) 
+            return redirect(route('disabilities.index'))->with(['success' => 'Disability deleted successfully']);
+        } catch (\Throwable $th) {
+            errorHandler('Error deleting disability!');
+        }
     }
 }

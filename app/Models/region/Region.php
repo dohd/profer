@@ -2,12 +2,14 @@
 
 namespace App\Models\region;
 
+use App\Models\ModelTrait;
+use App\Models\region\Traits\RegionAttribute;
 use App\Models\region\Traits\RegionRelationship;
 use Illuminate\Database\Eloquent\Model;
 
 class Region extends Model
 {
-    use RegionRelationship;    
+    use ModelTrait, RegionAttribute, RegionRelationship;    
 
     /**
      * The database table used by the model.

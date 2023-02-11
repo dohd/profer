@@ -39,15 +39,14 @@ class CohortController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
+        $request->validate(['name' => 'required']);
         $data = $request->only(['name']);
 
         try {            
-            $cohort = Cohort::create($data);
-            if ($cohort) {
-                return redirect(route('cohorts.index'))->with(['success' => 'Cohort created successfully']);
-            }
+            if (Cohort::create($data)) 
+            return redirect(route('cohorts.index'))->with(['success' => 'Cohort created successfully']);
         } catch (\Throwable $th) {
-            throw GeneralException('Error creating cohort!');
+            errorHandler('Error creating cohort!');
         }
     }
 
@@ -80,9 +79,18 @@ class CohortController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Cohort $cohort)
     {
-        //
+        // dd($request->all());
+        $request->validate(['name' => 'required']);
+        $data = $request->only(['name']);
+
+        try {            
+            if ($cohort->update($data)) 
+            return redirect(route('cohorts.index'))->with(['success' => 'Cohort updated successfully']);
+        } catch (\Throwable $th) {
+            errorHandler('Error updating cohort!');
+        }
     }
 
     /**
@@ -91,8 +99,13 @@ class CohortController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Cohort $cohort)
     {
-        //
+        try {            
+            if ($cohort->delete()) 
+            return redirect(route('cohorts.index'))->with(['success' => 'Cohort deleted successfully']);
+        } catch (\Throwable $th) {
+            errorHandler('Error deleting cohort!');
+        }
     }
 }

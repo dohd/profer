@@ -39,15 +39,14 @@ class RegionController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
+        $request->validate(['name' => 'required']);
         $data = $request->only(['name']);
 
         try {            
-            $region = Region::create($data);
-            if ($region) {
-                return redirect(route('regions.index'))->with(['success' => 'Region created successfully']);
-            }
+            if (Region::create($data))
+            return redirect(route('regions.index'))->with(['success' => 'Region created successfully']);
         } catch (\Throwable $th) {
-            throw GeneralException('Error creating region!');
+            errorHandler('Error creating region!');
         }
     }
 
@@ -80,9 +79,18 @@ class RegionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Region $region)
     {
-        //
+        // dd($request->all());
+        $request->validate(['name' => 'required']);
+        $data = $request->only(['name']);
+
+        try {            
+            if ($region->update($data))
+            return redirect(route('regions.index'))->with(['success' => 'Region updated successfully']);
+        } catch (\Throwable $th) {
+            errorHandler('Error updating region!');
+        }
     }
 
     /**
@@ -91,8 +99,13 @@ class RegionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Region $region)
     {
-        //
+        try {            
+            if ($region->delete())
+            return redirect(route('regions.index'))->with(['success' => 'Region deleted successfully']);
+        } catch (\Throwable $th) {
+            errorHandler('Error deleting region!');
+        }
     }
 }

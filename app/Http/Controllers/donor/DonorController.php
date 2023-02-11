@@ -43,9 +43,6 @@ class DonorController extends Controller
             'name' => 'required',
             'phone' => 'required',
             'email' => 'required',
-            'contact_person' => 'required',
-            'alternative_phone' => 'required',
-            'alternative_email' => 'required',
         ]);
         $data = $request->only(['name', 'phone', 'email', 'contact_person', 'alternative_phone', 'alternative_email']);
 
@@ -93,9 +90,6 @@ class DonorController extends Controller
             'name' => 'required',
             'phone' => 'required',
             'email' => 'required',
-            'contact_person' => 'required',
-            'alternative_phone' => 'required',
-            'alternative_email' => 'required',
         ]);
         $data = $request->only(['name', 'phone', 'email', 'contact_person', 'alternative_phone', 'alternative_email']);
 
