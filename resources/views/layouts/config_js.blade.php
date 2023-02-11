@@ -6,9 +6,10 @@
         }
     });
 
-    // global table-row delete handler
+    // global table-row form delete handler
     $(document).on('click', '.destroy', function() {
-        if ($(this).children('form').length && confirm('Are you sure?')) 
+        if ($(this).children('form').length && confirm('Are you sure?')) {
             $(this).children('form').submit();
+        }
     });
 </script>
