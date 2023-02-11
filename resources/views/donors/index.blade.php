@@ -28,22 +28,7 @@
                                 <td>{{ $donor->email }}</td>
                                 <td>{{ $donor->contact_person }}</td>
                                 <td>{{ $donor->alternative_phone }}</td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Action
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item pt-1 pb-1 view" href="{{ route('donors.show', $donor) }}"><i class="bi bi-eye-fill"></i>View</a></li>
-                                            <li><a class="dropdown-item pt-1 pb-1 edit" href="{{ route('donors.edit', $donor) }}"><i class="bi bi-pencil-square"></i>Edit</a></li>
-                                            <li><a class="dropdown-item pt-1 pb-1 destroy" href="javascript:">
-                                                <i class="bi bi-trash text-danger icon-xs"></i>Delete
-                                                {{ Form::open(['route' => array('donors.destroy', $donor), 'method' => 'DELETE']) }} {{ Form::close() }}
-                                            </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
+                                <td>{!! $donor->action_buttons !!}</td>
                             </tr>
                         @endforeach
                     </tbody>
