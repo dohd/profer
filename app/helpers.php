@@ -117,3 +117,10 @@ if (!function_exists('GeneralException')) {
         return \Illuminate\Validation\ValidationException::withMessages([$message]);
     }
 }
+
+if (!function_exists('errorHandler')) {
+    function errorHandler($message='Internal server error! Please try again later.')
+    {
+        return redirect()->back()->with(['error' => $message]);
+    }
+}
