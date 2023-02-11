@@ -8,7 +8,7 @@
         <div class="card-body">
             <div class="card-content p2">
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-6">
                         <select name="donor_id" id="donor" class="form-select mt-3">
                             <option value="">-- Choose Donor --</option>
                             @foreach ($donors as $item)
@@ -16,7 +16,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-4">
+                    <div class="col-6">
                         <select name="programme_id" id="programme" class="form-select mt-3">
                             <option value="">-- Choose Programme --</option>
                             @foreach ($programmes as $item)
@@ -24,7 +24,10 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-4">
+                    
+                </div>
+                <div class="row">
+                    <div class="col-3">
                         <select name="region_id" id="region" class="form-select mt-3">
                             <option value="">-- Choose Region --</option>
                             @foreach ($regions as $item)
@@ -32,9 +35,7 @@
                             @endforeach
                         </select>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
+                    <div class="col-3">
                         <select name="cohort_id" id="cohort" class="form-select mt-3">
                             <option value="">-- Choose Cohort --</option>
                             @foreach ($cohorts as $item)
@@ -42,19 +43,19 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-4">
-                        <select name="disability_id" id="disability" class="form-select mt-3">
-                            <option value="">-- Choose Disability --</option>
-                            @foreach ($disabilities as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <select name="age_group_id" id="age_group" class="form-select mt-3">
                             <option value="">-- Choose Age Group --</option>
                             @foreach ($age_groups as $item)
                                 <option value="{{ $item->id }}">{{ $item->bracket }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-3">
+                        <select name="disability_id" id="disability" class="form-select mt-3">
+                            <option value="">-- Choose Disability --</option>
+                            @foreach ($disabilities as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
                     </div>
