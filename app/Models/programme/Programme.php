@@ -2,12 +2,14 @@
 
 namespace App\Models\programme;
 
+use App\Models\ModelTrait;
+use App\Models\programme\Traits\ProgrammeAttribute;
 use App\Models\programme\Traits\ProgrammeRelationship;
 use Illuminate\Database\Eloquent\Model;
 
 class Programme extends Model
 {
-    use ProgrammeRelationship;    
+    use ModelTrait, ProgrammeAttribute, ProgrammeRelationship;    
 
     /**
      * The database table used by the model.
