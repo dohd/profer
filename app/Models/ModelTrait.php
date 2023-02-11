@@ -27,7 +27,7 @@ trait ModelTrait
     {
         return '<a class="dropdown-item pt-1 pb-1 destroy" href="javascript:">
                 <i class="bi bi-trash text-danger icon-xs"></i>Delete
-                <form action="'. route($route, $this) .'" method="DELETE">
+                <form action="'. route($route, $this) .'" method="POST">
                     <input type="hidden" name="_method" value="DELETE">
                     <input type="hidden" name="_token" value="'. csrf_token() .'">
                 </form>
