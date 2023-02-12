@@ -37,10 +37,10 @@ class AgeGroupController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
         // dd($request->all());
-        $request->validate(['name' => 'required']);
-        $data = $request->only(['name']);
+        $request->validate(['bracket' => 'required']);
+        $data = $request->only(['bracket']);
 
         try {            
             if (AgeGroup::create($data)) 
@@ -82,8 +82,8 @@ class AgeGroupController extends Controller
     public function update(Request $request, AgeGroup $age_group)
     {
         // dd($request->all());
-        $request->validate(['name' => 'required']);
-        $data = $request->only(['name']);
+        $request->validate(['bracket' => 'required']);
+        $data = $request->only(['bracket']);
 
         try {            
             if ($age_group->update($data)) 
