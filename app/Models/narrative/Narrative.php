@@ -2,12 +2,14 @@
 
 namespace App\Models\narrative;
 
+use App\Models\ModelTrait;
 use App\Models\narrative\Traits\NarrativeRelationship;
+use App\Models\narrative\Traits\NarrtiveAttribute;
 use Illuminate\Database\Eloquent\Model;
 
 class Narrative extends Model
 {
-    use NarrativeRelationship;    
+    use ModelTrait, NarrtiveAttribute, NarrativeRelationship;    
 
     /**
      * The database table used by the model.
@@ -58,19 +60,16 @@ class Narrative extends Model
         parent::boot();
 
         static::creating(function ($instance) {
-            $instance->user_id = 1;
-            $instance->ins = 1;
-            $instance->tid = Narrative::getTid()+1;
+            $instance->fill([
+                'tid' => $instance->next_tid,
+                'user_id' => 1,
+                'ins' => 1,
+            ]);
             return $instance;
         });
 
-        // static::addGlobalScope('ins', function ($builder) {
-        //     $builder->where('ins', '=', auth()->user()->ins);
-        // });
-    }
-
-    protected static function getTid()
-    {
-        return Narrative::where('ins', 1)->max('tid');
+        static::addGlobalScope('ins', function ($builder) {
+            // $builder->where('ins', '=', auth()->user()->ins);
+        });
     }
 }

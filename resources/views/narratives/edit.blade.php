@@ -8,7 +8,7 @@
         <div class="card-body">
             <h5 class="card-title">Narrative Details</h5>
             <div class="card-content p-2">
-                {{ Form::open(['route' => 'narratives.store', 'method' => 'POST', 'class' => 'form']) }}
+                {{ Form::model($narrative, ['route' => ['narratives.update', $narrative], 'method' => 'PATCH', 'class' => 'form']) }}
                     @include('narratives.form')
                     <div class="text-center">
                         <a href="{{ route('narratives.index') }}" class="btn btn-secondary">Cancel</a>
