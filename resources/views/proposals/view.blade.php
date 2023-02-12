@@ -17,9 +17,9 @@
                         $details = [
                             '#No.' => $proposal->tid,
                             'Title' => $proposal->title,
-                            'Region' => $proposal->region,
+                            'Region' => $proposal->region ? $proposal->region->name : '',
                             'Sector' => $proposal->sector,
-                            'Donor' => $proposal->donor,
+                            'Donor' => $proposal->donor ? $proposal->donor->name : '',
                             'Date (start-end)' => date('d-m-Y', strtotime($proposal->start_date)) . ' || ' . date('d-m-Y', strtotime($proposal->end_date)),
                             'Estimated Budget' => number_format($proposal->budget, 2),
                         ];

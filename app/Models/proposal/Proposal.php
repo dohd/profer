@@ -2,12 +2,14 @@
 
 namespace App\Models\proposal;
 
+use App\Models\ModelTrait;
+use App\Models\proposal\Traits\ProposalAttribute;
 use App\Models\proposal\Traits\ProposalRelationship;
 use Illuminate\Database\Eloquent\Model;
 
 class Proposal extends Model
 {
-    use ProposalRelationship;    
+    use ModelTrait, ProposalAttribute, ProposalRelationship;    
 
     /**
      * The database table used by the model.
@@ -58,19 +60,16 @@ class Proposal extends Model
         parent::boot();
 
         static::creating(function ($instance) {
-            $instance->user_id = 1;
-            $instance->ins = 1;
-            $instance->tid = Proposal::getTid()+1;
+            $instance->fill([
+                'tid' => $instance->next_tid,
+                'user_id' => 1,
+                'ins' => 1,
+            ]);
             return $instance;
         });
 
         // static::addGlobalScope('ins', function ($builder) {
         //     $builder->where('ins', '=', auth()->user()->ins);
         // });
-    }
-
-    protected static function getTid()
-    {
-        return Proposal::where('ins', 1)->max('tid');
     }
 }

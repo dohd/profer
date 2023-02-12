@@ -1,15 +1,14 @@
 @extends('layouts.core')
 
-@section('title', 'Create Proposal')
+@section('title', 'Edit | Proposal Management')
     
 @section('content')
-{{-- <div id="main" class="main"> --}}
     @include('proposals.header')
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Proposal Details</h5>
             <div class="card-content p-2">
-                {{ Form::open(['route' => 'proposals.store', 'method' => 'POST', 'class' => 'form']) }}
+                {{ Form::model($proposal, ['route' => ['proposals.update', $proposal], 'method' => 'PATCH', 'class' => 'form']) }}
                     @include('proposals.form')
                     <div class="text-center">
                         <a href="{{ route('proposals.index') }}" class="btn btn-secondary">Cancel</a>
@@ -19,5 +18,4 @@
             </div>
         </div>
     </div>
-{{-- </div> --}}
 @stop
