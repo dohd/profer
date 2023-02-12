@@ -53,8 +53,7 @@ class ActionPlanController extends Controller
         $request->validate([
             'proposal_id' => 'required', 
             'programme_id' => 'required', 
-            'main_assigned_to' => 'required'
-        ]);
+        ]); 
         $data = $request->only(['proposal_id', 'programme_id', 'main_assigned_to']);
         $data_items = $request->only(['proposal_item_id', 'start_date', 'end_date', 'resources', 'assigned_to', 'cohort_id']);
         $data_item_regions = $request->region_id;
@@ -139,7 +138,6 @@ class ActionPlanController extends Controller
             $request->validate([
                 'proposal_id' => 'required', 
                 'programme_id' => 'required', 
-                'main_assigned_to' => 'required'
             ]);
             $data = $request->only(['proposal_id', 'programme_id', 'main_assigned_to']);
             $data_items = $request->only(['proposal_item_id', 'start_date', 'end_date', 'resources', 'assigned_to', 'cohort_id', 'item_id']);

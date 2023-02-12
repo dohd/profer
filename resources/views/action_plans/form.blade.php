@@ -1,7 +1,7 @@
 <div class="row mb-3">
     <div class="col-12">
         <label for="title">Project Title*</label>
-        <select name="proposal_id" id="proposal" class="form-control select2" data-placeholder="Choose Project">
+        <select name="proposal_id" id="proposal" class="form-control select2" data-placeholder="Choose Project" required>
             <option value=""></option>
             @foreach ($proposals as $proposal)
                 <option value="{{ $proposal->id }}" {{ @$action_plan->proposal_id == $proposal->id? 'selected' : '' }}>{{ $proposal->title }}</option>
@@ -12,7 +12,7 @@
 <div class="row mb-3">
     <div class="col-9">
         <label for="title">Key Programme*</label>
-        <select name="programme_id" id="programme" class="form-control select2" data-placeholder="Choose Programme">
+        <select name="programme_id" id="programme" class="form-control select2" data-placeholder="Choose Programme" required>
             <option value=""></option>
             @foreach ($programmes as $programme)
                 <option value="{{ $programme->id }}" {{ @$action_plan->programme_id == $programme->id ? 'selected' : '' }}>{{ $programme->name }}</option>
