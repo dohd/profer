@@ -28,16 +28,13 @@
   <link href="{{ asset('vendor/quill/quill.bubble.css') }}" rel="stylesheet">
   <link href="{{ asset('vendor/remixicon/remixicon.css') }}" rel="stylesheet">
   <link href="{{ asset('vendor/simple-datatables/style.css') }}" rel="stylesheet">
+  <link href="{{ asset('vendor/select2/select2-4.0.13.min.css') }}" rel="stylesheet">
 
   <!-- Template Main CSS File -->
   <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: NiceAdmin - v2.3.1
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+  <!-- Custom CSS File -->
+  <link href="{{ asset('css/core.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -79,10 +76,12 @@
   <script src="{{ asset('vendor/tinymce/tinymce.min.js') }}"></script>
   <script src="{{ asset('vendor/php-email-form/validate.js') }}"></script>
   <script src="{{ asset('vendor/jquery/jquery-3.6.1.min.js') }}"></script>
+  <script src="{{ asset('vendor/select2/select2-4.0.13.min.js') }}"></script>
 
   <!-- Template Main JS File -->
   <script src="{{ asset('js/main.js') }}"></script>
-  {{-- custom scripts  --}}
+
+  <!-- Custom JS File  -->
   @include('layouts.config_js')
   @yield('script')
 </body>
