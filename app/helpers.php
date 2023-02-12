@@ -8,8 +8,8 @@ if (!function_exists('inputClean')) {
         foreach ($input as $key => $value) {
             if (!is_array($value)) {
                 if (in_array($key, $dates)) $input[$key] = databaseDate($value);
-                if (in_array($key, $totals)) $input[$key] = numberClean($value);
-                $input[$key] = trim($value);
+                elseif (in_array($key, $totals)) $input[$key] = numberClean($value);
+                else $input[$key] = trim($value);
             }
         }
         return $input;
