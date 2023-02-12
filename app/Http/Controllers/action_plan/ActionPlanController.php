@@ -130,54 +130,61 @@ class ActionPlanController extends Controller
     public function update(Request $request, ActionPlan $action_plan)
     {
         // dd($request->all());
-        $request->validate([
-            'proposal_id' => 'required', 
-            'programme_id' => 'required', 
-            'main_assigned_to' => 'required'
-        ]);
-        $data = $request->only(['proposal_id', 'programme_id', 'main_assigned_to']);
-        $data_items = $request->only(['proposal_item_id', 'start_date', 'end_date', 'resources', 'assigned_to', 'cohort_id', 'item_id']);
-        $data_item_regions = $request->region_id;
+        if (request('status')) {
+            // update action plan status
+            if ($action_plan->update(['status' => request('status')]))
+                return redirect()->back()->with('success', 'Status updated successfully');
+            else errorHandler('Error updating status!');
+        } else {
+            $request->validate([
+                'proposal_id' => 'required', 
+                'programme_id' => 'required', 
+                'main_assigned_to' => 'required'
+            ]);
+            $data = $request->only(['proposal_id', 'programme_id', 'main_assigned_to']);
+            $data_items = $request->only(['proposal_item_id', 'start_date', 'end_date', 'resources', 'assigned_to', 'cohort_id', 'item_id']);
+            $data_item_regions = $request->region_id;
 
-        DB::beginTransaction();
+            DB::beginTransaction();
 
-        try {
-            $data = inputClean($data);
-            $data_items = databaseArray($data_items);
-            $data_item_regions = explodeArray('-', $data_item_regions);
-            foreach ($data_item_regions as $key => $value) {
-                $data_item_regions[] = ['region_id' => $value[0], 'proposal_item_id' => $value[1]];
-                unset($data_item_regions[$key]);
-            }
-            
-            if ($action_plan->update($data)) {
-                // action plan items
-                $action_plan->items()->whereNotIn('id', array_map(fn($v) => $v['item_id'], $data_items))->delete();
-                $data_items = fillArrayRecurse($data_items, ['action_plan_id' => $action_plan->id]);
-                foreach ($data_items as $value) {
-                    $action_plan_item = ActionPlanItem::firstOrNew(['id' => $value['item_id']]);
-                    $action_plan_item->fill($value);
-                    unset($action_plan_item->item_id);
-                    $action_plan_item->save();
+            try {
+                $data = inputClean($data);
+                $data_items = databaseArray($data_items);
+                $data_item_regions = explodeArray('-', $data_item_regions);
+                foreach ($data_item_regions as $key => $value) {
+                    $data_item_regions[] = ['region_id' => $value[0], 'proposal_item_id' => $value[1]];
+                    unset($data_item_regions[$key]);
                 }
+                
+                if ($action_plan->update($data)) {
+                    // action plan items
+                    $action_plan->items()->whereNotIn('id', array_map(fn($v) => $v['item_id'], $data_items))->delete();
+                    $data_items = fillArrayRecurse($data_items, ['action_plan_id' => $action_plan->id]);
+                    foreach ($data_items as $value) {
+                        $action_plan_item = ActionPlanItem::firstOrNew(['id' => $value['item_id']]);
+                        $action_plan_item->fill($value);
+                        unset($action_plan_item->item_id);
+                        $action_plan_item->save();
+                    }
 
-                // item regions
-                foreach ($data_item_regions as $i => $item_region) {
-                    foreach ($data_items as $item) {
-                        if ($item['proposal_item_id'] == $item_region['proposal_item_id']) {
-                            $data_item_regions[$i]['action_plan_item_id'] = $item['item_id'];
+                    // item regions
+                    foreach ($data_item_regions as $i => $item_region) {
+                        foreach ($data_items as $item) {
+                            if ($item['proposal_item_id'] == $item_region['proposal_item_id']) {
+                                $data_item_regions[$i]['action_plan_item_id'] = $item['item_id'];
+                            }
                         }
                     }
+                    ActionPlanItemRegion::whereIn('action_plan_item_id', array_map(fn($v) => $v['item_id'], $data_items))->delete();
+                    ActionPlanItemRegion::insert($data_item_regions);
+                    
+                    DB::commit();
+                    return redirect(route('action_plans.index'))->with(['success' => 'Action Plan updated successfully']);
                 }
-                ActionPlanItemRegion::whereIn('action_plan_item_id', array_map(fn($v) => $v['item_id'], $data_items))->delete();
-                ActionPlanItemRegion::insert($data_item_regions);
-                
-                DB::commit();
-                return redirect(route('action_plans.index'))->with(['success' => 'Action Plan updated successfully']);
-            }
-        } catch (\Throwable $th) { 
-            errorHandler('Error updating Action Plan!');
-        }        
+            } catch (\Throwable $th) { 
+                errorHandler('Error updating Action Plan!');
+            }  
+        }
     }
 
     /**
