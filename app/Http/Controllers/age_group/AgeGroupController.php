@@ -39,15 +39,14 @@ class AgeGroupController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
+        $request->validate(['name' => 'required']);
         $data = $request->only(['name']);
 
         try {            
-            $age_group = AgeGroup::create($data);
-            if ($age_group) {
-                return redirect(route('age_groups.index'))->with(['success' => 'Age group created successfully']);
-            }
+            if (AgeGroup::create($data)) 
+            return redirect(route('age_groups.index'))->with(['success' => 'Age Group created successfully']);
         } catch (\Throwable $th) {
-            throw GeneralException('Error creating age group!');
+            throw GeneralException('Error creating Age Group!');
         }
     }
 
@@ -80,9 +79,18 @@ class AgeGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, AgeGroup $age_group)
     {
-        //
+        // dd($request->all());
+        $request->validate(['name' => 'required']);
+        $data = $request->only(['name']);
+
+        try {            
+            if ($age_group->update($data)) 
+            return redirect(route('age_groups.index'))->with(['success' => 'Age Group updated successfully']);
+        } catch (\Throwable $th) {
+            throw GeneralException('Error updating Age Group!');
+        }        
     }
 
     /**
@@ -91,8 +99,13 @@ class AgeGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(AgeGroup $age_group)
     {
-        //
+        try {            
+            if ($age_group->delete()) 
+            return redirect(route('age_groups.index'))->with(['success' => 'Age Group deleted successfully']);
+        } catch (\Throwable $th) {
+            throw GeneralException('Error deleting Age Group!');
+        }  
     }
 }

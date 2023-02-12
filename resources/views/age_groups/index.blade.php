@@ -20,18 +20,7 @@
                             <tr>
                                 <th scope="row">{{ $i+1 }}</th>
                                 <td>{{ $age_group->bracket }}</td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Action
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item pt-1 pb-1 view" href="{{ route('age_groups.show', $age_group) }}"><i class="bi bi-eye-fill"></i>View</a></li>
-                                            <li><a class="dropdown-item pt-1 pb-1 edit" href="{{ route('age_groups.edit', $age_group) }}"><i class="bi bi-pencil-square"></i>Edit</a></li>
-                                            <li><a class="dropdown-item pt-1 pb-1 destroy" href="javascript:" onclick="confirm('Are You sure?')"><i class="bi bi-trash text-danger icon-xs"></i>Delete</a></li>
-                                        </ul>
-                                    </div>
-                                </td>
+                                <td>{!! $age_group->action_buttons !!}</td>
                             </tr>
                         @endforeach
                     </tbody>

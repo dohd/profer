@@ -2,12 +2,14 @@
 
 namespace App\Models\age_group;
 
+use App\Models\age_group\Traits\AgeGroupAttribute;
 use App\Models\age_group\Traits\AgeGroupRelationship;
+use App\Models\ModelTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class AgeGroup extends Model
 {
-    use AgeGroupRelationship;    
+    use ModelTrait, AgeGroupAttribute, AgeGroupRelationship;    
 
     /**
      * The database table used by the model.
