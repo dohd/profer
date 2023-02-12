@@ -2,18 +2,16 @@
 
 namespace App\Models\region;
 
-use App\Models\region\Traits\RegionRelationship;
 use Illuminate\Database\Eloquent\Model;
 
-class ProposalItemRegion extends Model
+class ActionPlanItemRegion extends Model
 {
-    // use RegionRelationship;    
 
     /**
      * The database table used by the model.
      * @var string
      */
-    protected $table = 'proposal_item_regions';
+    protected $table = 'action_plan_item_regions';
 
     /**
      * Mass Assignable fields of model
@@ -58,13 +56,7 @@ class ProposalItemRegion extends Model
         parent::boot();
 
         static::creating(function ($instance) {
-            // $instance->user_id = 1;
-            // $instance->ins = 1;
             return $instance;
         });
-
-        // static::addGlobalScope('ins', function ($builder) {
-        //     $builder->where('ins', '=', auth()->user()->ins);
-        // });
     }
 }

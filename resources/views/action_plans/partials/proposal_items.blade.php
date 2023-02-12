@@ -23,22 +23,22 @@
             {{ Form::date('end_date[]', null, ['class' => 'form-control']) }}
         </td>
         <td>
-            <select name="cohort_id[]" class="form-control target-group">
-                <option value="">-- cohort --</option>
+            <select name="cohort_id[]" class="form-control select2 cohort" data-placeholder="Cohort">
+                <option value=""></option>
                 @foreach ($cohorts as $cohort)
                     <option value="{{ $cohort->id }}">{{ $cohort->name }}</option>
                 @endforeach
             </select>
         </td>
         <td>
-            <select name="region_id[]" class="form-control region" multiple>
-                {{-- <option value="">-- select region --</option> --}}
+            <select name="region_id[]" class="form-control select2 region" data-placeholder="Region" multiple>
+                <option value=""></option>
                 @foreach ($regions as $region)
                     <option value="{{ $region->id }}-{{ $item->id }}">{{ $region->name }}</option>
                 @endforeach
             </select>
         </td>
-        <td>{{ Form::textarea('resources[]', null, ['class' => 'form-control', 'rows' => '2']) }}</td>
+        <td>{{ Form::textarea('resources[]', null, ['class' => 'form-control', 'rows' => '3']) }}</td>
         <td>{{ Form::text('assigned_to[]', null, ['class' => 'form-control']) }}</td>
         <input type="hidden" name="proposal_item_id[]" value="{{ $item->id }}">
     @endif

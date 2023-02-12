@@ -2,12 +2,14 @@
 
 namespace App\Models\action_plan;
 
+use App\Models\action_plan\Traits\ActionPlanAttribute;
 use App\Models\action_plan\Traits\ActionPlanRelationship;
+use App\Models\ModelTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class ActionPlan extends Model
 {
-    use ActionPlanRelationship;    
+    use ModelTrait, ActionPlanAttribute, ActionPlanRelationship;    
 
     /**
      * The database table used by the model.
@@ -58,19 +60,16 @@ class ActionPlan extends Model
         parent::boot();
 
         static::creating(function ($instance) {
-            $instance->ins = 1;
-            $instance->user_id = 1;
-            $instance->tid = ActionPlan::getTid();
+            $instance->fill([
+                'tid' => $instance->next_tid,
+                'user_id' => 1,
+                'ins' => 1,
+            ]);
             return $instance;
         });
 
-        // static::addGlobalScope('ins', function ($builder) {
-        //     $builder->where('ins', '=', auth()->user()->ins);
-        // });
-    }
-
-    protected static function getTid()
-    {
-        return ActionPlan::where('ins', 1)->max('tid');
+        static::addGlobalScope('ins', function ($builder) {
+            // $builder->where('ins', '=', auth()->user()->ins);
+        });
     }
 }

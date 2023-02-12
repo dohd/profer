@@ -13,7 +13,7 @@
                         $details = [
                             '#No.' => $action_plan->tid,
                             'Project Title' => $action_plan->proposal? $action_plan->proposal->title : '',
-                            'Key Programme' => $action_plan->programme()? $action_plan->programme()->name : '',
+                            'Key Programme' => $action_plan->programme? $action_plan->programme->name : '',
                             'Created At' => dateFormat($action_plan->created_at),
                             'Assigned To' => $action_plan->main_assigned_to,
                         ];

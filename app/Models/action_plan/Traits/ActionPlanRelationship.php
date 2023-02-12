@@ -3,14 +3,14 @@
 namespace App\Models\action_plan\Traits;
 
 use App\Models\item\ActionPlanItem;
+use App\Models\programme\Programme;
 use App\Models\proposal\Proposal;
-use Illuminate\Support\Facades\DB;
 
 trait ActionPlanRelationship
 {
     public function programme()
     {
-        return DB::table('programmes')->find($this->programme_id);
+        return $this->belongsTo(Programme::class);
     }
 
     public function proposal()

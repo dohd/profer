@@ -1,10 +1,10 @@
 <div class="row mb-3">
     <div class="col-12">
         <label for="title">Project Title*</label>
-        <select name="proposal_id" id="proposal" class="form-control">
-            <option value="">-- select project --</option>
+        <select name="proposal_id" id="proposal" class="form-control select2" data-placeholder="Choose Project">
+            <option value=""></option>
             @foreach ($proposals as $proposal)
-                <option value="{{ $proposal->id }}">{{ $proposal->title }}</option>
+                <option value="{{ $proposal->id }}" {{ @$action_plan->proposal_id == $proposal->id? 'selected' : '' }}>{{ $proposal->title }}</option>
             @endforeach
         </select>
     </div>
@@ -12,10 +12,10 @@
 <div class="row mb-3">
     <div class="col-9">
         <label for="title">Key Programme*</label>
-        <select name="programme_id" id="programme" class="form-control">
-            <option value="">-- select programme --</option>
+        <select name="programme_id" id="programme" class="form-control select2" data-placeholder="Choose Programme">
+            <option value=""></option>
             @foreach ($programmes as $programme)
-                <option value="{{ $programme->id }}">{{ $programme->name }}</option>
+                <option value="{{ $programme->id }}" {{ @$action_plan->programme_id == $programme->id ? 'selected' : '' }}>{{ $programme->name }}</option>
             @endforeach
         </select>
     </div>
@@ -31,94 +31,95 @@
             <th scope="col" width="8%">#</th>
             <th scope="col">Project Activity</th>
             <th scope="col">Date(start-end)</th>
-            <th>Cohort</th>
-            <th>Region</th>
+            <th width="12%">Cohort</th>
+            <th width="12%">Region</th>
             <th>Resources</th>
             <th>Assigned To</th>
+            @isset ($action_plan)
+                <th>Action</th>
+            @endisset
         </tr>
     </thead>
-    <tbody></tbody>
+    <tbody>
+        <!-- edit action plan items -->
+        @isset($action_plan)
+            @foreach ($action_plan->items as $item)
+                @php
+                    $proposal_item = $item->proposal_item;
+                    if (!$proposal_item) co
+                @endphp
+                <tr>
+                    <th scope="row">
+                        @if ($proposal_item->row_num)
+                            {{ $proposal_item->row_num }}
+                        @else
+                            <b style="font-size: 1em">.</b>
+                        @endif
+                    </th>
+                    <td>{{ $proposal_item->name }}</td>
+                    @if ($proposal_item->is_obj)
+                        <td colspan="5"></td>
+                        <input type="hidden" name="start_date[]">
+                        <input type="hidden" name="end_date[]">
+                        <input type="hidden" name="cohort_id[]">
+                        <input type="hidden" name="region_id[]" value="0-{{ $proposal_item->id }}">
+                        <input type="hidden" name="resources[]">
+                        <input type="hidden" name="assigned_to[]">
+                        <input type="hidden" name="proposal_item_id[]" value="{{ $proposal_item->id }}">
+                        <input type="hidden" name="item_id[]" value="{{ $item->id }}">
+                    @else
+                        <td>
+                            {{ Form::date('start_date[]', $item->start_date, ['class' => 'form-control']) }}
+                            {{ Form::date('end_date[]', $item->end_date, ['class' => 'form-control']) }}
+                        </td>
+                        <td>
+                            <select name="cohort_id[]" class="form-control select2 cohort" data-placeholder="Cohort">
+                                <option value=""></option>
+                                @foreach ($cohorts as $cohort)
+                                    <option value="{{ $cohort->id }}" {{ $item->cohort_id == $cohort->id? 'selected' : '' }}>{{ $cohort->name }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                            <select name="region_id[]" class="form-control select2 region" data-placeholder="Region" multiple>
+                                <option value=""></option>
+                                @foreach ($regions as $region)
+                                    @php
+                                        $selected = '';
+                                        $region_ids = $proposal_item->regions->pluck('id')->toArray();
+                                        if (in_array($region->id, $region_ids)) $selected = 'selected';
+                                    @endphp
+                                    <option value="{{ $region->id }}-{{ $proposal_item->id }}" {{ $selected }}>{{ $region->name }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>{{ Form::textarea('resources[]', $item->resources, ['class' => 'form-control', 'rows' => '3']) }}</td>
+                        <td>{{ Form::text('assigned_to[]', $item->assigned_to, ['class' => 'form-control']) }}</td>
+                        <input type="hidden" name="proposal_item_id[]" value="{{ $proposal_item->id }}">
+                        <input type="hidden" name="item_id[]" value="{{ $item->id }}">
+                    @endif
+                    <td><a class="dropdown-item pt-1 pb-1 del" href="javascript:"><i class="bi bi-trash text-danger icon-xs"></i></a></td>
+                </tr>
+            @endforeach
+        @endisset
+    </tbody>
 </table>
 
 @section('script')
 <script>
-    // on proposal change
+    // on proposal change fetch activities
     $('#proposal').change(function() {
         $.post("{{ route('action_plans.proposal_items') }}", {proposal_id: $(this).val()}, data => {
             $('#objectivesTbl tbody').html(data);
+            $('.select2').each(function() {
+                $(this).select2({allowClear: true});
+            });
         });
     });
 
-    let objectiveIndex = 0;
-    let activityIndex = 0;
-    $('#objectivesTbl').on('click', '.add-obj, .add-act, .del', function() {
-        const row = $(this).parents('tr');
-        if ($(this).is('.add-obj')) {
-            objectiveIndex++;
-            row.after(objRow(objectiveIndex));
-        }
-        if ($(this).is('.add-act')) {
-            activityIndex++;
-            row.after(actRow(activityIndex));
-        }
-        if ($(this).is('.del')) {
-            if (!row.siblings().length) return;
-            if (row.find('.obj').length) objectiveIndex--;
-            else activityIndex--;
-            row.remove();
-        }
-
-        $('#objectivesTbl tbody tr').each(function(i) {
-            $(this).find('.row-index').val(i);
-        });
+    // on delete click
+    $(document).on('click', '.del', function() {
+        $(this).parents('tr').remove();
     });
-
-    function objRow(i,v) {
-        return `
-            <tr>
-                <th scope="row"><input type="text" name="row_num[]" id="rownum-${i+1}" value="${i+1}" class="form-control rownum"></th>
-                <td class="pt-3">objective</td>
-                <td><input type="text" name="name[]" id="obj-${i+1}" class="form-control obj"></td>
-                <td>
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Action
-                        </button>
-                        <ul class="dropdown-menu">
-                        <li><a class="dropdown-item pt-1 pb-1 add-obj" href="javascript:"><i class="bi bi-plus"></i>Objective</a></li>
-                        <li><a class="dropdown-item pt-1 pb-1 add-act" href="javascript:"><i class="bi bi-plus"></i>Activity</a></li>
-                        <li><a class="dropdown-item pt-1 pb-1 del" href="javascript:"><i class="bi bi-trash text-danger icon-xs"></i>Delete</a></li>
-                        </ul>
-                    </div>
-                </td>
-                <input type="hidden" name="row_index[]" class="row-index">
-                <input type="hidden" name="is_obj[]" value="1">
-            </tr>
-        `;
-    }
-
-    function actRow(v,i) {
-        return `
-            <tr>
-                <th scope="row"><input type="hidden" name="row_num[]"></th>
-                <td class="pt-3">activity</td>
-                <td><input type="text" name="name[]" id="act-${i+1}" class="form-control act"></td>
-                <td>
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Action
-                        </button>
-                        <ul class="dropdown-menu">
-                        <li><a class="dropdown-item pt-1 pb-1 add-obj" href="javascript:"><i class="bi bi-plus"></i>Objective</a></li>
-                        <li><a class="dropdown-item pt-1 pb-1 add-act" href="javascript:"><i class="bi bi-plus"></i>Activity</a></li>
-                        <li><a class="dropdown-item pt-1 pb-1 del" href="javascript:"><i class="bi bi-trash text-danger icon-xs"></i>Delete</a></li>
-                        </ul>
-                    </div>
-                </td>
-                <input type="hidden" name="row_index[]" class="row-index">
-                <input type="hidden" name="is_obj[]" value="0">
-            </tr>
-        `;
-    }
 </script>
 @stop
