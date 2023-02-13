@@ -1,9 +1,9 @@
 @extends('layouts.core')
 
-@section('title', 'Participant Management')
+@section('title', 'Participant List Management')
     
 @section('content')
-    @include('participants.header')
+    @include('participant_lists.header')
     <div class="card">
         <div class="card-body">
             <div class="card-content p-2">
@@ -20,7 +20,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                        @foreach ($participants as $i => $participant)
+                        @foreach ([] as $i => $participant)
                             <tr>
                                 <th scope="row">{{ $i+1 }}</th>
                                 <td>{{ $participant->name }}</td>
@@ -34,8 +34,8 @@
                                         Action
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item pt-1 pb-1 view" href="{{ route('participants.show', $participant) }}"><i class="bi bi-eye-fill"></i>View</a></li>
-                                            <li><a class="dropdown-item pt-1 pb-1 edit" href="{{ route('participants.edit', $participant) }}"><i class="bi bi-pencil-square"></i>Edit</a></li>
+                                            <li><a class="dropdown-item pt-1 pb-1 view" href="{{ route('participant_lists.show', $participant) }}"><i class="bi bi-eye-fill"></i>View</a></li>
+                                            <li><a class="dropdown-item pt-1 pb-1 edit" href="{{ route('participant_lists.edit', $participant) }}"><i class="bi bi-pencil-square"></i>Edit</a></li>
                                             <li><a class="dropdown-item pt-1 pb-1 destroy" href="javascript:" onclick="confirm('Are You sure?')"><i class="bi bi-trash text-danger icon-xs"></i>Delete</a></li>
                                         </ul>
                                     </div>

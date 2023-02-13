@@ -7,7 +7,7 @@ use App\Http\Controllers\CoreController;
 use App\Http\Controllers\disability\DisabilityController;
 use App\Http\Controllers\donor\DonorController;
 use App\Http\Controllers\narrative\NarrativeController;
-use App\Http\Controllers\participant\ParticipantController;
+use App\Http\Controllers\participant_list\ParticipantListController;
 use App\Http\Controllers\programme\ProgrammeController;
 use App\Http\Controllers\proposal\ProposalController;
 use App\Http\Controllers\region\RegionController;
@@ -58,7 +58,7 @@ Route::resource('action_plans', ActionPlanController::class);
 Route::post('action_plans/proposal_items', [ActionPlanController::class, 'proposal_items'])->name('action_plans.proposal_items');
 
 // participants
-Route::resource('participants', ParticipantController::class);
+Route::resource('participant_lists', ParticipantListController::class);
 
 // narratives
 Route::resource('narratives', NarrativeController::class);

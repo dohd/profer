@@ -255,10 +255,10 @@
         data-bs-parent="#sidebar-nav"
       >
         <li>
-          <a href="{{ route('participants.create') }}"><i class="bi bi-circle"></i><span>Create Participant List</span></a>
+          <a href="{{ route('participant_lists.create') }}"><i class="bi bi-circle"></i><span>Create Participant List</span></a>
         </li>
         <li>
-          <a href="{{ route('participants.index') }}"><i class="bi bi-circle"></i><span>Manage Participant Lists</span></a>
+          <a href="{{ route('participant_lists.index') }}"><i class="bi bi-circle"></i><span>Manage Participant Lists</span></a>
         </li>
       </ul>
     </li>

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\participant;
+namespace App\Http\Controllers\participant_list;
 
 use App\Http\Controllers\Controller;
 use App\Models\disability\Disability;
-use App\Models\participant\Participant;
+use App\Models\participant_list\ParticipantList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ParticipantController extends Controller
+class ParticipantListController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +17,9 @@ class ParticipantController extends Controller
      */
     public function index()
     {
-        $participants = Participant::all();
+        $participant_lists = ParticipantList::all();
 
-        return view('participants.index', compact('participants'));
+        return view('participant_lists.index', compact('participant_lists'));
     }
 
     /**
@@ -32,7 +32,7 @@ class ParticipantController extends Controller
         $age_groups = DB::table('age_groups')->get();
         $disabilities = Disability::get();
 
-        return view('participants.create', compact('age_groups', 'disabilities'));
+        return view('participant_lists.create', compact('age_groups', 'disabilities'));
     }
 
     /**
@@ -49,13 +49,13 @@ class ParticipantController extends Controller
         DB::beginTransaction();
 
         try {            
-            $participant = Participant::create($data);
-            if ($participant) {
+            $participant_list = ParticipantList::create($data);
+            if ($participant_list) {
                 DB::commit();
-                return redirect(route('participants.index'))->with(['success' => 'Participant created successfully']);
+                return redirect(route('participant_lists.index'))->with(['success' => 'ParticipantList created successfully']);
             }
         } catch (\Throwable $th) {
-            throw GeneralException('Error creating participant!');
+            throw GeneralException('Error creating participant_list!');
         }
     }
 
@@ -65,9 +65,9 @@ class ParticipantController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Participant $participant)
+    public function show(ParticipantList $participant_list)
     {
-        return view('participants.view', compact('participant'));
+        return view('participant_lists.view', compact('participant_list'));
     }
 
     /**
@@ -76,9 +76,9 @@ class ParticipantController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Participant $participant)
+    public function edit(ParticipantList $participant_list)
     {
-        return view('participants.edit', compact('participant'));
+        return view('participant_lists.edit', compact('participant_list'));
     }
 
     /**
