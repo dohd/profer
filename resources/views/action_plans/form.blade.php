@@ -119,7 +119,9 @@
 
     // on delete click
     $(document).on('click', '.del', function() {
-        $(this).parents('tr').remove();
+        const row = $(this).parents('tr');
+        if (!row.siblings().length) return;
+        row.remove();
     });
 </script>
 @stop

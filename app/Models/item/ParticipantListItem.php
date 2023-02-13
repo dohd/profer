@@ -1,21 +1,19 @@
 <?php
 
-namespace App\Models\participant_list;
+namespace App\Models\item;
 
-use App\Models\ModelTrait;
-use App\Models\participant_list\Traits\ParticipantListAttribute;
-use App\Models\participant_list\Traits\ParticipantListRelationship;
+use App\Models\item\Traits\ParticipantListItemRelationship;
 use Illuminate\Database\Eloquent\Model;
 
-class ParticipantList extends Model
+class ParticipantListItem extends Model
 {
-    use ModelTrait, ParticipantListAttribute, ParticipantListRelationship;    
+    use ParticipantListItemRelationship;    
 
     /**
      * The database table used by the model.
      * @var string
      */
-    protected $table = 'participant_lists';
+    protected $table = 'participant_list_items';
 
     /**
      * Mass Assignable fields of model
@@ -58,15 +56,6 @@ class ParticipantList extends Model
     protected static function boot()
     {
         parent::boot();
-
-        static::creating(function ($instance) {
-            $instance->fill([
-                'tid' => $instance->next_tid,
-                'user_id' => 1,
-                'ins' => 1,
-            ]);
-            return $instance;
-        });
 
         static::addGlobalScope('ins', function ($builder) {
             // $builder->where('ins', '=', auth()->user()->ins);

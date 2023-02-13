@@ -11,9 +11,9 @@ trait ParticipantListAttribute
     public function getActionButtonsAttribute()
     {
         return $this->getButtonWrapperAttribute(
-            $this->getViewButtonAttribute('particpant_lists.show', ''),
-            $this->getEditButtonAttribute('particpant_lists.edit', ''),
-            $this->getDeleteButtonAttribute('particpant_lists.destroy', ''),
+            $this->getViewButtonAttribute('participant_lists.show', ''),
+            $this->getEditButtonAttribute('participant_lists.edit', ''),
+            $this->getDeleteButtonAttribute('participant_lists.destroy', ''),
         );
     }
 

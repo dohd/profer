@@ -11,35 +11,24 @@
                     <thead>
                       <tr>
                         <th scope="col">#No</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Gender</th>
-                        <th scope="col">Age Group</th>
-                        <th scope="col">Organisation</th>
-                        <th scope="col">Designation</th>
+                        <th scope="col">Project Title</th>
+                        <th scope="col">Activity</th>
+                        <th scope="col">Region</th>
+                        <th scope="col">Ps</th>
+                        <th scope="col">Date</th>
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                        @foreach ([] as $i => $participant)
+                        @foreach ($participant_lists as $i => $item)
                             <tr>
                                 <th scope="row">{{ $i+1 }}</th>
-                                <td>{{ $participant->name }}</td>
-                                <td>{{ ucfirst($participant->gender) }}</td>
-                                <td>{{ '' }}</td>
-                                <td>{{ $participant->organisation }}</td>
-                                <td>{{ $participant->designation }}</td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Action
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item pt-1 pb-1 view" href="{{ route('participant_lists.show', $participant) }}"><i class="bi bi-eye-fill"></i>View</a></li>
-                                            <li><a class="dropdown-item pt-1 pb-1 edit" href="{{ route('participant_lists.edit', $participant) }}"><i class="bi bi-pencil-square"></i>Edit</a></li>
-                                            <li><a class="dropdown-item pt-1 pb-1 destroy" href="javascript:" onclick="confirm('Are You sure?')"><i class="bi bi-trash text-danger icon-xs"></i>Delete</a></li>
-                                        </ul>
-                                    </div>
-                                </td>
+                                <td>{{ $item->proposal? $item->proposal->title : ''  }}</td>
+                                <td>{{ $item->proposal_item? $item->proposal_item->name : '' }}</td>
+                                <td>{{ $item->region? $item->region->name : '' }}</td>
+                                <td>{{ $item->total_count }}</td>
+                                <td>{{ dateFormat($item->date) }}</td>
+                                <td>{!! $item->action_buttons !!}</td>
                             </tr>
                         @endforeach
                     </tbody>

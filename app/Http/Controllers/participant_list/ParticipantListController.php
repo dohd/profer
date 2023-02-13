@@ -3,8 +3,14 @@
 namespace App\Http\Controllers\participant_list;
 
 use App\Http\Controllers\Controller;
+use App\Models\age_group\AgeGroup;
+use App\Models\cohort\Cohort;
 use App\Models\disability\Disability;
+use App\Models\item\ParticipantListItem;
 use App\Models\participant_list\ParticipantList;
+use App\Models\programme\Programme;
+use App\Models\proposal\Proposal;
+use App\Models\region\Region;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -29,10 +35,16 @@ class ParticipantListController extends Controller
      */
     public function create()
     {
-        $age_groups = DB::table('age_groups')->get();
-        $disabilities = Disability::get();
+        $age_groups = AgeGroup::get(['id', 'bracket']);
+        $disabilities = Disability::get(['id', 'name', 'code']);
+        $proposals = Proposal::get(['id', 'title']);
+        $regions = Region::get(['id', 'name']);
+        $programmes = Programme::get(['id', 'name']);
+        $cohorts = Cohort::get(['id', 'name']);
 
-        return view('participant_lists.create', compact('age_groups', 'disabilities'));
+        return view('participant_lists.create', 
+            compact('age_groups', 'disabilities', 'proposals', 'regions', 'programmes', 'cohorts')
+        );
     }
 
     /**
@@ -44,18 +56,39 @@ class ParticipantListController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        $data = $request->only(['name', 'gender', 'age_group_id', 'disability_id', 'organisation', 'designation', 'phone', 'email']);
+        $request->validate([
+            'proposal_id' => 'required', 
+            'proposal_item_id' => 'required', 
+            'date' => 'required', 
+            'region_id' => 'required', 
+            'programme_id' => 'required', 
+            'cohort_id' => 'required'            
+        ]);
+        $data = $request->only([
+            'proposal_id', 'proposal_item_id', 'date', 'region_id', 'programme_id', 'cohort_id', 'prepared_by', 
+            'male_count', 'female_count', 'total_count'
+        ]);
+        $data_items = $request->only([
+            'name', 'gender', 'age_group_id', 'disability_id', 'phone', 'email', 'designation', 
+            'organisation'
+        ]);
 
         DB::beginTransaction();
 
-        try {            
+        try {     
+            $data = inputClean($data);            
             $participant_list = ParticipantList::create($data);
+
+            $data_items = databaseArray($data_items);
+            $data_items = fillArrayRecurse($data_items, ['participant_list_id' => $participant_list->id]);
+            ParticipantListItem::insert($data_items);
+
             if ($participant_list) {
                 DB::commit();
-                return redirect(route('participant_lists.index'))->with(['success' => 'ParticipantList created successfully']);
+                return redirect(route('participant_lists.index'))->with(['success' => 'Participant List created successfully']);
             }
         } catch (\Throwable $th) {
-            throw GeneralException('Error creating participant_list!');
+            errorHandler('Error creating participant_list!');
         }
     }
 
@@ -78,7 +111,16 @@ class ParticipantListController extends Controller
      */
     public function edit(ParticipantList $participant_list)
     {
-        return view('participant_lists.edit', compact('participant_list'));
+        $age_groups = AgeGroup::get(['id', 'bracket']);
+        $disabilities = Disability::get(['id', 'name', 'code']);
+        $proposals = Proposal::get(['id', 'title']);
+        $regions = Region::get(['id', 'name']);
+        $programmes = Programme::get(['id', 'name']);
+        $cohorts = Cohort::get(['id', 'name']);
+
+        return view('participant_lists.edit', 
+            compact('participant_list', 'age_groups', 'disabilities', 'proposals', 'regions', 'programmes', 'cohorts')
+        );
     }
 
     /**
@@ -88,9 +130,50 @@ class ParticipantListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, ParticipantList $participant_list)
     {
-        //
+        // dd($request->all());
+        $request->validate([
+            'proposal_id' => 'required', 
+            'proposal_item_id' => 'required', 
+            'date' => 'required', 
+            'region_id' => 'required', 
+            'programme_id' => 'required', 
+            'cohort_id' => 'required'            
+        ]);
+        $data = $request->only([
+            'proposal_id', 'proposal_item_id', 'date', 'region_id', 'programme_id', 'cohort_id', 'prepared_by', 
+            'male_count', 'female_count', 'total_count'
+        ]);
+        $data_items = $request->only([
+            'item_id', 'name', 'gender', 'age_group_id', 'disability_id', 'phone', 'email', 'designation', 
+            'organisation'
+        ]);
+
+        DB::beginTransaction();
+
+        try {     
+            $data = inputClean($data);      
+            if ($participant_list->update($data)) {
+                $data_items = databaseArray($data_items);
+                $data_items = fillArrayRecurse($data_items, ['participant_list_id' => $participant_list->id]);
+
+                // delete omitted item
+                $participant_list->items()->whereNotIn('id', array_map(fn($v) => $v['item_id'], $data_items))->delete();
+                // update or new item
+                foreach ($data_items as $value) {
+                    $participant_list_item = ParticipantListItem::firstOrNew(['id' => $value['item_id']]);
+                    $participant_list_item->fill($value);
+                    unset($participant_list_item->item_id);
+                    $participant_list_item->save();
+                }
+
+                DB::commit();
+                return redirect(route('participant_lists.index'))->with(['success' => 'Participant List updated successfully']);
+            }      
+        } catch (\Throwable $th) {
+            errorHandler('Error updating Participant List!');
+        }
     }
 
     /**
@@ -99,8 +182,10 @@ class ParticipantListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(ParticipantList $participant_list)
     {
-        //
+        if ($participant_list->delete()) 
+            return redirect(route('participant_lists.index'))->with(['success' => 'Participant List deleted successfully']);
+        else errorHandler('Error deleting Partcipant List!');
     }
 }
