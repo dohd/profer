@@ -9,13 +9,12 @@ use App\Models\disability\Disability;
 use App\Models\donor\Donor;
 use App\Models\item\NarrativeItem;
 use App\Models\item\ParticipantListItem;
+use App\Models\narrative\Narrative;
 use App\Models\narrative_pointer\NarrativePointer;
 use App\Models\participant_list\ParticipantList;
 use App\Models\programme\Programme;
 use App\Models\proposal\Proposal;
 use App\Models\region\Region;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
@@ -33,6 +32,29 @@ class ReportController extends Controller
 
         return view('reports.narrative_indicator', compact('proposals', 'narrative_pointers', 'programmes', 'regions', 'cohorts'));
     }
+
+    // narrative indicator narratives
+    public function narrative_indicator_narratives()
+    {
+        $narratives = Narrative::where('proposal_id', request('proposal_id'))
+            ->selectRaw('id, proposal_item_id, tid, MONTH(created_at) as month, YEAR(created_at) as year')
+            ->orderBy('tid', 'asc')
+            ->get();
+
+        return response()->json($narratives);
+    }
+
+    // narrative indicator data
+    public function narrative_indicator_data()
+    {
+        $narratives = Narrative::where('proposal_id', request('proposal_id'))
+            ->selectRaw('id, proposal_item_id, tid, MONTH(created_at) as month, YEAR(created_at) as year')
+            ->orderBy('tid', 'asc')
+            ->get();
+
+        return response()->json($narratives);
+    }
+
 
     /**
      * Participant analysis page
