@@ -69,6 +69,7 @@ Route::resource('narratives', NarrativeController::class);
 Route::get('narrative_indicator', [ReportController::class, 'narrative_indicator'])->name('reports.narrative_indicator');
 
 Route::get('participant_analysis', [ReportController::class, 'participant_analysis'])->name('reports.participant_analysis');
+Route::post('participant_analysis_data', [ReportController::class, 'participant_analysis_data'])->name('reports.participant_analysis_data');
 
 
 if (env('APP_ENV') == 'production') {

@@ -80,13 +80,15 @@ class ParticipantListController extends Controller
             $participant_list = ParticipantList::create($data);
 
             $data_items = databaseArray($data_items);
-            $data_items = fillArrayRecurse($data_items, ['participant_list_id' => $participant_list->id]);
+            $data_items = fillArrayRecurse($data_items, [
+                'participant_list_id' => $participant_list->id,
+                'date' => $data['date'],
+            ]);
+            $data_items = array_filter($data_items, fn($v) => isset($v['name']) && isset($v['gender']));
             ParticipantListItem::insert($data_items);
 
-            if ($participant_list) {
-                DB::commit();
-                return redirect(route('participant_lists.index'))->with(['success' => 'Participant List created successfully']);
-            }
+            DB::commit();
+            return redirect(route('participant_lists.index'))->with(['success' => 'Participant List created successfully']);
         } catch (\Throwable $th) {
             errorHandler('Error creating participant_list!');
         }
@@ -156,12 +158,16 @@ class ParticipantListController extends Controller
             $data = inputClean($data);      
             if ($participant_list->update($data)) {
                 $data_items = databaseArray($data_items);
-                $data_items = fillArrayRecurse($data_items, ['participant_list_id' => $participant_list->id]);
+                $data_items = fillArrayRecurse($data_items, [
+                    'participant_list_id' => $participant_list->id,
+                    'date' => $data['date'],
+                ]);
 
                 // delete omitted item
                 $participant_list->items()->whereNotIn('id', array_map(fn($v) => $v['item_id'], $data_items))->delete();
                 // update or new item
                 foreach ($data_items as $value) {
+                    if (empty($value['name']) || empty($value['gender'])) continue;
                     $participant_list_item = ParticipantListItem::firstOrNew(['id' => $value['item_id']]);
                     $participant_list_item->fill($value);
                     unset($participant_list_item->item_id);
