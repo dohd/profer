@@ -2,10 +2,12 @@
 
 namespace App\Models\region\Traits;
 
+use App\Models\participant_list\ParticipantList;
+
 trait RegionRelationship
 {
-    public function items()
+    public function participant_lists()
     {
-        // return $this->hasMany(ProposalItem::class)->orderBy('row_index', 'asc');
+        return $this->hasMany(ParticipantList::class);
     }
 }

@@ -41,12 +41,15 @@
             <div class="card-content p-2">
                 <table class="table table-bordered mt-3">
                     <tr><th width="20%">Project</th> <td id="t_project"></td></tr>
-                    <tr><th width="20%">Narrative No.</th> <td id="t_narr"></td></tr>
-                    <tr><th width="20%">Programme</th> <td id="t_prog"></td></tr>
+                    <tr><th width="20%">Narrative No.</th> <td id="t_narrative_no"></td></tr>
+                    <tr><th width="20%">Programme</th> <td id="t_programme"></td></tr>
                     <tr><th width="20%">Region</th> <td id="t_region"></td></tr>
                     <tr><th width="20%">Cohort</th> <td id="t_cohort"></td></tr>
+                </table>
+                <br>
+                <table class="table table-bordered">
                     <tr><th width="20%">Indicator</th> <td id="t_indicator"></td></tr>
-                    <tr><th width="20%">Indicator Response</th> <td id="t_response"></td></tr>
+                    <tr><th width="20%">Response</th> <td id="t_response"></td></tr>
                 </table>
             </div>
         </div>
@@ -58,27 +61,43 @@
     // on proposal change fetch narratives
     $('#proposal').change(function() {
         $('#t_project').text($(this).find(':selected').text());
-
-        $.post("{{ route('reports.narrative_indicator_narratives') }}", {
+        // fetch narratives
+        $.post("{{ route('reports.narrative_options') }}", {
             proposal_id: $(this).val(),
         }, data => {
             $('#narrative_no option:not(:first)').remove();
             data.forEach(v => {
                 const narr_no = `${v.tid}/${v.month}/${v.year}`;
-                $('#narrative_no').append(`<option value="${v.id}" proposal_item_id="${v.proposal_item_id}">${narr_no}</option>`);
+                $('#narrative_no').append(`<option value="${v.id}">${narr_no}</option>`);
             });
-
         });
     });
 
-    // on narrative no change
+    // on narrative change
     $('#narrative_no').change(function() {
-        $('#t_narr').text($('#narrative_no').find(':selected').text());
+        $('#t_narrative_no').text($('#narrative_no').find(':selected').text());
     });
 
-    // on narrative indicator change
+    // on indicator change
     $('#indicator').change(function() {
         $('#t_indicator').text($('#indicator').find(':selected').text());
+        $('#t_response').text('');
+        $('#t_programme').text('');
+        $('#t_region').text('');
+        $('#t_cohort').text('');
+        // fetch narrative item
+        if ($(this).val() && $('#narrative_no').val()) {
+            $.post("{{ route('reports.narrative_indicator_data') }}", {
+                narrative_id: $('#narrative_no').val(),
+                narrative_pointer_id: $(this).val(),
+            }, data => {
+                // console.log(data)
+                if (data.narrative_item) $('#t_response').text(data.narrative_item?.response);
+                if (data.programmes) $('#t_programme').text(data.programmes.join(', '));
+                if (data.regions) $('#t_region').text(data.regions.join(', '));
+                if (data.cohorts) $('#t_cohort').text(data.cohorts.join(', '));
+            });
+        }
     });
 </script>
 @stop

@@ -68,7 +68,7 @@ Route::resource('narratives', NarrativeController::class);
  */
 // narrative indicator
 Route::get('narrative_indicator', [ReportController::class, 'narrative_indicator'])->name('reports.narrative_indicator');
-Route::post('narrative_indicator_narratives', [ReportController::class, 'narrative_indicator_narratives'])->name('reports.narrative_indicator_narratives');
+Route::post('narrative_options', [ReportController::class, 'narrative_options'])->name('reports.narrative_options');
 Route::post('narrative_indicator_data', [ReportController::class, 'narrative_indicator_data'])->name('reports.narrative_indicator_data');
 
 // participant analysis

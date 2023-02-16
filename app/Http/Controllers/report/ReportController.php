@@ -15,6 +15,7 @@ use App\Models\participant_list\ParticipantList;
 use App\Models\programme\Programme;
 use App\Models\proposal\Proposal;
 use App\Models\region\Region;
+use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
@@ -33,26 +34,27 @@ class ReportController extends Controller
         return view('reports.narrative_indicator', compact('proposals', 'narrative_pointers', 'programmes', 'regions', 'cohorts'));
     }
 
-    // narrative indicator narratives
-    public function narrative_indicator_narratives()
+    // narrative indicator select options
+    public function narrative_options()
     {
         $narratives = Narrative::where('proposal_id', request('proposal_id'))
-            ->selectRaw('id, proposal_item_id, tid, MONTH(created_at) as month, YEAR(created_at) as year')
-            ->orderBy('tid', 'asc')
+            ->selectRaw('id, tid, MONTH(created_at) as month, YEAR(created_at) as year')
             ->get();
 
         return response()->json($narratives);
     }
 
     // narrative indicator data
-    public function narrative_indicator_data()
+    public function narrative_indicator_data(Request $request)
     {
-        $narratives = Narrative::where('proposal_id', request('proposal_id'))
-            ->selectRaw('id, proposal_item_id, tid, MONTH(created_at) as month, YEAR(created_at) as year')
-            ->orderBy('tid', 'asc')
-            ->get();
+        $data = $request->only(['narrative_id', 'narrative_pointer_id']);
 
-        return response()->json($narratives);
+        $narrative_item = NarrativeItem::where($data)->first();
+        $programmes = Programme::whereHas('participant_lists', fn($q) => $q->where('proposal_item_id', $narrative_item->proposal_item_id))->pluck('name')->unique();
+        $regions = Region::whereHas('participant_lists', fn($q) => $q->where('proposal_item_id', $narrative_item->proposal_item_id))->pluck('name')->unique();
+        $cohorts = Cohort::whereHas('participant_lists', fn($q) => $q->where('proposal_item_id', $narrative_item->proposal_item_id))->pluck('name')->unique();
+
+        return response()->json(compact('narrative_item', 'programmes', 'regions', 'cohorts'));
     }
 
 
