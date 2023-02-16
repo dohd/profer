@@ -20,213 +20,278 @@
       <!-- Left side columns -->
       <div class="col-lg-8">
         <div class="row">
-          <!-- Sales Card -->
+          <!-- Activities Card -->
           <div class="col-xxl-4 col-md-6">
             <div class="card info-card sales-card">
               <div class="filter">
-                <a class="icon" href="#" data-bs-toggle="dropdown"
-                  ><i class="bi bi-three-dots"></i
-                ></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filter</h6>
-                  </li>
-
-                  <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
-                </ul>
+                <a class="icon" href="#" data-bs-toggle="dropdown" ><i class="bi bi-three-dots"></i></a>
               </div>
-
               <div class="card-body">
-                <h5 class="card-title">Sales <span>| Today</span></h5>
-
+                <h5 class="card-title">Activities <span>| Collective</span></h5>
                 <div class="d-flex align-items-center">
-                  <div
-                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
-                  >
-                    <i class="bi bi-cart"></i>
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-stack"></i>
                   </div>
                   <div class="ps-3">
-                    <h6>145</h6>
-                    <span class="text-success small pt-1 fw-bold">12%</span>
-                    <span class="text-muted small pt-2 ps-1">increase</span>
+                    <h6>{{ $activity_count }}</h6>
+                    <span class="text-success small pt-1 fw-bold">{{ $activity_proposal_count }}</span>
+                    <span class="text-muted small pt-2 ps-1">Project</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <!-- End Sales Card -->
+          <!-- End Activities Card -->
 
-          <!-- Revenue Card -->
+          <!-- Grants Card -->
           <div class="col-xxl-4 col-md-6">
             <div class="card info-card revenue-card">
               <div class="filter">
-                <a class="icon" href="#" data-bs-toggle="dropdown"
-                  ><i class="bi bi-three-dots"></i
-                ></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filter</h6>
-                  </li>
-
-                  <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
-                </ul>
+                <a class="icon" href="#" data-bs-toggle="dropdown" ><i class="bi bi-three-dots"></i></a>
               </div>
-
               <div class="card-body">
-                <h5 class="card-title">Revenue <span>| This Month</span></h5>
-
+                <h5 class="card-title">Grants <span>| Collective</span></h5>
                 <div class="d-flex align-items-center">
-                  <div
-                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
-                  >
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                     <i class="bi bi-currency-dollar"></i>
                   </div>
                   <div class="ps-3">
-                    <h6>$3,264</h6>
-                    <span class="text-success small pt-1 fw-bold">8%</span>
-                    <span class="text-muted small pt-2 ps-1">increase</span>
+                    <h6>{{ numberFormat($grant_amount) }}</h6>
+                    <span class="text-success small pt-1 fw-bold">{{ $approved_proposal_count }}</span>
+                    <span class="text-muted small pt-2 ps-1">Project</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <!-- End Revenue Card -->
+          <!-- End Grants Card -->
 
-          <!-- Customers Card -->
+          <!-- Donors Card -->
           <div class="col-xxl-4 col-xl-12">
             <div class="card info-card customers-card">
               <div class="filter">
-                <a class="icon" href="#" data-bs-toggle="dropdown"
-                  ><i class="bi bi-three-dots"></i
-                ></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filter</h6>
-                  </li>
-
-                  <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
-                </ul>
+                <a class="icon" href="#" data-bs-toggle="dropdown" ><i class="bi bi-three-dots"></i></a>
               </div>
-
               <div class="card-body">
-                <h5 class="card-title">Customers <span>| This Year</span></h5>
-
+                <h5 class="card-title">Donors <span>| Collective</span></h5>
                 <div class="d-flex align-items-center">
-                  <div
-                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
-                  >
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                     <i class="bi bi-people"></i>
                   </div>
                   <div class="ps-3">
-                    <h6>1244</h6>
-                    <span class="text-danger small pt-1 fw-bold">12%</span>
-                    <span class="text-muted small pt-2 ps-1">decrease</span>
+                    <h6>{{ $donor_count }}</h6>
+                    <span class="text-danger small pt-1 fw-bold">{{ $approved_proposal_count }}</span>
+                    <span class="text-muted small pt-2 ps-1">Project</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <!-- End Customers Card -->
+          <!-- End Donors Card -->
 
-          <!-- Reports -->
-          <div class="col-12">
-            <div class="card">
+          <!-- Programmes Card -->
+          <div class="col-xxl-4 col-xl-12">
+            <div class="card info-card sales-card">
               <div class="filter">
-                <a class="icon" href="#" data-bs-toggle="dropdown"
-                  ><i class="bi bi-three-dots"></i
-                ></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filter</h6>
-                  </li>
-
-                  <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
-                </ul>
+                <a class="icon" href="#" data-bs-toggle="dropdown" ><i class="bi bi-three-dots"></i></a>
               </div>
-
               <div class="card-body">
-                <h5 class="card-title">Reports <span>/Today</span></h5>
-
-                <!-- Line Chart -->
-                <div id="reportsChart"></div>
-
-                <script>
-                  document.addEventListener("DOMContentLoaded", () => {
-                    new ApexCharts(document.querySelector("#reportsChart"), {
-                      series: [
-                        {
-                          name: "Sales",
-                          data: [31, 40, 28, 51, 42, 82, 56],
-                        },
-                        {
-                          name: "Revenue",
-                          data: [11, 32, 45, 32, 34, 52, 41],
-                        },
-                        {
-                          name: "Customers",
-                          data: [15, 11, 32, 18, 9, 24, 11],
-                        },
-                      ],
-                      chart: {
-                        height: 350,
-                        type: "area",
-                        toolbar: {
-                          show: false,
-                        },
-                      },
-                      markers: {
-                        size: 4,
-                      },
-                      colors: ["#4154f1", "#2eca6a", "#ff771d"],
-                      fill: {
-                        type: "gradient",
-                        gradient: {
-                          shadeIntensity: 1,
-                          opacityFrom: 0.3,
-                          opacityTo: 0.4,
-                          stops: [0, 90, 100],
-                        },
-                      },
-                      dataLabels: {
-                        enabled: false,
-                      },
-                      stroke: {
-                        curve: "smooth",
-                        width: 2,
-                      },
-                      xaxis: {
-                        type: "datetime",
-                        categories: [
-                          "2018-09-19T00:00:00.000Z",
-                          "2018-09-19T01:30:00.000Z",
-                          "2018-09-19T02:30:00.000Z",
-                          "2018-09-19T03:30:00.000Z",
-                          "2018-09-19T04:30:00.000Z",
-                          "2018-09-19T05:30:00.000Z",
-                          "2018-09-19T06:30:00.000Z",
-                        ],
-                      },
-                      tooltip: {
-                        x: {
-                          format: "dd/MM/yy HH:mm",
-                        },
-                      },
-                    }).render();
-                  });
-                </script>
-                <!-- End Line Chart -->
+                <h5 class="card-title">Programmes <span>| Collective</span></h5>
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-file-earmark-text"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>{{ $programmes_count }}</h6>
+                    <span class="text-danger small pt-1 fw-bold">{{ $approved_proposal_count }}</span>
+                    <span class="text-muted small pt-2 ps-1">Project</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <!-- End Reports -->
+          <!-- End Programmes Card -->
+
+          <!-- Cohorts Card -->
+          <div class="col-xxl-4 col-xl-12">
+            <div class="card info-card revenue-card">
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown" ><i class="bi bi-three-dots"></i></a>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Cohorts <span>| Collective</span></h5>
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>{{ $cohorts_count }}</h6>
+                    <span class="text-danger small pt-1 fw-bold">{{ $approved_proposal_count }}</span>
+                    <span class="text-muted small pt-2 ps-1">Project</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Cohorts Card -->
+
+          <!-- Regions Card -->
+          <div class="col-xxl-4 col-xl-12">
+            <div class="card info-card customers-card">
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown" ><i class="bi bi-three-dots"></i></a>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Regions <span>| Collective</span></h5>
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-geo-alt-fill"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>{{ $regions_count }}</h6>
+                    <span class="text-danger small pt-1 fw-bold">{{ $approved_proposal_count }}</span>
+                    <span class="text-muted small pt-2 ps-1">Project</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Regions Card -->
+
+          <!-- Monthly Activity Participants Card -->
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Monthly Activity Participants <span>| Collective</span></h5>
+  
+                <!-- Column Chart -->
+                <div id="monthlyActivityParticipant"></div>
+  
+                <script>
+                  document.addEventListener("DOMContentLoaded", () => {
+                    new ApexCharts(document.querySelector("#monthlyActivityParticipant"), {
+                      series: [{
+                        name: 'Male',
+                        data: [44, 55, 57, 56, 61, 58, 63, 60, 66, 23, 30, 10]
+                        }, 
+                        {
+                          name: 'Female',
+                          data: [76, 85, 101, 98, 87, 105, 91, 114, 94, 25, 15, 42]
+                        },
+                      ],
+                      chart: {
+                        type: 'bar',
+                        height: 350
+                      },
+                      plotOptions: {
+                        bar: {
+                          horizontal: false,
+                          columnWidth: '55%',
+                          endingShape: 'rounded'
+                        },
+                      },
+                      dataLabels: {
+                        enabled: false
+                      },
+                      stroke: {
+                        show: true,
+                        width: 2,
+                        colors: ['transparent']
+                      },
+                      xaxis: {
+                        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                      },
+                      yaxis: {
+                        title: {
+                          text: 'Count'
+                        }
+                      },
+                      fill: {
+                        opacity: 1
+                      },
+                      tooltip: {
+                        y: {
+                          formatter: function(val) {
+                            return val + " participants"
+                          }
+                        }
+                      }
+                    }).render();
+                  });
+                </script>
+                <!-- End Column Chart -->
+  
+              </div>
+            </div>
+          </div>
+          <!-- End Monthly Activity Participants Card -->
+
+          <!-- Regional Activity Participants Card -->
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Regional Activity Participants <span>| Collective</span></h5>
+                <!-- Column Chart -->
+                <div id="regionalActivityParticipant"></div>
+                <script>
+                  document.addEventListener("DOMContentLoaded", () => {
+                    new ApexCharts(document.querySelector("#regionalActivityParticipant"), {
+                      series: [{
+                        name: 'Male',
+                        data: [44, 55, 57, 56, 61, 58, 63, 60, 66, 23, 30, 10],
+                        }, 
+                        {
+                          name: 'Female',
+                          data: [76, 85, 101, 98, 87, 105, 91, 114, 94, 25, 15, 42],
+                        },
+                      ],
+                      colors: ['#6f42c1', '#d63384'],
+                      chart: {
+                        type: 'bar',
+                        height: 350
+                      },
+                      plotOptions: {
+                        bar: {
+                          horizontal: true,
+                          columnWidth: '55%',
+                          endingShape: 'rounded'
+                        },
+                      },
+                      dataLabels: {
+                        enabled: false
+                      },
+                      stroke: {
+                        show: true,
+                        width: 2,
+                        colors: ['transparent']
+                      },
+                      xaxis: {
+                        categories: ['Kisumu', 'Kakamega', 'Nairobi', 'Mombasa', 'Kisii', 'Nyeri', 'Machakos', 'Meru', 'Malindi', 'Eldoret', 'Isiolo', 'Busia'],
+                      },
+                      yaxis: {
+                        title: {
+                          text: 'Region'
+                        },
+                        
+                      },
+                      fill: {
+                        opacity: 1
+                      },
+                      tooltip: {
+                        y: {
+                          formatter: function(val) {
+                            return val + " participants"
+                          }
+                        }
+                      }
+                    }).render();
+                  });
+                </script>
+                <!-- End Column Chart -->
+              </div>
+            </div>
+          </div>
+          <!-- End Monthly Activity Participants Card -->
         </div>
       </div>
       <!-- End Left side columns -->
@@ -239,7 +304,7 @@
             <a class="icon" href="#" data-bs-toggle="dropdown"
               ><i class="bi bi-three-dots"></i
             ></a>
-            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow d-none">
               <li class="dropdown-header text-start">
                 <h6>Filter</h6>
               </li>
@@ -251,7 +316,7 @@
           </div>
 
           <div class="card-body">
-            <h5 class="card-title">Recent Activity <span>| Today</span></h5>
+            <h5 class="card-title">Recent Activity <span>| This Month</span></h5>
 
             <div class="activity">
               <div class="activity-item d-flex">
@@ -328,255 +393,57 @@
         </div>
         <!-- End Recent Activity -->
 
-        <!-- Budget Report -->
-        <div class="card">
-          <div class="filter">
-            <a class="icon" href="#" data-bs-toggle="dropdown"
-              ><i class="bi bi-three-dots"></i
-            ></a>
-            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-              <li class="dropdown-header text-start">
-                <h6>Filter</h6>
-              </li>
-
-              <li><a class="dropdown-item" href="#">Today</a></li>
-              <li><a class="dropdown-item" href="#">This Month</a></li>
-              <li><a class="dropdown-item" href="#">This Year</a></li>
-            </ul>
-          </div>
-
-          <div class="card-body pb-0">
-            <h5 class="card-title">Budget Report <span>| This Month</span></h5>
-
-            <div
-              id="budgetChart"
-              style="min-height: 400px"
-              class="echart"
-            ></div>
-
-            <script>
-              document.addEventListener("DOMContentLoaded", () => {
-                var budgetChart = echarts
-                  .init(document.querySelector("#budgetChart"))
-                  .setOption({
-                    legend: {
-                      data: ["Allocated Budget", "Actual Spending"],
+        <!-- Participants Age Distribution -->
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Participants Age Distribution</h5>
+              <!-- Pie Chart -->
+              <div id="participantAgeDistribution"></div>
+              <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                  new ApexCharts(document.querySelector("#participantAgeDistribution"), {
+                    series: [44, 60, 13,],
+                    chart: {
+                      height: 350,
+                      type: 'pie',
+                      toolbar: {
+                        show: true
+                      }
                     },
-                    radar: {
-                      // shape: 'circle',
-                      indicator: [
-                        {
-                          name: "Sales",
-                          max: 6500,
-                        },
-                        {
-                          name: "Administration",
-                          max: 16000,
-                        },
-                        {
-                          name: "Information Technology",
-                          max: 30000,
-                        },
-                        {
-                          name: "Customer Support",
-                          max: 38000,
-                        },
-                        {
-                          name: "Development",
-                          max: 52000,
-                        },
-                        {
-                          name: "Marketing",
-                          max: 25000,
-                        },
-                      ],
-                    },
-                    series: [
-                      {
-                        name: "Budget vs spending",
-                        type: "radar",
-                        data: [
-                          {
-                            value: [4200, 3000, 20000, 35000, 50000, 18000],
-                            name: "Allocated Budget",
-                          },
-                          {
-                            value: [5000, 14000, 28000, 26000, 42000, 21000],
-                            name: "Actual Spending",
-                          },
-                        ],
-                      },
-                    ],
-                  });
-              });
-            </script>
-          </div>
-        </div>
-        <!-- End Budget Report -->
-
-        <!-- Website Traffic -->
-        <div class="card">
-          <div class="filter">
-            <a class="icon" href="#" data-bs-toggle="dropdown"
-              ><i class="bi bi-three-dots"></i
-            ></a>
-            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-              <li class="dropdown-header text-start">
-                <h6>Filter</h6>
-              </li>
-
-              <li><a class="dropdown-item" href="#">Today</a></li>
-              <li><a class="dropdown-item" href="#">This Month</a></li>
-              <li><a class="dropdown-item" href="#">This Year</a></li>
-            </ul>
-          </div>
-
-          <div class="card-body pb-0">
-            <h5 class="card-title">Website Traffic <span>| Today</span></h5>
-
-            <div
-              id="trafficChart"
-              style="min-height: 400px"
-              class="echart"
-            ></div>
-
-            <script>
-              document.addEventListener("DOMContentLoaded", () => {
-                echarts
-                  .init(document.querySelector("#trafficChart"))
-                  .setOption({
-                    tooltip: {
-                      trigger: "item",
-                    },
-                    legend: {
-                      top: "5%",
-                      left: "center",
-                    },
-                    series: [
-                      {
-                        name: "Access From",
-                        type: "pie",
-                        radius: ["40%", "70%"],
-                        avoidLabelOverlap: false,
-                        label: {
-                          show: false,
-                          position: "center",
-                        },
-                        emphasis: {
-                          label: {
-                            show: true,
-                            fontSize: "18",
-                            fontWeight: "bold",
-                          },
-                        },
-                        labelLine: {
-                          show: false,
-                        },
-                        data: [
-                          {
-                            value: 1048,
-                            name: "Search Engine",
-                          },
-                          {
-                            value: 735,
-                            name: "Direct",
-                          },
-                          {
-                            value: 580,
-                            name: "Email",
-                          },
-                          {
-                            value: 484,
-                            name: "Union Ads",
-                          },
-                          {
-                            value: 300,
-                            name: "Video Ads",
-                          },
-                        ],
-                      },
-                    ],
-                  });
-              });
-            </script>
-          </div>
-        </div>
-        <!-- End Website Traffic -->
-
-        <!-- News & Updates Traffic -->
-        <div class="card">
-          <div class="filter">
-            <a class="icon" href="#" data-bs-toggle="dropdown"
-              ><i class="bi bi-three-dots"></i
-            ></a>
-            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-              <li class="dropdown-header text-start">
-                <h6>Filter</h6>
-              </li>
-
-              <li><a class="dropdown-item" href="#">Today</a></li>
-              <li><a class="dropdown-item" href="#">This Month</a></li>
-              <li><a class="dropdown-item" href="#">This Year</a></li>
-            </ul>
-          </div>
-
-          <div class="card-body pb-0">
-            <h5 class="card-title">News &amp; Updates <span>| Today</span></h5>
-
-            <div class="news">
-              <div class="post-item clearfix">
-                <img src="assets/img/news-1.jpg" alt="" />
-                <h4><a href="#">Nihil blanditiis at in nihil autem</a></h4>
-                <p>
-                  Sit recusandae non aspernatur laboriosam. Quia enim eligendi
-                  sed ut harum...
-                </p>
-              </div>
-
-              <div class="post-item clearfix">
-                <img src="assets/img/news-2.jpg" alt="" />
-                <h4><a href="#">Quidem autem et impedit</a></h4>
-                <p>
-                  Illo nemo neque maiores vitae officiis cum eum turos elan
-                  dries werona nande...
-                </p>
-              </div>
-
-              <div class="post-item clearfix">
-                <img src="assets/img/news-3.jpg" alt="" />
-                <h4>
-                  <a href="#">Id quia et et ut maxime similique occaecati ut</a>
-                </h4>
-                <p>
-                  Fugiat voluptas vero eaque accusantium eos. Consequuntur sed
-                  ipsam et totam...
-                </p>
-              </div>
-
-              <div class="post-item clearfix">
-                <img src="assets/img/news-4.jpg" alt="" />
-                <h4><a href="#">Laborum corporis quo dara net para</a></h4>
-                <p>
-                  Qui enim quia optio. Eligendi aut asperiores enim
-                  repellendusvel rerum cuder...
-                </p>
-              </div>
-
-              <div class="post-item clearfix">
-                <img src="assets/img/news-5.jpg" alt="" />
-                <h4>
-                  <a href="#">Et dolores corrupti quae illo quod dolor</a>
-                </h4>
-                <p>
-                  Odit ut eveniet modi reiciendis. Atque cupiditate libero
-                  beatae dignissimos eius...
-                </p>
-              </div>
+                    labels: ['Under 18', 'Btwn 18 & 35', 'Above 35']
+                  }).render();
+                });
+              </script>
+              <!-- End Pie Chart -->
             </div>
-            <!-- End sidebar recent posts-->
+          </div>
+        <!-- End Participants Age Distribution -->
+
+        <!-- Participants Cohort Distribution -->
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Participants Cohort Distribution</h5>
+            <!-- Donut Chart -->
+            <div id="participantCohortDistribution"></div>
+            <script>
+              document.addEventListener("DOMContentLoaded", () => {
+                new ApexCharts(document.querySelector("#participantCohortDistribution"), {
+                  series: [44, 56, 12, 20],
+                  chart: {
+                    height: 350,
+                    type: 'donut',
+                    toolbar: {
+                      show: true
+                    }
+                  },
+                  labels: ['Youth', 'Students', 'Teachers', 'Patients'],
+                }).render();
+              });
+            </script>
+            <!-- End Participants Cohort Distribution -->
+
           </div>
         </div>
-        <!-- End News & Updates -->
       </div>
       <!-- End Right side columns -->
     </div>

@@ -21,6 +21,11 @@ trait ProposalItemRelationship
         return $this->hasManyThrough(Region::class, ActionPlanItemRegion::class, 'proposal_item_id', 'id', 'id', 'region_id');
     }
 
+    public function participant_lists()
+    {
+        return $this->hasMany(ParticipantList::class);
+    }
+
     public function participant_regions()
     {
         return $this->hasManyThrough(Region::class, ParticipantList::class, 'proposal_item_id', 'id', 'id', 'region_id');

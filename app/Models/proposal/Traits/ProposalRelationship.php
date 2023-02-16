@@ -4,10 +4,16 @@ namespace App\Models\proposal\Traits;
 
 use App\Models\donor\Donor;
 use App\Models\item\ProposalItem;
+use App\Models\participant_list\ParticipantList;
 use App\Models\region\Region;
 
 trait ProposalRelationship
 {
+    public function participant_lists()
+    {
+        return $this->hasMany(ParticipantList::class);
+    }
+
     public function donor()
     {
         return $this->belongsTo(Donor::class);
