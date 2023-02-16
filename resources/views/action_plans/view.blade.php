@@ -69,8 +69,8 @@
                                     <td>
                                         @php
                                             $regions = [];
-                                            if (isset($item->proposal_item->regions))
-                                                $regions = $item->proposal_item->regions->pluck('name')->toArray();
+                                            if (isset($item->proposal_item->plan_regions))
+                                                $regions = $item->proposal_item->plan_regions->pluck('name')->toArray();
                                         @endphp
                                         {{ implode(', ', $regions) }}
                                     </td>

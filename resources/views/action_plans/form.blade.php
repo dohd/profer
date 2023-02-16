@@ -86,7 +86,7 @@
                                 @foreach ($regions as $region)
                                     @php
                                         $selected = '';
-                                        $region_ids = $proposal_item->regions->pluck('id')->toArray();
+                                        $region_ids = $proposal_item->plan_regions? $proposal_item->plan_regions->pluck('id')->toArray() : [];
                                         if (in_array($region->id, $region_ids)) $selected = 'selected';
                                     @endphp
                                     <option value="{{ $region->id }}-{{ $proposal_item->id }}" {{ $selected }}>{{ $region->name }}</option>
