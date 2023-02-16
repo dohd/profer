@@ -18,7 +18,7 @@
         data-bs-toggle="collapse"
         href="#"
       >
-        <i class="bi bi-journal-text"></i><span>Donor</span
+        <i class="bi bi-tag"></i><span>Donor</span
         ><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul
@@ -43,7 +43,7 @@
         data-bs-toggle="collapse"
         href="#"
       >
-        <i class="bi bi-journal-text"></i><span>Programme</span
+        <i class="bi bi-file-earmark-text"></i><span>Programme</span
         ><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul
@@ -68,7 +68,7 @@
         data-bs-toggle="collapse"
         href="#"
       >
-        <i class="bi bi-journal-text"></i><span>Target Region</span
+        <i class="bi bi-geo-alt-fill"></i><span>Target Region</span
         ><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul
@@ -93,7 +93,7 @@
         data-bs-toggle="collapse"
         href="#"
       >
-        <i class="bi bi-journal-text"></i><span>Target Cohort</span
+        <i class="bi bi-people"></i><span>Target Cohort</span
         ><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul
@@ -118,7 +118,7 @@
         data-bs-toggle="collapse"
         href="#"
       >
-        <i class="bi bi-journal-text"></i><span>Disability</span
+        <i class="bi bi-ticket-perforated"></i><span>Disability</span
         ><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul
@@ -143,7 +143,7 @@
         data-bs-toggle="collapse"
         href="#"
       >
-        <i class="bi bi-journal-text"></i><span>Age Group</span
+        <i class="bi bi-sort-down-alt"></i><span>Age Group</span
         ><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul
@@ -171,7 +171,7 @@
         data-bs-toggle="collapse"
         href="#"
       >
-        <i class="bi bi-menu-button-wide"></i><span>Grant Proposal</span
+        <i class="bi bi-kanban"></i><span>Grant Proposal</span
         ><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul
@@ -196,7 +196,7 @@
         data-bs-toggle="collapse"
         href="#"
       >
-        <i class="bi bi-menu-button-wide"></i><span>Log Frame</span
+        <i class="bi bi-journal-text"></i><span>Log Frame</span
         ><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul
@@ -221,7 +221,7 @@
         data-bs-toggle="collapse"
         href="#"
       >
-        <i class="bi bi-journal-text"></i><span>Action Plan</span
+        <i class="bi bi-calendar-event"></i><span>Action Plan</span
         ><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul
@@ -246,7 +246,7 @@
         data-bs-toggle="collapse"
         href="#"
       >
-        <i class="bi bi-journal-text"></i><span>Participant List</span
+        <i class="bi bi-clipboard-data"></i><span>Participant List</span
         ><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul
@@ -339,7 +339,7 @@
         data-bs-toggle="collapse"
         href="#"
       >
-        <i class="bi bi-journal-text"></i><span>Users</span
+        <i class="bi bi-people"></i><span>Users</span
         ><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul

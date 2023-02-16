@@ -76,7 +76,7 @@
                 <h5 class="card-title">Donors <span>| Collective</span></h5>
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                    <i class="bi bi-people"></i>
+                    <i class="bi bi-tag"></i>
                   </div>
                   <div class="ps-3">
                     <h6>{{ $donor_count }}</h6>
