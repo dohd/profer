@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\action_plan\ActionPlanController;
 use App\Http\Controllers\age_group\AgeGroupController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\cohort\CohortController;
 use App\Http\Controllers\CoreController;
 use App\Http\Controllers\disability\DisabilityController;
 use App\Http\Controllers\donor\DonorController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\narrative\NarrativeController;
 use App\Http\Controllers\participant_list\ParticipantListController;
 use App\Http\Controllers\programme\ProgrammeController;
@@ -27,59 +29,58 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [CoreController::class, 'index']);
-Route::get('home', [CoreController::class, 'index'])->name('home');
-Route::get('register', [CoreController::class, 'register'])->name('register');
-Route::get('login', [CoreController::class, 'login'])->name('login');
-Route::get('error_404', [CoreController::class, 'error_404'])->name('error_404');
+Auth::routes();
+Route::get('/', [LoginController::class, 'index']);
+Route::get('logout', [LoginController::class, 'logout']);
 
-Route::resource('user_profiles', UserProfileController::class);
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('home', [HomeController::class, 'index'])->name('home');
+    // Route::get('error_404', [CoreController::class, 'error_404'])->name('error_404');
 
-/**
- * key indicators
- */
-Route::resource('donors', DonorController::class);
-Route::resource('programmes', ProgrammeController::class);
-Route::resource('regions', RegionController::class);
-Route::resource('cohorts', CohortController::class);
-Route::resource('disabilities', DisabilityController::class);
-Route::resource('age_groups', AgeGroupController::class);
+    Route::resource('user_profiles', UserProfileController::class);
 
-/**
- * project management
- */
-// proposals
-Route::resource('proposals', ProposalController::class);
-Route::post('proposals/items', [ProposalController::class, 'proposal_items'])->name('proposals.items');
-Route::post('proposals/datatable', [ProposalController::class, 'datatable'])->name('proposals.datatable');
+    /**
+     * key indicators
+     */
+    Route::resource('donors', DonorController::class);
+    Route::resource('programmes', ProgrammeController::class);
+    Route::resource('regions', RegionController::class);
+    Route::resource('cohorts', CohortController::class);
+    Route::resource('disabilities', DisabilityController::class);
+    Route::resource('age_groups', AgeGroupController::class);
 
-// action plans
-Route::resource('action_plans', ActionPlanController::class);
-Route::post('action_plans/proposal_items', [ActionPlanController::class, 'proposal_items'])->name('action_plans.proposal_items');
+    /**
+     * project management
+     */
+    // proposals
+    Route::resource('proposals', ProposalController::class);
+    Route::post('proposals/items', [ProposalController::class, 'proposal_items'])->name('proposals.items');
+    Route::post('proposals/datatable', [ProposalController::class, 'datatable'])->name('proposals.datatable');
 
-// participants
-Route::resource('participant_lists', ParticipantListController::class);
+    // action plans
+    Route::resource('action_plans', ActionPlanController::class);
+    Route::post('action_plans/proposal_items', [ActionPlanController::class, 'proposal_items'])->name('action_plans.proposal_items');
 
-// narratives
-Route::resource('narratives', NarrativeController::class);
+    // participants
+    Route::resource('participant_lists', ParticipantListController::class);
 
-/**
- * Reports
- */
-// narrative indicator
-Route::get('narrative_indicator', [ReportController::class, 'narrative_indicator'])->name('reports.narrative_indicator');
-Route::post('narrative_options', [ReportController::class, 'narrative_options'])->name('reports.narrative_options');
-Route::post('narrative_indicator_data', [ReportController::class, 'narrative_indicator_data'])->name('reports.narrative_indicator_data');
+    // narratives
+    Route::resource('narratives', NarrativeController::class);
 
-// participant analysis
-Route::get('participant_analysis', [ReportController::class, 'participant_analysis'])->name('reports.participant_analysis');
-Route::post('participant_analysis_data', [ReportController::class, 'participant_analysis_data'])->name('reports.participant_analysis_data');
+    /**
+     * Reports
+     */
+    // narrative indicator
+    Route::get('narrative_indicator', [ReportController::class, 'narrative_indicator'])->name('reports.narrative_indicator');
+    Route::post('narrative_options', [ReportController::class, 'narrative_options'])->name('reports.narrative_options');
+    Route::post('narrative_indicator_data', [ReportController::class, 'narrative_indicator_data'])->name('reports.narrative_indicator_data');
+
+    // participant analysis
+    Route::get('participant_analysis', [ReportController::class, 'participant_analysis'])->name('reports.participant_analysis');
+    Route::post('participant_analysis_data', [ReportController::class, 'participant_analysis_data'])->name('reports.participant_analysis_data');
+});
 
 
 if (env('APP_ENV') == 'production') {
     URL::forceScheme('https');
 }
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
