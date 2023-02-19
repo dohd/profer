@@ -79,3 +79,7 @@ Route::post('participant_analysis_data', [ReportController::class, 'participant_
 if (env('APP_ENV') == 'production') {
     URL::forceScheme('https');
 }
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
