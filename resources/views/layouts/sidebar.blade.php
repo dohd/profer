@@ -383,7 +383,7 @@
     <!-- End Login Page Nav -->
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="{{ route('error_404') }}">
+      <a class="nav-link collapsed" href="{{ '#' }}">
         <i class="bi bi-dash-circle"></i>
         <span>Error 404</span>
       </a>
