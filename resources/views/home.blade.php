@@ -27,7 +27,7 @@
                 <a class="icon" href="#" data-bs-toggle="dropdown" ><i class="bi bi-three-dots"></i></a>
               </div>
               <div class="card-body">
-                <h5 class="card-title">Activities <span>| Collective</span></h5>
+                <h5 class="card-title">Activities <span></span></h5>
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                     <i class="bi bi-stack"></i>
@@ -50,7 +50,7 @@
                 <a class="icon" href="#" data-bs-toggle="dropdown" ><i class="bi bi-three-dots"></i></a>
               </div>
               <div class="card-body">
-                <h5 class="card-title">Grants <span>| Collective</span></h5>
+                <h5 class="card-title">Grants <span></span></h5>
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                     <i class="bi bi-currency-dollar"></i>
@@ -73,7 +73,7 @@
                 <a class="icon" href="#" data-bs-toggle="dropdown" ><i class="bi bi-three-dots"></i></a>
               </div>
               <div class="card-body">
-                <h5 class="card-title">Donors <span>| Collective</span></h5>
+                <h5 class="card-title">Donors <span></span></h5>
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                     <i class="bi bi-tag"></i>
@@ -96,7 +96,7 @@
                 <a class="icon" href="#" data-bs-toggle="dropdown" ><i class="bi bi-three-dots"></i></a>
               </div>
               <div class="card-body">
-                <h5 class="card-title">Programmes <span>| Collective</span></h5>
+                <h5 class="card-title">Programmes <span></span></h5>
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                     <i class="bi bi-file-earmark-text"></i>
@@ -119,7 +119,7 @@
                 <a class="icon" href="#" data-bs-toggle="dropdown" ><i class="bi bi-three-dots"></i></a>
               </div>
               <div class="card-body">
-                <h5 class="card-title">Cohorts <span>| Collective</span></h5>
+                <h5 class="card-title">Cohorts <span></span></h5>
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                     <i class="bi bi-people"></i>
@@ -142,7 +142,7 @@
                 <a class="icon" href="#" data-bs-toggle="dropdown" ><i class="bi bi-three-dots"></i></a>
               </div>
               <div class="card-body">
-                <h5 class="card-title">Regions <span>| Collective</span></h5>
+                <h5 class="card-title">Regions <span></span></h5>
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                     <i class="bi bi-geo-alt-fill"></i>
@@ -162,7 +162,7 @@
           <div class="col-12">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">Monthly Activity Participant <span>| Collective</span></h5>
+                <h5 class="card-title">Monthly Activity Participant <span></span></h5>
   
                 <!-- Column Chart -->
                 <div id="monthlyActivityParticipant"></div>
@@ -230,7 +230,7 @@
           <div class="col-12">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">Regional Activity Participant <span>| Collective</span></h5>
+                <h5 class="card-title">Regional Activity Participant <span></span></h5>
                 <!-- Column Chart -->
                 <div id="regionalActivityParticipant"></div>
                 <script>
