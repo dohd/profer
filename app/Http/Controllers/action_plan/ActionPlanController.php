@@ -100,7 +100,12 @@ class ActionPlanController extends Controller
      */
     public function show(ActionPlan $action_plan)
     {
-        return view('action_plans.view', compact('action_plan'));
+        $proposal_items = ProposalItem::where('proposal_id', $action_plan->id)
+            ->whereNotIn('id', function($q) use($action_plan) {
+                $q->select('proposal_item_id')->from('action_plan_items')->where('action_plan_id', $action_plan->id);
+            })->get(['id', 'name']);
+
+        return view('action_plans.view', compact('action_plan', 'proposal_items'));
     }
 
     /**
@@ -209,6 +214,6 @@ class ActionPlanController extends Controller
             ->orderBy('row_index', 'asc')
             ->get();
 
-        return view('action_plans.partials.proposal_items', compact('proposal_items', 'cohorts', 'regions'));
+        return view('action_plans.partial.proposal_items', compact('proposal_items', 'cohorts', 'regions'));
     }
 }

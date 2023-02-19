@@ -7,9 +7,14 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Action Plan Details
-                <span class="badge bg-secondary text-white float-end" role="button" data-bs-toggle="modal" data-bs-target="#status_modal">
-                    <i class="bi bi-pencil-fill"></i> Status
-                </span>
+                <div class="float-end">
+                    <span class="badge bg-secondary text-white" role="button" data-bs-toggle="modal" data-bs-target="#status_modal">
+                        <i class="bi bi-pencil-fill"></i> Status
+                    </span>
+                    <span class="badge bg-primary text-white" role="button" data-bs-toggle="modal" data-bs-target="#activity_modal">
+                        <i class="bi bi-plus-lg"></i> Activity
+                    </span>
+                </div>
             </h5>
             <div class="card-content p-2">
                 <table class="table table-bordered">
@@ -84,5 +89,12 @@
             </div>
         </div>
     </div>
-    @include('action_plans.partial.action_plan_status')
+    @include('action_plans.partial.status_modal')
+    @include('action_plans.partial.activity_modal')
+@stop
+
+@section('script')
+<script>
+    $('.select2').each(function() { $(this).css('width', '100%') })
+</script>
 @stop

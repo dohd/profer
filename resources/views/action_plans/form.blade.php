@@ -32,7 +32,7 @@
             <th scope="col">Project Activity</th>
             <th scope="col">Date(start-end)</th>
             <th width="12%">Cohort</th>
-            <th width="12%">Region</th>
+            <th width="14%">Region</th>
             <th>Resources</th>
             <th>Assigned To</th>
             @isset ($action_plan)
@@ -82,14 +82,15 @@
                         </td>
                         <td>
                             <select name="region_id[]" class="form-control select2 region" data-placeholder="Region" multiple>
-                                <option value=""></option>
                                 @foreach ($regions as $region)
                                     @php
                                         $selected = '';
                                         $region_ids = $proposal_item->plan_regions? $proposal_item->plan_regions->pluck('id')->toArray() : [];
                                         if (in_array($region->id, $region_ids)) $selected = 'selected';
                                     @endphp
-                                    <option value="{{ $region->id }}-{{ $proposal_item->id }}" {{ $selected }}>{{ $region->name }}</option>
+                                    <option value="{{ $region->id }}-{{ $proposal_item->id }}" {{ $selected }}>
+                                        {{ $region->name }}
+                                    </option>
                                 @endforeach
                             </select>
                         </td>

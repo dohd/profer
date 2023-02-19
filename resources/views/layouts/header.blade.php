@@ -217,14 +217,14 @@
             alt="Profile"
             class="rounded-circle"
           />
-          <span class="d-none d-md-block dropdown-toggle ps-2"
-            >Super Admin</span
-          > </a
-        ><!-- End Profile Iamge Icon -->
-
+          <span class="d-none d-md-block dropdown-toggle ps-2">
+            {{ auth()->user()->name }}
+          </span> 
+        </a>
+        <!-- End Profile Iamge Icon -->
         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
           <li class="dropdown-header">
-            <h6>Super Admin</h6>
+            <h6>{{ auth()->user()->name }}</h6>
             <span>Web Designer</span>
           </li>
           <li>
@@ -262,7 +262,7 @@
           </li>
 
           <li>
-            <a class="dropdown-item d-flex align-items-center" href="{{ route('login') }}">
+            <a class="dropdown-item d-flex align-items-center" href="{{ route('logout') }}">
               <i class="bi bi-box-arrow-right"></i>
               <span>Sign Out</span>
             </a>
