@@ -56,7 +56,7 @@
                     <i class="bi bi-currency-dollar"></i>
                   </div>
                   <div class="ps-3">
-                    <h6>{{ numberFormat($grant_amount) }}</h6>
+                    <h6 style="font-size: 1.2em">{{ numberFormat($grant_amount) }}</h6>
                     <span class="text-success small pt-1 fw-bold">{{ $approved_proposal_count }}</span>
                     <span class="text-muted small pt-2 ps-1">Project</span>
                   </div>
@@ -158,11 +158,11 @@
           </div>
           <!-- End Regions Card -->
 
-          <!-- Monthly Activity Participants Card -->
+          <!-- Monthly Activity Participant Card -->
           <div class="col-12">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">Monthly Activity Participants <span>| Collective</span></h5>
+                <h5 class="card-title">Monthly Activity Participant <span>| Collective</span></h5>
   
                 <!-- Column Chart -->
                 <div id="monthlyActivityParticipant"></div>
@@ -224,13 +224,13 @@
               </div>
             </div>
           </div>
-          <!-- End Monthly Activity Participants Card -->
+          <!-- End Monthly Activity Participant Card -->
 
-          <!-- Regional Activity Participants Card -->
+          <!-- Regional Activity Participant Card -->
           <div class="col-12">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">Regional Activity Participants <span>| Collective</span></h5>
+                <h5 class="card-title">Regional Activity Participant <span>| Collective</span></h5>
                 <!-- Column Chart -->
                 <div id="regionalActivityParticipant"></div>
                 <script>
@@ -291,7 +291,7 @@
               </div>
             </div>
           </div>
-          <!-- End Monthly Activity Participants Card -->
+          <!-- End Monthly Activity Participant Card -->
         </div>
       </div>
       <!-- End Left side columns -->
@@ -393,10 +393,35 @@
         </div>
         <!-- End Recent Activity -->
 
-        <!-- Participants Age Distribution -->
+        <!-- Donor Activity Distribution -->
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Donor Activity Distribution</h5>
+            <!-- Donut Chart -->
+            <div id="donorActivityDistribution"></div>
+            <script>
+              document.addEventListener("DOMContentLoaded", () => {
+                new ApexCharts(document.querySelector("#donorActivityDistribution"), {
+                  series: [44, 56, 12, 20],
+                  chart: {
+                    height: 350,
+                    type: 'donut',
+                    toolbar: {
+                      show: true
+                    }
+                  },
+                  labels: ['WHO', 'UNEP', 'County Gvt', 'National Gvt'],
+                }).render();
+              });
+            </script>
+            <!-- End Donor Activity Distribution -->
+          </div>
+        </div>
+
+        <!-- Participant Age Distribution -->
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Participants Age Distribution</h5>
+              <h5 class="card-title">Participant Age Distribution</h5>
               <!-- Pie Chart -->
               <div id="participantAgeDistribution"></div>
               <script>
@@ -417,12 +442,12 @@
               <!-- End Pie Chart -->
             </div>
           </div>
-        <!-- End Participants Age Distribution -->
+        <!-- End Participant Age Distribution -->
 
-        <!-- Participants Cohort Distribution -->
+        <!-- Participant Cohort Distribution -->
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Participants Cohort Distribution</h5>
+            <h5 class="card-title">Participant Cohort Distribution</h5>
             <!-- Donut Chart -->
             <div id="participantCohortDistribution"></div>
             <script>
@@ -440,8 +465,7 @@
                 }).render();
               });
             </script>
-            <!-- End Participants Cohort Distribution -->
-
+            <!-- End Participant Cohort Distribution -->
           </div>
         </div>
       </div>
