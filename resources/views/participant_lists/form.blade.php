@@ -171,7 +171,7 @@
     </tbody>
 </table>
 <h5>
-    <span class="badge bg-primary addrow" role="button"><i class="bi bi-plus-lg"></i> row</span>
+    <span class="badge bg-primary addrow" role="button"><i class="bi bi-plus-lg"></i> add row</span>
 </h5>
 
 @section('script')

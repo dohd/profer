@@ -3,17 +3,19 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="status_modal_label">Additional Activity</h5>
+                <h5 class="modal-title" id="activity_modal_label">Add Activity</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            {{ Form::model($action_plan, ['route' => array('action_plans.update', $action_plan), 'method' => 'PATCH']) }}
+            {{ Form::open(['route' => 'action_plans.store_activity', 'method' => 'POST', 'id' => 'activity_form']) }}
+            <input type="hidden" name="action_plan_id" value="{{ $action_plan->id }}">
+                <input type="hidden" name="item_id" id="item_id">
                 <div class="modal-body">
                     <div class="row mb-3">
                         <div class="col-12">
                             <label for="activity">Activity</label>
-                            <select name="activity_id[]" class="form-control select2" id="activity" data-placeholder="Choose Activity">
+                            <select name="activity_id" class="form-control" id="activity" data-placeholder="Choose Activity" required>
                                 <option value=""></option>
-                                @foreach ($proposal_items as $item)
+                                @foreach ($activities as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
                             </select>
@@ -22,54 +24,38 @@
                     <div class="row mb-3">
                         <div class="col-4">
                             <label for="start_date">Start Date*</label>
-                            {{ Form::date('start_date', null, ['class' => 'form-control', 'required']) }}
+                            {{ Form::date('start_date', null, ['class' => 'form-control', 'id' => 'start_date', 'required']) }}
                         </div>
                         <div class="col-4">
                             <label for="end_date">End Date*</label>
-                            {{ Form::date('end_date', null, ['class' => 'form-control', 'required']) }}
+                            {{ Form::date('end_date', null, ['class' => 'form-control', 'id' => 'end_date', 'required']) }}
                         </div>
 
                         <div class="col-4">
                             <label for="assigned_to">Assigned To</label>
-                            {{ Form::text('assigned_to[]', null, ['class' => 'form-control']) }}
-                        </div>
-                        
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-12">
-                            <label for="cohort">Cohort</label>
-                            <select name="cohort_id" class="form-control select2" data-placeholder="Choose Cohort">
-                                <option value=""></option>
-                                @foreach ([] as $cohort)
-                                    <option value="{{ $cohort->id }}">{{ $cohort->name }}</option>
-                                @endforeach
-                            </select>
+                            {{ Form::text('assigned_to', null, ['class' => 'form-control', 'id' => 'assigned_to',]) }}
                         </div>
                     </div>
 
                     <div class="row mb-3">
-                        <div class="col-12">
+                        <div class="col-6">
                             <label for="region">Region</label>
-                            <select name="region_id" class="form-control select2" data-placeholder="Choose Region" multiple>
+                            <select name="region_id[]" class="form-control" id="region" data-placeholder="Choose Region" multiple>
                                 <option value=""></option>
-                                @foreach ([] as $region)
-                                    <option value="{{ $region->id }}-{{ $item->id }}">{{ $region->name }}</option>
+                                @foreach ($regions as $region)
+                                    <option value="{{ $region->id }}">{{ $region->name }}</option>
                                 @endforeach
                             </select>
                         </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-12">
+                        <div class="col-6">
                             <label for="resources">Resources</label>
-                            {{ Form::textarea('resources', null, ['class' => 'form-control', 'rows' => '2']) }}
+                            {{ Form::textarea('resources', null, ['class' => 'form-control', 'id' => 'resources', 'rows' => '2']) }}
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" disabled>Update</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             {{ Form::close() }}
         </div>

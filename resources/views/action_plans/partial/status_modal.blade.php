@@ -12,7 +12,7 @@
                         <label for="status" class="col-2 col-form-label">Status</label>
                         <div class="col-6">
                             <select name="status" id="status" class="form-select">
-                                @foreach (['pending', 'approved', 'rejected'] as $item)
+                                @foreach (['pending', 'approved', 'review'] as $item)
                                     <option value="{{ $item }}" {{ $action_plan->status == $item? 'selected' : '' }}>{{ ucfirst($item) }}</option>
                                 @endforeach
                             </select>

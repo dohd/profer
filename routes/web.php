@@ -53,13 +53,17 @@ Route::group(['middleware' => 'auth'], function() {
      * project management
      */
     // proposals
-    Route::resource('proposals', ProposalController::class);
     Route::post('proposals/items', [ProposalController::class, 'proposal_items'])->name('proposals.items');
     Route::post('proposals/datatable', [ProposalController::class, 'datatable'])->name('proposals.datatable');
+    Route::resource('proposals', ProposalController::class);
 
     // action plans
-    Route::resource('action_plans', ActionPlanController::class);
+    Route::post('action_plans/activity/edit', [ActionPlanController::class, 'edit_activity'])->name('action_plans.edit_activity');
+    Route::post('action_plans/activity/update', [ActionPlanController::class, 'update_activity'])->name('action_plans.update_activity');
+    Route::post('action_plans/activity/store', [ActionPlanController::class, 'store_activity'])->name('action_plans.store_activity');
+    Route::post('action_plans/activity/delete', [ActionPlanController::class, 'destroy_activity'])->name('action_plans.destroy_activity');
     Route::post('action_plans/proposal_items', [ActionPlanController::class, 'proposal_items'])->name('action_plans.proposal_items');
+    Route::resource('action_plans', ActionPlanController::class);
 
     // participants
     Route::resource('participant_lists', ParticipantListController::class);

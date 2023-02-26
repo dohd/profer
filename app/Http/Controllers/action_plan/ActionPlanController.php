@@ -4,6 +4,9 @@ namespace App\Http\Controllers\action_plan;
 
 use App\Http\Controllers\Controller;
 use App\Models\action_plan\ActionPlan;
+use App\Models\action_plan\ActionPlanActivity;
+use App\Models\action_plan\ActionPlanCohort;
+use App\Models\action_plan\ActionPlanRegion;
 use App\Models\cohort\Cohort;
 use App\Models\item\ActionPlanItem;
 use App\Models\item\ProposalItem;
@@ -16,6 +19,8 @@ use Illuminate\Support\Facades\DB;
 
 class ActionPlanController extends Controller
 {
+    use ActionPlanActivityTrait;
+
     /**
      * Display a listing of the resource.
      *
@@ -35,10 +40,12 @@ class ActionPlanController extends Controller
      */
     public function create()
     {
-        $proposals = Proposal::get(['id', 'title']);
+        $proposals = Proposal::where('status', 'approved')->get(['id', 'title']);
         $programmes = Programme::get(['id', 'name']);
+        $regions = Region::get(['id', 'name']);
+        $cohorts = Cohort::get(['id', 'name']);
             
-        return view('action_plans.create', compact('proposals', 'programmes'));
+        return view('action_plans.create', compact('proposals', 'programmes', 'regions', 'cohorts'));
     }
 
     /**
@@ -53,37 +60,42 @@ class ActionPlanController extends Controller
         $request->validate([
             'proposal_id' => 'required', 
             'programme_id' => 'required', 
+            'main_assigned_to' => 'required',
+            'activity_id' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
+            'assigned_to' => 'required',
+            'cohort_id' => 'required',
+            'target_no' => 'required',
+            'region_id' => 'required',
+            'resources' => 'required',
         ]); 
+
         $data = $request->only(['proposal_id', 'programme_id', 'main_assigned_to']);
-        $data_items = $request->only(['proposal_item_id', 'start_date', 'end_date', 'resources', 'assigned_to', 'cohort_id']);
-        $data_item_regions = $request->region_id;
+        $data_activity = $request->only(['activity_id', 'start_date', 'end_date', 'assigned_to', 'resources']);
+        $data_regions = $request->only(['region_id']);
+        $data_cohort = $request->only(['cohort_id', 'target_no']);
 
         DB::beginTransaction();
 
         try {
-            $data = inputClean($data);
-            $data_items = databaseArray($data_items);
-            $data_item_regions = explodeArray('-', $data_item_regions);
-            foreach ($data_item_regions as $key => $value) {
-                $data_item_regions[] = ['region_id' => $value[0], 'proposal_item_id' => $value[1]];
-                unset($data_item_regions[$key]);
-            }
-
             $action_plan = ActionPlan::create($data);
 
-            // action plan items
-            $data_items = fillArrayRecurse($data_items, ['action_plan_id' => $action_plan->id]);
-            ActionPlanItem::insert($data_items);
+            $data_activity = inputClean($data_activity);
+            $data_activity['action_plan_id'] = $action_plan->id;
+            $plan_activity = ActionPlanActivity::create($data_activity);
 
-            // item regions
-            foreach ($data_item_regions as $i => $item_region) {
-                foreach ($action_plan->items as $item) {
-                    if ($item['proposal_item_id'] == $item_region['proposal_item_id']) {
-                        $data_item_regions[$i]['action_plan_item_id'] = $item['id'];
-                    }
-                }
-            }
-            ActionPlanItemRegion::insert($data_item_regions);
+            $add_params = [
+                'action_plan_id' => $action_plan->id,
+                'activity_id' => $plan_activity->id,
+            ];
+
+            $data_regions = databaseArray($data_regions);
+            $data_regions = fillArrayRecurse($data_regions, $add_params);
+            ActionPlanRegion::insert($data_regions);
+
+            $data_cohort = fillArray($data_cohort, $add_params);
+            ActionPlanCohort::insert($data_cohort);
 
             DB::commit();
             return redirect(route('action_plans.index'))->with(['success' => 'Action Plan created successfully']);
@@ -100,12 +112,10 @@ class ActionPlanController extends Controller
      */
     public function show(ActionPlan $action_plan)
     {
-        $proposal_items = ProposalItem::where('proposal_id', $action_plan->id)
-            ->whereNotIn('id', function($q) use($action_plan) {
-                $q->select('proposal_item_id')->from('action_plan_items')->where('action_plan_id', $action_plan->id);
-            })->get(['id', 'name']);
+        $activities = ProposalItem::where(['proposal_id' => $action_plan->proposal_id, 'is_obj' => 0])->get(['id', 'name']);
+        $regions = Region::get(['id', 'name']);
 
-        return view('action_plans.view', compact('action_plan', 'proposal_items'));
+        return view('action_plans.view', compact('action_plan', 'activities', 'regions'));
     }
 
     /**
@@ -116,12 +126,12 @@ class ActionPlanController extends Controller
      */
     public function edit(ActionPlan $action_plan)
     {
-        $proposals = Proposal::get(['id', 'title']);
+        $proposals = Proposal::where('status', 'approved')->get(['id', 'title']);
         $programmes = Programme::get(['id', 'name']);
-        $cohorts = Cohort::get(['id', 'name']);
         $regions = Region::get(['id', 'name']);
-
-        return view('action_plans.edit', compact('action_plan', 'proposals', 'programmes', 'cohorts', 'regions'));
+        $cohorts = Cohort::get(['id', 'name']);
+            
+        return view('action_plans.edit', compact('action_plan', 'proposals', 'programmes', 'regions', 'cohorts'));
     }
 
     /**
@@ -208,12 +218,9 @@ class ActionPlanController extends Controller
      */
     public function proposal_items()
     {
-        $cohorts = Cohort::get(['id', 'name']);
-        $regions = Region::get(['id', 'name']);
-        $proposal_items = ProposalItem::where('proposal_id', request('proposal_id'))
-            ->orderBy('row_index', 'asc')
-            ->get();
-
-        return view('action_plans.partial.proposal_items', compact('proposal_items', 'cohorts', 'regions'));
+        $proposal_items = ProposalItem::where(['proposal_id' => request('proposal_id'), 'is_obj' => 0])
+            ->get(['id', 'name']);
+            
+        return response()->json($proposal_items);
     }
 }
