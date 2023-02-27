@@ -113,9 +113,10 @@ class ActionPlanController extends Controller
     public function show(ActionPlan $action_plan)
     {
         $activities = ProposalItem::where(['proposal_id' => $action_plan->proposal_id, 'is_obj' => 0])->get(['id', 'name']);
+        $cohort_activities = ProposalItem::whereHas('plan_activities')->get(['id', 'name']);
         $regions = Region::get(['id', 'name']);
 
-        return view('action_plans.view', compact('action_plan', 'activities', 'regions'));
+        return view('action_plans.view', compact('action_plan', 'activities', 'cohort_activities', 'regions'));
     }
 
     /**
@@ -130,6 +131,23 @@ class ActionPlanController extends Controller
         $programmes = Programme::get(['id', 'name']);
         $regions = Region::get(['id', 'name']);
         $cohorts = Cohort::get(['id', 'name']);
+
+        $plan_activity = $action_plan->plan_activity;
+        if ($plan_activity) {
+            $action_plan = fillArray($action_plan, [
+                'start_date' => $plan_activity->start_date,
+                'end_date' => $plan_activity->end_date,
+                'assigned_to' => $plan_activity->assigned_to,
+                'resources' => $plan_activity->resources,
+            ]);
+            if ($plan_activity->cohort) {
+                $action_plan['cohort_id'] = $plan_activity->cohort->id;
+                $action_plan['target_no'] = $plan_activity->activity_cohort->target_no;
+            }
+            if ($plan_activity->regions->count()) {
+                $action_plan['regions'] = $plan_activity->regions->pluck('id')->toArray();
+            }
+        }
             
         return view('action_plans.edit', compact('action_plan', 'proposals', 'programmes', 'regions', 'cohorts'));
     }
@@ -143,7 +161,7 @@ class ActionPlanController extends Controller
      */
     public function update(Request $request, ActionPlan $action_plan)
     {
-        // dd($request->all());
+        dd($request->all());
         if (request('status')) {
             // update action plan status
             if ($action_plan->update(['status' => request('status')]))
@@ -208,6 +226,7 @@ class ActionPlanController extends Controller
      */
     public function destroy(ActionPlan $action_plan)
     {
+        dd($action_plan->id);
         if ($action_plan->delete())
             return redirect(route('action_plans.index'))->with(['success' => 'Action Plan deleted successfully']);
         else errorHandler('Error deleting Action Plan!');
@@ -218,8 +237,7 @@ class ActionPlanController extends Controller
      */
     public function proposal_items()
     {
-        $proposal_items = ProposalItem::where(['proposal_id' => request('proposal_id'), 'is_obj' => 0])
-            ->get(['id', 'name']);
+        $proposal_items = ProposalItem::where(['proposal_id' => request('proposal_id'), 'is_obj' => 0])->get(['id', 'name']);
             
         return response()->json($proposal_items);
     }

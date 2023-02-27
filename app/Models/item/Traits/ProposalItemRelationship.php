@@ -2,6 +2,7 @@
 
 namespace App\Models\item\Traits;
 
+use App\Models\action_plan\ActionPlanActivity;
 use App\Models\cohort\Cohort;
 use App\Models\participant_list\ParticipantList;
 use App\Models\programme\Programme;
@@ -14,6 +15,11 @@ trait ProposalItemRelationship
     public function proposal()
     {
         return $this->belongsTo(Proposal::class);
+    }
+
+    public function plan_activities()
+    {
+        return $this->hasMany(ActionPlanActivity::class, 'activity_id');
     }
 
     public function plan_regions()

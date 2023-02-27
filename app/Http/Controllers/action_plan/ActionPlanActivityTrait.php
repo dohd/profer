@@ -110,6 +110,9 @@ trait ActionPlanActivityTrait
 
         try {
             $plan_activity = ActionPlanActivity::findOrFail(request('activity_id'));
+            $plan_activity_count = ActionPlanActivity::where('action_plan_id', $plan_activity->action_plan_id)->count();
+            if ($plan_activity_count == 1) return errorHandler('Cannot delete initial activity!');
+            
             ActionPlanRegion::where('activity_id', $plan_activity->id)->delete();
             $plan_activity->delete();
 

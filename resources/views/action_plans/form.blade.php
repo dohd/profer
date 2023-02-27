@@ -34,6 +34,11 @@
                 <label for="activity">Activity*</label>
                 <select name="activity_id" class="form-control select2" id="activity" data-placeholder="Choose Activity" required>
                     <option value=""></option>
+                    @if(@$action_plan->plan_activity && $action_plan->plan_activity->activity)
+                        <option value="{{ $action_plan->plan_activity->activity_id }}" selected>
+                            {{ $action_plan->plan_activity->activity->name }}
+                        </option>
+                    @endif
                 </select>
             </div>
         </div>
@@ -59,7 +64,9 @@
                 <select name="cohort_id" class="form-control select2" data-placeholder="Choose Cohort" required>
                     <option value=""></option>
                     @foreach ($cohorts as $cohort)
-                        <option value="{{ $cohort->id }}">{{ $cohort->name }}</option>
+                        <option value="{{ $cohort->id }}" {{ @$action_plan->cohort_id == $cohort->id? 'selected' : '' }}>
+                            {{ $cohort->name }}
+                        </option>
                     @endforeach
                 </select>
             </div>
@@ -75,7 +82,9 @@
                 <select name="region_id[]" class="form-control select2" data-placeholder="Choose Region" multiple required>
                     <option value=""></option>
                     @foreach ($regions as $region)
-                        <option value="{{ $region->id }}">{{ $region->name }}</option>
+                        <option value="{{ $region->id }}" {{ @$action_plan && in_array($region->id, $action_plan->regions)? 'selected' : '' }}>
+                            {{ $region->name }}
+                        </option>
                     @endforeach
                 </select>
             </div>
