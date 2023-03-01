@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\DB;
 
 class ActionPlanController extends Controller
 {
-    use ActionPlanActivityTrait;
+    use ActionPlanActivityTrait, ActionPlanCohortTrait;
 
     /**
      * Display a listing of the resource.
@@ -115,8 +115,9 @@ class ActionPlanController extends Controller
         $activities = ProposalItem::where(['proposal_id' => $action_plan->proposal_id, 'is_obj' => 0])->get(['id', 'name']);
         $cohort_activities = ProposalItem::whereHas('plan_activities')->get(['id', 'name']);
         $regions = Region::get(['id', 'name']);
+        $cohorts = Cohort::get(['id', 'name']);
 
-        return view('action_plans.view', compact('action_plan', 'activities', 'cohort_activities', 'regions'));
+        return view('action_plans.view', compact('action_plan', 'activities', 'cohort_activities', 'regions', 'cohorts'));
     }
 
     /**

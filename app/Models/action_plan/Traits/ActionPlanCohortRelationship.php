@@ -13,7 +13,7 @@ trait ActionPlanCohortRelationship
         return $this->belongsTo(Cohort::class);
     }
 
-    public function action_plan_activity()
+    public function plan_activity()
     {
         return $this->belongsTo(ActionPlanActivity::class, 'activity_id');
     }

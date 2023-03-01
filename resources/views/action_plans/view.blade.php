@@ -45,10 +45,10 @@
         <div class="card-body">
             <h5 class="card-title">
                 <div class="float-end">
-                    <span class="badge bg-primary text-white" role="button" data-bs-toggle="modal" data-bs-target="#activity_modal">
+                    <span class="badge bg-primary text-white" role="button" id="activity_md" data-bs-toggle="modal" data-bs-target="#activity_modal">
                         <i class="bi bi-plus-lg"></i> Activity
                     </span>
-                    <span class="badge bg-success text-white" role="button" data-bs-toggle="modal" data-bs-target="#cohort_modal">
+                    <span class="badge bg-success text-white" role="button" id="cohort_md" data-bs-toggle="modal" data-bs-target="#cohort_modal">
                         <i class="bi bi-plus-lg"></i> Target Cohort
                     </span>
                 </div>
@@ -78,11 +78,12 @@
 
 @section('script')
 <script>
+    // select2 config
     $('select').each(function() { $(this).css('width', '100%') });
+
     ['activity', 'region'].forEach(v => {
         $('#'+v).select2({allowClear: true, dropdownParent: $('#activity_modal')});
     });
-
     // reset activity modal
     $('#activity_modal').on('hide.bs.modal', function() {
         $('#activity_modal_label').html('Add Activity');
@@ -90,7 +91,6 @@
         $('#activity_form').trigger('reset');
         $('select option').each(function() { $(this).prop('selected', false).change(); });
     });
-
     // edit activity modal
     $('#activity_tbl').on('click', '.edit', function() {
         const url = $(this).attr('data-url');
@@ -115,5 +115,35 @@
         });
     });
 
+    /** 
+     * Cohort Modal
+    */
+    $('#cohort_activity').select2({allowClear: true, dropdownParent: $('#cohort_modal')});
+    // add cohort row
+    let rowCount = 1;
+    let initRow = $('#cohorts_tbl tbody tr:first').html();
+    $('.addrow').click(function() {
+        rowCount++;
+        $('#cohorts_tbl tbody').append(`<tr>${initRow}</tr>`);
+        const row = $('#cohorts_tbl tbody tr:last');
+        row.find('.num').text(rowCount);
+        // add select2 to added row
+        row.find('select.custom').each(function() {
+            $(this).select2({allowClear: true, dropdownParent: $('#cohort_modal')});
+        });
+    });
+    // add select2 to default row
+    $('#cohorts_tbl tbody tr:first').find('select.custom').select2({
+        allowClear: true, dropdownParent: $('#cohort_modal')
+    });
+
+    // remove row
+    $('#cohorts_tbl').on('click', '.del', function() {
+        const row = $(this).parents('tr');
+        if (!row.siblings().length) return;
+        row.remove();
+        rowCount--;
+    });
+    
 </script>
 @stop

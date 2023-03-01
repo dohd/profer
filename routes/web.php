@@ -58,6 +58,11 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('proposals', ProposalController::class);
 
     // action plans
+    Route::post('action_plans/cohort/edit', [ActionPlanController::class, 'edit_cohort'])->name('action_plans.edit_cohort');
+    Route::post('action_plans/cohort/update', [ActionPlanController::class, 'update_cohort'])->name('action_plans.update_cohort');
+    Route::post('action_plans/cohort/store', [ActionPlanController::class, 'store_cohort'])->name('action_plans.store_cohort');
+    Route::post('action_plans/cohort/delete', [ActionPlanController::class, 'destroy_cohort'])->name('action_plans.destroy_cohort');
+
     Route::post('action_plans/activity/edit', [ActionPlanController::class, 'edit_activity'])->name('action_plans.edit_activity');
     Route::post('action_plans/activity/update', [ActionPlanController::class, 'update_activity'])->name('action_plans.update_activity');
     Route::post('action_plans/activity/store', [ActionPlanController::class, 'store_activity'])->name('action_plans.store_activity');

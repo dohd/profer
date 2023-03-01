@@ -6,21 +6,22 @@
                 <h5 class="modal-title" id="cohort_modal_label">Add Target Cohort</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            {{ Form::model($action_plan, ['route' => array('action_plans.update', $action_plan), 'method' => 'PATCH']) }}
+            {{ Form::open(['route' => 'action_plans.store_cohort', 'method' => 'POST', 'id' => 'activity_form']) }}
+                <input type="hidden" name="action_plan_id" value="{{ $action_plan->id }}">
                 <div class="modal-body">
                     <div class="row mb-3">
                         <div class="col-12">
                             <label for="activity">Activity</label>
-                            <select name="activity_id[]" class="form-control select2" id="activity" data-placeholder="Choose Activity">
+                            <select name="activity_id" class="form-control" id="cohort_activity" data-placeholder="Choose Activity" required>
                                 <option value=""></option>
-                                @foreach ([] as $item)
+                                @foreach ($cohort_activities as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
 
-                    <table class="table table-striped" id="participants_tbl">
+                    <table class="table table-striped" id="cohorts_tbl">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
@@ -34,16 +35,17 @@
                             <tr>
                                 <th scope="row" class="p-3 num">1</th>
                                 <td>
-                                    <select name="cohort[]" class="form-select gender">
-                                        @foreach ([] as $item)
-                                            <option value="{{ $item }}">{{ ucfirst($item) }}</option>
+                                    <select name="cohort_id[]" class="form-select custom" data-placeholder="Choose Cohort" required>
+                                        <option value=""></option>
+                                        @foreach ($cohorts as $item)
+                                            <option value="{{ $item->id }}">{{ ucfirst($item->name) }}</option>
                                         @endforeach
                                     </select>
                                 </td>
-                                <td><input type="text" name="organisation[]" class="form-control org"></td>
+                                <td><input type="text" name="target_no[]" class="form-control org" required></td>
                                 <td>
                                     <div class="d-inline"></div>
-                                    <a class="dropdown-item pt-1 pb-1 remove" href="javascript:">
+                                    <a class="dropdown-item pt-1 pb-1 del" href="javascript:">
                                         <i class="bi bi-trash text-danger icon-xs ml-1"></i>
                                     </a> 
                                 </td>
@@ -51,12 +53,14 @@
                         </tbody>
                     </table>
                     <h5>
-                        <span class="badge bg-primary addrow" role="button"><i class="bi bi-plus-lg"></i> row</span>
+                        <span class="badge bg-primary addrow" role="button">
+                            <i class="bi bi-plus-lg"></i> row
+                        </span>
                     </h5>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             {{ Form::close() }}
         </div>
