@@ -190,9 +190,7 @@
         });
     });
     // add select2 to default row
-    $('#participants_tbl').find('select.custom').each(function() {
-        $(this).select2({allowClear: true});
-    });
+    $('#participants_tbl tbody tr:first').find('select.custom').select2({allowClear: true});
 
     // remove row
     $('#participants_tbl').on('click', '.del', function() {
