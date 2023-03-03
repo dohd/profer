@@ -8,6 +8,7 @@ use App\Http\Controllers\CoreController;
 use App\Http\Controllers\disability\DisabilityController;
 use App\Http\Controllers\donor\DonorController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\log_frame\LogFrameController;
 use App\Http\Controllers\narrative\NarrativeController;
 use App\Http\Controllers\participant_list\ParticipantListController;
 use App\Http\Controllers\programme\ProgrammeController;
@@ -56,6 +57,10 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('proposals/items', [ProposalController::class, 'proposal_items'])->name('proposals.items');
     Route::post('proposals/datatable', [ProposalController::class, 'datatable'])->name('proposals.datatable');
     Route::resource('proposals', ProposalController::class);
+
+    // log frames
+    Route::post('log_frames/datatable', [LogFrameController::class, 'datatable'])->name('log_frames.datatable');
+    Route::resource('log_frames', LogFrameController::class);
 
     // action plans
     Route::post('action_plans/cohort/edit', [ActionPlanController::class, 'edit_cohort'])->name('action_plans.edit_cohort');

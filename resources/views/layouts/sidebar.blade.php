@@ -205,10 +205,10 @@
         data-bs-parent="#sidebar-nav"
       >
         <li>
-          <a href="{{ '#' }}"><i class="bi bi-circle"></i><span>Create Log Frame</span></a>
+          <a href="{{ route('log_frames.create') }}"><i class="bi bi-circle"></i><span>Create Log Frame</span></a>
         </li>
         <li>
-          <a href="{{ '#' }}"><i class="bi bi-circle"></i><span>Manage Log Frames</span></a>
+          <a href="{{ route('log_frames.index') }}"><i class="bi bi-circle"></i><span>Manage Log Frames</span></a>
         </li>
       </ul>
     </li>

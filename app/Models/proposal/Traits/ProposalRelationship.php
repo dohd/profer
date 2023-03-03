@@ -4,11 +4,17 @@ namespace App\Models\proposal\Traits;
 
 use App\Models\donor\Donor;
 use App\Models\item\ProposalItem;
+use App\Models\log_frame\LogFrame;
 use App\Models\participant_list\ParticipantList;
 use App\Models\region\Region;
 
 trait ProposalRelationship
 {
+    public function log_frames()
+    {
+        return $this->hasMany(LogFrame::class);
+    }
+
     public function participant_lists()
     {
         return $this->hasMany(ParticipantList::class);
