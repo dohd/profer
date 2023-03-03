@@ -47,10 +47,8 @@
                     <tr><th width="20%">Cohort</th> <td id="t_cohort"></td></tr>
                 </table>
                 <br>
-                <table class="table table-bordered">
-                    <tr><th width="20%">Indicator</th> <td id="t_indicator"></td></tr>
-                    <tr><th width="20%">Response</th> <td id="t_response"></td></tr>
-                </table>
+                <h5>Indicator: <b><span id="t_indicator"></span></b></h5>
+                <p id="t_response"></p>
             </div>
         </div>
     </div> 
