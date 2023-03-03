@@ -1,5 +1,5 @@
 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-    <table class="table table-striped datatable" id="cohort_tbl">
+    <table class="table table-striped datatable" id="cohort_list_tbl">
         <thead>
             <tr>
                 <th scope="col">#</th>

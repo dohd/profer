@@ -144,6 +144,31 @@
         row.remove();
         rowCount--;
     });
+
+    // edit cohorts modal
+    $('#cohort_list_tbl').on('click', '.edit', function() {
+        const url = $(this).attr('data-url');
+        const cohort_id = $(this).attr('data-id');
+        $.post(url, {cohort_id}, data => {
+            if (!data.id) return;
+            $('#cohort_modal_label').html('Edit Cohort');
+            $('#cohort_form').attr('action', @json(route('action_plans.update_cohort')));
+            $('#item_id').val(data.id);
+            $('#cohort_activity').val(data.activity_id);
+            console.log(data)
+            // $('#end_date').val(data.end_date);
+            // $('#assigned_to').val(data.assigned_to);
+            // $('#resources').val(data.resources);
+            // $('#activity').val(data.activity_id).change();
+            // $('#region option').each(function() {
+            //     const opt = $(this);
+            //     data.regions.forEach(v => {
+            //         if (v.id == opt.attr('value')) 
+            //             opt.prop('selected', true).change();
+            //     })
+            // });
+        });
+    });
     
 </script>
 @stop

@@ -15,15 +15,14 @@ trait ActionPlanCohortTrait
      */
     public function edit_cohort()
     {
-        $plan_cohort = ActionPlanCohort::findOrFail(request('cohort_id'))
-            ->with(['regions' => fn($q) => $q->select('regions.id') ])
-            ->first();
-
+        $plan_cohort = ActionPlanCohort::findOrFail(request('cohort_id'));
+        $plan_cohort['activity_id'] = $plan_cohort->plan_activity? $plan_cohort->plan_activity->activity_id : '';
+            
         return response()->json($plan_cohort);
     }
 
     /**
-     * Store Activity
+     * Store Cohort
      */
     public function store_cohort(Request $request)
     {
@@ -55,11 +54,11 @@ trait ActionPlanCohortTrait
     }
 
     /**
-     * Update Activity
+     * Update Cohort
      */
     public function update_cohort(Request $request)
     {
-        // dd($request->all());
+        dd($request->all());
         $request->validate([
             'cohort_id' => 'required',
             'start_date' => 'required',
@@ -89,15 +88,15 @@ trait ActionPlanCohortTrait
             ActionPlanRegion::insert($data_regions);
 
             DB::commit();
-            return redirect()->back()->with('success', 'Activity updated successfully');
+            return redirect()->back()->with('success', 'Cohort updated successfully');
         } catch (\Throwable $th) {
             errorLog($th->getMessage());
-            errorHandler('Error updating Activity!');
+            errorHandler('Error updating Cohort!');
         }
     }
 
     /**
-     * Destroy Activity
+     * Destroy Cohort
      */
     public function destroy_cohort()
     {
@@ -113,9 +112,9 @@ trait ActionPlanCohortTrait
             $plan_cohort->delete();
 
             DB::commit();
-            return redirect()->back()->with('success', 'Activity deleted successfully');
+            return redirect()->back()->with('success', 'Cohort deleted successfully');
         } catch (\Throwable $th) {
-            errorHandler('Error deleting Activity!');
+            errorHandler('Error deleting Cohort!');
         }
     }
 }
