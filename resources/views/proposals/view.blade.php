@@ -36,27 +36,29 @@
                             </td>
                         </tr>
                     @endforeach
+                    @if ($proposal->status_note)
+                        <tr>
+                            <th width="30%">Rejection Remark</th>
+                            <td>{{ $proposal->status_note }}</td>
+                        </tr>
+                    @endif
                 </table>
                 
                 <!-- Proposal items -->
                 <table class="table table-striped" id="objectivesTbl">
                     <thead>
                         <tr class="">
-                            <th scope="col" width="8%">#</th>
-                            <th scope="col">Item Description</th>
+                            <th scope="col" width="8%" class="text-center">#</th>
+                            <th scope="col">Item</th>
+                            <th scope="col">Description</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($proposal->items as $item)
                             <tr>
-                                <th scope="row">
-                                    @if ($item->row_num)
-                                        {{ $item->row_num }}.
-                                    @else
-                                        <ul><li></li></ul>
-                                    @endif
-                                </th>
-                                <td>{{ $item->is_obj? 'Obj' : 'Act' }} : {{ $item->name }}</td>
+                                <th scope="row" class="text-center">{{ $item->row_num }} </th>
+                                <td>{{ $item->is_obj? 'objective' : 'activity' }}</td>
+                                <td>{{ $item->name }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -66,3 +68,15 @@
     </div>
     @include('proposals.partial.proposal_status')
 @stop
+
+@section('script')
+<script>
+    $('#status').change(function() {
+        if ($(this).val() == 'rejected') {
+            $('#note').parents('.row').removeClass('d-none');
+        } else {
+            $('#note').parents('.row').addClass('d-none');
+        }
+    }).trigger('change');
+</script>
+@endsection

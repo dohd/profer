@@ -9,13 +9,19 @@
             {{ Form::model($proposal, ['route' => array('proposals.update', $proposal), 'method' => 'PATCH']) }}
                 <div class="modal-body">
                     <div class="row">
-                        <label for="status" class="col-2 col-form-label">Status</label>
-                        <div class="col-6">
+                        <div class="col-12">
+                            <label for="status" class="col-12 col-form-label">Status</label>
                             <select name="status" id="status" class="form-select">
                                 @foreach (['pending', 'approved', 'rejected'] as $item)
                                     <option value="{{ $item }}" {{ $proposal->status == $item? 'selected' : '' }}>{{ ucfirst($item) }}</option>
                                 @endforeach
                             </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="status" class="col-12 col-form-label">Remark</label>
+                            {{ Form::textarea('status_note', null, ['class' => 'form-control', 'id' => 'note', 'rows' => '3']) }}
                         </div>
                     </div>
                 </div>

@@ -11,7 +11,7 @@
     </div>
 
     <div class="col-5">
-        <label for="sector">Donor*</label>
+        <label for="sector" class="col-12">Donor*</label>
         <select name="donor_id" id="donor" class="form-select select2" data-placeholder="Choose Donor" required>
             <option value=""></option>
             @foreach ($donors as $donor)
@@ -21,7 +21,7 @@
     </div>
 
     <div class="col-3">
-        <label for="region">Region*</label>
+        <label for="region" class="col-12">Region*</label>
         <select name="region_id" id="region" class="form-select select2" data-placeholder="Choose Region" required>
             <option value=""></option>
             @foreach ($regions as $region)
