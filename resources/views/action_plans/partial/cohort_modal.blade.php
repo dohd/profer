@@ -36,14 +36,14 @@
                             <tr>
                                 <th scope="row" class="p-3 num">1</th>
                                 <td>
-                                    <select name="cohort_id[]" class="form-select custom" data-placeholder="Choose Cohort" required>
+                                    <select name="cohort_id[]" class="form-select custom cohort_id" data-placeholder="Choose Cohort" required>
                                         <option value=""></option>
                                         @foreach ($cohorts as $item)
                                             <option value="{{ $item->id }}">{{ ucfirst($item->name) }}</option>
                                         @endforeach
                                     </select>
                                 </td>
-                                <td><input type="text" name="target_no[]" class="form-control org" required></td>
+                                <td><input type="text" name="target_no[]" class="form-control target_no" required></td>
                                 <td>
                                     <div class="d-inline"></div>
                                     <a class="dropdown-item pt-1 pb-1 del" href="javascript:">
