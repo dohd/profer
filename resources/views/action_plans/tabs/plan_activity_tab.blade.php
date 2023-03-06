@@ -1,4 +1,4 @@
-<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+<div class="tab-pane fade show" id="home" role="tabpanel" aria-labelledby="home-tab">
     <table class="table table-striped datatable" id="activity_tbl">
         <thead>
             <tr>
