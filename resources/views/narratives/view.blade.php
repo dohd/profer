@@ -25,13 +25,22 @@
                         <th width="30%">{{ $key }}</th>
                         <td>
                             @if ($key == 'Project Title')
-                                {{ $val }} || <span class="badge bg-{{ $narrative->status == 'approved'? 'success' : 'secondary' }}">{{ $narrative->status }}</span>
+                                {{ $val }} || 
+                                <span class="badge bg-{{ $narrative->status == 'approved'? 'success' : 'secondary' }}">
+                                    {{ $narrative->status }}
+                                </span>
                             @else
                                 {{ $val }}
                             @endif
                         </td>
                     </tr>
                     @endforeach
+                    @if ($narrative->status_note)
+                        <tr>
+                            <th width="30%">Review Remark</th>
+                            <td>{{ $narrative->status_note }}</td>
+                        </tr>
+                    @endif
                 </table>
 
                 <!-- narrative items -->
@@ -58,3 +67,15 @@
     </div>
     @include('narratives.partial.narrative_status')
 @stop
+
+@section('script')
+<script>
+    $('#status').change(function() {
+        if ($(this).val() == 'review') {
+            $('#note').parents('.row').removeClass('d-none');
+        } else {
+            $('#note').parents('.row').addClass('d-none');
+        }
+    }).trigger('change');
+</script>
+@endsection

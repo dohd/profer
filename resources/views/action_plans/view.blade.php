@@ -35,6 +35,12 @@
                             </td>
                         </tr>
                     @endforeach
+                    @if ($action_plan->status_note)
+                        <tr>
+                            <th width="30%">Review Remark</th>
+                            <td>{{ $action_plan->status_note }}</td>
+                        </tr>
+                    @endif
                 </table>
             </div>
         </div>
@@ -78,6 +84,16 @@
 
 @section('script')
 <script>
+    // on change status
+    $('#status').change(function() {
+        if ($(this).val() == 'review') {
+            $('#note').parents('.row').removeClass('d-none');
+        } else {
+            $('#note').parents('.row').addClass('d-none');
+        }
+    }).trigger('change');
+
+
     // select2 config
     $('select').each(function() { $(this).css('width', '100%') });
 
