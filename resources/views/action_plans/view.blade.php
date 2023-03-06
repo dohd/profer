@@ -181,5 +181,13 @@
         row.find('.cohort_id').val('').change();
         row.find('.target_no').val('');
     });
+
+    // persist selected tab
+    $('.nav-link').on('show.bs.tab', function() {
+        localStorage['activeTab'] = $(this).attr('data-bs-target');
+    });
+    const activeTab = localStorage['activeTab']
+    if (activeTab) $('button[data-bs-target="'+ activeTab +'"]').addClass('active').click(); 
+    else $('.nav-link:first').addClass('active');
 </script>
 @stop
