@@ -26,4 +26,13 @@
         });
     });
 
+    /**
+     * Persist Bootstrap tab on page refresh
+     **/
+    $('.nav-tabs .nav-link').on('show.bs.tab', function() {
+        localStorage['activeTab'] = $(this).attr('data-bs-target');
+    });
+    const activeTab = localStorage['activeTab'];
+    if (activeTab) $('.nav-item button[data-bs-target="'+ activeTab +'"]').addClass('active').click(); 
+    else $('.nav-tabs .nav-link:first').addClass('active');
 </script>
