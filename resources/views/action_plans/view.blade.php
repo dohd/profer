@@ -89,6 +89,7 @@
         $('#activity_modal_label').html('Add Activity');
         $('#activity_form').attr('action', @json(route('action_plans.store_activity')));
         $('#activity_form').trigger('reset');
+        $('#item_id').val('');
         $('select option').each(function() { $(this).prop('selected', false).change(); });
     });
     // edit activity modal
@@ -150,23 +151,15 @@
         const url = $(this).attr('data-url');
         const cohort_id = $(this).attr('data-id');
         $.post(url, {cohort_id}, data => {
+            $('.addrow').addClass('d-none');
             if (!data.id) return;
             $('#cohort_modal_label').html('Edit Cohort');
             $('#cohort_form').attr('action', @json(route('action_plans.update_cohort')));
             $('#item_id').val(data.id);
-            $('#cohort_activity').val(data.activity_id);
-            console.log(data)
-            // $('#end_date').val(data.end_date);
-            // $('#assigned_to').val(data.assigned_to);
-            // $('#resources').val(data.resources);
-            // $('#activity').val(data.activity_id).change();
-            // $('#region option').each(function() {
-            //     const opt = $(this);
-            //     data.regions.forEach(v => {
-            //         if (v.id == opt.attr('value')) 
-            //             opt.prop('selected', true).change();
-            //     })
-            // });
+            if (data.plan_activity) $('#cohort_activity').val(data.plan_activity.activity_id).change();
+            const row = $('#cohorts_tbl tbody tr:first');
+            row.find('.cohort_id').val(data.cohort_id).change();
+            row.find('.target_no').val(data.target_no);
         });
     });
 
@@ -177,5 +170,16 @@
     const activeTab = localStorage['activeTab']
     if (activeTab) $('button[data-bs-target="'+ activeTab +'"]').addClass('active').click(); 
     else $('.nav-link:first').addClass('active');
+    // reset cohort modal
+    $('#cohort_modal').on('hide.bs.modal', function() {
+        $('.addrow').removeClass('d-none');
+        $('#cohort_modal_label').html('Add Cohort');
+        $('#cohort_form').attr('action', @json(route('action_plans.store_cohort')));
+        $('#item_id').val('');
+        $('#cohort_activity').val('').change();
+        const row = $('#cohorts_tbl tbody tr:first');
+        row.find('.cohort_id').val('').change();
+        row.find('.target_no').val('');
+    });
 </script>
 @stop
