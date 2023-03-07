@@ -126,42 +126,34 @@ class LogFrameController extends Controller
     public function update(Request $request, LogFrame $log_frame)
     {
         // dd($request->all());
-        if ($request->status) {
-            // update log_frame status
-            $data = $request->only('status', 'status_note');
-            if (empty($data['status_note'])) unset($data['status_note']);
-            if ($log_frame->update($data)) return redirect()->back()->with('success', 'Status updated successfully');
-            else errorHandler('Error updating status!');
-        } else {
-            $request->validate([
-                'proposal_id' => 'required',
+        $request->validate([
+            'proposal_id' => 'required',
+        ]);
+
+        $data = $request->only('proposal_id');
+        $data_items = $request->only([
+            'item_id', 'summary', 'indicator', 'baseline', 'target', 'data_source', 'frequency', 'assign_to', 'context'
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            $data_items = fillArrayRecurse(databaseArray($data_items), [
+                'proposal_id' => $data['proposal_id'],
             ]);
-    
-            $data = $request->only('proposal_id');
-            $data_items = $request->only([
-                'item_id', 'summary', 'indicator', 'baseline', 'target', 'data_source', 'frequency', 'assign_to', 'context'
-            ]);
+            foreach ($data_items as $item) {
+                $item['id'] = $item['item_id'];
+                unset($item['item_id']);
+                $log_frame = LogFrame::findOrFail($item['id']);
+                $log_frame->fill($item);
+                $log_frame->save();
+            }
 
-            DB::beginTransaction();
-
-            try {
-                $data_items = fillArrayRecurse(databaseArray($data_items), [
-                    'proposal_id' => $data['proposal_id'],
-                ]);
-                foreach ($data_items as $item) {
-                    $item['id'] = $item['item_id'];
-                    unset($item['item_id']);
-                    $log_frame = LogFrame::findOrFail($item['id']);
-                    $log_frame->fill($item);
-                    $log_frame->save();
-                }
-
-                DB::commit();
-                return redirect(route('log_frames.index'))->with(['success' => 'Log Frame updated successfully']);
-            } catch (\Throwable $th) {
-                errorHandler('Error updating Log Frame!');
-            }   
-        } 
+            DB::commit();
+            return redirect(route('log_frames.index'))->with(['success' => 'Log Frame updated successfully']);
+        } catch (\Throwable $th) {
+            errorHandler('Error updating Log Frame!');
+        }   
     }
 
     /**
