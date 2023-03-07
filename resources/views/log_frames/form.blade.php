@@ -4,7 +4,9 @@
         <select name="proposal_id" id="proposal" class="form-control select2" data-placeholder="Choose Project" required>
             <option value=""></option>
             @foreach ($proposals as $proposal)
-                <option value="{{ $proposal->id }}" {{ @$participant_list->proposal_id == $proposal->id? 'selected' : '' }}>{{ $proposal->title }}</option>
+                <option value="{{ $proposal->id }}" {{ @$log_frame->proposal_id == $proposal->id? 'selected' : '' }}>
+                    {{ $proposal->title }}
+                </option>
             @endforeach
         </select>
     </div>
@@ -40,13 +42,14 @@
                 @endphp
                 @foreach ($labels as $key => $value)
                     <tr>
-                        <td class="">{{ $key }}</td>
-                        <td class="">
+                        <td>{{ $key }}</td>
+                        <td>
                             {{ Form::textarea($value, null, ['class' => 'form-control', 'rows' => '2']) }}
                         </td>
                     </tr>   
                 @endforeach
                 <input type="hidden" name="context[]" value="goal">
+                <input type="hidden" name="item_id[]" value="{{ @$log_frame->id }}">
             </tbody>
         </table>
         
@@ -69,13 +72,14 @@
                 @endphp
                 @foreach ($labels as $key => $value)
                     <tr>
-                        <td class="">{{ $key }}</td>
-                        <td class="">
-                            {{ Form::textarea($value, null, ['class' => 'form-control', 'rows' => '2']) }}
+                        <td>{{ $key }}</td>
+                        <td>
+                            {{ Form::textarea($value, @$outcome_row[str_replace('[]', '', $value)], ['class' => 'form-control', 'rows' => '2']) }}
                         </td>
                     </tr>   
                 @endforeach
                 <input type="hidden" name="context[]" value="outcome">
+                <input type="hidden" name="item_id[]" value="{{ @$outcome_row->id }}">
             </tbody>
         </table>
     </div>
@@ -94,24 +98,20 @@
                         'Frequency' => 'frequency[]', 
                         'Assign To' => 'assign_to[]'
                     ];
+                    
                 @endphp
                 @foreach ($labels as $key => $value)
                     <tr>
-                        <td class="">{{ $key }}</td>
-                        <td class="">
-                            {{ Form::textarea($value, null, ['class' => 'form-control', 'rows' => '2']) }}
+                        <td>{{ $key }}</td>
+                        <td>
+                            {{ Form::textarea($value, @$result_row[str_replace('[]', '', $value)], ['class' => 'form-control', 'rows' => '2']) }}
                         </td>
                     </tr>   
                 @endforeach
                 <input type="hidden" name="context[]" value="result">
+                <input type="hidden" name="item_id[]" value="{{ @$result_row->id }}">
             </tbody>
         </table>
     </div>
 </div>
 <!-- End Default Tabs -->
-
-@section('script')
-<script>
-    
-</script>
-@stop

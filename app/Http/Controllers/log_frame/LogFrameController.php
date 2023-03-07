@@ -4,7 +4,6 @@ namespace App\Http\Controllers\log_frame;
 
 use App\Http\Controllers\Controller;
 use App\Models\donor\Donor;
-use App\Models\item\ProposalItem;
 use App\Models\log_frame\LogFrame;
 use App\Models\proposal\Proposal;
 use App\Models\region\Region;
@@ -107,10 +106,14 @@ class LogFrameController extends Controller
     {   
         $donors = Donor::get(['id', 'name']);
         $regions = Region::get(['id', 'name']);
+        $proposals = Proposal::where('status', 'approved')->get(['id', 'title']);
 
-        return redirect()->back()->with('error', 'Maintenance Mode! Please try again later');
+        $outcome_row = LogFrame::where('proposal_id', $log_frame->proposal_id)
+            ->where('context', 'outcome')->first();
+        $result_row = LogFrame::where('proposal_id', $log_frame->proposal_id)
+            ->where('context', 'result')->first();
         
-        return view('log_frames.edit', compact('log_frame', 'donors','regions'));
+        return view('log_frames.edit', compact('log_frame', 'outcome_row', 'result_row', 'donors', 'regions', 'proposals'));
     }
 
     /**
@@ -122,49 +125,41 @@ class LogFrameController extends Controller
      */
     public function update(Request $request, LogFrame $log_frame)
     {
-        dd($request->all());
-        
-        if (request('status')) {
+        // dd($request->all());
+        if ($request->status) {
             // update log_frame status
-            if ($log_frame->update(['status' => request('status')]))
-                return redirect()->back()->with('success', 'Status updated successfully');
+            $data = $request->only('status', 'status_note');
+            if (empty($data['status_note'])) unset($data['status_note']);
+            if ($log_frame->update($data)) return redirect()->back()->with('success', 'Status updated successfully');
             else errorHandler('Error updating status!');
         } else {
-            // update log_frame
             $request->validate([
-                'title' => 'required', 
-                'region_id' => 'required', 
-                'sector' => 'required', 
-                'donor_id' => 'required', 
-                'start_date' => 'required', 
-                'end_date' => 'required', 
-                'budget' => 'required',
+                'proposal_id' => 'required',
             ]);
-
-            $data = $request->only(['title', 'region_id', 'sector', 'donor_id', 'start_date', 'end_date', 'budget',]);
-            $data_items = $request->only(['name', 'is_obj', 'row_num', 'row_index', 'item_id']);
+    
+            $data = $request->only('proposal_id');
+            $data_items = $request->only([
+                'item_id', 'summary', 'indicator', 'baseline', 'target', 'data_source', 'frequency', 'assign_to', 'context'
+            ]);
 
             DB::beginTransaction();
 
             try {
-                $data = inputClean($data);
-                if ($log_frame->update($data)) {
-                    $data_items = databaseArray($data_items);
-                    $data_items = fillArrayRecurse($data_items, ['proposal_id' => $log_frame->id]);
-
-                    $log_frame->items()->whereNotIn('id', array_map(fn($v) => $v['item_id'], $data_items))->delete();
-                    foreach ($data_items as $value) {
-                        $proposal_item = ProposalItem::firstOrNew(['id' => $value['item_id']]);
-                        $proposal_item->fill($value);
-                        unset($log_frame->item_id);
-                        $proposal_item->save();
-                    }
-
-                    DB::commit();
-                    return redirect(route('log_frames.index'))->with(['success' => 'LogFrame updated successfully']);
+                $data_items = fillArrayRecurse(databaseArray($data_items), [
+                    'proposal_id' => $data['proposal_id'],
+                ]);
+                foreach ($data_items as $item) {
+                    $item['id'] = $item['item_id'];
+                    unset($item['item_id']);
+                    $log_frame = LogFrame::findOrFail($item['id']);
+                    $log_frame->fill($item);
+                    $log_frame->save();
                 }
+
+                DB::commit();
+                return redirect(route('log_frames.index'))->with(['success' => 'Log Frame updated successfully']);
             } catch (\Throwable $th) {
-                errorHandler('Error updating log_frame!');
+                errorHandler('Error updating Log Frame!');
             }   
         } 
     }
