@@ -11,7 +11,7 @@
                 <!-- Default Tabs -->
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="goal-tab" data-bs-toggle="tab" data-bs-target="#goal" type="button" role="tab" aria-controls="home" aria-selected="true">Goal (Impact)</button>
+                        <button class="nav-link" id="goal-tab" data-bs-toggle="tab" data-bs-target="#goal" type="button" role="tab" aria-controls="home" aria-selected="true">Goal (Impact)</button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="outcome-tab" data-bs-toggle="tab" data-bs-target="#outcome" type="button" role="tab" aria-controls="outcome" aria-selected="false">Outcome (Objective)</button>
@@ -22,7 +22,7 @@
                 </ul>
                 <div class="tab-content pt-2" id="myTabContent">
                     <!-- impact/goal  -->
-                    <div class="tab-pane fade show active" id="goal" role="tabpanel" aria-labelledby="goal-tab">
+                    <div class="tab-pane fade show" id="goal" role="tabpanel" aria-labelledby="goal-tab">
                         <table class="table table-striped table-bordered" id="impact_tbl">
                             <tbody>
                                 @php
