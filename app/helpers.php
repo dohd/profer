@@ -57,9 +57,9 @@ if (!function_exists('numberClean')) {
 }
 
 if (!function_exists('numberFormat')) {
-    function numberFormat($number=0)
+    function numberFormat($number=0, $deci=2)
     {
-        return number_format($number, 2);
+        return number_format($number, $deci);
     }
 }
 
