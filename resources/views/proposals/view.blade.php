@@ -36,7 +36,7 @@
                             </td>
                         </tr>
                     @endforeach
-                    @if ($proposal->status_note)
+                    @if ($proposal->status_note && $proposal->status == 'rejected')
                         <tr>
                             <th width="30%">Rejection Remark</th>
                             <td>{{ $proposal->status_note }}</td>
