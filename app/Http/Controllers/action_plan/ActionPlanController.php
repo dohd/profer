@@ -28,7 +28,11 @@ class ActionPlanController extends Controller
     {
         $action_plans = ActionPlan::all();
 
-        return view('action_plans.index', compact('action_plans'));
+        $pending_count = ActionPlan::where('status', 'pending')->count();
+        $approved_count = ActionPlan::where('status', 'approved')->count();
+        $review_count = ActionPlan::where('status', 'review')->count();
+
+        return view('action_plans.index', compact('action_plans', 'pending_count', 'approved_count', 'review_count'));
     }
 
     /**

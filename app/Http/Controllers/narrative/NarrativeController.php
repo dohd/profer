@@ -21,7 +21,11 @@ class NarrativeController extends Controller
     {
         $narratives = Narrative::all();
 
-        return view('narratives.index', compact('narratives'));
+        $pending_count = Narrative::where('status', 'pending')->count();
+        $approved_count = Narrative::where('status', 'approved')->count();
+        $review_count = Narrative::where('status', 'review')->count();
+
+        return view('narratives.index', compact('narratives', 'pending_count', 'approved_count', 'review_count'));
     }
 
     // narrative datatable

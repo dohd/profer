@@ -21,7 +21,11 @@ class ProposalController extends Controller
     {
         $proposals = Proposal::all();
 
-        return view('proposals.index', compact('proposals'));
+        $pending_count = Proposal::where('status', 'pending')->count();
+        $approved_count = Proposal::where('status', 'approved')->count();
+        $rejected_count = Proposal::where('status', 'rejected')->count();
+
+        return view('proposals.index', compact('proposals', 'pending_count', 'approved_count', 'rejected_count'));
     }
 
     // proposal datatable
