@@ -21,9 +21,7 @@
      * Initiate select2
      **/
     $('.select2').each(function() {
-        $(this).select2({
-            allowClear: true,
-        });
+        $(this).css('width', '100%').select2({allowClear: true});
     });
 
     /**
