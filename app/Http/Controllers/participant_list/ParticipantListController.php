@@ -35,13 +35,14 @@ class ParticipantListController extends Controller
      */
     public function create()
     {
+        $proposals = Proposal::whereHas('action_plans')->get(['id', 'title']);
+        $programmes = Programme::whereHas('action_plans')->get(['id', 'name']);
+        $cohorts = Cohort::whereHas('plan_cohorts')->get(['id', 'name']);
+        $regions = Region::whereHas('plan_regions')->get(['id', 'name']);
+
         $age_groups = AgeGroup::get(['id', 'bracket']);
         $disabilities = Disability::get(['id', 'name', 'code']);
-        $proposals = Proposal::get(['id', 'title']);
-        $regions = Region::get(['id', 'name']);
-        $programmes = Programme::get(['id', 'name']);
-        $cohorts = Cohort::get(['id', 'name']);
-
+        
         return view('participant_lists.create', 
             compact('age_groups', 'disabilities', 'proposals', 'regions', 'programmes', 'cohorts')
         );
@@ -113,12 +114,13 @@ class ParticipantListController extends Controller
      */
     public function edit(ParticipantList $participant_list)
     {
+        $proposals = Proposal::whereHas('action_plans')->get(['id', 'title']);
+        $programmes = Programme::whereHas('action_plans')->get(['id', 'name']);
+        $cohorts = Cohort::whereHas('plan_cohorts')->get(['id', 'name']);
+        $regions = Region::whereHas('plan_regions')->get(['id', 'name']);
+
         $age_groups = AgeGroup::get(['id', 'bracket']);
         $disabilities = Disability::get(['id', 'name', 'code']);
-        $proposals = Proposal::get(['id', 'title']);
-        $regions = Region::get(['id', 'name']);
-        $programmes = Programme::get(['id', 'name']);
-        $cohorts = Cohort::get(['id', 'name']);
 
         return view('participant_lists.edit', 
             compact('participant_list', 'age_groups', 'disabilities', 'proposals', 'regions', 'programmes', 'cohorts')
@@ -157,8 +159,7 @@ class ParticipantListController extends Controller
         try {     
             $data = inputClean($data);      
             if ($participant_list->update($data)) {
-                $data_items = databaseArray($data_items);
-                $data_items = fillArrayRecurse($data_items, [
+                $data_items = fillArrayRecurse(databaseArray($data_items), [
                     'participant_list_id' => $participant_list->id,
                     'date' => $data['date'],
                 ]);

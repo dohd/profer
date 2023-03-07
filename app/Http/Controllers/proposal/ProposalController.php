@@ -146,8 +146,9 @@ class ProposalController extends Controller
             try {
                 $data = inputClean($data);
                 if ($proposal->update($data)) {
-                    $data_items = databaseArray($data_items);
-                    $data_items = fillArrayRecurse($data_items, ['proposal_id' => $proposal->id]);
+                    $data_items = fillArrayRecurse(databaseArray($data_items), [
+                        'proposal_id' => $proposal->id
+                    ]);
 
                     $proposal->items()->whereNotIn('id', array_map(fn($v) => $v['item_id'], $data_items))->delete();
                     foreach ($data_items as $value) {
@@ -180,12 +181,17 @@ class ProposalController extends Controller
     }
 
     // proposal items
-    public function proposal_items()
+    public function proposal_items(Request $request)
     {
-        $proposal_items = ProposalItem::where('proposal_id', request('proposal_id'))
-            ->orderBy('row_index', 'asc')
-            ->get()->toArray();
-    
+        $proposal_items = [];
+        if ($request->is_participant_list) {
+            $proposal_items = ProposalItem::whereHas('plan_activities')
+                ->where('proposal_id', $request->proposal_id)->get();
+        } else {
+            $proposal_items = ProposalItem::where('proposal_id', $request->proposal_id)
+                ->get();
+        }
+        
         return response()->json($proposal_items);
     }
 }

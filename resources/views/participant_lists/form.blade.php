@@ -209,7 +209,12 @@
 
     // on proposal change fetch activites
     $('#proposal').change(function() {
-        $.post("{{ route('proposals.items') }}", {proposal_id: $(this).val()}, data => {
+        const url = @json(route('proposals.items'));
+        const params = {
+            proposal_id: $(this).val(),
+            is_participant_list: 1,
+        };
+        $.post(url, params, data => {
             const activityId = @json(@$participant_list->proposal_item_id);
             $('#activity option:not(:first)').remove();
             data.forEach(v => {

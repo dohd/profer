@@ -2,6 +2,7 @@
 
 namespace App\Models\proposal\Traits;
 
+use App\Models\action_plan\ActionPlan;
 use App\Models\donor\Donor;
 use App\Models\item\ProposalItem;
 use App\Models\log_frame\LogFrame;
@@ -10,6 +11,11 @@ use App\Models\region\Region;
 
 trait ProposalRelationship
 {
+    public function action_plans()
+    {
+        return $this->hasMany(ActionPlan::class);
+    }
+
     public function log_frames()
     {
         return $this->hasMany(LogFrame::class);
