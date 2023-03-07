@@ -30,9 +30,10 @@
      * Persist Bootstrap tab on page refresh
     **/
     $('.nav-tabs .nav-link').on('show.bs.tab', function() {
-        localStorage['activeTab'] = $(this).attr('data-bs-target');
+        localStorage['tabIndex'] = $(this).attr('data-bs-target');
     });
-    const activeTab = localStorage['activeTab'];
-    if (activeTab) $('.nav-item button[data-bs-target="'+ activeTab +'"]').click(); 
+    const tabIndex = localStorage['tabIndex'];
+    const activeTab = $('.nav-item button[data-bs-target="'+ tabIndex +'"]');
+    if (tabIndex && activeTab.length) activeTab.click(); 
     else $('.nav-tabs .nav-link:first').click();
 </script>
