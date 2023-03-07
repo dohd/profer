@@ -8,11 +8,9 @@ use App\Models\action_plan\ActionPlanActivity;
 use App\Models\action_plan\ActionPlanCohort;
 use App\Models\action_plan\ActionPlanRegion;
 use App\Models\cohort\Cohort;
-use App\Models\item\ActionPlanItem;
 use App\Models\item\ProposalItem;
 use App\Models\programme\Programme;
 use App\Models\proposal\Proposal;
-use App\Models\region\ActionPlanItemRegion;
 use App\Models\region\Region;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -81,20 +79,23 @@ class ActionPlanController extends Controller
         try {
             $action_plan = ActionPlan::create($data);
 
+            // create activity
             $data_activity = inputClean($data_activity);
             $data_activity['action_plan_id'] = $action_plan->id;
             $plan_activity = ActionPlanActivity::create($data_activity);
 
-            $add_params = [
+            $activity_params = [
                 'action_plan_id' => $action_plan->id,
                 'activity_id' => $plan_activity->id,
             ];
 
+            // create regions
             $data_regions = databaseArray($data_regions);
-            $data_regions = fillArrayRecurse($data_regions, $add_params);
+            $data_regions = fillArrayRecurse($data_regions, $activity_params);
             ActionPlanRegion::insert($data_regions);
-
-            $data_cohort = fillArray($data_cohort, $add_params);
+            
+            // create cohorts
+            $data_cohort = fillArray($data_cohort, $activity_params);
             ActionPlanCohort::insert($data_cohort);
 
             DB::commit();
@@ -162,57 +163,58 @@ class ActionPlanController extends Controller
      */
     public function update(Request $request, ActionPlan $action_plan)
     {
-        dd($request->all());
-        if (request('status')) {
-            // update action plan status
-            if ($action_plan->update(['status' => request('status')]))
-                return redirect()->back()->with('success', 'Status updated successfully');
+        // dd($request->all());
+        if ($request->status) {
+            // update log_frame status
+            $data = $request->only('status', 'status_note');
+            if (empty($data['status_note'])) unset($data['status_note']);
+            if ($action_plan->update($data)) return redirect()->back()->with('success', 'Status updated successfully');
             else errorHandler('Error updating status!');
         } else {
             $request->validate([
                 'proposal_id' => 'required', 
                 'programme_id' => 'required', 
-            ]);
+                'main_assigned_to' => 'required',
+                'activity_id' => 'required',
+                'start_date' => 'required',
+                'end_date' => 'required',
+                'assigned_to' => 'required',
+                'cohort_id' => 'required',
+                'target_no' => 'required',
+                'region_id' => 'required',
+                'resources' => 'required',
+            ]); 
+    
             $data = $request->only(['proposal_id', 'programme_id', 'main_assigned_to']);
-            $data_items = $request->only(['proposal_item_id', 'start_date', 'end_date', 'resources', 'assigned_to', 'cohort_id', 'item_id']);
-            $data_item_regions = $request->region_id;
-
+            $data_activity = $request->only(['activity_id', 'start_date', 'end_date', 'assigned_to', 'resources']);
+            $data_regions = $request->only(['region_id']);
+            $data_cohort = $request->only(['cohort_id', 'target_no']);
+    
             DB::beginTransaction();
 
             try {
-                $data = inputClean($data);
-                $data_items = databaseArray($data_items);
-                $data_item_regions = explodeArray('-', $data_item_regions);
-                foreach ($data_item_regions as $key => $value) {
-                    $data_item_regions[] = ['region_id' => $value[0], 'proposal_item_id' => $value[1]];
-                    unset($data_item_regions[$key]);
-                }
-                
-                if ($action_plan->update($data)) {
-                    // action plan items
-                    $action_plan->items()->whereNotIn('id', array_map(fn($v) => $v['item_id'], $data_items))->delete();
-                    $data_items = fillArrayRecurse($data_items, ['action_plan_id' => $action_plan->id]);
-                    foreach ($data_items as $value) {
-                        $action_plan_item = ActionPlanItem::firstOrNew(['id' => $value['item_id']]);
-                        $action_plan_item->fill($value);
-                        unset($action_plan_item->item_id);
-                        $action_plan_item->save();
-                    }
+                $action_plan->update($data);
+                // update activity
+                $action_plan->plan_activity->update($data_activity);
 
-                    // item regions
-                    foreach ($data_item_regions as $i => $item_region) {
-                        foreach ($data_items as $item) {
-                            if ($item['proposal_item_id'] == $item_region['proposal_item_id']) {
-                                $data_item_regions[$i]['action_plan_item_id'] = $item['item_id'];
-                            }
-                        }
-                    }
-                    ActionPlanItemRegion::whereIn('action_plan_item_id', array_map(fn($v) => $v['item_id'], $data_items))->delete();
-                    ActionPlanItemRegion::insert($data_item_regions);
-                    
-                    DB::commit();
-                    return redirect(route('action_plans.index'))->with(['success' => 'Action Plan updated successfully']);
-                }
+                $activity_params = [
+                    'action_plan_id' => $action_plan->id,
+                    'activity_id' => $action_plan->plan_activity->id,
+                ];
+
+                // update regions
+                $data_regions = databaseArray($data_regions);
+                $data_regions = fillArrayRecurse($data_regions, $activity_params);
+                ActionPlanRegion::where($activity_params)->delete();
+                ActionPlanRegion::insert($data_regions);
+
+                // update cohort
+                $data_cohort = fillArray($data_cohort, $activity_params);
+                ActionPlanCohort::where($activity_params)->delete();
+                ActionPlanCohort::insert($data_cohort);
+
+                DB::commit();
+                return redirect(route('action_plans.index'))->with(['success' => 'Action Plan updated successfully']);
             } catch (\Throwable $th) { 
                 errorHandler('Error updating Action Plan!');
             }  
@@ -227,18 +229,20 @@ class ActionPlanController extends Controller
      */
     public function destroy(ActionPlan $action_plan)
     {
-        dd($action_plan->id);
         if ($action_plan->delete())
             return redirect(route('action_plans.index'))->with(['success' => 'Action Plan deleted successfully']);
         else errorHandler('Error deleting Action Plan!');
     }
 
     /**
-     * Proposal items
+     * Proposal items (activities)
      */
-    public function proposal_items()
+    public function proposal_items(Request $request)
     {
-        $proposal_items = ProposalItem::where(['proposal_id' => request('proposal_id'), 'is_obj' => 0])->get(['id', 'name']);
+        $proposal_items = ProposalItem::where([
+            'proposal_id' => $request->proposal_id, 
+            'is_obj' => 0
+        ])->get(['id', 'name']);
             
         return response()->json($proposal_items);
     }

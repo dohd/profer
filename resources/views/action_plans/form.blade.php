@@ -11,7 +11,7 @@
 </div>
 <div class="row mb-3">
     <div class="col-9">
-        <label for="title">Key Programme*</label>
+        <label for="programme">Key Programme*</label>
         <select name="programme_id" id="programme" class="form-control select2" data-placeholder="Choose Programme" required>
             <option value=""></option>
             @foreach ($programmes as $programme)
