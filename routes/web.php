@@ -4,7 +4,6 @@ use App\Http\Controllers\action_plan\ActionPlanController;
 use App\Http\Controllers\age_group\AgeGroupController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\cohort\CohortController;
-use App\Http\Controllers\CoreController;
 use App\Http\Controllers\disability\DisabilityController;
 use App\Http\Controllers\donor\DonorController;
 use App\Http\Controllers\HomeController;
@@ -16,8 +15,9 @@ use App\Http\Controllers\proposal\ProposalController;
 use App\Http\Controllers\region\RegionController;
 use App\Http\Controllers\report\ReportController;
 use App\Http\Controllers\user_profile\UserProfileController;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,7 +51,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('age_groups', AgeGroupController::class);
 
     /**
-     * project management
+     * Programmes Management
      */
     // proposals
     Route::post('proposals/items', [ProposalController::class, 'proposal_items'])->name('proposals.items');
@@ -82,7 +82,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('narratives', NarrativeController::class);
 
     /**
-     * Reports
+     * Input/Output Analysis
      */
     // narrative indicator
     Route::get('narrative_indicator', [ReportController::class, 'narrative_indicator'])->name('reports.narrative_indicator');
