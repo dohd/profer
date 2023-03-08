@@ -4,7 +4,6 @@ namespace App\Http\Controllers\action_plan;
 
 use App\Models\action_plan\ActionPlanActivity;
 use App\Models\action_plan\ActionPlanCohort;
-use App\Models\action_plan\ActionPlanRegion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -40,7 +39,7 @@ trait ActionPlanCohortTrait
 
         try {
             $plan_activity = ActionPlanActivity::where('action_plan_id', $data['action_plan_id'])->first();
-            if (!$plan_activity) return errorHandler('Action Plan activity could not be found!');
+            if (!$plan_activity) return errorHandler('Activity could not be found!');
 
             $data['activity_id'] = $plan_activity->id;
             $data_cohort = fillArrayRecurse(databaseArray($data_cohort), $data);
@@ -58,57 +57,51 @@ trait ActionPlanCohortTrait
      */
     public function update_cohort(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $request->validate([
+            'activity_id' => 'required',
             'cohort_id' => 'required',
-            'start_date' => 'required',
-            'end_date' => 'required',
-            'assigned_to' => 'required',
-            'region_id' => 'required',
-            'resources' => 'required',
+            'target_no' => 'required',
         ]); 
 
-        $data = $request->only(['item_id', 'cohort_id', 'start_date', 'end_date', 'assigned_to', 'resources']);
-        $data_regions = $request->only(['region_id']);
+        $data = $request->only(['item_id', 'action_plan_id', 'activity_id']);
+        $data_cohort = $request->only(['cohort_id', 'target_no']); 
 
         DB::beginTransaction();
 
         try {
-            $data = inputClean($data);
-            $plan_cohort = ActionPlanCohort::findOrFail($data['item_id']);
-            unset($data['item_id']);
-            $plan_cohort->update($data);
+            $plan_activity = ActionPlanActivity::where([
+                'action_plan_id' => $data['action_plan_id'],
+                'activity_id' => $data['activity_id'],
+            ])->first();
+            if (!$plan_activity) return errorHandler('Activity could not be found!');
 
-            ActionPlanRegion::where('cohort_id', $plan_cohort->id)->delete();
-            $data_regions = databaseArray($data_regions);
-            $data_regions = fillArrayRecurse($data_regions, [
-                'cohort_id' => $plan_cohort->id, 
-                'action_plan_id' => $plan_cohort->action_plan_id,
+            $plan_cohort = ActionPlanCohort::findOrFail($data['item_id']);
+            $data = fillArrayRecurse(databaseArray($data_cohort), [
+                'activity_id' => $plan_activity->id,
             ]);
-            ActionPlanRegion::insert($data_regions);
+            $plan_cohort->fill(current($data));
+            $plan_cohort->save();
 
             DB::commit();
             return redirect()->back()->with('success', 'Cohort updated successfully');
         } catch (\Throwable $th) {
-            errorLog($th->getMessage());
             errorHandler('Error updating Cohort!');
         }
     }
 
     /**
      * Destroy Cohort
-     */
+     */ 
     public function destroy_cohort()
     {
-        dd(request('cohort_id'));
         DB::beginTransaction();
 
         try {
             $plan_cohort = ActionPlanCohort::findOrFail(request('cohort_id'));
-            $plan_cohort_count = ActionPlanCohort::where('action_plan_id', $plan_cohort->action_plan_id)->count();
-            if ($plan_cohort_count == 1) return errorHandler('Cannot delete initial cohort!');
+            $cohort_count = ActionPlanCohort::where('action_plan_id', $plan_cohort->action_plan_id)->count();
+            if ($plan_cohort->plan_activity && $cohort_count == 1) return errorHandler('Cannot delete initial cohort!');
             
-            ActionPlanRegion::where('cohort_id', $plan_cohort->id)->delete();
             $plan_cohort->delete();
 
             DB::commit();

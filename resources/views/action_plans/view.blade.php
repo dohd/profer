@@ -91,8 +91,7 @@
         } else {
             $('#note').parents('.row').addClass('d-none');
         }
-    }).trigger('change');
-
+    }).change();
 
     // select2 config
     $('select').each(function() { $(this).css('width', '100%') });
@@ -125,13 +124,13 @@
             $('#region option').each(function() {
                 const opt = $(this);
                 data.regions.forEach(v => {
-                    if (v.id == opt.attr('value')) 
-                        opt.prop('selected', true).change();
+                    if (v.id == opt.attr('value')) opt.prop('selected', true).change();
                 })
             });
         });
     });
 
+    
     /** 
      * Cohort Modal
     */
@@ -171,7 +170,7 @@
             if (!data.id) return;
             $('#cohort_modal_label').html('Edit Cohort');
             $('#cohort_form').attr('action', @json(route('action_plans.update_cohort')));
-            $('#item_id').val(data.id);
+            $('#cohort_item_id').val(data.id);
             if (data.plan_activity) $('#cohort_activity').val(data.plan_activity.activity_id).change();
             const row = $('#cohorts_tbl tbody tr:first');
             row.find('.cohort_id').val(data.cohort_id).change();
@@ -184,7 +183,7 @@
         $('.addrow').removeClass('d-none');
         $('#cohort_modal_label').html('Add Cohort');
         $('#cohort_form').attr('action', @json(route('action_plans.store_cohort')));
-        $('#item_id').val('');
+        $('#cohort_item_id').val('');
         $('#cohort_activity').val('').change();
         const row = $('#cohorts_tbl tbody tr:first');
         row.find('.cohort_id').val('').change();

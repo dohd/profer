@@ -6,8 +6,8 @@
                 <h5 class="modal-title" id="cohort_modal_label">Add Target Cohort</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            {{ Form::open(['route' => 'action_plans.store_cohort', 'method' => 'POST', 'id' => 'activity_form']) }}
-                <input type="hidden" name="item_id">
+            {{ Form::open(['route' => 'action_plans.store_cohort', 'method' => 'POST', 'id' => 'cohort_form']) }}
+                <input type="hidden" name="item_id" id="cohort_item_id">
                 <input type="hidden" name="action_plan_id" value="{{ $action_plan->id }}">
                 <div class="modal-body">
                     <div class="row mb-3">
