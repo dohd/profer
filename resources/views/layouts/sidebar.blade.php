@@ -160,8 +160,7 @@
       </ul>
     </li>
 
-
-    <li class="nav-heading">Project Management</li>
+    <li class="nav-heading">Programme Management</li>
 
     {{-- proposal --}}
     <li class="nav-item">
@@ -288,7 +287,7 @@
       </ul>
     </li>
 
-    <li class="nav-heading">Reports</li>
+    <li class="nav-heading">Input/Output Analysis</li>
 
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('reports.narrative_indicator') }}">
@@ -304,7 +303,7 @@
       </a>
     </li>
 
-    <li class="nav-heading">Authorization</li>
+    <li class="nav-heading">Authorization Control</li>
 
     {{-- roles --}}
     <li class="nav-item">
@@ -355,8 +354,6 @@
         </li>
       </ul>
     </li>
-    
-    <li class="nav-heading">Pages</li>
 
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('user_profiles.index') }}">
@@ -364,8 +361,9 @@
         <span>Profile</span>
       </a>
     </li>
-    <!-- End Profile Page Nav -->
-
+ {{--    
+    <li class="nav-heading">Pages</li>
+    
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('register') }}">
         <i class="bi bi-card-list"></i>
@@ -389,5 +387,6 @@
       </a>
     </li>
     <!-- End Error 404 Page Nav -->
+     --}}
   </ul>
 </aside>
