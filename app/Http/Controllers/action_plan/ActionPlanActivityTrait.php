@@ -38,13 +38,22 @@ trait ActionPlanActivityTrait
 
         $data = $request->only(['action_plan_id', 'activity_id', 'start_date', 'end_date', 'assigned_to', 'resources']);
         $data_regions = $request->only(['region_id']); 
-        // dd(compact('data', 'data_regions'));
+
         DB::beginTransaction();
 
         try {
             $data = inputClean($data);
+
+            $is_plan_activity = ActionPlanActivity::where([
+                'action_plan_id' => $data['action_plan_id'], 
+                'activity_id' => $data['activity_id']
+            ])->count();
+            if ($is_plan_activity) return errorHandler('Activity already exists!');
+
+            // create activity
             $plan_activity = ActionPlanActivity::create($data);
 
+            // create regions
             $data_regions = databaseArray($data_regions);
             $data_regions = fillArrayRecurse($data_regions, [
                 'activity_id' => $plan_activity->id, 
@@ -81,10 +90,20 @@ trait ActionPlanActivityTrait
 
         try {
             $data = inputClean($data);
+
+            $is_plan_activity = ActionPlanActivity::where('id', '!=', $data['item_id'])
+                ->where([
+                    'action_plan_id' => $data['action_plan_id'], 
+                    'activity_id' => $data['activity_id']
+                ])->count();
+            if ($is_plan_activity) return errorHandler('Activity already exists!');
+            
+            // update plan activity
             $plan_activity = ActionPlanActivity::findOrFail($data['item_id']);
             unset($data['item_id']);
             $plan_activity->update($data);
 
+            // update regions
             ActionPlanRegion::where('activity_id', $plan_activity->id)->delete();
             $data_regions = databaseArray($data_regions);
             $data_regions = fillArrayRecurse($data_regions, [
@@ -96,7 +115,6 @@ trait ActionPlanActivityTrait
             DB::commit();
             return redirect()->back()->with('success', 'Activity updated successfully');
         } catch (\Throwable $th) {
-            errorLog($th->getMessage());
             errorHandler('Error updating Activity!');
         }
     }
