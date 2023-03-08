@@ -5,9 +5,7 @@
                 <th scope="col" width="8%">#</th>
                 <th scope="col">Activity</th>
                 <th scope="col">Start</th>
-                <th scope="col">End</th>
-                <th width="14%">Region</th>
-                <th>Resources</th>
+                <th scope="col">Region</th>
                 <th>Assigned To</th>
                 <th>Action</th>
             </tr>
@@ -18,9 +16,7 @@
                     <td>{{ $i+1 }}</td>
                     <td>{{ $plan_activity->activity? $plan_activity->activity->name : '' }}</td>
                     <td>{{ dateFormat($plan_activity->start_date) }}</td>
-                    <td>{{ dateFormat($plan_activity->end_date) }}</td>
                     <td>{{ implode(', ', $plan_activity->regions->pluck('name')->toArray()) }}</td>
-                    <td>{{ $plan_activity->resources }}</td>
                     <td>{{ $plan_activity->assigned_to }}</td>
                     <td>
                         <div class="dropdown"> 

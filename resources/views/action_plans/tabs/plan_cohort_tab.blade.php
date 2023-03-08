@@ -2,10 +2,10 @@
     <table class="table table-striped datatable" id="cohort_list_tbl">
         <thead>
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">Activity</th>
-                <th width="50%">Cohort</th>
-                <th scope="col">Targeted No.</th>
+                <th>#</th>
+                <th width="40%">Activity</th>
+                <th>Cohort</th>
+                <th>Targeted No.</th>
                 <th>Action</th>
             </tr>
         </thead>
