@@ -8,7 +8,6 @@ use App\Models\log_frame\LogFrame;
 use App\Models\proposal\Proposal;
 use App\Models\region\Region;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class LogFrameController extends Controller
 {
@@ -19,7 +18,7 @@ class LogFrameController extends Controller
      */
     public function index()
     {
-        $log_frames = LogFrame::where('context', 'goal')->get();
+        $log_frames = LogFrame::all();
 
         return view('log_frames.index', compact('log_frames'));
     }
@@ -56,27 +55,12 @@ class LogFrameController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        $request->validate([
-            'proposal_id' => 'required',
-        ]);
+        $request->validate(['proposal_id' => 'required',]);
 
-        $data = $request->only('proposal_id');
-        $data_items = $request->only([
-            'summary', 'indicator', 'baseline', 'target', 'data_source', 'frequency', 'assign_to', 'context'
-        ]);
-
-        DB::beginTransaction();
+        $data = $request->except('_token'); 
 
         try {
-            $data_items = fillArrayRecurse(databaseArray($data_items), [
-                'tid' => (new LogFrame)->next_tid,
-                'proposal_id' => $data['proposal_id'],
-                'user_id' => auth()->user()->id,
-                'ins' => auth()->user()->ins,
-            ]);
-            LogFrame::insert($data_items);
-
-            DB::commit();
+            LogFrame::create($data);
             return redirect(route('log_frames.index'))->with(['success' => 'Log Frame created successfully']);
         } catch (\Throwable $th) {
             errorHandler('Error creating Log frame!');
@@ -91,9 +75,7 @@ class LogFrameController extends Controller
      */
     public function show(LogFrame $log_frame)
     {
-        $log_frame_rows = LogFrame::where('tid', $log_frame->tid)->get();
-
-        return view('log_frames.view', compact('log_frame', 'log_frame_rows'));
+        return view('log_frames.view', compact('log_frame'));
     }
 
     /**
@@ -107,13 +89,8 @@ class LogFrameController extends Controller
         $donors = Donor::get(['id', 'name']);
         $regions = Region::get(['id', 'name']);
         $proposals = Proposal::where('status', 'approved')->get(['id', 'title']);
-
-        $outcome_row = LogFrame::where('proposal_id', $log_frame->proposal_id)
-            ->where('context', 'outcome')->first();
-        $result_row = LogFrame::where('proposal_id', $log_frame->proposal_id)
-            ->where('context', 'result')->first();
         
-        return view('log_frames.edit', compact('log_frame', 'outcome_row', 'result_row', 'donors', 'regions', 'proposals'));
+        return view('log_frames.edit', compact('log_frame', 'donors', 'regions', 'proposals'));
     }
 
     /**
@@ -126,34 +103,16 @@ class LogFrameController extends Controller
     public function update(Request $request, LogFrame $log_frame)
     {
         // dd($request->all());
-        $request->validate([
-            'proposal_id' => 'required',
-        ]);
+        $request->validate(['proposal_id' => 'required',]);
 
-        $data = $request->only('proposal_id');
-        $data_items = $request->only([
-            'item_id', 'summary', 'indicator', 'baseline', 'target', 'data_source', 'frequency', 'assign_to', 'context'
-        ]);
-
-        DB::beginTransaction();
+        $data = $request->except('_token'); 
 
         try {
-            $data_items = fillArrayRecurse(databaseArray($data_items), [
-                'proposal_id' => $data['proposal_id'],
-            ]);
-            foreach ($data_items as $item) {
-                $item['id'] = $item['item_id'];
-                unset($item['item_id']);
-                $log_frame = LogFrame::findOrFail($item['id']);
-                $log_frame->fill($item);
-                $log_frame->save();
-            }
-
-            DB::commit();
+            $log_frame->update($data);
             return redirect(route('log_frames.index'))->with(['success' => 'Log Frame updated successfully']);
         } catch (\Throwable $th) {
             errorHandler('Error updating Log Frame!');
-        }   
+        }
     }
 
     /**
@@ -164,7 +123,7 @@ class LogFrameController extends Controller
      */
     public function destroy(LogFrame $log_frame)
     {
-        if (LogFrame::where('tid', $log_frame->tid)->delete())
+        if ($log_frame->delete())
             return redirect(route('log_frames.index'))->with(['success' => 'Log Frame deleted successfully']);
         else errorHandler('Error deleting Log Frame!');
     }

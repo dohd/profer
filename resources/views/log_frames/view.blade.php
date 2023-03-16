@@ -21,30 +21,27 @@
                     </li>
                 </ul>
                 <div class="tab-content pt-2" id="myTabContent">
+                    @php
+                        $labels = [
+                            'Summary' => 'summary', 
+                            'Indicator' => 'indicator', 
+                            'Baseline' => 'baseline', 
+                            'Target' => 'target', 
+                            'Data Source' => 'data_source', 
+                            'Frequency' => 'frequency', 
+                            'Assign To' => 'assign_to'
+                        ];
+                    @endphp
                     <!-- impact/goal  -->
                     <div class="tab-pane fade show" id="goal" role="tabpanel" aria-labelledby="goal-tab">
                         <table class="table table-striped table-bordered" id="impact_tbl">
                             <tbody>
-                                @php
-                                    $labels = [
-                                        'Summary' => 'summary', 
-                                        'Indicator' => 'indicator', 
-                                        'Baseline' => 'baseline', 
-                                        'Target' => 'target', 
-                                        'Data Source' => 'data_source', 
-                                        'Frequency' => 'frequency', 
-                                        'Assign To' => 'assign_to'
-                                    ];
-                                @endphp
+                                
                                 @foreach ($labels as $key => $value)
                                     <tr>
                                         <th width="30%">{{ $key }}</th>
                                         <td>
-                                            @foreach ($log_frame_rows as $row)
-                                                @if ($row->context == 'goal')
-                                                    {{ $row[$value] }}
-                                                @endif
-                                            @endforeach
+                                            {{ $log_frame['goal_' . $value] }}
                                         </td>
                                     </tr>   
                                 @endforeach
@@ -56,26 +53,13 @@
                     <div class="tab-pane fade" id="outcome" role="tabpanel" aria-labelledby="outcome-tab">
                         <table class="table table-striped table-bordered" id="outcome_tbl">
                             <tbody>
-                                @php
-                                    $labels = [
-                                        'Summary' => 'summary', 
-                                        'Indicator' => 'indicator', 
-                                        'Baseline' => 'baseline', 
-                                        'Target' => 'target', 
-                                        'Data Source' => 'data_source', 
-                                        'Frequency' => 'frequency', 
-                                        'Assign To' => 'assign_to'
-                                    ];
-                                @endphp
                                 @foreach ($labels as $key => $value)
                                     <tr>
                                         <th width="30%">{{ $key }}</th>
                                         <td>
-                                            @foreach ($log_frame_rows as $row)
-                                                @if ($row->context == 'outcome')
-                                                    {{ $row[$value] }}
-                                                @endif
-                                            @endforeach
+                                            <td>
+                                                {{ $log_frame['outcome_' . $value] }}
+                                            </td>
                                         </td>
                                     </tr>   
                                 @endforeach
@@ -87,26 +71,12 @@
                     <div class="tab-pane fade" id="result" role="tabpanel" aria-labelledby="result-tab">
                         <table class="table table-striped table-bordered" id="result_tbl">
                             <tbody>
-                                @php
-                                    $labels = [
-                                        'Summary' => 'summary', 
-                                        'Indicator' => 'indicator', 
-                                        'Baseline' => 'baseline', 
-                                        'Target' => 'target', 
-                                        'Data Source' => 'data_source', 
-                                        'Frequency' => 'frequency', 
-                                        'Assign To' => 'assign_to'
-                                    ];
-                                @endphp
+                                
                                 @foreach ($labels as $key => $value)
                                     <tr>
                                         <th width="30%">{{ $key }}</th>
                                         <td>
-                                            @foreach ($log_frame_rows as $row)
-                                                @if ($row->context == 'result')
-                                                    {{ $row[$value] }}
-                                                @endif
-                                            @endforeach
+                                            {{ $log_frame['result_' . $value] }}
                                         </td>
                                     </tr>   
                                 @endforeach

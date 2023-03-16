@@ -25,61 +25,46 @@
     </li>
 </ul>
 <div class="tab-content pt-2" id="myTabContent">
+    @php
+        $labels = [
+            'Summary' => 'summary', 
+            'Indicator' => 'indicator', 
+            'Baseline' => 'baseline', 
+            'Target' => 'target', 
+            'Data Source' => 'data_source', 
+            'Frequency' => 'frequency', 
+            'Assign To' => 'assign_to'
+        ];
+    @endphp
     <!-- impact/goal  -->
     <div class="tab-pane fade show active" id="goal" role="tabpanel" aria-labelledby="goal-tab">
         <table class="table table-striped" id="impact_tbl">
             <tbody>
-                @php
-                    $labels = [
-                        'Summary' => 'summary[]', 
-                        'Indicator' => 'indicator[]', 
-                        'Baseline' => 'baseline[]', 
-                        'Target' => 'target[]', 
-                        'Data Source' => 'data_source[]', 
-                        'Frequency' => 'frequency[]', 
-                        'Assign To' => 'assign_to[]'
-                    ];
-                @endphp
+                
                 @foreach ($labels as $key => $value)
                     <tr>
                         <td>{{ $key }}</td>
                         <td>
-                            {{ Form::textarea($value, null, ['class' => 'form-control', 'rows' => '2']) }}
+                            {{ Form::textarea('goal_'.$value, null, ['class' => 'form-control', 'rows' => '2']) }}
                         </td>
                     </tr>   
                 @endforeach
-                <input type="hidden" name="context[]" value="goal">
-                <input type="hidden" name="item_id[]" value="{{ @$log_frame->id }}">
             </tbody>
         </table>
-        
     </div>
 
     <!-- outcome/objective  -->
     <div class="tab-pane fade" id="outcome" role="tabpanel" aria-labelledby="outcome-tab">
         <table class="table table-striped" id="impact_tbl">
             <tbody>
-                @php
-                    $labels = [
-                        'Summary' => 'summary[]', 
-                        'Indicator' => 'indicator[]', 
-                        'Baseline' => 'baseline[]', 
-                        'Target' => 'target[]', 
-                        'Data Source' => 'data_source[]', 
-                        'Frequency' => 'frequency[]', 
-                        'Assign To' => 'assign_to[]'
-                    ];
-                @endphp
                 @foreach ($labels as $key => $value)
                     <tr>
                         <td>{{ $key }}</td>
                         <td>
-                            {{ Form::textarea($value, @$outcome_row[str_replace('[]', '', $value)], ['class' => 'form-control', 'rows' => '2']) }}
+                            {{ Form::textarea('outcome_'.$value, null, ['class' => 'form-control', 'rows' => '2']) }}
                         </td>
                     </tr>   
                 @endforeach
-                <input type="hidden" name="context[]" value="outcome">
-                <input type="hidden" name="item_id[]" value="{{ @$outcome_row->id }}">
             </tbody>
         </table>
     </div>
@@ -88,28 +73,14 @@
     <div class="tab-pane fade" id="result" role="tabpanel" aria-labelledby="result-tab">
         <table class="table table-striped" id="impact_tbl">
             <tbody>
-                @php
-                    $labels = [
-                        'Summary' => 'summary[]', 
-                        'Indicator' => 'indicator[]', 
-                        'Baseline' => 'baseline[]', 
-                        'Target' => 'target[]', 
-                        'Data Source' => 'data_source[]', 
-                        'Frequency' => 'frequency[]', 
-                        'Assign To' => 'assign_to[]'
-                    ];
-                    
-                @endphp
                 @foreach ($labels as $key => $value)
                     <tr>
                         <td>{{ $key }}</td>
                         <td>
-                            {{ Form::textarea($value, @$result_row[str_replace('[]', '', $value)], ['class' => 'form-control', 'rows' => '2']) }}
+                            {{ Form::textarea('result_'.$value, @$result_row[str_replace('[]', '', $value)], ['class' => 'form-control', 'rows' => '2']) }}
                         </td>
                     </tr>   
                 @endforeach
-                <input type="hidden" name="context[]" value="result">
-                <input type="hidden" name="item_id[]" value="{{ @$result_row->id }}">
             </tbody>
         </table>
     </div>
