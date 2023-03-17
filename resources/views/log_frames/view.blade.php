@@ -57,9 +57,7 @@
                                     <tr>
                                         <th width="30%">{{ $key }}</th>
                                         <td>
-                                            <td>
-                                                {{ $log_frame['outcome_' . $value] }}
-                                            </td>
+                                            {{ $log_frame['outcome_' . $value] }}
                                         </td>
                                     </tr>   
                                 @endforeach
