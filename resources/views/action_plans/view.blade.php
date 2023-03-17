@@ -79,26 +79,29 @@
     <!-- End Default Tabs -->
     @include('action_plans.partial.status_modal')
     @include('action_plans.partial.activity_modal')
+    @include('action_plans.partial.activity_view_modal')
     @include('action_plans.partial.cohort_modal')
 @stop
 
 @section('script')
 <script>
-    // on change status
+    // on status change
     $('#status').change(function() {
-        if ($(this).val() == 'review') {
+        if ($(this).val() == 'review') 
             $('#note').parents('.row').removeClass('d-none');
-        } else {
-            $('#note').parents('.row').addClass('d-none');
-        }
+        else $('#note').parents('.row').addClass('d-none');
     }).change();
 
     // select2 config
     $('select').each(function() { $(this).css('width', '100%') });
-
     ['activity', 'region'].forEach(v => {
         $('#'+v).select2({allowClear: true, dropdownParent: $('#activity_modal')});
     });
+
+
+    /**
+     * Activity Modal
+     **/
     // reset activity modal
     $('#activity_modal').on('hide.bs.modal', function() {
         $('#activity_modal_label').html('Add Activity');
@@ -129,6 +132,32 @@
             });
         });
     });
+    // show activity modal
+    $('#activity_tbl').on('click', '.view', function() {
+        const url = $(this).attr('data-url');
+        const activity_id = $(this).attr('data-id');
+        $.post(url, {activity_id}, data => {
+            if (!data.id) return;
+            
+            const values = new Array(5).fill(null);
+            if (data.activity) values[0] = data.activity.name;
+            values[1] = data.start_date.split('-').reverse().join('-') + ' || ' +
+                data.end_date.split('-').reverse().join('-');
+            values[2] = data.regions.map(v => v.name).join(', ');
+            values[3] = data.resources;
+            values[4] = data.assigned_to;
+            
+            $('table.activity_view tr').each(function(i) {
+                values.forEach((v,j) => {
+                    if (i == j) {
+                        if (!v) v = '';
+                        $(this).find('td').html(v);
+                    }
+                });
+            });
+        });
+    });
+
 
     
     /** 

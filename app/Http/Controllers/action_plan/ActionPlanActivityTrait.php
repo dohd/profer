@@ -12,10 +12,13 @@ trait ActionPlanActivityTrait
     /**
      * Edit Activity
      */
-    public function edit_activity()
+    public function edit_activity(Request $request)
     {
-        $plan_activity = ActionPlanActivity::find(request('activity_id'))
-            ->with(['regions' => fn($q) => $q->select('regions.id') ])
+        $plan_activity = ActionPlanActivity::find($request->activity_id)
+            ->with([
+                'activity' => fn($q) => $q->select('id', 'name'),
+                'regions' => fn($q) => $q->select('regions.id', 'regions.name')
+            ])
             ->first();
 
         return response()->json($plan_activity);

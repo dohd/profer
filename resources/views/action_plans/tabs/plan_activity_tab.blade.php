@@ -25,6 +25,11 @@
                             </button> 
                             <ul class="dropdown-menu"> 
                                 <li>
+                                    <a class="dropdown-item pt-1 pb-1 view" href="#activity_view_modal" data-bs-toggle="modal" data-id="{{ $plan_activity->id }}" data-url="{{ route('action_plans.edit_activity') }}">
+                                        <i class="bi bi-eye-fill"></i>View
+                                    </a>
+                                </li>
+                                <li>
                                     <a class="dropdown-item pt-1 pb-1 edit" href="#activity_modal" data-bs-toggle="modal" data-id="{{ $plan_activity->id }}" data-url="{{ route('action_plans.edit_activity') }}">
                                         <i class="bi bi-pencil-square"></i>Edit
                                     </a>
