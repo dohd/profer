@@ -73,6 +73,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('action_plans/activity/store', [ActionPlanController::class, 'store_activity'])->name('action_plans.store_activity');
     Route::post('action_plans/activity/delete', [ActionPlanController::class, 'destroy_activity'])->name('action_plans.destroy_activity');
     Route::post('action_plans/proposal_items', [ActionPlanController::class, 'proposal_items'])->name('action_plans.proposal_items');
+    Route::post('action_plans/select_items', [ActionPlanController::class, 'select_items'])->name('action_plans.select_items');
     Route::resource('action_plans', ActionPlanController::class);
 
     // participants
