@@ -37,19 +37,21 @@
                 <table class="table table-borderless datatable">
                     <thead>
                         <tr>
-                        <th scope="col">#No</th>
-                        <th scope="col">Project Title</th>
-                        <th scope="col">Key Programme</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Assigned To</th>
-                        <th scope="col">Created At</th>
-                        <th scope="col">Action</th>
+                            <th scope="col">#No</th>
+                            <th scope="col">#Code</th>
+                            <th scope="col">Project Title</th>
+                            <th scope="col">Key Programme</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Assigned To</th>
+                            <th scope="col">Created At</th>
+                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($action_plans as $plan)
                             <tr>
                                 <th scope="row"><a href="#">{{ $plan->tid }}</a></th>
+                                <td>AP-{{ $plan->tid }}</td>
                                 <td>{{ $plan->proposal ? $plan->proposal->title : '' }}</td>
                                 <td>{{ $plan->programme ? $plan->programme->name : '' }}</td>
                                 <td><span class="badge bg-{{ $plan->status == 'approved'? 'success' : 'secondary' }}">{{ $plan->status }}</span></td>
