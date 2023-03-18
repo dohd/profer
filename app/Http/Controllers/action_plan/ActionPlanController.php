@@ -239,15 +239,38 @@ class ActionPlanController extends Controller
     }
 
     /**
+     * Action Plan Select Items
+     */
+    public function select_items(Request $request)
+    {
+        $action_plans = ActionPlan::where('proposal_id', $request->proposal_id)
+            ->get(['id', 'tid', 'date'])
+            ->map(function($v) {
+                $d = explode('-', $v->date);
+                $v->code = 'AP-' . $v->tid . '/' . $d[1] . '/' . $d[0];
+                return $v;
+            });
+        
+        return response()->json($action_plans);
+    }
+
+    /**
      * Proposal items (activities)
      */
     public function proposal_items(Request $request)
     {
-        $proposal_items = ProposalItem::where([
-            'proposal_id' => $request->proposal_id, 
-            'is_obj' => 0
-        ])->get(['id', 'name']);
+        if ($request->plan_id) {
+            $proposal_items = ProposalItem::whereHas('plan_activities', fn($q) => $q->where('action_plan_id', $request->plan_id))
+            ->get(['id', 'name']);
+
             
-        return response()->json($proposal_items);
+
+        } else {
+            $proposal_items = ProposalItem::where([
+                'proposal_id' => $request->proposal_id, 
+                'is_obj' => 0
+            ])->get(['id', 'name']);
+            return response()->json($proposal_items);
+        }
     }
 }
