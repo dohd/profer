@@ -43,12 +43,10 @@ class ProgrammeController extends Controller
         $data = $request->only(['name']);
 
         try {            
-            $programme = Programme::create($data);
-            if ($programme) {
-                return redirect(route('programmes.index'))->with(['success' => 'Programme created successfully']);
-            }
+            Programme::create($data);
+            return redirect(route('programmes.index'))->with(['success' => 'Programme created successfully']);
         } catch (\Throwable $th) {
-            throw GeneralException('Error creating programme!');
+            errorHandler('Error creating programme!');
         }
     }
 
