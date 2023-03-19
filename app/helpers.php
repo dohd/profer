@@ -110,17 +110,20 @@ if (!function_exists('errorLog')) {
     }
 }
 
-if (!function_exists('GeneralException')) {
-    function GeneralException($message='Internal server error!')
-    {
-        if (is_array($message)) return \Illuminate\Validation\ValidationException::withMessages($message);
-        return \Illuminate\Validation\ValidationException::withMessages([$message]);
-    }
-}
-
 if (!function_exists('errorHandler')) {
     function errorHandler($message='Internal server error! Please try again later.')
     {
         return redirect()->back()->with(['error' => $message]);
+    }
+}
+
+if (!function_exists('tidCode')) {
+    function tidCode($prefix='', $num=0, $count=2)
+    {
+        if ($prefix) {
+            $prefixInst = \Illuminate\Support\Facades\DB::table('prefixes')->where('name', $prefix)->first();
+            if ($prefixInst) $prefix = "{$prefixInst->code}{$prefixInst->sep}";
+        }
+        return $prefix . sprintf('%0'.$count.'d', $num);
     }
 }
