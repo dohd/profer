@@ -41,7 +41,6 @@
                         <div class="col-6">
                             <label for="region">Region</label>
                             <select name="region_id[]" class="form-control" id="region" data-placeholder="Choose Region" multiple>
-                                <option value=""></option>
                                 @foreach ($regions as $region)
                                     <option value="{{ $region->id }}">{{ $region->name }}</option>
                                 @endforeach

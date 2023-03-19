@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\participant_list;
 
 use App\Http\Controllers\Controller;
+use App\Models\action_plan\ActionPlan;
 use App\Models\age_group\AgeGroup;
 use App\Models\cohort\Cohort;
 use App\Models\disability\Disability;
 use App\Models\item\ParticipantListItem;
+use App\Models\item\ProposalItem;
 use App\Models\participant_list\ParticipantList;
-use App\Models\programme\Programme;
 use App\Models\proposal\Proposal;
 use App\Models\region\Region;
 use Illuminate\Http\Request;
@@ -35,16 +36,12 @@ class ParticipantListController extends Controller
      */
     public function create()
     {
-        $proposals = Proposal::whereHas('action_plans')->get(['id', 'title']);
-        $programmes = Programme::whereHas('action_plans')->get(['id', 'name']);
-        $cohorts = Cohort::whereHas('plan_cohorts')->get(['id', 'name']);
-        $regions = Region::whereHas('plan_regions')->get(['id', 'name']);
-
+        $proposals = Proposal::whereHas('action_plans')->pluck('title', 'id');
         $age_groups = AgeGroup::get(['id', 'bracket']);
         $disabilities = Disability::get(['id', 'name', 'code']);
         
         return view('participant_lists.create', 
-            compact('age_groups', 'disabilities', 'proposals', 'regions', 'programmes', 'cohorts')
+            compact('age_groups', 'disabilities', 'proposals')
         );
     }
 
@@ -59,14 +56,14 @@ class ParticipantListController extends Controller
         // dd($request->all());
         $request->validate([
             'proposal_id' => 'required', 
+            'action_plan_id' => 'required',
             'proposal_item_id' => 'required', 
             'date' => 'required', 
             'region_id' => 'required', 
-            'programme_id' => 'required', 
             'cohort_id' => 'required'            
         ]);
         $data = $request->only([
-            'proposal_id', 'proposal_item_id', 'date', 'region_id', 'programme_id', 'cohort_id', 'prepared_by', 
+            'proposal_id', 'action_plan_id', 'proposal_item_id', 'date', 'region_id', 'cohort_id', 'prepared_by', 
             'male_count', 'female_count', 'total_count'
         ]);
         $data_items = $request->only([
@@ -91,7 +88,7 @@ class ParticipantListController extends Controller
             DB::commit();
             return redirect(route('participant_lists.index'))->with(['success' => 'Participant List created successfully']);
         } catch (\Throwable $th) {
-            errorHandler('Error creating participant_list!');
+            errorHandler('Error creating Participant List!');
         }
     }
 
@@ -114,16 +111,28 @@ class ParticipantListController extends Controller
      */
     public function edit(ParticipantList $participant_list)
     {
-        $proposals = Proposal::whereHas('action_plans')->get(['id', 'title']);
-        $programmes = Programme::whereHas('action_plans')->get(['id', 'name']);
-        $cohorts = Cohort::whereHas('plan_cohorts')->get(['id', 'name']);
-        $regions = Region::whereHas('plan_regions')->get(['id', 'name']);
-
+        $proposals = Proposal::whereHas('action_plans')->pluck('title', 'id');
         $age_groups = AgeGroup::get(['id', 'bracket']);
         $disabilities = Disability::get(['id', 'name', 'code']);
 
+        $participant_list['action_plans'] = ActionPlan::where('proposal_id', $participant_list->proposal_id)
+            ->get(['id', 'tid', 'date'])->map(function($v) {
+                $d = explode('-', $v->date);
+                $v->code = tidCode('action_plan', $v->tid) . "/{$d[1]}";
+                return $v;
+            });
+        $participant_list['proposal_items'] = ProposalItem::whereHas('plan_activities', function ($q) use($participant_list) {
+            $q->whereHas('action_plan', fn($q) => $q->where('id', $participant_list->action_plan_id));
+        })->pluck('name', 'id');
+        $participant_list['regions'] = Region::whereHas('plan_regions', function ($q) use($participant_list) {
+            $q->whereHas('plan_activity', fn($q)  => $q->where('activity_id', $participant_list->proposal_item_id));
+        })->pluck('name', 'id');
+        $participant_list['cohorts'] = Cohort::whereHas('plan_cohorts', function ($q) use($participant_list) {
+            $q->whereHas('plan_activity', fn($q) => $q->where('activity_id', $participant_list->proposal_item_id));
+        })->pluck('name', 'id'); 
+
         return view('participant_lists.edit', 
-            compact('participant_list', 'age_groups', 'disabilities', 'proposals', 'regions', 'programmes', 'cohorts')
+            compact('participant_list', 'age_groups', 'disabilities', 'proposals')
         );
     }
 
@@ -139,14 +148,14 @@ class ParticipantListController extends Controller
         // dd($request->all());
         $request->validate([
             'proposal_id' => 'required', 
+            'action_plan_id' => 'required',
             'proposal_item_id' => 'required', 
             'date' => 'required', 
             'region_id' => 'required', 
-            'programme_id' => 'required', 
             'cohort_id' => 'required'            
         ]);
         $data = $request->only([
-            'proposal_id', 'proposal_item_id', 'date', 'region_id', 'programme_id', 'cohort_id', 'prepared_by', 
+            'proposal_id', 'action_plan_id', 'proposal_item_id', 'date', 'region_id', 'cohort_id', 'prepared_by', 
             'male_count', 'female_count', 'total_count'
         ]);
         $data_items = $request->only([

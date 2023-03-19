@@ -2,10 +2,10 @@
 
 namespace App\Models\participant_list\Traits;
 
+use App\Models\action_plan\ActionPlan;
 use App\Models\cohort\Cohort;
 use App\Models\item\ParticipantListItem;
 use App\Models\item\ProposalItem;
-use App\Models\programme\Programme;
 use App\Models\proposal\Proposal;
 use App\Models\region\Region;
 
@@ -16,9 +16,9 @@ trait ParticipantListRelationship
         return $this->belongsTo(Cohort::class);
     }
 
-    public function programme()
+    public function action_plan()
     {
-        return $this->belongsTo(Programme::class);
+        return $this->belongsTo(ActionPlan::class);
     }
 
     public function region()
@@ -28,7 +28,7 @@ trait ParticipantListRelationship
 
     public function proposal_item()
     {
-        return $this->belongsTo(ProposalItem::class)->where('is_obj', 0);
+        return $this->belongsTo(ProposalItem::class);
     }
 
     public function proposal()
