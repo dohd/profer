@@ -3,15 +3,20 @@
         <label for="title">Project Title*</label>
         <select name="proposal_id" id="proposal" class="form-control select2" data-placeholder="Choose Project" required>
             <option value=""></option>
-            @foreach ($proposals as $proposal)
-                <option value="{{ $proposal->id }}" {{ @$participant_list->proposal_id == $proposal->id? 'selected' : '' }}>{{ $proposal->title }}</option>
+            @foreach ($proposals as $key => $value)
+                <option value="{{ $key }}" {{ @$participant_list->proposal_id == $key? 'selected' : '' }}>{{ $value }}</option>
             @endforeach
-        </select>
+        </select>   
     </div>
     <div class="col-4">
         <label for="plan">Action Plan No*</label>
         <select name="action_plan_id" id="action_plan" class="form-control select2" data-placeholder="Choose Action Plan" required disabled>
             <option value=""></option>
+            @if(@$participant_list)
+                @foreach ($participant_list->action_plans as $item)
+                    <option value="{{ $item->id }}" {{ $item->id == $participant_list->action_plan_id? 'selected' : '' }}>{{ $item->code }}</option>
+                @endforeach
+            @endif
         </select>
     </div>
 </div>
@@ -20,9 +25,11 @@
         <label for="title">Activity*</label>
         <select name="proposal_item_id" id="activity" class="form-control select2" data-placeholder="Choose Activity" required disabled>
             <option value=""></option>
-            @foreach ([] as $item)
-                <option value="{{ $item->id }}" {{ @$participant_list->proposal_item_id == $item->id? 'selected' : '' }}>{{ $item->name }}</option>
-            @endforeach
+            @if(@$participant_list)
+                @foreach ($participant_list->proposal_items as $key => $value)
+                    <option value="{{ $key }}" {{ $key == $participant_list->proposal_item_id? 'selected' : '' }}>{{ $value }}</option>
+                @endforeach
+            @endif
         </select>
     </div>
     <div class="col-3">
@@ -33,9 +40,11 @@
         <label for="region">Region*</label>
         <select name="region_id" id="region" class="form-select select2" data-placeholder="Choose Region" required disabled>
             <option value=""></option>
-            @foreach ($regions as $region)
-                <option value="{{ $region->id }}" {{ @$participant_list->region_id == $region->id? 'selected' : '' }}>{{ $region->name }}</option>
-            @endforeach
+            @if(@$participant_list)
+                @foreach ($participant_list->regions as $key => $value)
+                    <option value="{{ $key }}" {{ $key == $participant_list->region_id? 'selected' : '' }}>{{ $value }}</option>
+                @endforeach
+            @endif
         </select>
     </div>
 </div>
@@ -45,9 +54,11 @@
         <label for="cohort">Cohort*</label>
         <select name="cohort_id" id="cohort" class="form-select select2" data-placeholder="Choose Cohort" required disabled>
             <option value=""></option>
-            @foreach ($cohorts as $cohort)
-                <option value="{{ $cohort->id }}" {{ @$participant_list->cohort_id == $cohort->id? 'selected' : '' }}>{{ $cohort->name }}</option>
-            @endforeach
+            @if(@$participant_list)
+                @foreach ($participant_list->cohorts as $key => $value)
+                    <option value="{{ $key }}" {{ $key == $participant_list->cohort_id? 'selected' : '' }}>{{ $value }}</option>
+                @endforeach
+            @endif
         </select>
     </div>
     <div class="col-2">
@@ -67,7 +78,6 @@
         {{ Form::text('prepared_by', null, ['class' => 'form-control']) }}
     </div>
 </div>
-
 <!-- Participants Table -->
 @include('participant_lists.partial.participants_table')
 
@@ -104,48 +114,97 @@
         $('#total_count').val(m+f);
     });
 
-    // on change proposal fetch action plans
+    // on proposal change
     $('#proposal').change(function() {
-        const url = @json(route('action_plans.select_items'));
-        const params = {
-            proposal_id: $(this).val(),
-            is_participant_list: 1,
-        };
-        $.post(url, params, data => {
-            $('#action_plan option:not(:first)').remove();
-            data.forEach(v => {
-                const planId = @json(@$participant_list->action_plan_id);
-                $('#action_plan').append(`<option value="${v.id}" ${v.id == planId? 'selected' : ''}>${v.code}</option>`);
+        if ($(this).val()) {
+            const url = @json(route('action_plans.select_items'));
+            const params = {
+                proposal_id: $(this).val(),
+                is_participant_list: 1,
+            };
+            // fetch action plans
+            $.post(url, params, data => {
+                $('#action_plan option:not(:first)').remove();
+                data.forEach(v => {
+                    const planId = @json(@$participant_list->action_plan_id);
+                    $('#action_plan').append(`<option value="${v.id}" ${v.id == planId? 'selected' : ''}>${v.code}</option>`);
+                });
+                $('#action_plan').prop('disabled', false);
             });
-            $('#action_plan').prop('disabled', false);
-        });
+        } else {
+            ['action_plan', 'activity', 'region', 'cohort'].forEach(v => {
+                $('#'+v).prop('disabled', true);
+                $('#'+v).find('option:not(:first)').remove();
+            });
+        }
     });
 
-    // on change action plan fetch plan activities
+    // on action plan change
     $('#action_plan').change(function() {
-        const url = @json(route('action_plans.proposal_items'));
-        const params = {
-            plan_id: $(this).val(),
-            is_participant_list: 1,
-        };
-        $.post(url, params, data => {
-            const activityId = @json(@$participant_list->proposal_item_id);
-            $('#activity option:not(:first)').remove();
-            data.forEach(v => {
-                $('#activity').append(`<option value="${v.id}" ${v.id == activityId? 'selected' : ''}>${v.name}</option>`);
+        if ($(this).val()) {
+            const url = @json(route('action_plans.proposal_items'));
+            const params = {
+                plan_id: $(this).val(),
+                is_participant_list: 1,
+            };
+            // fetch activities
+            $.post(url, params, data => {
+                const activityId = @json(@$participant_list->proposal_item_id);
+                $('#activity option:not(:first)').remove();
+                data.forEach(v => {
+                    $('#activity').append(`<option value="${v.id}" ${v.id == activityId? 'selected' : ''}>${v.name}</option>`);
+                });
+                $('#activity').prop('disabled', false);
             });
-            $('#activity').prop('disabled', false);
-        });
+        } else {
+            ['activity', 'region', 'cohort'].forEach(v => {
+                $('#'+v).prop('disabled', true);
+                $('#'+v).find('option:not(:first)').remove();
+            });
+        }
+    });
+
+    // on activity change
+    $('#activity').change(function() {
+        if ($(this).val()) { 
+            const url = @json(route('action_plans.select_activity_items'));
+            const params = {
+                activity_id: $(this).val(),
+                is_participant_list: 1,
+            };
+            // fetch regions & cohorts
+            $.post(url, params, data => {
+                $('#region option:not(:first)').remove();
+                $('#cohort option:not(:first)').remove();
+                if (!data.regions || !data.cohorts) return;
+                data.regions.forEach(v => {
+                    $('#region').append(`<option value="${v.id}">${v.name}</option>`);
+                });
+                data.cohorts.forEach(v => {
+                    $('#cohort').append(`<option value="${v.id}">${v.name}</option>`);
+                });
+                ['region', 'cohort'].forEach(v => {
+                    $('#'+v).prop('disabled', false);
+                });
+            });
+        } else {
+            ['region', 'cohort'].forEach(v => {
+                $('#'+v).prop('disabled', true);
+                $('#'+v).find('option:not(:first)').remove();
+            });
+        }
     });
 
 
     /**
      * Edit Mode
      **/
-    const isEdit = @json(isset($participant_list));
-    if (isEdit) {
+    const psList = @json(@$participant_list);
+    if (psList) {
         $('#participants_tbl tbody tr:first').remove();
-        rowCount = $('#participants_tbl tbody tr').length;
+        ['action_plan', 'activity', 'region', 'cohort'].forEach(v => {
+            $('#'+v).prop('disabled', false);
+        });
     }
 </script>
 @stop

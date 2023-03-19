@@ -16,12 +16,8 @@
                             'Activity' => $item->proposal_item? $item->proposal_item->name : '',
                             'Date' => dateFormat($item->date),
                             'Region' => $item->region? $item->region->name : '',
-                            'Key Programme' => $item->programme? $item->programme->name : '',
                             'Cohort' => $item->cohort? $item->cohort->name : '',
                             'Prepared By' => $item->prepared_by,
-                            'Male Count' => $item->male_count,
-                            'Female Count' => $item->female_count,
-                            'Total Count' => $item->total_count,
                         ];
                     @endphp
                     @foreach ($details as $key => $val)
@@ -30,22 +26,29 @@
                             <td>{{ $val}}</td>
                         </tr>
                     @endforeach
+                    <tr>
+                        <th width="30%">Participant Count</th>
+                        <td>
+                            Male: {{ $item->male_count }} || 
+                            Female: {{ $item->female_count }} || 
+                            Total: {{ $item->total_count }}
+                        </td>
+                    </tr>
                 </table>
 
                 <!-- participants -->                
                 <table class="table table-striped" id="participants_tbl">
                     <thead>
-                        <tr class="">
-                            <th scope="col">#</th>
-                            <th scope="col">Full Name</th>
-                            <th scope="col">Gender</th>
-                            <th scope="col" width="10%">Age Group</th>
-                            <th scope="col">Disability</th>
-                            <th scope="col">Phone</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Designation</th>
-                            <th scope="col">Organisation</th>
-                            
+                        <tr>
+                            <th>#</th>
+                            <th>Full Name</th>
+                            <th>Gender</th>
+                            <th width="10%">Age Group</th>
+                            <th>Disability</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Designation</th>
+                            <th>Organisation</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -64,7 +67,6 @@
                         @endforeach
                     </tbody>
                 </table>
-
             </div>
         </div>
     </div>
