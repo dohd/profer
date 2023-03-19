@@ -46,7 +46,7 @@ class AgeGroupController extends Controller
             if (AgeGroup::create($data)) 
             return redirect(route('age_groups.index'))->with(['success' => 'Age Group created successfully']);
         } catch (\Throwable $th) {
-            throw GeneralException('Error creating Age Group!');
+            errorHandler('Error creating Age Group!');
         }
     }
 
@@ -89,7 +89,7 @@ class AgeGroupController extends Controller
             if ($age_group->update($data)) 
             return redirect(route('age_groups.index'))->with(['success' => 'Age Group updated successfully']);
         } catch (\Throwable $th) {
-            throw GeneralException('Error updating Age Group!');
+            errorHandler('Error updating Age Group!');
         }        
     }
 
@@ -105,7 +105,7 @@ class AgeGroupController extends Controller
             if ($age_group->delete()) 
             return redirect(route('age_groups.index'))->with(['success' => 'Age Group deleted successfully']);
         } catch (\Throwable $th) {
-            throw GeneralException('Error deleting Age Group!');
+            errorHandler('Error deleting Age Group!');
         }  
     }
 }
