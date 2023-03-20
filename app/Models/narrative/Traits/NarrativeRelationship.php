@@ -2,12 +2,18 @@
 
 namespace App\Models\narrative\Traits;
 
+use App\Models\action_plan\ActionPlan;
 use App\Models\item\NarrativeItem;
 use App\Models\item\ProposalItem;
 use App\Models\proposal\Proposal;
 
 trait NarrativeRelationship
 {   
+    public function action_plan()
+    {
+        return $this->belongsTo(ActionPlan::class);
+    }
+
     public function proposal()
     {
         return $this->belongsTo(Proposal::class);

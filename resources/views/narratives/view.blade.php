@@ -14,9 +14,17 @@
             <div class="card-content p-2">
                 <table class="table table-bordered">
                     @php
+                        $action_plan_no = '';
+                        if ($narrative->action_plan) {
+                            $d = explode('-', $narrative->action_plan->date);
+                            $action_plan_no = tidCode('action_plan', $narrative->action_plan->tid) . "/{$d[1]}";
+                        }
+
                         $details = [
                             'Project Title' => $narrative->proposal? $narrative->proposal->title : '',
+                            'Action Plan No' => $action_plan_no,
                             'Activity' => $narrative->proposal_item? $narrative->proposal_item->name : '',
+                            'Date' => dateFormat($narrative->date),
                             'Note' => $narrative->note,
                         ];
                     @endphp

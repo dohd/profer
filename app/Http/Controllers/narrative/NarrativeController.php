@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\narrative;
 
 use App\Http\Controllers\Controller;
+use App\Models\action_plan\ActionPlan;
 use App\Models\item\NarrativeItem;
+use App\Models\item\ProposalItem;
 use App\Models\narrative\Narrative;
 use App\Models\narrative_pointer\NarrativePointer;
 use App\Models\proposal\Proposal;
@@ -43,7 +45,7 @@ class NarrativeController extends Controller
      */
     public function create()
     {
-        $proposals = Proposal::all();
+        $proposals = Proposal::whereHas('action_plans')->pluck('title', 'id');
         $narrative_pointers = NarrativePointer::all();
 
         return view('narratives.create', compact('proposals', 'narrative_pointers'));
@@ -60,9 +62,11 @@ class NarrativeController extends Controller
         // dd($request->all());
         $request->validate([
             'proposal_id' => 'required', 
+            'action_plan_id' => 'required', 
             'proposal_item_id' => 'required', 
+            'date' => 'required',
         ]);
-        $data = $request->only(['proposal_id', 'proposal_item_id', 'note']);
+        $data = $request->only(['proposal_id', 'action_plan_id', 'proposal_item_id', 'date', 'note']);
         $data_items = $request->only(['narrative_pointer_id', 'response']);
 
         DB::beginTransaction();
@@ -78,11 +82,10 @@ class NarrativeController extends Controller
             ]);
             NarrativeItem::insert($data_items);
 
-            if ($narrative) {
-                DB::commit();
-                return redirect(route('narratives.index'))->with(['success' => 'Narrative created successfully']);
-            }
-        } catch (\Throwable $th) {
+            DB::commit();
+            return redirect(route('narratives.index'))->with(['success' => 'Narrative created successfully']);
+        } catch (\Throwable $th) { 
+            dd($th->getMessage());
             errorHandler('Error creating narrative!');
         }
     }
@@ -106,8 +109,19 @@ class NarrativeController extends Controller
      */
     public function edit(Narrative $narrative)
     {
-        $proposals = Proposal::all();
+        $proposals = Proposal::whereHas('action_plans')->pluck('title', 'id');
         $narrative_pointers = NarrativePointer::all();
+
+        $narrative['action_plans'] = ActionPlan::where('proposal_id', $narrative->proposal_id)
+            ->get(['id', 'tid', 'date'])->map(function($v) {
+                $d = explode('-', $v->date);
+                $v->code = tidCode('action_plan', $v->tid) . "/{$d[1]}";
+                return $v;
+            });
+        $narrative['proposal_items'] = ProposalItem::whereHas('participant_lists')
+            ->whereHas('plan_activities', function ($q) use($narrative) {
+                $q->whereHas('action_plan', fn($q) => $q->where('id', $narrative->action_plan_id));
+            })->pluck('name', 'id');
 
         return view('narratives.edit', compact('narrative', 'narrative_pointers', 'proposals'));
     }
@@ -131,9 +145,11 @@ class NarrativeController extends Controller
             // update narrative
             $request->validate([
                 'proposal_id' => 'required', 
+                'action_plan_id' => 'required', 
                 'proposal_item_id' => 'required', 
+                'date' => 'required',
             ]);
-            $data = $request->only(['proposal_id', 'proposal_item_id', 'note']);
+            $data = $request->only(['proposal_id', 'action_plan_id', 'proposal_item_id', 'date', 'note']);
             $data_items = $request->only(['item_id', 'narrative_pointer_id', 'response']);
 
             DB::beginTransaction();

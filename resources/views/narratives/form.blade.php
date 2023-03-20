@@ -1,112 +1,112 @@
 <div class="row mb-3">
-    <div class="col-12">
-        <label for="name">Project Title*</label>
-        <select name="proposal_id" id="proposal" class="form-select select2" data-placeholder="Choose Project" required>
+    <div class="col-8">
+        <label for="title">Project Title*</label>
+        <select name="proposal_id" id="proposal" class="form-control select2" data-placeholder="Choose Project" required>
             <option value=""></option>
-            @foreach ($proposals as $proposal)
-                <option value="{{ $proposal->id }}" {{ @$narrative->proposal_id == $proposal->id? 'selected' : '' }}>{{ $proposal->title }}</option>
+            @foreach ($proposals as $key => $value)
+                <option value="{{ $key }}" {{ @$narrative->proposal_id == $key? 'selected' : '' }}>{{ $value }}</option>
             @endforeach
-        </select>
+        </select>   
     </div>
-</div>
-
-<div class="row mb-3">
-    <div class="col-12">
-        <label for="name">Activity*</label>
-        <select name="proposal_item_id" id="activity" class="form-select select2" data-placeholder="Choose Activity" required>
+    <div class="col-4">
+        <label for="plan">Action Plan No*</label>
+        <select name="action_plan_id" id="action_plan" class="form-control select2" data-placeholder="Choose Action Plan" required disabled>
             <option value=""></option>
+            @if(@$narrative)
+                @foreach ($narrative->action_plans as $item)
+                    <option value="{{ $item->id }}" {{ $item->id == $narrative->action_plan_id? 'selected' : '' }}>{{ $item->code }}</option>
+                @endforeach
+            @endif
         </select>
     </div>
 </div>
-
+<div class="row mb-3">
+    <div class="col-8">
+        <label for="activity">Activity*</label>
+        <select name="proposal_item_id" id="activity" class="form-control select2" data-placeholder="Choose Activity" required disabled>
+            <option value=""></option>
+            @if(@$narrative)
+                @foreach ($narrative->proposal_items as $key => $value)
+                    <option value="{{ $key }}" {{ $key == $narrative->proposal_item_id? 'selected' : '' }}>{{ $value }}</option>
+                @endforeach
+            @endif
+        </select>
+    </div>
+    <div class="col-4">
+        <label for="date">Date*</label>
+        {{ Form::date('date', null, ['class' => 'form-control', 'required']) }}
+    </div>
+</div>
 <div class="row mb-3">
     <div class="col-12">
         <label for="name">Note</label>
         {{ Form::text('note', null, ['class' => 'form-control']) }}
     </div>
 </div>
-
-<table class="table table-striped" id="narratives_tbl">
-    <thead>
-        <tr class="">
-            <th scope="col">#</th>
-            <th scope="col" width="30%">Narrative Indicator</th>
-            <th scope="col">Response</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($narrative_pointers as $i => $item)
-            @if ($item->pointer == 'pt_a')
-                <tr>
-                    <th scope="row" class="pt-2">{{ $i+1 }}</th>
-                    <td class="pt-2">{{ $item->value }}</td>
-                    <td class="pt-2">
-                        @if (@$narrative)
-                            @foreach ($narrative->items as $nar_item)
-                                @if ($nar_item->narrative_pointer_id == $item->id)
-                                    <input type="text" name="response[]" class="form-control" value="{{ $nar_item->response }}">
-                                    <input type="hidden" name="item_id[]" value="{{ $nar_item->id }}">
-                                @endif
-                            @endforeach
-                        @else
-                            <input type="text" name="response[]" class="form-control">
-                        @endif
-                    </td>
-                    <input type="hidden" name="narrative_pointer_id[]" value="{{ $item->id }}">
-                </tr>   
-            @elseif ($item->pointer == 'pt_c')
-                <tr>
-                    <th scope="row" class="pt-2">{{ $i+1 }}</th>
-                    <td class="pt-2">{{ $item->value }}</td>
-                    <td class="pt-2">
-                        @if (@$narrative)
-                            @foreach ($narrative->items as $nar_item)
-                                @if ($nar_item->narrative_pointer_id == $item->id)
-                                    <input type="number" name="response[]" class="form-control" value="{{ $nar_item->response }}">
-                                    <input type="hidden" name="item_id[]" value="{{ $nar_item->id }}">
-                                @endif
-                            @endforeach
-                        @else
-                            <input type="number" name="response[]" class="form-control">
-                        @endif
-                    </td>
-                    <input type="hidden" name="narrative_pointer_id[]" value="{{ $item->id }}">
-                </tr>   
-            @else
-                <tr>
-                    <th scope="row" class="pt-2">{{ $i+1 }}</th>
-                    <td class="pt-2">{{ $item->value }}</td>
-                    <td class="pt-2">
-                        @if (@$narrative)
-                            @foreach ($narrative->items as $nar_item)
-                                @if ($nar_item->narrative_pointer_id == $item->id)
-                                    <textarea name="response[]" class="form-control" rows="3">{{ $nar_item->response }}</textarea>
-                                    <input type="hidden" name="item_id[]" value="{{ $nar_item->id }}">
-                                @endif
-                            @endforeach
-                        @else
-                            <textarea name="response[]" class="form-control" rows="3"></textarea>
-                        @endif
-                    </td>
-                    <input type="hidden" name="narrative_pointer_id[]" value="{{ $item->id }}">
-                </tr>   
-            @endif
-        @endforeach
-    </tbody>
-</table>
+<!-- Narratives Table -->
+@include('narratives.partial.narr_pointer_table')
 
 @section('script')
 <script>
+    // on proposal change
     $('#proposal').change(function() {
-        $.post("{{ route('proposals.items') }}", {proposal_id: $(this).val()}, data => {
-            const activityId = @json(@$narrative->proposal_item_id);
-            $('#activity option:not(:first)').remove();
-            data.forEach(v => {
-                if (v.is_obj == 0) {
-                    $('#activity').append(`<option value="${v.id}" ${v.id == activityId? 'selected' : ''}>${v.name}</option>`);
-                }
+        if ($(this).val()) {
+            const url = @json(route('action_plans.select_items'));
+            const params = {
+                proposal_id: $(this).val(),
+                is_participant_list: 1,
+            };
+            // fetch action plans
+            $.post(url, params, data => {
+                $('#action_plan option:not(:first)').remove();
+                data.forEach(v => {
+                    const planId = @json(@$narrative->action_plan_id);
+                    $('#action_plan').append(`<option value="${v.id}" ${v.id == planId? 'selected' : ''}>${v.code}</option>`);
+                });
+                $('#action_plan').prop('disabled', false);
             });
+        } else {
+            ['action_plan', 'activity', 'region', 'cohort'].forEach(v => {
+                $('#'+v).prop('disabled', true);
+                $('#'+v).find('option:not(:first)').remove();
+            });
+        }
+    });
+
+    // on action plan change
+    $('#action_plan').change(function() {
+        if ($(this).val()) {
+            const url = @json(route('action_plans.proposal_items'));
+            const params = {
+                plan_id: $(this).val(),
+                has_participant: 1
+            };
+            // fetch activities
+            $.post(url, params, data => {
+                const activityId = @json(@$narrative->proposal_item_id);
+                $('#activity option:not(:first)').remove();
+                data.forEach(v => {
+                    $('#activity').append(`<option value="${v.id}" ${v.id == activityId? 'selected' : ''}>${v.name}</option>`);
+                });
+                $('#activity').prop('disabled', false);
+            });
+        } else {
+            ['activity', 'region', 'cohort'].forEach(v => {
+                $('#'+v).prop('disabled', true);
+                $('#'+v).find('option:not(:first)').remove();
+            });
+        }
+    });
+
+    /**
+     * Edit Mode
+     **/
+     const psList = @json(@$narrative);
+    if (psList) {
+        $('#participants_tbl tbody tr:first').remove();
+        ['action_plan', 'activity', 'region', 'cohort'].forEach(v => {
+            $('#'+v).prop('disabled', false);
         });
-    }).change();
+    }
 </script>
 @stop
