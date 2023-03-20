@@ -101,8 +101,8 @@ if (!function_exists('browserLog')) {
     }
 }
 
-if (!function_exists('errorLog')) {
-    function errorLog(...$messages)
+if (!function_exists('printLog')) {
+    function printLog(...$messages)
     {
         foreach ($messages as $value) {
             error_log(print_r($value, 1));
