@@ -5,7 +5,7 @@
     </div>
 </div>
 <div class="row mb-3">
-    <div class="col-4">
+    <div class="col-3">
         <label for="sector">Sector*</label>
         {{ Form::text('sector', null, ['class' => 'form-control', 'required']) }}
     </div>
@@ -20,7 +20,12 @@
         </select>
     </div>
 
-    <div class="col-3">
+    <div class="col-2">
+        <label for="date">Date*</label>
+        {{ Form::date('date', null, ['class' => 'form-control', 'required']) }}
+    </div>
+
+    <div class="col-2">
         <label for="region" class="col-12">Region*</label>
         <select name="region_id" id="region" class="form-select select2" data-placeholder="Choose Region" required>
             <option value=""></option>

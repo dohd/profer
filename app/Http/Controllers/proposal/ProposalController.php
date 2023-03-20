@@ -60,6 +60,7 @@ class ProposalController extends Controller
         // dd($request->all());
         $request->validate([
             'title' => 'required', 
+            'date' => 'required',
             'region_id' => 'required', 
             'sector' => 'required', 
             'donor_id' => 'required', 
@@ -67,7 +68,7 @@ class ProposalController extends Controller
             'end_date' => 'required', 
             'budget' => 'required',
         ]); 
-        $data = $request->only(['title', 'region_id', 'sector', 'donor_id', 'start_date', 'end_date', 'budget',]);
+        $data = $request->only(['title', 'date', 'region_id', 'sector', 'donor_id', 'start_date', 'end_date', 'budget',]);
         $data_items = $request->only(['name', 'is_obj', 'row_num', 'row_index',]);
 
         DB::beginTransaction();
@@ -76,14 +77,13 @@ class ProposalController extends Controller
             $data = inputClean($data);
             $proposal = Proposal::create($data);
 
+            // create proposal items
             $data_items = databaseArray($data_items);
             $data_items = fillArrayRecurse($data_items, ['proposal_id' => $proposal->id]);
             ProposalItem::insert($data_items);
 
-            if ($proposal) {
-                DB::commit();
-                return redirect(route('proposals.index'))->with(['success' => 'Proposal created successfully']);
-            }
+            DB::commit();
+            return redirect(route('proposals.index'))->with(['success' => 'Proposal created successfully']);
         } catch (\Throwable $th) {
             errorHandler('Error creating proposal!');
         }
@@ -134,6 +134,7 @@ class ProposalController extends Controller
             // update proposal
             $request->validate([
                 'title' => 'required', 
+                'date' => 'required', 
                 'region_id' => 'required', 
                 'sector' => 'required', 
                 'donor_id' => 'required', 
@@ -142,29 +143,29 @@ class ProposalController extends Controller
                 'budget' => 'required',
             ]);
 
-            $data = $request->only(['title', 'region_id', 'sector', 'donor_id', 'start_date', 'end_date', 'budget',]);
+            $data = $request->only(['title', 'date', 'region_id', 'sector', 'donor_id', 'start_date', 'end_date', 'budget',]);
             $data_items = $request->only(['name', 'is_obj', 'row_num', 'row_index', 'item_id']);
 
             DB::beginTransaction();
 
             try {
                 $data = inputClean($data);
-                if ($proposal->update($data)) {
-                    $data_items = fillArrayRecurse(databaseArray($data_items), [
-                        'proposal_id' => $proposal->id
-                    ]);
+                $data_items = fillArrayRecurse(databaseArray($data_items), [
+                    'proposal_id' => $proposal->id
+                ]);
 
-                    $proposal->items()->whereNotIn('id', array_map(fn($v) => $v['item_id'], $data_items))->delete();
-                    foreach ($data_items as $value) {
-                        $proposal_item = ProposalItem::firstOrNew(['id' => $value['item_id']]);
-                        $proposal_item->fill($value);
-                        unset($proposal->item_id);
-                        $proposal_item->save();
-                    }
-
-                    DB::commit();
-                    return redirect(route('proposals.index'))->with(['success' => 'Proposal updated successfully']);
+                // delete omitted line items
+                $proposal->items()->whereNotIn('id', array_map(fn($v) => $v['item_id'], $data_items))->delete();
+                // update or create line items
+                foreach ($data_items as $value) {
+                    $proposal_item = ProposalItem::firstOrNew(['id' => $value['item_id']]);
+                    $proposal_item->fill($value);
+                    unset($proposal->item_id);
+                    $proposal_item->save();
                 }
+
+                DB::commit();
+                return redirect(route('proposals.index'))->with(['success' => 'Proposal updated successfully']);
             } catch (\Throwable $th) {
                 errorHandler('Error updating proposal!');
             }   
@@ -187,14 +188,9 @@ class ProposalController extends Controller
     // proposal items
     public function proposal_items(Request $request)
     {
-        $proposal_items = [];
-        if ($request->is_participant_list) {
-            $proposal_items = ProposalItem::whereHas('plan_activities')
-                ->where('proposal_id', $request->proposal_id)->get();
-        } else {
-            $proposal_items = ProposalItem::where('proposal_id', $request->proposal_id)
-                ->get();
-        }
+        $proposal_items = ProposalItem::when(request('is_participant_list'), function ($q) {
+            $q->whereHas('plan_activities');
+        })->where('proposal_id', request('proposal_id'))->get();
         
         return response()->json($proposal_items);
     }
