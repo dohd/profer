@@ -42,8 +42,8 @@
                             <th scope="col">Project Title</th>
                             <th scope="col">Key Programme</th>
                             <th scope="col">Status</th>
-                            <th scope="col">Assigned To</th>
-                            <th scope="col">Created At</th>
+                            <th scope="col">Overseen By</th>
+                            <th scope="col">Date</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -56,7 +56,7 @@
                                 <td>{{ $plan->programme ? $plan->programme->name : '' }}</td>
                                 <td><span class="badge bg-{{ $plan->status == 'approved'? 'success' : 'secondary' }}">{{ $plan->status }}</span></td>
                                 <td>{{ $plan->main_assigned_to }}</td>
-                                <td>{{ dateFormat($plan->created_at) }}</td>
+                                <td>{{ dateFormat($plan->date) }}</td>
                                 <td>{!! $plan->action_buttons !!}</td>
                             </tr>
                         @endforeach

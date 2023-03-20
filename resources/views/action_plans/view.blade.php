@@ -20,7 +20,8 @@
                         $details = [
                             'Project Title' => $action_plan->proposal? $action_plan->proposal->title : '',
                             'Key Programme' => $action_plan->programme? $action_plan->programme->name : '',
-                            'Assigned To' => $action_plan->main_assigned_to,
+                            'Date' => dateFormat($action_plan->date),
+                            'Overseen By' => $action_plan->main_assigned_to,
                         ];
                     @endphp
                     @foreach ($details as $key => $val)
@@ -113,8 +114,8 @@
     // edit activity modal
     $('#activity_tbl').on('click', '.edit', function() {
         const url = $(this).attr('data-url');
-        const activity_id = $(this).attr('data-id');
-        $.post(url, {activity_id}, data => {
+        const plan_activity_id = $(this).attr('data-id');
+        $.post(url, {plan_activity_id}, data => {
             if (!data.id) return;
             $('#activity_modal_label').html('Edit Activity');
             $('#activity_form').attr('action', @json(route('action_plans.update_activity')));
@@ -159,7 +160,6 @@
     });
 
 
-    
     /** 
      * Cohort Modal
     */

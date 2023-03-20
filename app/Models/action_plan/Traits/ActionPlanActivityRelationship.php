@@ -18,22 +18,22 @@ trait ActionPlanActivityRelationship
 
     public function regions()
     {
-        return $this->hasManyThrough(Region::class, ActionPlanRegion::class, 'activity_id', 'id', 'id', 'region_id');
+        return $this->hasManyThrough(Region::class, ActionPlanRegion::class, 'plan_activity_id', 'id', 'id', 'region_id');
     }
 
     public function activity_cohort()
     {
-        return $this->hasOne(ActionPlanCohort::class, 'activity_id');
+        return $this->hasOne(ActionPlanCohort::class, 'plan_activity_id');
     }
 
     public function cohort()
     {
-        return $this->hasOneThrough(Cohort::class, ActionPlanCohort::class, 'activity_id', 'id', 'id', 'cohort_id');
+        return $this->hasOneThrough(Cohort::class, ActionPlanCohort::class, 'plan_activity_id', 'id', 'id', 'cohort_id');
     }
 
     public function cohorts()
     {
-        return $this->hasManyThrough(Cohort::class, ActionPlanCohort::class, 'activity_id', 'id', 'id', 'cohort_id');
+        return $this->hasManyThrough(Cohort::class, ActionPlanCohort::class, 'plan_activity_id', 'id', 'id', 'cohort_id');
     }
 
     public function action_plan()

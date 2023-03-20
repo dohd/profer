@@ -15,7 +15,7 @@ trait ActionPlanCohortTrait
     public function edit_cohort()
     {
         $plan_cohort = ActionPlanCohort::findOrFail(request('cohort_id'));
-        $plan_cohort['activity_id'] = $plan_cohort->plan_activity? $plan_cohort->plan_activity->activity_id : '';
+        $plan_cohort['plan_activity_id'] = $plan_cohort->plan_activity? $plan_cohort->plan_activity->id : '';
             
         return response()->json($plan_cohort);
     }
@@ -32,22 +32,21 @@ trait ActionPlanCohortTrait
             'target_no' => 'required',
         ]); 
 
-        $data = $request->only(['action_plan_id']);
+        $data = $request->only(['action_plan_id', 'activity_id']);
         $data_cohort = $request->only(['cohort_id', 'target_no']); 
 
         DB::beginTransaction();
 
         try {
-            $plan_activity = ActionPlanActivity::where('action_plan_id', $data['action_plan_id'])->first();
-            if (!$plan_activity) return errorHandler('Activity could not be found!');
-
-            $data['activity_id'] = $plan_activity->id;
+            $plan_activity = ActionPlanActivity::where($data)->firstOrFail();
+            $data['plan_activity_id'] = $plan_activity->id;
             $data_cohort = fillArrayRecurse(databaseArray($data_cohort), $data);
             ActionPlanCohort::insert($data_cohort);
 
             DB::commit();
             return redirect()->back()->with('success', 'Cohort created successfully');
-        } catch (\Throwable $th) { dd($th->getMessage());
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
             errorHandler('Error creating Cohort!');
         }
     }
@@ -70,17 +69,10 @@ trait ActionPlanCohortTrait
         DB::beginTransaction();
 
         try {
-            $plan_activity = ActionPlanActivity::where([
-                'action_plan_id' => $data['action_plan_id'],
-                'activity_id' => $data['activity_id'],
-            ])->first();
-            if (!$plan_activity) return errorHandler('Activity could not be found!');
-
             $plan_cohort = ActionPlanCohort::findOrFail($data['item_id']);
-            $data = fillArrayRecurse(databaseArray($data_cohort), [
-                'activity_id' => $plan_activity->id,
-            ]);
-            $plan_cohort->fill(current($data));
+            unset($data['item_id']);
+            $data = fillArrayRecurse(databaseArray($data_cohort), $data);
+            $plan_cohort->fill($data[0]);
             $plan_cohort->save();
 
             DB::commit();
@@ -99,8 +91,9 @@ trait ActionPlanCohortTrait
 
         try {
             $plan_cohort = ActionPlanCohort::findOrFail(request('cohort_id'));
-            $cohort_count = ActionPlanCohort::where('action_plan_id', $plan_cohort->action_plan_id)->count();
-            if ($plan_cohort->plan_activity && $cohort_count == 1) return errorHandler('Cannot delete initial cohort!');
+            $cohort_count = ActionPlanCohort::whereHas('plan_activity')
+                ->where('action_plan_id', $plan_cohort->action_plan_id)->count();
+            if ($cohort_count == 1) return errorHandler('Cannot delete initial cohort!');
             
             $plan_cohort->delete();
 

@@ -14,13 +14,11 @@ trait ActionPlanActivityTrait
      */
     public function edit_activity(Request $request)
     {
-        $plan_activity = ActionPlanActivity::find($request->activity_id)
-            ->with([
-                'activity' => fn($q) => $q->select('id', 'name'),
-                'regions' => fn($q) => $q->select('regions.id', 'regions.name')
-            ])
-            ->first();
-
+        $plan_activity = ActionPlanActivity::where('id', request('plan_activity_id'))->with([
+            'activity' => fn($q) => $q->select('id', 'name'),
+            'regions' => fn($q) => $q->select('regions.id', 'regions.name')
+        ])->first();
+                
         return response()->json($plan_activity);
     }
 
@@ -47,11 +45,11 @@ trait ActionPlanActivityTrait
         try {
             $data = inputClean($data);
 
-            $is_plan_activity = ActionPlanActivity::where([
+            $is_activity = ActionPlanActivity::where([
                 'action_plan_id' => $data['action_plan_id'], 
                 'activity_id' => $data['activity_id']
-            ])->count();
-            if ($is_plan_activity) return errorHandler('Activity already exists!');
+            ])->exists();
+            if ($is_activity) return errorHandler('Activity already exists!');
 
             // create activity
             $plan_activity = ActionPlanActivity::create($data);
@@ -59,8 +57,9 @@ trait ActionPlanActivityTrait
             // create regions
             $data_regions = databaseArray($data_regions);
             $data_regions = fillArrayRecurse($data_regions, [
-                'activity_id' => $plan_activity->id, 
+                'plan_activity_id' => $plan_activity->id, 
                 'action_plan_id' => $plan_activity->action_plan_id,
+                'activity_id' => $plan_activity->activity_id,
             ]);
             ActionPlanRegion::insert($data_regions);
 
@@ -86,7 +85,7 @@ trait ActionPlanActivityTrait
             'resources' => 'required',
         ]); 
 
-        $data = $request->only(['item_id', 'activity_id', 'start_date', 'end_date', 'assigned_to', 'resources']);
+        $data = $request->only(['item_id', 'action_plan_id', 'activity_id', 'start_date', 'end_date', 'assigned_to', 'resources']);
         $data_regions = $request->only(['region_id']);
 
         DB::beginTransaction();
@@ -95,10 +94,8 @@ trait ActionPlanActivityTrait
             $data = inputClean($data);
 
             $is_plan_activity = ActionPlanActivity::where('id', '!=', $data['item_id'])
-                ->where([
-                    'action_plan_id' => $data['action_plan_id'], 
-                    'activity_id' => $data['activity_id']
-                ])->count();
+                ->where('action_plan_id', $data['action_plan_id'])
+                ->where('activity_id', $data['activity_id'])->exists();
             if ($is_plan_activity) return errorHandler('Activity already exists!');
             
             // update plan activity
@@ -107,17 +104,19 @@ trait ActionPlanActivityTrait
             $plan_activity->update($data);
 
             // update regions
-            ActionPlanRegion::where('activity_id', $plan_activity->id)->delete();
+            ActionPlanRegion::where('plan_activity_id', $plan_activity->id)->delete();
             $data_regions = databaseArray($data_regions);
             $data_regions = fillArrayRecurse($data_regions, [
-                'activity_id' => $plan_activity->id, 
                 'action_plan_id' => $plan_activity->action_plan_id,
+                'plan_activity_id' => $plan_activity->id, 
+                'activity_id' => $plan_activity->activity_id,
             ]);
             ActionPlanRegion::insert($data_regions);
 
             DB::commit();
             return redirect()->back()->with('success', 'Activity updated successfully');
         } catch (\Throwable $th) {
+            dd($th);
             errorHandler('Error updating Activity!');
         }
     }
@@ -131,10 +130,10 @@ trait ActionPlanActivityTrait
 
         try {
             $plan_activity = ActionPlanActivity::findOrFail(request('activity_id'));
-            $plan_activity_count = ActionPlanActivity::where('action_plan_id', $plan_activity->action_plan_id)->count();
-            if ($plan_activity_count == 1) return errorHandler('Cannot delete initial activity!');
+            $activity_count = ActionPlanActivity::where('action_plan_id', $plan_activity->action_plan_id)->count();
+            if ($activity_count == 1) return errorHandler('Cannot delete initial activity!');
             
-            ActionPlanRegion::where('activity_id', $plan_activity->id)->delete();
+            ActionPlanRegion::where('plan_activity_id', $plan_activity->id)->delete();
             $plan_activity->delete();
 
             DB::commit();

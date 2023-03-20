@@ -62,6 +62,7 @@ class ActionPlanController extends Controller
         $request->validate([
             'proposal_id' => 'required', 
             'programme_id' => 'required', 
+            'date' => 'required',
             'main_assigned_to' => 'required',
             'activity_id' => 'required',
             'start_date' => 'required',
@@ -73,7 +74,7 @@ class ActionPlanController extends Controller
             'resources' => 'required',
         ]); 
 
-        $data = $request->only(['proposal_id', 'programme_id', 'main_assigned_to']);
+        $data = $request->only(['proposal_id', 'programme_id', 'date', 'main_assigned_to']);
         $data_activity = $request->only(['activity_id', 'start_date', 'end_date', 'assigned_to', 'resources']);
         $data_regions = $request->only(['region_id']);
         $data_cohort = $request->only(['cohort_id', 'target_no']);
@@ -81,6 +82,7 @@ class ActionPlanController extends Controller
         DB::beginTransaction();
 
         try {
+            $data = inputClean($data);
             $action_plan = ActionPlan::create($data);
 
             // create activity
@@ -90,7 +92,7 @@ class ActionPlanController extends Controller
 
             $activity_params = [
                 'action_plan_id' => $action_plan->id,
-                'activity_id' => $plan_activity->id,
+                'plan_activity_id' => $plan_activity->id,
             ];
 
             // create regions
@@ -104,7 +106,7 @@ class ActionPlanController extends Controller
 
             DB::commit();
             return redirect(route('action_plans.index'))->with(['success' => 'Action Plan created successfully']);
-        } catch (\Throwable $th) {
+        } catch (\Throwable $th) { 
             errorHandler('Error creating Action Plan!');
         }
     }
@@ -117,10 +119,14 @@ class ActionPlanController extends Controller
      */
     public function show(ActionPlan $action_plan)
     {
-        $activities = ProposalItem::where(['proposal_id' => $action_plan->proposal_id, 'is_obj' => 0])->get(['id', 'name']);
-        $cohort_activities = ProposalItem::whereHas('plan_activities')->get(['id', 'name']);
-        $regions = Region::get(['id', 'name']);
-        $cohorts = Cohort::get(['id', 'name']);
+        $regions = Region::pluck('name', 'id');
+        $cohorts = Cohort::pluck('name', 'id');
+
+        $activities = ProposalItem::where(['proposal_id' => $action_plan->proposal_id, 'is_obj' => 0])
+            ->pluck('name', 'id');
+        $cohort_activities = ProposalItem::whereHas('plan_activities')
+            ->where(['proposal_id' => $action_plan->proposal_id, 'is_obj' => 0])
+            ->pluck('name', 'id');
 
         return view('action_plans.view', compact('action_plan', 'activities', 'cohort_activities', 'regions', 'cohorts'));
     }
@@ -178,6 +184,7 @@ class ActionPlanController extends Controller
             $request->validate([
                 'proposal_id' => 'required', 
                 'programme_id' => 'required', 
+                'date' => 'required',
                 'main_assigned_to' => 'required',
                 'activity_id' => 'required',
                 'start_date' => 'required',
@@ -189,7 +196,7 @@ class ActionPlanController extends Controller
                 'resources' => 'required',
             ]); 
     
-            $data = $request->only(['proposal_id', 'programme_id', 'main_assigned_to']);
+            $data = $request->only(['proposal_id', 'programme_id', 'date', 'main_assigned_to']);
             $data_activity = $request->only(['activity_id', 'start_date', 'end_date', 'assigned_to', 'resources']);
             $data_regions = $request->only(['region_id']);
             $data_cohort = $request->only(['cohort_id', 'target_no']);
@@ -197,13 +204,18 @@ class ActionPlanController extends Controller
             DB::beginTransaction();
 
             try {
+                $data = inputClean($data);
                 $action_plan->update($data);
+
                 // update activity
+                $is_activity_plan = ActionPlanActivity::where('id', '!=', $action_plan->plan_activity)
+                    ->where('activity_id', $action_plan->plan_activity->activity_id)->exists();
+                if ($is_activity_plan) return errorHandler('Activity exists!');
                 $action_plan->plan_activity->update($data_activity);
 
                 $activity_params = [
                     'action_plan_id' => $action_plan->id,
-                    'activity_id' => $action_plan->plan_activity->id,
+                    'plan_activity_id' => $action_plan->plan_activity->id,
                 ];
 
                 // update regions
@@ -219,7 +231,7 @@ class ActionPlanController extends Controller
 
                 DB::commit();
                 return redirect(route('action_plans.index'))->with(['success' => 'Action Plan updated successfully']);
-            } catch (\Throwable $th) { 
+            } catch (\Throwable $th) {
                 errorHandler('Error updating Action Plan!');
             }  
         }
@@ -256,6 +268,7 @@ class ActionPlanController extends Controller
                 'is_obj' => 0
             ])->get(['id', 'name']);
         }
+        
         return response()->json($proposal_items);
     }
 

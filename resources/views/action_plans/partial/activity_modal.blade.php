@@ -7,7 +7,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             {{ Form::open(['route' => 'action_plans.store_activity', 'method' => 'POST', 'id' => 'activity_form']) }}
-            <input type="hidden" name="action_plan_id" value="{{ $action_plan->id }}">
+                <input type="hidden" name="action_plan_id" value="{{ $action_plan->id }}">
                 <input type="hidden" name="item_id" id="item_id">
                 <div class="modal-body">
                     <div class="row mb-3">
@@ -15,8 +15,8 @@
                             <label for="activity">Activity</label>
                             <select name="activity_id" class="form-control" id="activity" data-placeholder="Choose Activity" required>
                                 <option value=""></option>
-                                @foreach ($activities as $item)
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                @foreach ($activities as $key => $value)
+                                    <option value="{{ $key }}">{{ $value }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -41,8 +41,8 @@
                         <div class="col-6">
                             <label for="region">Region</label>
                             <select name="region_id[]" class="form-control" id="region" data-placeholder="Choose Region" multiple>
-                                @foreach ($regions as $region)
-                                    <option value="{{ $region->id }}">{{ $region->name }}</option>
+                                @foreach ($regions as $key => $value)
+                                    <option value="{{ $key }}">{{ $value }}</option>
                                 @endforeach
                             </select>
                         </div>

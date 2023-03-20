@@ -15,8 +15,8 @@
                             <label for="activity">Activity</label>
                             <select name="activity_id" class="form-control" id="cohort_activity" data-placeholder="Choose Activity" required>
                                 <option value=""></option>
-                                @foreach ($cohort_activities as $item)
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                @foreach ($cohort_activities as $key => $value)
+                                    <option value="{{ $key }}">{{ $value }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -38,8 +38,8 @@
                                 <td>
                                     <select name="cohort_id[]" class="form-select custom cohort_id" data-placeholder="Choose Cohort" required>
                                         <option value=""></option>
-                                        @foreach ($cohorts as $item)
-                                            <option value="{{ $item->id }}">{{ ucfirst($item->name) }}</option>
+                                        @foreach ($cohorts as $key => $value)
+                                            <option value="{{ $key }}">{{ ucfirst($value) }}</option>
                                         @endforeach
                                     </select>
                                 </td>

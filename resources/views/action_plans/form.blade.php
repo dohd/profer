@@ -10,7 +10,7 @@
     </div>
 </div>
 <div class="row mb-3">
-    <div class="col-9">
+    <div class="col-8">
         <label for="programme">Key Programme*</label>
         <select name="programme_id" id="programme" class="form-control select2" data-placeholder="Choose Programme" required>
             <option value=""></option>
@@ -19,8 +19,12 @@
             @endforeach
         </select>
     </div>
-    <div class="col-3">
-        <label for="assigned_to">Plan Assigned To*</label>
+    <div class="col-2">
+        <label for="date">Date*</label>
+        {{ Form::date('date', null, ['class' => 'form-control', 'required']) }}
+    </div>
+    <div class="col-2">
+        <label for="assigned_to">Plan Overseen By*</label>
         {{ Form::text('main_assigned_to', null, ['class' => 'form-control', 'required']) }}
     </div>
 </div>
@@ -51,7 +55,6 @@
                 <label for="end_date">End Date*</label>
                 {{ Form::date('end_date', null, ['class' => 'form-control', 'required']) }}
             </div>
-
             <div class="col-4">
                 <label for="assigned_to">Activity Assigned To*</label>
                 {{ Form::text('assigned_to', null, ['class' => 'form-control']) }}

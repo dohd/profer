@@ -15,7 +15,7 @@ trait ActionPlanCohortRelationship
 
     public function plan_activity()
     {
-        return $this->belongsTo(ActionPlanActivity::class, 'activity_id');
+        return $this->belongsTo(ActionPlanActivity::class, 'plan_activity_id');
     }
 
     public function action_plan()
