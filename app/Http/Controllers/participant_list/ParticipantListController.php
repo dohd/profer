@@ -78,12 +78,23 @@ class ParticipantListController extends Controller
             $participant_list = ParticipantList::create($data);
 
             $data_items = databaseArray($data_items);
-            $data_items = fillArrayRecurse($data_items, [
-                'participant_list_id' => $participant_list->id,
-                'date' => $data['date'],
-            ]);
-            $data_items = array_filter($data_items, fn($v) => isset($v['name']) && isset($v['gender']));
-            ParticipantListItem::insert($data_items);
+            if ($data_items) {
+                $data_items = fillArrayRecurse($data_items, [
+                    'participant_list_id' => $participant_list->id,
+                    'date' => $data['date'],
+                ]);
+                $data_items = array_filter($data_items, fn($v) => isset($v['name']) && isset($v['gender']));
+                ParticipantListItem::insert($data_items);
+
+                // update count
+                $males = $participant_list->items()->where('gender', 'male')->count();
+                $females = $participant_list->items()->where('gender', 'female')->count();
+                $participant_list->update([
+                    'male_count' => $males,
+                    'female_count' => $females,
+                    'total_count' => $males+$females,
+                ]);
+            }
 
             DB::commit();
             return redirect(route('participant_lists.index'))->with(['success' => 'Participant List created successfully']);
@@ -183,6 +194,15 @@ class ParticipantListController extends Controller
                     unset($participant_list_item->item_id);
                     $participant_list_item->save();
                 }
+
+                // update count
+                $males = $participant_list->items()->where('gender', 'male')->count();
+                $females = $participant_list->items()->where('gender', 'female')->count();
+                $participant_list->update([
+                    'male_count' => $males,
+                    'female_count' => $females,
+                    'total_count' => $males+$females,
+                ]);
 
                 DB::commit();
                 return redirect(route('participant_lists.index'))->with(['success' => 'Participant List updated successfully']);
