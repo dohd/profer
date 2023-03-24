@@ -19,12 +19,12 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-4">
-                        <select name="narrative_id" id="narrative_no" class="form-select select2 filter" data-placeholder="Choose Narrative No.">
+                        <select name="narrative_id" id="narrative_no" class="form-select select2 filter" data-placeholder="Choose Narrative No." disabled>
                             <option value=""></option>
                         </select>
                     </div>
                     <div class="col-8">
-                        <select name="narrative_pointer_id" id="indicator" class="form-select select2 filter" data-placeholder="Choose Narrative Indicator">
+                        <select name="narrative_pointer_id" id="indicator" class="form-select select2 filter" data-placeholder="Choose Narrative Indicator" disabled>
                             <option value=""></option>
                             @foreach ($narrative_pointers as $item)
                                 <option value="{{ $item->id }}">{{ $item->value }}</option>
@@ -60,20 +60,28 @@
     $('#proposal').change(function() {
         $('#t_project').text($(this).find(':selected').text());
         // fetch narratives
-        $.post("{{ route('reports.narrative_options') }}", {
-            proposal_id: $(this).val(),
-        }, data => {
-            $('#narrative_no option:not(:first)').remove();
-            data.forEach(v => {
-                const narr_no = `${v.tid}/${v.month}/${v.year}`;
-                $('#narrative_no').append(`<option value="${v.id}">${narr_no}</option>`);
+        if ($(this).val()) {
+            $.post("{{ route('reports.narrative_options') }}", {
+                proposal_id: $(this).val(),
+            }, data => {
+                $('#narrative_no option:not(:first)').remove();
+                data.forEach(v => {
+                    $('#narrative_no').append(`<option value="${v.id}">${v.code}</option>`);
+                });
+                $('#narrative_no').prop('disabled', false);
             });
-        });
+        } else {
+            ['narrative_no', 'indicator'].forEach(v => {
+                $('#'+v).prop('disabled', true);
+                $('#'+v).find('option:not(:first)').remove();
+            });
+        }
     });
 
     // on narrative change
     $('#narrative_no').change(function() {
         $('#t_narrative_no').text($('#narrative_no').find(':selected').text());
+        $('#indicator').prop('disabled', false);
     });
 
     // on indicator change

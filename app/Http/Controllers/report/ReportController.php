@@ -38,8 +38,11 @@ class ReportController extends Controller
     public function narrative_options()
     {
         $narratives = Narrative::where('proposal_id', request('proposal_id'))
-            ->selectRaw('id, tid, MONTH(created_at) as month, YEAR(created_at) as year')
-            ->get();
+            ->get(['id', 'tid', 'date'])->map(function($v) {
+                $d = explode('-', $v->date);
+                $v->code = tidCode('activity_narrative', $v->tid) . "/{$d[1]}";
+                return $v;
+            });
 
         return response()->json($narratives);
     }
