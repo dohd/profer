@@ -52,7 +52,7 @@
               <div class="card-body">
                 <h5 class="card-title">Grants <span></span></h5>
                 <div class="d-flex align-items-center">
-                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center" style="width:40px;height:40px;">
                     <i class="bi bi-currency-dollar"></i>
                   </div>
                   <div class="ps-3">
@@ -60,6 +60,7 @@
                     <span class="text-success small pt-1 fw-bold">{{ $approved_proposal_count }}</span>
                     <span class="text-muted small pt-2 ps-1">Project</span>
                   </div>
+                  <div>&nbsp;<br><br><br></div>
                 </div>
               </div>
             </div>
@@ -159,138 +160,11 @@
           <!-- End Regions Card -->
 
           <!-- Monthly Activity Participant Card -->
-          <div class="col-12">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Monthly Activity Participant <span></span></h5>
-  
-                <!-- Column Chart -->
-                <div id="monthlyActivityParticipant"></div>
-  
-                <script>
-                  document.addEventListener("DOMContentLoaded", () => {
-                    new ApexCharts(document.querySelector("#monthlyActivityParticipant"), {
-                      series: [{
-                        name: 'Male',
-                        data: [44, 55, 57, 56, 61, 58, 63, 60, 66, 23, 30, 10]
-                        }, 
-                        {
-                          name: 'Female',
-                          data: [76, 85, 101, 98, 87, 105, 91, 114, 94, 25, 15, 42]
-                        },
-                      ],
-                      chart: {
-                        type: 'bar',
-                        height: 350
-                      },
-                      plotOptions: {
-                        bar: {
-                          horizontal: false,
-                          columnWidth: '55%',
-                          endingShape: 'rounded'
-                        },
-                      },
-                      dataLabels: {
-                        enabled: false
-                      },
-                      stroke: {
-                        show: true,
-                        width: 2,
-                        colors: ['transparent']
-                      },
-                      xaxis: {
-                        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                      },
-                      yaxis: {
-                        title: {
-                          text: 'Count'
-                        }
-                      },
-                      fill: {
-                        opacity: 1
-                      },
-                      tooltip: {
-                        y: {
-                          formatter: function(val) {
-                            return val + " participants"
-                          }
-                        }
-                      }
-                    }).render();
-                  });
-                </script>
-                <!-- End Column Chart -->
-  
-              </div>
-            </div>
-          </div>
+          @include('charts.activity_monthly_participant')
           <!-- End Monthly Activity Participant Card -->
 
           <!-- Regional Activity Participant Card -->
-          <div class="col-12">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Regional Activity Participant <span></span></h5>
-                <!-- Column Chart -->
-                <div id="regionalActivityParticipant"></div>
-                <script>
-                  document.addEventListener("DOMContentLoaded", () => {
-                    new ApexCharts(document.querySelector("#regionalActivityParticipant"), {
-                      series: [{
-                        name: 'Male',
-                        data: [44, 55, 57, 56, 61, 58, 63, 60, 66, 23, 30, 10],
-                        }, 
-                        {
-                          name: 'Female',
-                          data: [76, 85, 101, 98, 87, 105, 91, 114, 94, 25, 15, 42],
-                        },
-                      ],
-                      colors: ['#6f42c1', '#d63384'],
-                      chart: {
-                        type: 'bar',
-                        height: 350
-                      },
-                      plotOptions: {
-                        bar: {
-                          horizontal: true,
-                          columnWidth: '55%',
-                          endingShape: 'rounded'
-                        },
-                      },
-                      dataLabels: {
-                        enabled: false
-                      },
-                      stroke: {
-                        show: true,
-                        width: 2,
-                        colors: ['transparent']
-                      },
-                      xaxis: {
-                        categories: ['Kisumu', 'Kakamega', 'Nairobi', 'Mombasa', 'Kisii', 'Nyeri', 'Machakos', 'Meru', 'Malindi', 'Eldoret', 'Isiolo', 'Busia'],
-                      },
-                      yaxis: {
-                        title: {
-                          text: 'Region'
-                        },
-                        
-                      },
-                      fill: {
-                        opacity: 1
-                      },
-                      tooltip: {
-                        y: {
-                          formatter: function(val) {
-                            return val + " participants"
-                          }
-                        }
-                      }
-                    }).render();
-                  });
-                </script>
-                <!-- End Column Chart -->
-              </div>
-            </div>
-          </div>
+          @include('charts.activity_regional_participant')
           <!-- End Monthly Activity Participant Card -->
         </div>
       </div>
@@ -299,175 +173,20 @@
       <!-- Right side columns -->
       <div class="col-lg-4">
         <!-- Recent Activity -->
-        <div class="card">
-          <div class="filter">
-            <a class="icon" href="#" data-bs-toggle="dropdown"
-              ><i class="bi bi-three-dots"></i
-            ></a>
-            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow d-none">
-              <li class="dropdown-header text-start">
-                <h6>Filter</h6>
-              </li>
-
-              <li><a class="dropdown-item" href="#">Today</a></li>
-              <li><a class="dropdown-item" href="#">This Month</a></li>
-              <li><a class="dropdown-item" href="#">This Year</a></li>
-            </ul>
-          </div>
-
-          <div class="card-body">
-            <h5 class="card-title">Recent Activity <span>| This Month</span></h5>
-
-            <div class="activity">
-              <div class="activity-item d-flex">
-                <div class="activite-label">32 min</div>
-                <i
-                  class="bi bi-circle-fill activity-badge text-success align-self-start"
-                ></i>
-                <div class="activity-content">
-                  Quia quae rerum
-                  <a href="#" class="fw-bold text-dark">explicabo officiis</a>
-                  beatae
-                </div>
-              </div>
-              <!-- End activity item-->
-
-              <div class="activity-item d-flex">
-                <div class="activite-label">56 min</div>
-                <i
-                  class="bi bi-circle-fill activity-badge text-danger align-self-start"
-                ></i>
-                <div class="activity-content">
-                  Voluptatem blanditiis blanditiis eveniet
-                </div>
-              </div>
-              <!-- End activity item-->
-
-              <div class="activity-item d-flex">
-                <div class="activite-label">2 hrs</div>
-                <i
-                  class="bi bi-circle-fill activity-badge text-primary align-self-start"
-                ></i>
-                <div class="activity-content">
-                  Voluptates corrupti molestias voluptatem
-                </div>
-              </div>
-              <!-- End activity item-->
-
-              <div class="activity-item d-flex">
-                <div class="activite-label">1 day</div>
-                <i
-                  class="bi bi-circle-fill activity-badge text-info align-self-start"
-                ></i>
-                <div class="activity-content">
-                  Tempore autem saepe
-                  <a href="#" class="fw-bold text-dark">occaecati voluptatem</a>
-                  tempore
-                </div>
-              </div>
-              <!-- End activity item-->
-
-              <div class="activity-item d-flex">
-                <div class="activite-label">2 days</div>
-                <i
-                  class="bi bi-circle-fill activity-badge text-warning align-self-start"
-                ></i>
-                <div class="activity-content">
-                  Est sit eum reiciendis exercitationem
-                </div>
-              </div>
-              <!-- End activity item-->
-
-              <div class="activity-item d-flex">
-                <div class="activite-label">4 weeks</div>
-                <i
-                  class="bi bi-circle-fill activity-badge text-muted align-self-start"
-                ></i>
-                <div class="activity-content">
-                  Dicta dolorem harum nulla eius. Ut quidem quidem sit quas
-                </div>
-              </div>
-              <!-- End activity item-->
-            </div>
-          </div>
-        </div>
+        @include('charts.recent_activity')
         <!-- End Recent Activity -->
 
         <!-- Donor Activity Distribution -->
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Donor Activity Distribution</h5>
-            <!-- Donut Chart -->
-            <div id="donorActivityDistribution"></div>
-            <script>
-              document.addEventListener("DOMContentLoaded", () => {
-                new ApexCharts(document.querySelector("#donorActivityDistribution"), {
-                  series: [44, 56, 12, 20],
-                  chart: {
-                    height: 350,
-                    type: 'donut',
-                    toolbar: {
-                      show: true
-                    }
-                  },
-                  labels: ['WHO', 'UNEP', 'County Gvt', 'National Gvt'],
-                }).render();
-              });
-            </script>
-            <!-- End Donor Activity Distribution -->
-          </div>
-        </div>
+        @include('charts.activity_donor_dist')
+        <!-- End Donor Activity Distribution -->
 
         <!-- Participant Age Distribution -->
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Participant Age Distribution</h5>
-              <!-- Pie Chart -->
-              <div id="participantAgeDistribution"></div>
-              <script>
-                document.addEventListener("DOMContentLoaded", () => {
-                  new ApexCharts(document.querySelector("#participantAgeDistribution"), {
-                    series: [44, 60, 13,],
-                    chart: {
-                      height: 350,
-                      type: 'pie',
-                      toolbar: {
-                        show: true
-                      }
-                    },
-                    labels: ['Under 18', 'Btwn 18 & 35', 'Above 35']
-                  }).render();
-                });
-              </script>
-              <!-- End Pie Chart -->
-            </div>
-          </div>
+        @include('charts.participant_age_dist')
         <!-- End Participant Age Distribution -->
 
         <!-- Participant Cohort Distribution -->
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Participant Cohort Distribution</h5>
-            <!-- Donut Chart -->
-            <div id="participantCohortDistribution"></div>
-            <script>
-              document.addEventListener("DOMContentLoaded", () => {
-                new ApexCharts(document.querySelector("#participantCohortDistribution"), {
-                  series: [44, 56, 12, 20],
-                  chart: {
-                    height: 350,
-                    type: 'donut',
-                    toolbar: {
-                      show: true
-                    }
-                  },
-                  labels: ['Youth', 'Students', 'Teachers', 'Patients'],
-                }).render();
-              });
-            </script>
-            <!-- End Participant Cohort Distribution -->
-          </div>
-        </div>
+        @include('charts.participant_cohort_dist')
+        <!-- End Participant Cohort Distribution -->
       </div>
       <!-- End Right side columns -->
     </div>
