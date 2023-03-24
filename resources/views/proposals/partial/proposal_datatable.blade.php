@@ -1,6 +1,6 @@
-@foreach ($proposals as $proposal)
+@foreach ($proposals as $i => $proposal)
 <tr>
-    <th scope="row">{{ $proposal->tid }}</th>
+    <th scope="row">{{ $i+1 }}</th>
     <td><a href="{{ route('proposals.show', $proposal) }}" class="text-primary">{{ $proposal->title }}</a></td>
     <td>{{ dateFormat($proposal->start_date) }}</td>
     <td>{{ numberFormat($proposal->budget) }}</td>
