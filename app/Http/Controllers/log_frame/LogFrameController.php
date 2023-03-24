@@ -55,7 +55,7 @@ class LogFrameController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        $request->validate(['proposal_id' => 'required',]);
+        $request->validate(['proposal_id' => 'required', 'date' => 'required']);
 
         $data = $request->except('_token'); 
 
@@ -103,7 +103,7 @@ class LogFrameController extends Controller
     public function update(Request $request, LogFrame $log_frame)
     {
         // dd($request->all());
-        $request->validate(['proposal_id' => 'required',]);
+        $request->validate(['proposal_id' => 'required', 'date' => 'required']);
 
         $data = $request->except('_token'); 
 

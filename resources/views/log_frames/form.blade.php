@@ -1,5 +1,5 @@
 <div class="row mb-3">
-    <div class="col-12">
+    <div class="col-10">
         <label for="title">Project Title*</label>
         <select name="proposal_id" id="proposal" class="form-control select2" data-placeholder="Choose Project" required>
             <option value=""></option>
@@ -9,6 +9,10 @@
                 </option>
             @endforeach
         </select>
+    </div>
+    <div class="col-2">
+        <label for="date">Date*</label>
+        {{ Form::date('date', null, ['class' => 'form-control', 'required']) }}
     </div>
 </div>
 <br>
