@@ -20,7 +20,11 @@
                         @foreach ($log_frames as $i => $log_frame)
                             <tr>
                                 <th scope="row">{{ $i+1 }}</th>
-                                <td>{{ $log_frame->proposal? $log_frame->proposal->title : '' }}</td>
+                                @if ($log_frame->proposal)
+                                    <td><a href="{{ route('proposals.show', $log_frame->proposal->id . '?is_project=1') }}">{{ $log_frame->proposal->title }}</a></td>
+                                @else
+                                    <td></td>
+                                @endif
                                 <td>{{ dateFormat($log_frame->created_at) }}</td>
                                 <td>{!! $log_frame->action_buttons !!}</td>
                             </tr>

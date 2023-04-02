@@ -50,7 +50,11 @@
                             <tr>
                                 <th scope="row">{{ $i+1 }}</th>
                                 <td>{{ tidCode('activity_narrative', $narrative->tid) }}</td>
-                                <td>{{ $narrative->proposal? $narrative->proposal->title : '' }}</td>
+                                @if ($narrative->proposal)
+                                    <td><a href="{{ route('proposals.show', $narrative->proposal->id . '?is_project=1') }}">{{ $narrative->proposal->title }}</a></td>
+                                @else
+                                    <td></td>
+                                @endif
                                 <td>{{ $narrative->proposal_item? $narrative->proposal_item->name : '' }}</td>
                                 <td><span class="badge bg-{{ $narrative->status == 'approved'? 'success' : 'secondary' }}">{{ $narrative->status }}</span></td>
                                 <td>{!! $narrative->action_buttons !!}</td>

@@ -23,7 +23,11 @@
                         @foreach ($participant_lists as $i => $item)
                             <tr>
                                 <th scope="row">{{ $i+1 }}</th>
-                                <td>{{ $item->proposal? $item->proposal->title : ''  }}</td>
+                                @if ($item->proposal)
+                                    <td><a href="{{ route('proposals.show', $item->proposal->id . '?is_project=1') }}">{{ $item->proposal->title }}</a></td>
+                                @else
+                                    <td></td>
+                                @endif
                                 <td>{{ $item->proposal_item? $item->proposal_item->name : '' }}</td>
                                 <td>{{ $item->region? $item->region->name : '' }}</td>
                                 <td>{{ $item->total_count }}</td>
