@@ -17,8 +17,7 @@
 
   <section class="section dashboard">
     <div class="row">
-      <!-- Left side columns -->
-      <div class="col-lg-8">
+      <div class="col-lg-12">
         <div class="row">
           <!-- Activities Card -->
           <div class="col-xxl-4 col-md-6">
@@ -52,7 +51,7 @@
               <div class="card-body">
                 <h5 class="card-title">Grants <span></span></h5>
                 <div class="d-flex align-items-center">
-                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center" style="width:40px;height:40px;">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                     <i class="bi bi-currency-dollar"></i>
                   </div>
                   <div class="ps-3">
@@ -60,7 +59,6 @@
                     <span class="text-success small pt-1 fw-bold">{{ $approved_proposal_count }}</span>
                     <span class="text-muted small pt-2 ps-1">Project</span>
                   </div>
-                  <div>&nbsp;<br><br><br></div>
                 </div>
               </div>
             </div>
@@ -158,7 +156,13 @@
             </div>
           </div>
           <!-- End Regions Card -->
-
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Left side columns -->
+      <div class="col-lg-8">
+        <div class="row">
           <!-- Monthly Activity Participant Card -->
           @include('charts.activity_monthly_participant')
           <!-- End Monthly Activity Participant Card -->
@@ -172,10 +176,6 @@
 
       <!-- Right side columns -->
       <div class="col-lg-4">
-        <!-- Recent Activity -->
-        @include('charts.recent_activity')
-        <!-- End Recent Activity -->
-
         <!-- Donor Activity Distribution -->
         @include('charts.activity_donor_dist')
         <!-- End Donor Activity Distribution -->
