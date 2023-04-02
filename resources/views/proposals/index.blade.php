@@ -35,7 +35,7 @@
 
     const isProject = @json(request('is_project'));
     if (isProject == 1) {
-        $(document).on('click', '.dropdown-item', function() {
+        $(document).on('click', '.dropdown-item, .title', function() {
             $(this).attr('href', $(this).attr('href') + '?is_project=1');
         });
     }
