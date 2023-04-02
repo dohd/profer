@@ -6,14 +6,14 @@
     <div id="donorActivityDistribution"></div>
 
     <script>
-      const donors = @json(@$donors_dist);
-      let activityCount = @json(@$donor_activity_dist);
-      activityCount = activityCount.map(v => v['count']);
+      const donorDist = @json(@$donors_dist);
+      let donorActivityDist = @json(@$donor_activity_dist);
+      donorActivityDist = donorActivityDist.map(v => v['count']);
 
       document.addEventListener("DOMContentLoaded", () => {
         new ApexCharts(document.querySelector("#donorActivityDistribution"), {
           // series: [44, 56, 12, 20],
-          series: activityCount,
+          series: donorActivityDist,
           chart: {
             height: 350,
             type: 'donut',
@@ -22,7 +22,7 @@
             }
           },
           // labels: ['WHO', 'UNEP', 'County Gvt', 'National Gvt'],
-          labels: donors,
+          labels: donorDist,
         }).render();
       });
     </script>

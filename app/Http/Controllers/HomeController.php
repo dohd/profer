@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\age_group\AgeGroup;
 use App\Models\cohort\Cohort;
 use App\Models\donor\Donor;
+use App\Models\item\ParticipantListItem;
 use App\Models\item\ProposalItem;
 use App\Models\participant_list\ParticipantList;
 use App\Models\programme\Programme;
@@ -54,16 +56,19 @@ class HomeController extends Controller
         $donors_dist = Donor::whereHas('proposals', fn($q) => $q->whereIn('proposals.id', $donor_activity_dist->pluck('proposal_id')->toArray()))
             ->pluck('name'); 
 
-        // 
-
-        
+        // participant age distribution chart
+        $sql = 'age_group_id, COUNT(*) as count';
+        $age_group_dist = ParticipantListItem::selectRaw($sql)->groupBy('age_group_id')->get();
+        $age_dist = AgeGroup::whereIn('id', $age_group_dist->pluck('age_group_id')->toArray())
+            ->pluck('bracket'); 
+            
         return view('home', compact(
             'donor_count', 'programmes_count', 'regions_count', 'cohorts_count', 
             'activity_done_count', 'project_done_count', 
             'project_budget', 'project_count', 'proposal_count',
             'monthly_pts', 
             'donor_activity_dist', 'donors_dist',
-
+            'age_group_dist', 'age_dist'
         ));
     }
 
