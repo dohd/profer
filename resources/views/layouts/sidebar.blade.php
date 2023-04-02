@@ -71,7 +71,7 @@
         data-bs-parent="#sidebar-nav"
       >
         <li>
-          <a href="{{ route('proposals.index') }}"><i class="bi bi-circle"></i><span>Manage Projects</span></a>
+          <a href="{{ route('proposals.index', 'is_project=1') }}"><i class="bi bi-circle"></i><span>Manage Projects</span></a>
         </li>
         <li>
           <a href="{{ route('log_frames.index') }}"><i class="bi bi-circle"></i><span>Project Log Frame</span></a>

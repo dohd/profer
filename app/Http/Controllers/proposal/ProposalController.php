@@ -17,22 +17,20 @@ class ProposalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $proposals = Proposal::all();
 
-        $pending_count = Proposal::where('status', 'pending')->count();
-        $approved_count = Proposal::where('status', 'approved')->count();
-        $rejected_count = Proposal::where('status', 'rejected')->count();
-
-        return view('proposals.index', compact('proposals', 'pending_count', 'approved_count', 'rejected_count'));
+        return view('proposals.index', compact('proposals'));
     }
 
     // proposal datatable
-    public function datatable()
+    public function datatable(Request $request)
     {
-        $proposals = Proposal::all();
-
+        $proposals = [];
+        if ($request->is_project) $proposals = Proposal::where('status', 'approved')->get();
+        else $proposals = Proposal::where('status', '!=', 'approved')->get();
+        
         return view('proposals.partial.proposal_datatable', compact('proposals'));
     }
 

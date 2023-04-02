@@ -1,36 +1,9 @@
 @extends('layouts.core')
 
-@section('title', 'Proposal Management')
+@section('title', request('is_project')? 'Project Management' : 'Proposal Management')
     
 @section('content')
     @include('proposals.header')
-    <div class="card">
-        <div class="card-body">
-            <div class="card-content pt-4">
-                <div class="row">
-                    <div class="col-6">
-                        <table class="table table-bordered">
-                            <tbody>
-                                <tr>
-                                    <th>Status</th>
-                                    <td>Pending</td>
-                                    <td>Approved</td>
-                                    <td>Rejected</td>
-                                </tr>
-                                <tr>
-                                    <th>Count</th>
-                                    <td>{{ numberFormat($pending_count, 0) }}</td>
-                                    <td>{{ numberFormat($approved_count, 0) }}</td>
-                                    <td>{{ numberFormat($rejected_count, 0) }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="card">
         <div class="card-body">
             <div class="card-content p-2">
@@ -55,9 +28,16 @@
 
 @section('script')
 <script>
-    $.post("{{ route('proposals.datatable') }}", data => {
+    $.post("{{ route('proposals.datatable', request()->only('is_project')) }}", data => {
         $('#proposal_tbl tbody').html(data);
         new simpleDatatables.DataTable($('#proposal_tbl')[0]);
     });
+
+    const isProject = @json(request('is_project'));
+    if (isProject == 1) {
+        $(document).on('click', '.dropdown-item', function() {
+            $(this).attr('href', $(this).attr('href') + '?is_project=1');
+        });
+    }
 </script>
 @stop
