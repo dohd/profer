@@ -6,7 +6,7 @@
     @include('log_frames.header')
     <div class="card">
         <div class="card-body">
-            <div class="card-title h5">Project: <b>{{ @$log_frame->proposal->title }}</b></div>
+            <div class="card-title h5">{{ @$log_frame->proposal->title }}</div>
             <div class="card-content p-2">
                 <!-- Default Tabs -->
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
