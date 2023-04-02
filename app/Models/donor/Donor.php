@@ -3,12 +3,13 @@
 namespace App\Models\donor;
 
 use App\Models\donor\Traits\DonorAttribute;
+use App\Models\donor\Traits\DonorRelationship;
 use App\Models\ModelTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class Donor extends Model
 {
-    use ModelTrait, DonorAttribute;
+    use ModelTrait, DonorAttribute, DonorRelationship;
 
     /**
      * The database table used by the model.
