@@ -41,7 +41,7 @@
           <a href="{{ route('age_groups.index') }}"><i class="bi bi-circle"></i><span>Age Groups</span></a>
         </li>
         <li>
-          <a href="{{ route('disabilities.index') }}"><i class="bi bi-circle"></i><span>Disability Types</span></a>
+          <a href="{{ route('disabilities.index') }}"><i class="bi bi-circle"></i><span>Disabilities</span></a>
         </li>
       </ul>
     </li>
