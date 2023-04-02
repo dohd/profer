@@ -32,8 +32,8 @@
                     <i class="bi bi-stack"></i>
                   </div>
                   <div class="ps-3">
-                    <h6>{{ $activity_count }}</h6>
-                    <span class="text-success small pt-1 fw-bold">{{ $activity_proposal_count }}</span>
+                    <h6>{{ $activity_done_count }}</h6>
+                    <span class="text-success small pt-1 fw-bold">{{ $project_done_count }}</span>
                     <span class="text-muted small pt-2 ps-1">Project</span>
                   </div>
                 </div>
@@ -55,8 +55,8 @@
                     <i class="bi bi-currency-dollar"></i>
                   </div>
                   <div class="ps-3">
-                    <h6 style="font-size: 1.2em">{{ numberFormat($grant_amount) }}</h6>
-                    <span class="text-success small pt-1 fw-bold">{{ $approved_proposal_count }}</span>
+                    <h6 style="font-size: 1.2em">{{ numberFormat($project_budget) }}</h6>
+                    <span class="text-success small pt-1 fw-bold">{{ $project_count }}</span>
                     <span class="text-muted small pt-2 ps-1">Project</span>
                   </div>
                 </div>
@@ -79,7 +79,7 @@
                   </div>
                   <div class="ps-3">
                     <h6>{{ $donor_count }}</h6>
-                    <span class="text-danger small pt-1 fw-bold">{{ $approved_proposal_count }}</span>
+                    <span class="text-danger small pt-1 fw-bold">{{ $project_count }}</span>
                     <span class="text-muted small pt-2 ps-1">Project</span>
                   </div>
                 </div>
@@ -102,7 +102,7 @@
                   </div>
                   <div class="ps-3">
                     <h6>{{ $programmes_count }}</h6>
-                    <span class="text-danger small pt-1 fw-bold">{{ $approved_proposal_count }}</span>
+                    <span class="text-danger small pt-1 fw-bold">{{ $project_count }}</span>
                     <span class="text-muted small pt-2 ps-1">Project</span>
                   </div>
                 </div>
@@ -125,7 +125,7 @@
                   </div>
                   <div class="ps-3">
                     <h6>{{ $cohorts_count }}</h6>
-                    <span class="text-danger small pt-1 fw-bold">{{ $approved_proposal_count }}</span>
+                    <span class="text-danger small pt-1 fw-bold">{{ $project_count }}</span>
                     <span class="text-muted small pt-2 ps-1">Project</span>
                   </div>
                 </div>
@@ -148,7 +148,7 @@
                   </div>
                   <div class="ps-3">
                     <h6>{{ $regions_count }}</h6>
-                    <span class="text-danger small pt-1 fw-bold">{{ $approved_proposal_count }}</span>
+                    <span class="text-danger small pt-1 fw-bold">{{ $project_count }}</span>
                     <span class="text-muted small pt-2 ps-1">Project</span>
                   </div>
                 </div>

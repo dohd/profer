@@ -7,15 +7,35 @@
         <div id="monthlyActivityParticipant"></div>
 
         <script>
+          const maleCount = [];
+          const femaleCount = [];
+          const monthlyPts = @json(@$monthly_pts);
+          for (let i = 1; i < 13; i++) {
+            let isChecked = false;
+            monthlyPts.forEach(v => {
+              if (v['month'] == i) {
+                isChecked = true;
+                maleCount.push(v['male_count']*1);
+                femaleCount.push(v['female_count']*1);
+              }
+            });
+            if (!isChecked) {
+              maleCount.push(0);
+              femaleCount.push(0);
+            }
+          }
+
           document.addEventListener("DOMContentLoaded", () => {
             new ApexCharts(document.querySelector("#monthlyActivityParticipant"), {
               series: [{
                 name: 'Male',
-                data: [44, 55, 57, 56, 61, 58, 63, 60, 66, 23, 30, 10]
+                // data: [44, 55, 57, 56, 61, 58, 63, 60, 66, 23, 30, 10]
+                data: maleCount,
                 }, 
                 {
                   name: 'Female',
-                  data: [76, 85, 101, 98, 87, 105, 91, 114, 94, 25, 15, 42]
+                  // data: [76, 85, 101, 98, 87, 105, 91, 114, 94, 25, 15, 42]
+                  data: femaleCount,
                 },
               ],
               chart: {
