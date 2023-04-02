@@ -65,11 +65,8 @@
     
     <div class="card">
         <div class="card-body">
-            <div class="card-header">
-                No. of Participants
-            </div>
             <div class="card-content p-2">
-                <div class="mt-1">
+                <div class="mt-2">
                     <label for="date" class="d-inline-block p2" style="margin-right: .5em">Date Between</label>
                     <div class="d-inline-block p2" style="margin-right: .5em"><input type="date" placeholder="dd-mm-yyyy" class="str_date"></div>
                     <div class="d-inline-block p2" style="margin-right: .5em"><input type="date" placeholder="dd-mm-yyyy" class="end_date"></div>
