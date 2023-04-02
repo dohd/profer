@@ -57,18 +57,32 @@ class HomeController extends Controller
             ->pluck('name'); 
 
         // participant age distribution chart
-        $sql = 'age_group_id, COUNT(*) as count';
+        $sql = 'age_group_id, Count(*) as count';
         $age_group_dist = ParticipantListItem::selectRaw($sql)->groupBy('age_group_id')->get();
         $age_dist = AgeGroup::whereIn('id', $age_group_dist->pluck('age_group_id')->toArray())
             ->pluck('bracket'); 
-            
+
+        // participant cohort distribution chart
+        $sql = 'cohort_id, SUM(total_count) as count';
+        $ps_cohort_dist = ParticipantList::selectRaw($sql)->groupBy('cohort_id')->get();
+        $cohort_dist = Cohort::whereIn('id', $ps_cohort_dist->pluck('cohort_id')->toArray())
+            ->pluck('name'); 
+
+        // region participant chart
+        $sql = 'region_id, SUM(male_count) as male_count, SUM(female_count) as female_count';
+        $region_pts = ParticipantList::selectRaw($sql)->groupBy('region_id')->get();
+        $region_dist = Region::whereIn('id', $region_pts->pluck('region_id')->toArray())
+            ->pluck('name'); 
+        
         return view('home', compact(
             'donor_count', 'programmes_count', 'regions_count', 'cohorts_count', 
             'activity_done_count', 'project_done_count', 
             'project_budget', 'project_count', 'proposal_count',
             'monthly_pts', 
             'donor_activity_dist', 'donors_dist',
-            'age_group_dist', 'age_dist'
+            'age_group_dist', 'age_dist',
+            'ps_cohort_dist', 'cohort_dist',
+            'region_pts', 'region_dist',
         ));
     }
 
