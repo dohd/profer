@@ -27,12 +27,14 @@ class ActionPlanController extends Controller
     public function index()
     {
         $action_plans = ActionPlan::all();
+        $status_count = ActionPlan::selectRaw('status, count(*) as count')
+            ->groupBy('status')->get()
+            ->reduce(function($init, $v) {
+                $init[$v->status] = $v->count;
+                return $init;
+            }, []);
 
-        $pending_count = ActionPlan::where('status', 'pending')->count();
-        $approved_count = ActionPlan::where('status', 'approved')->count();
-        $review_count = ActionPlan::where('status', 'review')->count();
-
-        return view('action_plans.index', compact('action_plans', 'pending_count', 'approved_count', 'review_count'));
+        return view('action_plans.index', compact('action_plans', 'status_count'));
     }
 
     /**
