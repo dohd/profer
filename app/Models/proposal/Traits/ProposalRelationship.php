@@ -6,11 +6,17 @@ use App\Models\action_plan\ActionPlan;
 use App\Models\donor\Donor;
 use App\Models\item\ProposalItem;
 use App\Models\log_frame\LogFrame;
+use App\Models\narrative\Narrative;
 use App\Models\participant_list\ParticipantList;
 use App\Models\region\Region;
 
 trait ProposalRelationship
 {
+    public function narratives()
+    {
+        return $this->hasMany(Narrative::class);
+    }
+
     public function action_plans()
     {
         return $this->hasMany(ActionPlan::class);
