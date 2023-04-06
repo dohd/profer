@@ -51,8 +51,8 @@
                 <div class="row">
                     <div class="col-5"></div>
                     <div class="col-7">
-                        <select name="" id="" class="custom-control col-6">
-                            <option value="">-- Select Proposal Filter --</option>
+                        <select name="" id="" class="custom-control col-4">
+                            <option value="">-- Select Filter --</option>
                             <option value="">W/O Log Frame</option>
                             <option value="">W/O Action Plan</option>
                             <option value="">W/O Participant</option>
