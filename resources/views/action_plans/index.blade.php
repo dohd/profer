@@ -52,11 +52,7 @@
                             <tr>
                                 <th scope="row"><a href="#">{{ $plan->tid }}</a></th>
                                 <td>AP-{{ $plan->tid }}</td>
-                                @if ($plan->proposal)
-                                    <td><a href="{{ route('proposals.show', $plan->proposal->id . '?is_project=1') }}">{{ $plan->proposal->title }}</a></td>
-                                @else
-                                    <td></td>
-                                @endif
+                                <td><a href="{{ route('proposals.show', $plan->proposal) }}">{{ $plan->proposal->title }}</a></td>
                                 <td>{{ $plan->programme ? $plan->programme->name : '' }}</td>
                                 <td><span class="badge bg-{{ $plan->status == 'approved'? 'success' : 'secondary' }}">{{ $plan->status }}</span></td>
                                 <td>{{ $plan->main_assigned_to }}</td>

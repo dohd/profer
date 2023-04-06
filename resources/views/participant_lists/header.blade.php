@@ -9,7 +9,7 @@
   <nav>
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-      <li class="breadcrumb-item active"><a href="{{ route('participant_lists.index') }}">Project Management / Participant Lists</a></li>
+      <li class="breadcrumb-item active"><a href="{{ route('participant_lists.index') }}">Participant Lists</a></li>
     </ol>
   </nav>
 </div>

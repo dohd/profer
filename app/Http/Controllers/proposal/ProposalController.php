@@ -27,9 +27,7 @@ class ProposalController extends Controller
     // proposal datatable
     public function datatable(Request $request)
     {
-        $proposals = [];
-        if ($request->is_project) $proposals = Proposal::where('status', 'approved')->get();
-        else $proposals = Proposal::where('status', '!=', 'approved')->get();
+        $proposals = Proposal::all();
         
         return view('proposals.partial.proposal_datatable', compact('proposals'));
     }

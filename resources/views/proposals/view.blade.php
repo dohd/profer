@@ -1,12 +1,12 @@
 @extends('layouts.core')
 
-@section('title', 'View | ' .  (request('is_project')? 'Project Management' : 'Proposal Management'))
+@section('title', 'View | Proposal Management')
     
 @section('content')
     @include('proposals.header')
     <div class="card">
         <div class="card-body">
-            <div class="card-title h5">{{ request('is_project')? 'Project Details' : 'Proposal Details' }}
+            <div class="card-title h5">Proposal Details
                 <span class="badge bg-secondary text-white float-end" role="button" data-bs-toggle="modal" data-bs-target="#status_modal">
                     <i class="bi bi-pencil-fill"></i> Status
                 </span>

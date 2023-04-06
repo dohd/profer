@@ -46,37 +46,20 @@
       </ul>
     </li>
 
-    <li class="nav-heading">Project Management</li>
+    <li class="nav-heading">Programme Management</li>
 
+    {{-- proposals --}}
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('proposals.index') }}">
         <i class="bi bi-journal-text"></i></i><span>Grant Proposals</span>
       </a>
     </li>
 
-    {{-- projects --}}
+    {{-- log frame --}}
     <li class="nav-item">
-      <a
-        class="nav-link collapsed"
-        data-bs-target="#project-nav"
-        data-bs-toggle="collapse"
-        href="#"
-      >
-        <i class="bi bi-kanban"></i><span>Projects</span
-        ><i class="bi bi-chevron-down ms-auto"></i>
+      <a class="nav-link collapsed" href="{{ route('log_frames.index') }}">
+        <i class="bi bi-circle"></i><span>Project Log Frame</span>
       </a>
-      <ul
-        id="project-nav"
-        class="nav-content collapse"
-        data-bs-parent="#sidebar-nav"
-      >
-        <li>
-          <a href="{{ route('proposals.index', 'is_project=1') }}"><i class="bi bi-circle"></i><span>Manage Projects</span></a>
-        </li>
-        <li>
-          <a href="{{ route('log_frames.index') }}"><i class="bi bi-circle"></i><span>Project Log Frame</span></a>
-        </li>
-      </ul>
     </li>
 
     {{-- action plan --}}
