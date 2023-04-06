@@ -12,63 +12,45 @@
                 </span>
             </div>
             <div class="card-content">
-                <div class="row">
-                    <div class="col-6">
-                        @if (in_array($proposal->status, ['approved', 'pending']))
-                            <span class="badge bg-{{ $proposal->status == 'approved'? 'success' : 'secondary' }}">{{ $proposal->status }}</span>
-                        @endif
-                        <div class="text-center">
-                            
-                            @if ($proposal->status_note && $proposal->status == 'rejected')
-                                <span class="badge bg-danger text-white">
-                                    Rejected
-                                </span>
-                                <br>
-                                {{ $proposal->status_note }}
-                            @endif
-                        </div>
-                        <h5>
-                            #Proposal No : <b>PR-{{ $proposal->tid }}</b> <br>
-                            Region : <b>{{ @$proposal->region->name }}</b> <br>
-                            Sector : <b>{{ $proposal->sector }}</b> <br>
-                            Donor : <b>{{ @$proposal->donor->name }}</b>
-                        </h5>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12">
-                        <h4 class="text-center text-primary"><b>{{ strtoupper($proposal->title) }}</b></h4>
-                        <h5 class="text-center">
-                            Period <b>{{ date('d-M-Y', strtotime($proposal->start_date)) }}</b> to <b>{{ date('d-M-Y', strtotime($proposal->end_date)) }}</b> <br>
-                            Budget <b>{{ number_format($proposal->budget, 2) }}</b>
-                        </h5>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12">
-                        <br>
-                        <!-- Proposal items -->
-                        <table class="table table-striped" id="objectivesTbl">
-                            <thead>
-                                <tr class="">
-                                    <th scope="col" width="8%" class="text-center">#</th>
-                                    <th scope="col">Item</th>
-                                    <th scope="col">Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($proposal->items as $item)
-                                    <tr>
-                                        <th scope="row" class="text-center">{{ $item->row_num }} </th>
-                                        <td>{{ $item->is_obj? 'objective' : 'activity' }}</td>
-                                        <td>{{ $item->name }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary" type="button" role="tab" aria-controls="summary" aria-selected="true">
+                            Summary
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="log-frame-tab" data-bs-toggle="tab" data-bs-target="#log-frame" type="button" role="tab" aria-controls="log-frame" aria-selected="false">
+                            Log Frame
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="action-plan-tab" data-bs-toggle="tab" data-bs-target="#action-plan" type="button" role="tab" aria-controls="action-plan" aria-selected="false">
+                            Action Plan
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="participant-list-tab" data-bs-toggle="tab" data-bs-target="#participant-list" type="button" role="tab" aria-controls="participant-list" aria-selected="false">
+                            Participant List
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="narrative-tab" data-bs-toggle="tab" data-bs-target="#narrative" type="button" role="tab" aria-controls="narrative" aria-selected="false">
+                            Narrative
+                        </button>
+                    </li>
+                </ul>
+                <div class="tab-content pt-2" id="myTabContent">
+                    <!-- proposal summary  -->
+                    @include('proposals.tabs.proposal_summary_tab')
+                    <!-- log frame  -->
+                    @include('proposals.tabs.log_frame_tab')
+                    <!-- action plans  -->
+                    @include('proposals.tabs.action_plan_tab')
+                    <!-- participant list  -->
+                    @include('proposals.tabs.participant_list_tab')
+                    <!-- narrative  -->
+                    @include('proposals.tabs.narrative_tab')
                 </div>
             </div>
         </div>

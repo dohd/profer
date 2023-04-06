@@ -1,0 +1,1 @@
+<div class="tab-pane fade show" id="log-frame" role="tabpanel" aria-labelledby="log-frame-tab"></div>
