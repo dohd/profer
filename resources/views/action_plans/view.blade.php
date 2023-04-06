@@ -136,10 +136,9 @@
     // show activity modal
     $('#activity_tbl').on('click', '.view', function() {
         const url = $(this).attr('data-url');
-        const activity_id = $(this).attr('data-id');
-        $.post(url, {activity_id}, data => {
+        const plan_activity_id = $(this).attr('data-id');
+        $.post(url, {plan_activity_id}, data => {
             if (!data.id) return;
-            
             const values = new Array(5).fill(null);
             if (data.activity) values[0] = data.activity.name;
             values[1] = data.start_date.split('-').reverse().join('-') + ' || ' +
