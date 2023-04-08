@@ -21,22 +21,22 @@
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="log-frame-tab" data-bs-toggle="tab" data-bs-target="#log-frame" type="button" role="tab" aria-controls="log-frame" aria-selected="false">
-                            Log Frame
+                            Log Frame ({{ $proposal->log_frame? 1 : 0 }})
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="action-plan-tab" data-bs-toggle="tab" data-bs-target="#action-plan" type="button" role="tab" aria-controls="action-plan" aria-selected="false">
-                            Action Plan
+                            Action Plan ({{ $proposal->action_plans->count() }})
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="participant-list-tab" data-bs-toggle="tab" data-bs-target="#participant-list" type="button" role="tab" aria-controls="participant-list" aria-selected="false">
-                            Participant List
+                            Participant List ({{ $proposal->participant_lists->count() }})
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="narrative-tab" data-bs-toggle="tab" data-bs-target="#narrative" type="button" role="tab" aria-controls="narrative" aria-selected="false">
-                            Narrative
+                            Activity Narrative ({{ $proposal->narratives->count() }})
                         </button>
                     </li>
                 </ul>
@@ -55,7 +55,7 @@
             </div>
         </div>
     </div>
-    @include('proposals.partial.proposal_status')
+    @include('proposals.partial.status_modal')
 @stop
 
 @section('script')
