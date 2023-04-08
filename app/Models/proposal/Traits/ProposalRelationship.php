@@ -22,9 +22,9 @@ trait ProposalRelationship
         return $this->hasMany(ActionPlan::class);
     }
 
-    public function log_frames()
+    public function log_frame()
     {
-        return $this->hasMany(LogFrame::class);
+        return $this->hasOne(LogFrame::class);
     }
 
     public function participant_lists()

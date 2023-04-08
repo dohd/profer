@@ -20,9 +20,9 @@
                                 <tr></tr>
                                 <tr>
                                     <th>Count</th>
-                                    <td>{{ numberFormat(@$status_count['pending'], 0) }}</td>
-                                    <td>{{ numberFormat(@$status_count['approved'], 0) }}</td>
-                                    <td>{{ numberFormat(@$status_count['review'], 0) }}</td>
+                                    <td>{{ numberFormat(@$grp_status_count['pending'], 0) }}</td>
+                                    <td>{{ numberFormat(@$grp_status_count['approved'], 0) }}</td>
+                                    <td>{{ numberFormat(@$grp_status_count['review'], 0) }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -39,10 +39,10 @@
                                 </tr>
                                 <tr>
                                     <th>Count</th>
-                                    <td>{{ numberFormat(@$status_count['pending'], 0) }}</td>
-                                    <td>{{ numberFormat(@$status_count['approved'], 0) }}</td>
-                                    <td>{{ numberFormat(@$status_count['review'], 0) }}</td>
-                                    <td>{{ numberFormat(@$status_count['review'], 0) }}</td>
+                                    <td>{{ numberFormat(@$wo_logframe_count, 0) }}</td>
+                                    <td>{{ numberFormat(@$wo_action_plan_count, 0) }}</td>
+                                    <td>{{ numberFormat(@$wo_participants_count, 0) }}</td>
+                                    <td>{{ numberFormat(@$wo_narrative_count, 0) }}</td>
                                 </tr>
                             </tbody>
                         </table>

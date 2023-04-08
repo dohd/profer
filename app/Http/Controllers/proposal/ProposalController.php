@@ -21,7 +21,17 @@ class ProposalController extends Controller
     {
         $proposals = Proposal::all();
 
-        return view('proposals.index', compact('proposals'));
+        $grp_status_count = Proposal::selectRaw('status, COUNT(*) as count')->groupBy('status')->pluck('count', 'status');
+        $wo_logframe_count = Proposal::where('status', 'approved')->doesntHave('log_frame')->count();
+        $wo_action_plan_count = Proposal::where('status', 'approved')->doesntHave('action_plans')->count();
+        $wo_participants_count = Proposal::where('status', 'approved')->doesntHave('participant_lists')->count();
+        $wo_narrative_count = Proposal::where('status', 'approved')->doesntHave('narratives')->count();
+
+        // dd(compact('proposals', 'grp_status_count', 'wo_logframe_count', 'wo_action_plan_count', 'wo_participants_count', 'wo_narrative_count'));
+
+        return view('proposals.index', 
+            compact('proposals', 'grp_status_count', 'wo_logframe_count', 'wo_action_plan_count', 'wo_participants_count', 'wo_narrative_count')
+        );
     }
 
     // proposal datatable
