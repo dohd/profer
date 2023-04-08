@@ -73,28 +73,30 @@
                     <div class="d-inline-block p2"><span class="badge bg-primary date_search" role="button">search</span></div>
                     <hr>
                 </div>
-                <table class="table table-borderless" id="ps_analysis_tbl">
-                    <thead>
-                      <tr>
-                        @php
-                            $months = [
-                                'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
-                                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-                            ];
-                        @endphp
-                        @foreach ($months as $month)
-                            <th scope="col">{{ $month }}</th>
-                        @endforeach
-                      </tr>
-                    </thead>
-                    <tbody>
+                <div class="overflow-auto">
+                    <table class="table table-borderless" id="ps_analysis_tbl">
+                        <thead>
                         <tr>
-                            @foreach (range(1,12) as $item)
-                                <td>_</td>
+                            @php
+                                $months = [
+                                    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+                                ];
+                            @endphp
+                            @foreach ($months as $month)
+                                <th scope="col">{{ $month }}</th>
                             @endforeach
                         </tr>
-                    </tbody>
-                  </table>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                @foreach (range(1,12) as $item)
+                                    <td>_</td>
+                                @endforeach
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

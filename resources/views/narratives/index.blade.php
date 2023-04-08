@@ -34,30 +34,32 @@
     <div class="card">
         <div class="card-body">
             <div class="card-content p-2">
-                <table class="table table-borderless datatable">
-                    <thead>
-                      <tr>
-                        <th>#No</th>
-                        <th>#Code</th>
-                        <th>Project Title</th>
-                        <th>Activity</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($narratives as $i => $narrative)
-                            <tr>
-                                <th scope="row">{{ $i+1 }}</th>
-                                <td>{{ tidCode('activity_narrative', $narrative->tid) }}</td>
-                                <td><a href="{{ route('proposals.show', $narrative->proposal) }}">{{ $narrative->proposal->title }}</a></td>
-                                <td>{{ $narrative->proposal_item? $narrative->proposal_item->name : '' }}</td>
-                                <td><span class="badge bg-{{ $narrative->status == 'approved'? 'success' : 'secondary' }}">{{ $narrative->status }}</span></td>
-                                <td>{!! $narrative->action_buttons !!}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                <div class="over-flow-auto">
+                    <table class="table table-borderless datatable">
+                        <thead>
+                        <tr>
+                            <th>#No</th>
+                            <th>#Code</th>
+                            <th>Project Title</th>
+                            <th>Activity</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($narratives as $i => $narrative)
+                                <tr>
+                                    <th scope="row">{{ $i+1 }}</th>
+                                    <td>{{ tidCode('activity_narrative', $narrative->tid) }}</td>
+                                    <td><a href="{{ route('proposals.show', $narrative->proposal) }}">{{ $narrative->proposal->title }}</a></td>
+                                    <td>{{ $narrative->proposal_item? $narrative->proposal_item->name : '' }}</td>
+                                    <td><span class="badge bg-{{ $narrative->status == 'approved'? 'success' : 'secondary' }}">{{ $narrative->status }}</span></td>
+                                    <td>{!! $narrative->action_buttons !!}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

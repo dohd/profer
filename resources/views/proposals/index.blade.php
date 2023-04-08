@@ -8,7 +8,7 @@
         <div class="card-body">
             <div class="card-content pt-4">
                 <div class="row">
-                    <div class="col-5">
+                    <div class="col-sm-5 col-xs-12">
                         <table class="table table-bordered">
                             <tbody>
                                 <tr>
@@ -27,7 +27,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-7">
+                    <div class="col-sm-7 col-xs-12">
                         <table class="table table-bordered">
                             <tbody>
                                 <tr>
@@ -49,8 +49,8 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-5"></div>
-                    <div class="col-7">
+                    <div class="col-sm-5 col-xs-12"></div>
+                    <div class="col-sm-7 col-xs-12">
                         <select name="" id="wo_status_filter" class="custom-control col-4">
                             <option value="">-- Select Filter --</option>
                             <option value="wo_logframe">W/O Log Frame</option>
@@ -67,20 +67,22 @@
     <div class="card">
         <div class="card-body">
             <div class="card-content p-2">
-                <table class="table table-borderless" id="proposal_tbl">
-                    <thead>
-                      <tr>
-                        <th scope="col">#No</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Start Date</th>
-                        <th scope="col">Budget</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Donor</th>
-                        <th scope="col">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+                <div class="overflow-auto">
+                    <table class="table table-borderless" id="proposal_tbl">
+                        <thead>
+                        <tr>
+                            <th scope="col">#No</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Start Date</th>
+                            <th scope="col">Budget</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Donor</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

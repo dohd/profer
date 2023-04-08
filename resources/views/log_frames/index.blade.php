@@ -7,26 +7,28 @@
     <div class="card">
         <div class="card-body">
             <div class="card-content p-2">
-                <table class="table table-borderless datatable" id="log_frame_tbl">
-                    <thead>
-                      <tr>
-                        <th scope="col">#No</th>
-                        <th scope="col">Project Title</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($log_frames as $i => $log_frame)
-                            <tr>
-                                <th scope="row">{{ $i+1 }}</th>
-                                <td><a href="{{ route('proposals.show', $log_frame->proposal) }}">{{ $log_frame->proposal->title }}</a></td>
-                                <td>{{ dateFormat($log_frame->date) }}</td>
-                                <td>{!! $log_frame->action_buttons !!}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                  </table>
+                <div class="overflow-auto">
+                    <table class="table table-borderless datatable" id="log_frame_tbl">
+                        <thead>
+                        <tr>
+                            <th scope="col">#No</th>
+                            <th scope="col">Project Title</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($log_frames as $i => $log_frame)
+                                <tr>
+                                    <th scope="row">{{ $i+1 }}</th>
+                                    <td><a href="{{ route('proposals.show', $log_frame->proposal) }}">{{ $log_frame->proposal->title }}</a></td>
+                                    <td>{{ dateFormat($log_frame->date) }}</td>
+                                    <td>{!! $log_frame->action_buttons !!}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
