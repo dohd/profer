@@ -9,7 +9,7 @@
   <nav>
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-      <li class="breadcrumb-item active"><a href="{{ route('regions.index') }}">Key Indicators / Region</a></li>
+      <li class="breadcrumb-item active"><a href="{{ route('regions.index') }}">Region</a></li>
     </ol>
   </nav>
 </div>
