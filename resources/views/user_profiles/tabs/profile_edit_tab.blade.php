@@ -27,13 +27,6 @@
       </div>
 
       <div class="row mb-3">
-        <label for="company" class="col-md-4 col-lg-3 col-form-label">Company</label>
-        <div class="col-md-8 col-lg-9">
-          <input name="company" type="text" class="form-control" id="company" value="Profer">
-        </div>
-      </div>
-
-      <div class="row mb-3">
         <label for="Job" class="col-md-4 col-lg-3 col-form-label">Job</label>
         <div class="col-md-8 col-lg-9">
           <input name="job" type="text" class="form-control" id="Job" value="Web Designer">
@@ -65,27 +58,6 @@
         <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
         <div class="col-md-8 col-lg-9">
           <input name="email" type="email" class="form-control" id="Email" value="admin@admin.com">
-        </div>
-      </div>
-
-      <div class="row mb-3">
-        <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Twitter Profile</label>
-        <div class="col-md-8 col-lg-9">
-          <input name="twitter" type="text" class="form-control" id="Twitter" value="https://twitter.com/#">
-        </div>
-      </div>
-
-      <div class="row mb-3">
-        <label for="Facebook" class="col-md-4 col-lg-3 col-form-label">Facebook Profile</label>
-        <div class="col-md-8 col-lg-9">
-          <input name="facebook" type="text" class="form-control" id="Facebook" value="https://facebook.com/#">
-        </div>
-      </div>
-
-      <div class="row mb-3">
-        <label for="Instagram" class="col-md-4 col-lg-3 col-form-label">Instagram Profile</label>
-        <div class="col-md-8 col-lg-9">
-          <input name="instagram" type="text" class="form-control" id="Instagram" value="https://instagram.com/#">
         </div>
       </div>
 
