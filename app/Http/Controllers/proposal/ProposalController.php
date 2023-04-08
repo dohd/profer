@@ -27,19 +27,30 @@ class ProposalController extends Controller
         $wo_participants_count = Proposal::where('status', 'approved')->doesntHave('participant_lists')->count();
         $wo_narrative_count = Proposal::where('status', 'approved')->doesntHave('narratives')->count();
 
-        // dd(compact('proposals', 'grp_status_count', 'wo_logframe_count', 'wo_action_plan_count', 'wo_participants_count', 'wo_narrative_count'));
-
         return view('proposals.index', 
             compact('proposals', 'grp_status_count', 'wo_logframe_count', 'wo_action_plan_count', 'wo_participants_count', 'wo_narrative_count')
         );
     }
 
-    // proposal datatable
+    /**
+     * Display list of proposals using datatable
+     */
     public function datatable(Request $request)
     {
-        $proposals = Proposal::all();
+        $q = Proposal::query();
+
+        // filter approved proposals
+        $q->when(request('status'), function($q) {
+            $q->where('status', 'approved');
+            switch (request('status')) {
+                case 'wo_logframe': $q->doesntHave('log_frame'); break;
+                case 'wo_action_plan': $q->doesntHave('action_plans'); break;
+                case 'wo_participant': $q->doesntHave('participant_lists'); break;
+                case 'wo_logframe': $q->doesntHave('narratives'); break;
+            }
+        });
         
-        return view('proposals.partial.proposal_datatable', compact('proposals'));
+        return view('proposals.partial.proposal_datatable', ['proposals' => $q->get()]);
     }
 
     /**

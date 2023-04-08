@@ -51,12 +51,12 @@
                 <div class="row">
                     <div class="col-5"></div>
                     <div class="col-7">
-                        <select name="" id="" class="custom-control col-4">
+                        <select name="" id="wo_status_filter" class="custom-control col-4">
                             <option value="">-- Select Filter --</option>
-                            <option value="">W/O Log Frame</option>
-                            <option value="">W/O Action Plan</option>
-                            <option value="">W/O Participant</option>
-                            <option value="">W/O Narrative</option>
+                            <option value="wo_logframe">W/O Log Frame</option>
+                            <option value="wo_action_plan">W/O Action Plan</option>
+                            <option value="wo_participant">W/O Participant</option>
+                            <option value="wo_narrative">W/O Narrative</option>
                         </select>
                     </div>
                 </div>
@@ -91,6 +91,14 @@
     $.post("{{ route('proposals.datatable') }}", data => {
         $('#proposal_tbl tbody').html(data);
         new simpleDatatables.DataTable($('#proposal_tbl')[0]);
+    });
+
+    // on change status filter
+    $('#wo_status_filter').change(function() {
+        $.post("{{ route('proposals.datatable') }}", {status: $(this).val()}, data => {
+            $('#proposal_tbl tbody').html(data);
+            new simpleDatatables.DataTable($('#proposal_tbl')[0]);
+        });
     });
 </script>
 @stop
