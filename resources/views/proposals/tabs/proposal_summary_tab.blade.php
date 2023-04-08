@@ -35,13 +35,13 @@
 
     <div class="row">
         <div class="col-12">
-            <br>
             <!-- Proposal items -->
-            <table class="table table-striped" id="objectivesTbl">
+            <h5>Objectives & Activities</h5>
+            <table class="table table-bordered" id="objectivesTbl">
                 <thead>
                     <tr class="">
-                        <th scope="col" width="8%" class="text-center">#</th>
-                        <th scope="col">Item</th>
+                        <th scope="col" width="8%" class="text-center">#No</th>
+                        <th scope="col" width="8%">Item</th>
                         <th scope="col">Description</th>
                     </tr>
                 </thead>

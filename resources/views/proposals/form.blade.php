@@ -49,7 +49,8 @@
         {{ Form::text('budget', numberFormat(@$proposal->budget), ['class' => 'form-control', 'id' => 'budget', 'required']) }}
     </div>
 </div>
-
+<br>
+<h5>Objectives & Activites</h5>
 <table class="table table-striped" id="objectivesTbl">
     <thead>
         <tr>
