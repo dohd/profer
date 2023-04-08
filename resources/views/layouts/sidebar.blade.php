@@ -127,7 +127,7 @@
         data-bs-parent="#sidebar-nav"
       >
         <li>
-          <a href="{{ '#' }}"><i class="bi bi-circle"></i><span>Roles & Rights</span></a>
+          <a href="{{ route('roles.index') }}"><i class="bi bi-circle"></i><span>Roles & Rights</span></a>
         </li>
         <li>
           <a href="{{ '#' }}"><i class="bi bi-circle"></i><span>Users</span></a>

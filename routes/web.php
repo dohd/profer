@@ -14,6 +14,7 @@ use App\Http\Controllers\programme\ProgrammeController;
 use App\Http\Controllers\proposal\ProposalController;
 use App\Http\Controllers\region\RegionController;
 use App\Http\Controllers\report\ReportController;
+use App\Http\Controllers\role\RoleController;
 use App\Http\Controllers\user_profile\UserProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -30,19 +31,29 @@ use Illuminate\Support\Facades\URL;
 |
 */
 
+/**
+ * Authentication
+ */
 Auth::routes();
 Route::get('/', [LoginController::class, 'index']);
 Route::get('logout', [LoginController::class, 'logout']);
 
 Route::group(['middleware' => 'auth'], function() {
+    /**
+     * Dashboard
+     */
     Route::get('home', [HomeController::class, 'index'])->name('home');
-    // Route::get('error_404', [CoreController::class, 'error_404'])->name('error_404');
 
     /**
      * User Profiles
      */
     Route::get('user_profiles/active_profile', [UserProfileController::class, 'active_profile'])->name('user_profiles.active_profile');
     Route::resource('user_profiles', UserProfileController::class);
+
+    /**
+     * Roles
+     */
+    Route::resource('roles', RoleController::class);
 
     /**
      * key indicators
@@ -55,18 +66,21 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('age_groups', AgeGroupController::class);
 
     /**
-     * Programmes Management
+     * Proposals
      */
-    // proposals
     Route::post('proposals/items', [ProposalController::class, 'proposal_items'])->name('proposals.items');
     Route::post('proposals/datatable', [ProposalController::class, 'datatable'])->name('proposals.datatable');
     Route::resource('proposals', ProposalController::class);
 
-    // log frames
+    /**
+     * Log Frames
+     */
     Route::post('log_frames/datatable', [LogFrameController::class, 'datatable'])->name('log_frames.datatable');
     Route::resource('log_frames', LogFrameController::class);
 
-    // action plans
+    /**
+     * Action Plans
+     */
     Route::post('action_plans/cohort/edit', [ActionPlanController::class, 'edit_cohort'])->name('action_plans.edit_cohort');
     Route::post('action_plans/cohort/update', [ActionPlanController::class, 'update_cohort'])->name('action_plans.update_cohort');
     Route::post('action_plans/cohort/store', [ActionPlanController::class, 'store_cohort'])->name('action_plans.store_cohort');
@@ -81,21 +95,26 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('action_plans/select_items', [ActionPlanController::class, 'select_items'])->name('action_plans.select_items');
     Route::resource('action_plans', ActionPlanController::class);
 
-    // participants
+    /**
+     * Participant Lists
+     */
     Route::resource('participant_lists', ParticipantListController::class);
 
-    // narratives
+    /**
+     * Activity Narratives
+     */
     Route::resource('narratives', NarrativeController::class);
 
     /**
-     * Input/Output Analysis
+     * Narrative Indicator Report
      */
-    // narrative indicator
     Route::get('narrative_indicator', [ReportController::class, 'narrative_indicator'])->name('reports.narrative_indicator');
     Route::post('narrative_options', [ReportController::class, 'narrative_options'])->name('reports.narrative_options');
     Route::post('narrative_indicator_data', [ReportController::class, 'narrative_indicator_data'])->name('reports.narrative_indicator_data');
 
-    // participant analysis
+    /**
+     * Participant Analysis Report
+     */
     Route::get('participant_analysis', [ReportController::class, 'participant_analysis'])->name('reports.participant_analysis');
     Route::post('participant_analysis_data', [ReportController::class, 'participant_analysis_data'])->name('reports.participant_analysis_data');
 });
