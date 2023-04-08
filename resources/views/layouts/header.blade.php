@@ -11,8 +11,9 @@
   <div class="search-bar">
     <form
       class="search-form d-flex align-items-center"
-      method="POST"
+      {{-- method="POST" --}}
       action="#"
+      disabled
     >
       <input
         type="text"

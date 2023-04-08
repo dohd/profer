@@ -97,7 +97,7 @@
       </div>
 
       <div class="text-center">
-        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <button type="submit" class="btn btn-primary" disabled>Save Changes</button>
       </div>
     </form><!-- End Profile Edit Form -->
 
