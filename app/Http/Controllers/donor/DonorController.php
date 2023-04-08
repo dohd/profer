@@ -47,10 +47,10 @@ class DonorController extends Controller
         $data = $request->only(['name', 'phone', 'email', 'contact_person', 'alternative_phone', 'alternative_email']);
 
         try {            
-            if (Donor::create($data)) 
+            Donor::create($data);
             return redirect(route('donors.index'))->with(['success' => 'Donor created successfully']);
         } catch (\Throwable $th) {
-            return errorHandler('Error creating donor!');
+            return errorHandler('Error creating donor!', $th);
         }
     }
 
@@ -93,11 +93,11 @@ class DonorController extends Controller
         ]);
         $data = $request->only(['name', 'phone', 'email', 'contact_person', 'alternative_phone', 'alternative_email']);
 
-        try {            
-            if ($donor->update($data)) 
+        try {   
+            $donor->update($data);
             return redirect(route('donors.index'))->with(['success' => 'Donor updated successfully']);
         } catch (\Throwable $th) {
-            return errorHandler('Error updating donor!');
+            return errorHandler('Error updating donor!', $th);
         }
     }
 
@@ -110,10 +110,10 @@ class DonorController extends Controller
     public function destroy(Donor $donor)
     {
         try {
-            if ($donor->delete())
+            $donor->delete();
             return redirect(route('donors.index'))->with(['success' => 'Donor deleted successfully']);
         } catch (\Throwable $th) {
-            return errorHandler('Error deleting donor!');
+            return errorHandler('Error deleting donor!', $th);
         }
     }
 }
