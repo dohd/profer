@@ -58,8 +58,8 @@ class ProposalItemRegion extends Model
         parent::boot();
 
         static::creating(function ($instance) {
-            // $instance->user_id = 1;
-            // $instance->ins = 1;
+            // $instance->user_id = auth()->user()->id;
+            // $instance->ins = auth()->user()->ins;
             return $instance;
         });
 
