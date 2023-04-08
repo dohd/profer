@@ -29,44 +29,46 @@
                     <tr>
                         <th width="30%">Participant Count</th>
                         <td>
-                            Male: {{ $item->male_count }} || 
-                            Female: {{ $item->female_count }} || 
-                            Total: {{ $item->total_count }}
+                            Male: <b>{{ $item->male_count }}</b> || 
+                            Female: <b>{{ $item->female_count }}</b> || 
+                            Total: <b>{{ $item->total_count }}</b>
                         </td>
                     </tr>
                 </table>
 
-                <!-- participants -->                
-                <table class="table table-striped" id="participants_tbl">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Full Name</th>
-                            <th>Gender</th>
-                            <th width="10%">Age Group</th>
-                            <th>Disability</th>
-                            <th>Phone</th>
-                            <th>Email</th>
-                            <th>Designation</th>
-                            <th>Organisation</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($participant_list->items as $i => $item)
+                <!-- participants -->     
+                <div class="table-responsive">
+                    <table class="table table-striped" id="participants_tbl">
+                        <thead>
                             <tr>
-                                <th scope="row" class="p-3 num">{{ $i+1 }}</th>
-                                <td>{{ $item->name }}</td>
-                                <td>{{ $item->gender }}</td>
-                                <td>{{ $item->age_group? $item->age_group->bracket : '' }}</td>
-                                <td>{{ $item->disability? $item->disability->code : ''}}</td>
-                                <td>{{ $item->phone }}</td>
-                                <td>{{ $item->email }}</td>
-                                <td>{{ $item->designation }}</td>
-                                <td>{{ $item->organisation }}</td>                            
+                                <th>#</th>
+                                <th>Full Name</th>
+                                <th>Gender</th>
+                                <th width="10%">Age Group</th>
+                                <th>Disability</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Designation</th>
+                                <th>Organisation</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($participant_list->items as $i => $item)
+                                <tr>
+                                    <th scope="row" class="p-3 num">{{ $i+1 }}</th>
+                                    <td>{{ $item->name }}</td>
+                                    <td>{{ $item->gender }}</td>
+                                    <td>{{ $item->age_group? $item->age_group->bracket : '' }}</td>
+                                    <td>{{ $item->disability? $item->disability->code : ''}}</td>
+                                    <td>{{ $item->phone }}</td>
+                                    <td>{{ $item->email }}</td>
+                                    <td>{{ $item->designation }}</td>
+                                    <td>{{ $item->organisation }}</td>                            
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div> 
             </div>
         </div>
     </div>
