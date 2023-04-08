@@ -13,9 +13,9 @@
         <tbody>
             @foreach ($proposal->action_plans as $i => $plan)
                 <tr>
-                    <td>{{ $i+1 }}</td>
+                    <th>{{ $i+1 }}</th>
                     <td><a href="{{ route('action_plans.show', $plan) }}">{{ tidCode('action_plan', $plan->tid) }}</a></td>
-                    <td>{{ $plan->programme ? $plan->programme->name : '' }}</td>
+                    <td>{{ @$plan->programme->name }}</td>
                     <td><span class="badge bg-{{ $plan->status == 'approved'? 'success' : 'secondary' }}">{{ $plan->status }}</span></td>
                     <td>{{ $plan->main_assigned_to }}</td>
                     <td>{{ dateFormat($plan->date) }}</td>
