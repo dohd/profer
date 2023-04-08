@@ -38,6 +38,10 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('home', [HomeController::class, 'index'])->name('home');
     // Route::get('error_404', [CoreController::class, 'error_404'])->name('error_404');
 
+    /**
+     * User Profiles
+     */
+    Route::get('user_profiles/active_profile', [UserProfileController::class, 'active_profile'])->name('user_profiles.active_profile');
     Route::resource('user_profiles', UserProfileController::class);
 
     /**

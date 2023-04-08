@@ -82,4 +82,15 @@ class UserProfileController extends Controller
     {
         //
     }
+
+    /**
+     * Display active user profile.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function active_profile()
+    {
+        return view('user_profiles.active_profile');
+    }
 }
