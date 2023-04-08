@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\user_profile;
 
 use App\Http\Controllers\Controller;
+use App\Models\user_profile\UserProfile;
 use Illuminate\Http\Request;
 
 class UserProfileController extends Controller
@@ -14,7 +15,9 @@ class UserProfileController extends Controller
      */
     public function index()
     {
-        return view('user_profiles.index');
+        $user_profiles = UserProfile::get();
+
+        return view('user_profiles.index', compact('user_profiles'));
     }
 
     /**
@@ -24,7 +27,7 @@ class UserProfileController extends Controller
      */
     public function create()
     {
-        //
+        return view('user_profiles.create');
     }
 
     /**

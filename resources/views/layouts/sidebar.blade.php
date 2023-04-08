@@ -130,7 +130,7 @@
           <a href="{{ route('roles.index') }}"><i class="bi bi-circle"></i><span>Roles & Rights</span></a>
         </li>
         <li>
-          <a href="{{ '#' }}"><i class="bi bi-circle"></i><span>Users</span></a>
+          <a href="{{ route('user_profiles.index') }}"><i class="bi bi-circle"></i><span>Users</span></a>
         </li>
       </ul>
     </li>
