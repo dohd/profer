@@ -52,7 +52,7 @@
                             @foreach ($action_plans as $plan)
                                 <tr>
                                     <th scope="row"><a href="#">{{ $plan->tid }}</a></th>
-                                    <td>AP-{{ $plan->tid }}</td>
+                                    <td>{{ tidCode('action_plan', $plan->tid) }}</td>
                                     <td><a href="{{ route('proposals.show', $plan->proposal) }}">{{ $plan->proposal->title }}</a></td>
                                     <td>{{ $plan->programme ? $plan->programme->name : '' }}</td>
                                     <td><span class="badge bg-{{ $plan->status == 'approved'? 'success' : 'secondary' }}">{{ $plan->status }}</span></td>
