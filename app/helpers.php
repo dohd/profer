@@ -111,9 +111,10 @@ if (!function_exists('printLog')) {
 }
 
 if (!function_exists('errorHandler')) {
-    function errorHandler($message='Internal server error! Please try again later.')
+    function errorHandler($msg='Internal server error! Please try again later.', $e=null)
     {
-        return redirect()->back()->with(['error' => $message]);
+        if ($e) Log::error($e->getMessage() . ' {user_id:'. auth()->user()->id . '} at ' . $e->getFile() . ':' . $e->getLine());
+        return redirect()->back()->with(['error' => $msg]);
     }
 }
 
