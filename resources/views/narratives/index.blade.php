@@ -34,7 +34,7 @@
     <div class="card">
         <div class="card-body">
             <div class="card-content p-2">
-                <div class="over-flow-auto">
+                <div class="table-responsive">
                     <table class="table table-borderless datatable">
                         <thead>
                         <tr>

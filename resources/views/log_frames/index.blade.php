@@ -10,12 +10,12 @@
                 <div class="overflow-auto">
                     <table class="table table-borderless datatable" id="log_frame_tbl">
                         <thead>
-                        <tr>
-                            <th scope="col">#No</th>
-                            <th scope="col">Project Title</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Action</th>
-                        </tr>
+                            <tr>
+                                <th scope="col">#No</th>
+                                <th scope="col">Project Title</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Action</th>
+                            </tr>
                         </thead>
                         <tbody>
                             @foreach ($log_frames as $i => $log_frame)

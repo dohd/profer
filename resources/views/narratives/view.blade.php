@@ -21,10 +21,10 @@
                         }
 
                         $details = [
-                            'Project Title' => $narrative->proposal? $narrative->proposal->title : '',
+                            'Project Title' => @$narrative->proposal->title,
                             'Action Plan No' => $action_plan_no,
-                            'Activity' => $narrative->proposal_item? $narrative->proposal_item->name : '',
-                            'Date' => dateFormat($narrative->date),
+                            'Activity' => @$narrative->proposal_item->name,
+                            'Date' => dateFormat($narrative->date, 'd-M-Y'),
                             'Note' => $narrative->note,
                         ];
                     @endphp
