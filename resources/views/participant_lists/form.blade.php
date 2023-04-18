@@ -63,11 +63,11 @@
     </div>
     <div class="col-2">
         <label for="male_count">Male Count</label>
-        {{ Form::number('male_count', null, ['class' => 'form-control', 'id' => 'male_count']) }}
+        {{ Form::number('male_count', null, ['class' => 'form-control', 'id' => 'male_count', 'required']) }}
     </div>
     <div class="col-2">
         <label for="female_count">Female Count</label>
-        {{ Form::number('female_count', null, ['class' => 'form-control', 'id' => 'female_count']) }}
+        {{ Form::number('female_count', null, ['class' => 'form-control', 'id' => 'female_count', 'required']) }}
     </div>
     <div class="col-2">
         <label for="total_count">Total Count</label>
@@ -83,6 +83,13 @@
 
 @section('script')
 <script>
+    // on submit form
+    $('form').submit(function() {
+        $('#participants_tbl tbody tr').each(function() {
+            if (!$(this).find('.name').val()) $(this).remove();
+        });
+    });
+
     // add row
     let rowCount = 1;
     let initRow = $('#participants_tbl tbody tr:first').html();

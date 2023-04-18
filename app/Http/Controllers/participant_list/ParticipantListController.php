@@ -60,7 +60,9 @@ class ParticipantListController extends Controller
             'proposal_item_id' => 'required', 
             'date' => 'required', 
             'region_id' => 'required', 
-            'cohort_id' => 'required'            
+            'cohort_id' => 'required',
+            'male_count' => 'required',
+            'female_count' => 'required',
         ]);
         $data = $request->only([
             'proposal_id', 'action_plan_id', 'proposal_item_id', 'date', 'region_id', 'cohort_id', 'prepared_by', 
@@ -89,6 +91,7 @@ class ParticipantListController extends Controller
                 // update count
                 $males = $participant_list->items()->where('gender', 'male')->count();
                 $females = $participant_list->items()->where('gender', 'female')->count();
+                if (!$males && !$females) return errorHandler('Participants required!');
                 $participant_list->update([
                     'male_count' => $males,
                     'female_count' => $females,
@@ -99,7 +102,7 @@ class ParticipantListController extends Controller
             DB::commit();
             return redirect(route('participant_lists.index'))->with(['success' => 'Participant List created successfully']);
         } catch (\Throwable $th) {
-            errorHandler('Error creating Participant List!');
+            errorHandler('Error creating Participant List!', $th);
         }
     }
 
@@ -163,7 +166,9 @@ class ParticipantListController extends Controller
             'proposal_item_id' => 'required', 
             'date' => 'required', 
             'region_id' => 'required', 
-            'cohort_id' => 'required'            
+            'cohort_id' => 'required',
+            'male_count' => 'required',
+            'female_count' => 'required',
         ]);
         $data = $request->only([
             'proposal_id', 'action_plan_id', 'proposal_item_id', 'date', 'region_id', 'cohort_id', 'prepared_by', 
@@ -173,42 +178,46 @@ class ParticipantListController extends Controller
             'item_id', 'name', 'gender', 'age_group_id', 'disability_id', 'phone', 'email', 'designation', 
             'organisation'
         ]);
-
+        
         DB::beginTransaction();
 
         try {     
             $data = inputClean($data);      
             if ($participant_list->update($data)) {
-                $data_items = fillArrayRecurse(databaseArray($data_items), [
-                    'participant_list_id' => $participant_list->id,
-                    'date' => $data['date'],
-                ]);
-
-                // delete omitted item
-                $participant_list->items()->whereNotIn('id', array_map(fn($v) => $v['item_id'], $data_items))->delete();
-                // update or new item
-                foreach ($data_items as $value) {
-                    if (empty($value['name']) || empty($value['gender'])) continue;
-                    $participant_list_item = ParticipantListItem::firstOrNew(['id' => $value['item_id']]);
-                    $participant_list_item->fill($value);
-                    unset($participant_list_item->item_id);
-                    $participant_list_item->save();
+                $data_items = databaseArray($data_items);
+                if ($data_items) {
+                    $data_items = fillArrayRecurse($data_items, [
+                        'participant_list_id' => $participant_list->id,
+                        'date' => $data['date'],
+                    ]);
+    
+                    // delete omitted item
+                    $participant_list->items()->whereNotIn('id', array_map(fn($v) => $v['item_id'], $data_items))->delete();
+                    // update or new item
+                    foreach ($data_items as $value) {
+                        if (empty($value['name']) || empty($value['gender'])) continue;
+                        $participant_list_item = ParticipantListItem::firstOrNew(['id' => $value['item_id']]);
+                        $participant_list_item->fill($value);
+                        unset($participant_list_item->item_id);
+                        $participant_list_item->save();
+                    }
+    
+                    // update count
+                    $males = $participant_list->items()->where('gender', 'male')->count();
+                    $females = $participant_list->items()->where('gender', 'female')->count();
+                    if (!$males && !$females) return errorHandler('Participants required!');
+                    $participant_list->update([
+                        'male_count' => $males,
+                        'female_count' => $females,
+                        'total_count' => $males+$females,
+                    ]);
                 }
-
-                // update count
-                $males = $participant_list->items()->where('gender', 'male')->count();
-                $females = $participant_list->items()->where('gender', 'female')->count();
-                $participant_list->update([
-                    'male_count' => $males,
-                    'female_count' => $females,
-                    'total_count' => $males+$females,
-                ]);
-
+                    
                 DB::commit();
                 return redirect(route('participant_lists.index'))->with(['success' => 'Participant List updated successfully']);
             }      
         } catch (\Throwable $th) {
-            errorHandler('Error updating Participant List!');
+            errorHandler('Error updating Participant List!', $th);
         }
     }
 
@@ -220,8 +229,11 @@ class ParticipantListController extends Controller
      */
     public function destroy(ParticipantList $participant_list)
     {
-        if ($participant_list->delete()) 
+        try {
+            $participant_list->delete();
             return redirect(route('participant_lists.index'))->with(['success' => 'Participant List deleted successfully']);
-        else errorHandler('Error deleting Partcipant List!');
+        } catch (\Throwable $th) {
+            errorHandler('Error deleting Partcipant List!', $th);
+        }
     }
 }
