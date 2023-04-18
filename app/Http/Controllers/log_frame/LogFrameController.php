@@ -23,14 +23,6 @@ class LogFrameController extends Controller
         return view('log_frames.index', compact('log_frames'));
     }
 
-    // log_frame datatable
-    public function datatable()
-    {
-        $log_frames = LogFrame::all();
-
-        return view('log_frames.partial.proposal_datatable', compact('log_frames'));
-    }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -41,8 +33,7 @@ class LogFrameController extends Controller
         $donors = Donor::get(['id', 'name']);
         $regions = Region::get(['id', 'name']);
         $proposals = Proposal::where('status', 'approved')
-            ->doesntHave('log_frame')
-            ->get(['id', 'title']);
+            ->whereDoesntHave('log_frames')->get(['id', 'title']);
         
         return view('log_frames.create', compact('donors','regions', 'proposals'));
     }
