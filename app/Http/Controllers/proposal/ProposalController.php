@@ -46,7 +46,7 @@ class ProposalController extends Controller
                 case 'wo_logframe': $q->doesntHave('log_frame'); break;
                 case 'wo_action_plan': $q->doesntHave('action_plans'); break;
                 case 'wo_participant': $q->doesntHave('participant_lists'); break;
-                case 'wo_logframe': $q->doesntHave('narratives'); break;
+                case 'wo_narrative': $q->doesntHave('narratives'); break;
             }
         });
         
