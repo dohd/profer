@@ -8,7 +8,7 @@
     <script>
       const cohortDist = @json(@$cohort_dist);
       let psCohortDist = @json(@$ps_cohort_dist);
-      psCohortDist = psCohortDist.map(v => v['count']);
+      psCohortDist = psCohortDist.map(v => v['count']*1);
 
       document.addEventListener("DOMContentLoaded", () => {
         new ApexCharts(document.querySelector("#participantCohortDistribution"), {
