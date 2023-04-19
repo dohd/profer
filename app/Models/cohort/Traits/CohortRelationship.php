@@ -2,8 +2,8 @@
 
 namespace App\Models\cohort\Traits;
 
+use App\Models\action_plan\ActionPlan;
 use App\Models\action_plan\ActionPlanCohort;
-use App\Models\participant_list\ParticipantList;
 
 trait CohortRelationship
 {
@@ -12,8 +12,8 @@ trait CohortRelationship
         return $this->hasMany(ActionPlanCohort::class);
     }
 
-    public function participant_lists()
+    public function action_plans()
     {
-        return $this->hasMany(ParticipantList::class);
+        return $this->hasManyThrough(ActionPlan::class, ActionPlanCohort::class, 'cohort_id', 'id', 'id', 'action_plan_id');
     }
 }

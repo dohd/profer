@@ -53,9 +53,28 @@ class ReportController extends Controller
         $data = $request->only(['narrative_id', 'narrative_pointer_id']);
 
         $narrative_item = NarrativeItem::where($data)->first();
-        $programmes = Programme::whereHas('participant_lists', fn($q) => $q->where('proposal_item_id', $narrative_item->proposal_item_id))->pluck('name')->unique();
-        $regions = Region::whereHas('participant_lists', fn($q) => $q->where('proposal_item_id', $narrative_item->proposal_item_id))->pluck('name')->unique();
-        $cohorts = Cohort::whereHas('participant_lists', fn($q) => $q->where('proposal_item_id', $narrative_item->proposal_item_id))->pluck('name')->unique();
+
+        $programmes = Programme::whereHas('action_plans', function ($q) use($narrative_item) {
+            $q->whereHas('proposal', function ($q) use($narrative_item) {
+                $q->whereHas('items', function ($q) use($narrative_item) {
+                    $q->where('proposal_items.id', $narrative_item->proposal_item_id);
+                });
+            });
+        })->pluck('name')->unique();
+        $regions = Region::whereHas('action_plans', function ($q) use($narrative_item) {
+            $q->whereHas('proposal', function ($q) use($narrative_item) {
+                $q->whereHas('items', function ($q) use($narrative_item) {
+                    $q->where('proposal_items.id', $narrative_item->proposal_item_id);
+                });
+            });
+        })->pluck('name')->unique();
+        $cohorts = Cohort::whereHas('action_plans', function ($q) use($narrative_item) {
+            $q->whereHas('proposal', function ($q) use($narrative_item) {
+                $q->whereHas('items', function ($q) use($narrative_item) {
+                    $q->where('proposal_items.id', $narrative_item->proposal_item_id);
+                });
+            });
+        })->pluck('name')->unique();
 
         return response()->json(compact('narrative_item', 'programmes', 'regions', 'cohorts'));
     }

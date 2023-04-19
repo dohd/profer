@@ -2,8 +2,8 @@
 
 namespace App\Models\region\Traits;
 
+use App\Models\action_plan\ActionPlan;
 use App\Models\action_plan\ActionPlanRegion;
-use App\Models\participant_list\ParticipantList;
 
 trait RegionRelationship
 {
@@ -12,8 +12,8 @@ trait RegionRelationship
         return $this->hasMany(ActionPlanRegion::class);
     }
 
-    public function participant_lists()
+    public function action_plans()
     {
-        return $this->hasMany(ParticipantList::class);
+        return $this->hasManyThrough(ActionPlan::class, ActionPlanRegion::class, 'region_id', 'id', 'id', 'action_plan_id');
     }
 }
