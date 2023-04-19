@@ -100,49 +100,74 @@ class ReportController extends Controller
     // participant analysis data
     public function participant_analysis_data()
     {
-        $q = null;
+        $ps_count = [];
         if (request('age_group_id') || request('disability_id')) {
             $q = ParticipantListItem::query();
 
             $q->when(request('age_group_id'), fn($q) => $q->where('age_group_id', request('age_group_id')));
             $q->when(request('disability_id'), fn($q) => $q->where('disability_id', request('disability_id')));
-
             $q->when(request('donor_id'), function ($q) {
                 $q->whereHas('participant_list', function ($q) {
                     $q->whereHas('proposal', fn($q) => $q->where('donor_id', request('donor_id')));
                 });
             });
+
             $q->when(request('programme_id'), function ($q) {
-                $q->whereHas('participant_list', fn($q) => $q->where('programme_id', request('programme_id')));
+                $q->whereHas('participant_list', function ($q) {
+                    $q->whereHas('action_plan', function ($q) {
+                        $q->where('programme_id', request('programme_id'));
+                        
+                    });
+                });
             });
             $q->when(request('region_id'), function ($q) {
-                $q->whereHas('participant_list', fn($q) => $q->where('region_id', request('region_id')));
+                $q->whereHas('participant_list', function ($q) {
+                    $q->where('region_id', request('region_id'));
+                });
             });
             $q->when(request('cohort_id'), function ($q) {
-                $q->whereHas('participant_list', fn($q) => $q->where('cohort_id', request('cohort_id')));
+                $q->whereHas('participant_list', function ($q) {
+                    $q->where('cohorts_id', request('cohort_id'));
+                });
             });
+
+            $q->when(request('start_date') && request('end_date'), function ($q) {
+                $q->whereBetween('date', [
+                    databaseDate(request('start_date')), 
+                    databaseDate(request('end_date'))
+                ]);
+            });
+    
+            $ps_count = $q->selectRaw('MONTH(date) AS month, COUNT(*) AS total_count')
+                ->groupBy('month')
+                ->orderBy('month', 'ASC')
+                ->get();
         } else {
             $q = ParticipantList::query();
 
             $q->when(request('donor_id'), function ($q) {
                 $q->whereHas('proposal', fn($q) => $q->where('donor_id', request('donor_id')));
             });
-            $q->when(request('programme_id'), fn($q) => $q->where('programme_id', request('programme_id')));
+            $q->when(request('programme_id'), function ($q) {
+                $q->whereHas('action_plan', function ($q) {
+                    $q->where('programme_id', request('programme_id'));
+                });
+            });
             $q->when(request('region_id'), fn($q) => $q->where('region_id', request('region_id')));
             $q->when(request('cohort_id'), fn($q) => $q->where('cohort_id', request('cohort_id')));
-        }
 
-        $q->when(request('start_date') && request('end_date'), function ($q) {
-            $q->whereBetween('date', [
-                databaseDate(request('start_date')), 
-                databaseDate(request('end_date'))
-            ]);
-        });
-
-        $ps_count = $q->selectRaw('MONTH(date) AS month, SUM(total_count) AS total_count')
+            $q->when(request('start_date') && request('end_date'), function ($q) {
+                $q->whereBetween('date', [
+                    databaseDate(request('start_date')), 
+                    databaseDate(request('end_date'))
+                ]);
+            });
+    
+            $ps_count = $q->selectRaw('MONTH(date) AS month, SUM(total_count) AS total_count')
                 ->groupBy('month')
-                ->orderBy('month', 'asc')
+                ->orderBy('month', 'ASC')
                 ->get();
+        }
 
         return response()->json($ps_count);
     }
