@@ -24,11 +24,9 @@ class ProposalController extends Controller
         $grp_status_count = Proposal::selectRaw('status, COUNT(*) as count')->groupBy('status')->pluck('count', 'status');
         $wo_logframe_count = Proposal::where('status', 'approved')->doesntHave('log_frame')->count();
         $wo_action_plan_count = Proposal::where('status', 'approved')->doesntHave('action_plans')->count();
-        $wo_participants_count = Proposal::where('status', 'approved')->doesntHave('participant_lists')->count();
-        $wo_narrative_count = Proposal::where('status', 'approved')->doesntHave('narratives')->count();
 
         return view('proposals.index', 
-            compact('proposals', 'grp_status_count', 'wo_logframe_count', 'wo_action_plan_count', 'wo_participants_count', 'wo_narrative_count')
+            compact('proposals', 'grp_status_count', 'wo_logframe_count', 'wo_action_plan_count')
         );
     }
 
@@ -45,8 +43,6 @@ class ProposalController extends Controller
             switch (request('status')) {
                 case 'wo_logframe': $q->doesntHave('log_frame'); break;
                 case 'wo_action_plan': $q->doesntHave('action_plans'); break;
-                case 'wo_participant': $q->doesntHave('participant_lists'); break;
-                case 'wo_narrative': $q->doesntHave('narratives'); break;
             }
         });
         

@@ -1,11 +1,10 @@
 <div class="tab-pane fade show" id="summary" role="tabpanel" aria-labelledby="summary-tab">
     <div class="row mb-2">
-        <div class="col-6">
+        <div class="col-12">
             @if (in_array($proposal->status, ['approved', 'pending']))
                 <span class="badge bg-{{ $proposal->status == 'approved'? 'success' : 'secondary' }}">{{ $proposal->status }}</span>
             @endif
-            <div class="text-center">
-                
+            <p class="text-center">
                 @if ($proposal->status_note && $proposal->status == 'rejected')
                     <span class="badge bg-danger text-white">
                         Rejected
@@ -13,7 +12,7 @@
                     <br>
                     {{ $proposal->status_note }}
                 @endif
-            </div>
+            </p>
             <h5>
                 #Proposal No : <b>PR-{{ $proposal->tid }}</b> <br>
                 Region : <b>{{ @$proposal->region->name }}</b> <br>
