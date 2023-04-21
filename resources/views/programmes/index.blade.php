@@ -11,7 +11,7 @@
                     <table class="table table-borderless datatable">
                         <thead>
                         <tr>
-                            <th scope="col">#No</th>
+                            <th scope="col">#No.</th>
                             <th scope="col">Programme</th>
                             <th scope="col">Action</th>
                         </tr>
@@ -20,7 +20,7 @@
                             @foreach ($programmes as $i => $programme)
                                 <tr>
                                     <th scope="row">{{ $i+1 }}</th>
-                                    <td>{{ $programme->name }}</td>
+                                    <td><a href="{{ route('programmes.show', $programme) }}">{{ $programme->name }}</a></td>
                                     <td>{!! $programme->action_buttons !!}</td>
                                 </tr>
                             @endforeach

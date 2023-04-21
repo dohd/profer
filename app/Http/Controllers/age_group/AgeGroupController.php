@@ -4,6 +4,7 @@ namespace App\Http\Controllers\age_group;
 
 use App\Http\Controllers\Controller;
 use App\Models\age_group\AgeGroup;
+use App\Models\item\ProposalItem;
 use Illuminate\Http\Request;
 
 class AgeGroupController extends Controller
@@ -58,7 +59,11 @@ class AgeGroupController extends Controller
      */
     public function show(AgeGroup $age_group)
     {
-        return view('age_groups.view', compact('age_group'));
+        $proposal_items = ProposalItem::whereHas('participants', fn($q) => $q->where('age_group_id', $age_group->id))
+        ->with(['participants' => fn($q) => $q->where('age_group_id', $age_group->id)])
+        ->get();
+
+        return view('age_groups.view', compact('age_group', 'proposal_items'));
     }
 
     /**

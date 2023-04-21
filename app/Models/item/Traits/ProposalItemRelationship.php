@@ -4,6 +4,7 @@ namespace App\Models\item\Traits;
 
 use App\Models\action_plan\ActionPlanActivity;
 use App\Models\cohort\Cohort;
+use App\Models\item\ParticipantListItem;
 use App\Models\participant_list\ParticipantList;
 use App\Models\programme\Programme;
 use App\Models\proposal\Proposal;
@@ -30,6 +31,11 @@ trait ProposalItemRelationship
     public function participant_lists()
     {
         return $this->hasMany(ParticipantList::class);
+    }
+
+    public function participants()
+    {
+        return $this->hasManyThrough(ParticipantListItem::class, ParticipantList::class, 'proposal_item_id', 'participant_list_id', 'id', 'id');
     }
 
     public function participant_regions()

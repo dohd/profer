@@ -24,7 +24,7 @@
                             @foreach ($donors as $i => $donor)
                                 <tr>
                                     <th scope="row">{{ $i+1 }}</th>
-                                    <td>{{ $donor->name }}</td>
+                                    <td><a href="{{ route('donors.show', $donor) }}">{{ $donor->name }}</a></td>
                                     <td>{{ $donor->phone }}</td>
                                     <td>{{ $donor->email }}</td>
                                     <td>{{ $donor->contact_person }}</td>

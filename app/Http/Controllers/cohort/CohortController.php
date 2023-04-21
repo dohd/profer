@@ -4,6 +4,7 @@ namespace App\Http\Controllers\cohort;
 
 use App\Http\Controllers\Controller;
 use App\Models\cohort\Cohort;
+use App\Models\item\ProposalItem;
 use Illuminate\Http\Request;
 
 class CohortController extends Controller
@@ -58,7 +59,13 @@ class CohortController extends Controller
      */
     public function show(Cohort $cohort)
     {
-        return view('cohorts.view', compact('cohort'));
+        $proposal_items = ProposalItem::whereHas('participant_lists', function ($q) use($cohort) {
+            $q->where('region_id', $cohort->id)->where('total_count', '>', 0);
+        })
+        ->with(['participant_lists' => fn($q) => $q->where('region_id', $cohort->id)->where('total_count', '>', 0)])
+        ->get();
+
+        return view('cohorts.view', compact('cohort', 'proposal_items'));
     }
 
     /**

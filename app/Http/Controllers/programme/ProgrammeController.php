@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\programme;
 
 use App\Http\Controllers\Controller;
+use App\Models\item\ProposalItem;
 use App\Models\programme\Programme;
 use Illuminate\Http\Request;
 
@@ -58,7 +59,14 @@ class ProgrammeController extends Controller
      */
     public function show(Programme $programme)
     {
-        return view('programmes.view', compact('programme'));
+        $proposal_items = ProposalItem::whereHas('proposal', function ($q) use($programme) {
+            $q->whereHas('action_plans', fn($q) => $q->where('programme_id', $programme->id));
+        })
+        ->whereHas('participant_lists', fn($q) => $q->where('total_count', '>', 0))
+        ->with(['participant_lists' => fn($q) => $q->where('total_count', '>', 0)])
+        ->get();
+
+        return view('programmes.view', compact('programme', 'proposal_items'));
     }
 
     /**

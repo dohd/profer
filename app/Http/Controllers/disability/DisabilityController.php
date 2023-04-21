@@ -4,6 +4,7 @@ namespace App\Http\Controllers\disability;
 
 use App\Http\Controllers\Controller;
 use App\Models\disability\Disability;
+use App\Models\item\ProposalItem;
 use Illuminate\Http\Request;
 
 class DisabilityController extends Controller
@@ -58,7 +59,11 @@ class DisabilityController extends Controller
      */
     public function show(Disability $disability)
     {
-        return view('disabilities.view', compact('disability'));
+        $proposal_items = ProposalItem::whereHas('participants', fn($q) => $q->where('disability_id', $disability->id))
+        ->with(['participants' => fn($q) => $q->where('disability_id', $disability->id)])
+        ->get();
+
+        return view('disabilities.view', compact('disability', 'proposal_items'));
     }
 
     /**

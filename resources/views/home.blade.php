@@ -33,8 +33,7 @@
                   </div>
                   <div class="ps-3">
                     <h6>{{ $activity_done_count }}</h6>
-                    <span class="text-success small pt-1 fw-bold">{{ $project_done_count }}</span>
-                    <span class="text-muted small pt-2 ps-1">Project</span>
+                    <span class="text-muted small pt-2 ps-1">Activities</span>
                   </div>
                 </div>
               </div>
@@ -52,12 +51,12 @@
                 <h5 class="card-title">Grants <span></span></h5>
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                    <i class="bi bi-currency-dollar"></i>
+                    <a href="{{ route('proposals.index') }}" style="color:inherit"><i class="bi bi-currency-dollar"></i></a>
                   </div>
                   <div class="ps-3">
                     <h6 style="font-size: 1.2em">{{ numberFormat($project_budget) }}</h6>
                     <span class="text-success small pt-1 fw-bold">{{ $project_count }}</span>
-                    <span class="text-muted small pt-2 ps-1">Project</span>
+                    <span class="text-muted small pt-2 ps-1">Projects</span>
                   </div>
                 </div>
               </div>
@@ -75,12 +74,11 @@
                 <h5 class="card-title">Donors <span></span></h5>
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                    <i class="bi bi-tag"></i>
+                    <a href="{{ route('donors.index') }}" style="color:inherit"><i class="bi bi-tag"></i></a>
                   </div>
                   <div class="ps-3">
                     <h6>{{ $donor_count }}</h6>
-                    <span class="text-danger small pt-1 fw-bold">{{ $project_count }}</span>
-                    <span class="text-muted small pt-2 ps-1">Project</span>
+                    <span class="text-muted small pt-2 ps-1">Donors</span>
                   </div>
                 </div>
               </div>
@@ -98,12 +96,11 @@
                 <h5 class="card-title">Programmes <span></span></h5>
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                    <i class="bi bi-file-earmark-text"></i>
+                    <a href="{{ route('programmes.index') }}" style="color:inherit"><i class="bi bi-file-earmark-text"></i></a>
                   </div>
                   <div class="ps-3">
                     <h6>{{ $programmes_count }}</h6>
-                    <span class="text-danger small pt-1 fw-bold">{{ $project_count }}</span>
-                    <span class="text-muted small pt-2 ps-1">Project</span>
+                    <span class="text-muted small pt-2 ps-1">Programmes</span>
                   </div>
                 </div>
               </div>
@@ -121,12 +118,11 @@
                 <h5 class="card-title">Cohorts <span></span></h5>
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                    <i class="bi bi-people"></i>
+                    <a href="{{ route('cohorts.index') }}" style="color:inherit"><i class="bi bi-people"></i></a>
                   </div>
                   <div class="ps-3">
                     <h6>{{ $cohorts_count }}</h6>
-                    <span class="text-danger small pt-1 fw-bold">{{ $project_count }}</span>
-                    <span class="text-muted small pt-2 ps-1">Project</span>
+                    <span class="text-muted small pt-2 ps-1">Cohorts</span>
                   </div>
                 </div>
               </div>
@@ -144,12 +140,11 @@
                 <h5 class="card-title">Regions <span></span></h5>
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                    <i class="bi bi-geo-alt-fill"></i>
+                    <a href="{{ route('regions.index') }}" style="color:inherit"><i class="bi bi-geo-alt-fill"></i></a>
                   </div>
                   <div class="ps-3">
                     <h6>{{ $regions_count }}</h6>
-                    <span class="text-danger small pt-1 fw-bold">{{ $project_count }}</span>
-                    <span class="text-muted small pt-2 ps-1">Project</span>
+                    <span class="text-muted small pt-2 ps-1">Regions</span>
                   </div>
                 </div>
               </div>

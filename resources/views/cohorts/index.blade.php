@@ -20,7 +20,7 @@
                             @foreach ($cohorts as $i => $cohort)
                                 <tr>
                                     <th scope="row">{{ $i+1 }}</th>
-                                    <td>{{ $cohort->name }}</td>
+                                    <td><a href="{{ route('cohorts.show', $cohort) }}">{{ $cohort->name }}</a></td>
                                     <td>{!! $cohort->action_buttons !!}</td>
                                 </tr>
                             @endforeach

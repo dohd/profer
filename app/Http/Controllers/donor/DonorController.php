@@ -4,6 +4,7 @@ namespace App\Http\Controllers\donor;
 
 use App\Http\Controllers\Controller;
 use App\Models\donor\Donor;
+use App\Models\item\ProposalItem;
 use Illuminate\Http\Request;
 
 class DonorController extends Controller
@@ -62,7 +63,12 @@ class DonorController extends Controller
      */
     public function show(Donor $donor)
     {
-        return view('donors.view', compact('donor'));
+        $proposal_items = ProposalItem::whereHas('proposal', fn($q) => $q->where('donor_id', $donor->id))
+            ->whereHas('participant_lists', fn($q) => $q->where('total_count', '>', 0))
+            ->with(['participant_lists' => fn($q) => $q->where('total_count', '>', 0)])
+            ->get();
+
+        return view('donors.view', compact('donor', 'proposal_items'));
     }
 
     /**

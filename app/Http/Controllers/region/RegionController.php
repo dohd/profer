@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\region;
 
 use App\Http\Controllers\Controller;
+use App\Models\item\ProposalItem;
 use App\Models\region\Region;
 use Illuminate\Http\Request;
 
@@ -58,7 +59,13 @@ class RegionController extends Controller
      */
     public function show(Region $region)
     {
-        return view('regions.view', compact('region'));
+        $proposal_items = ProposalItem::whereHas('participant_lists', function ($q) use($region) {
+            $q->where('region_id', $region->id)->where('total_count', '>', 0);
+        })
+        ->with(['participant_lists' => fn($q) => $q->where('region_id', $region->id)->where('total_count', '>', 0)])
+        ->get();
+
+        return view('regions.view', compact('region', 'proposal_items'));
     }
 
     /**
