@@ -38,7 +38,7 @@ class ParticipantListController extends Controller
     {
         $proposals = Proposal::whereHas('action_plans')->pluck('title', 'id');
         $age_groups = AgeGroup::get(['id', 'bracket']);
-        $disabilities = Disability::get(['id', 'name', 'code']);
+        $disabilities = Disability::get(['id', 'name']);
         
         return view('participant_lists.create', 
             compact('age_groups', 'disabilities', 'proposals')
@@ -127,7 +127,7 @@ class ParticipantListController extends Controller
     {
         $proposals = Proposal::whereHas('action_plans')->pluck('title', 'id');
         $age_groups = AgeGroup::get(['id', 'bracket']);
-        $disabilities = Disability::get(['id', 'name', 'code']);
+        $disabilities = Disability::get(['id', 'name']);
 
         $participant_list['action_plans'] = ActionPlan::where('proposal_id', $participant_list->proposal_id)
             ->get(['id', 'tid', 'date'])->map(function($v) {
