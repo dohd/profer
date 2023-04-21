@@ -29,16 +29,6 @@
                             Action Plan ({{ $proposal->action_plans->count() }})
                         </button>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="participant-list-tab" data-bs-toggle="tab" data-bs-target="#participant-list" type="button" role="tab" aria-controls="participant-list" aria-selected="false">
-                            Participant List ({{ $proposal->participant_lists->count() }})
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="narrative-tab" data-bs-toggle="tab" data-bs-target="#narrative" type="button" role="tab" aria-controls="narrative" aria-selected="false">
-                            Activity Narrative ({{ $proposal->narratives->count() }})
-                        </button>
-                    </li>
                 </ul>
                 <div class="tab-content pt-2" id="myTabContent">
                     <!-- proposal summary  -->
@@ -47,10 +37,6 @@
                     @include('proposals.tabs.log_frame_tab')
                     <!-- action plans  -->
                     @include('proposals.tabs.action_plan_tab')
-                    <!-- participant list  -->
-                    @include('proposals.tabs.participant_list_tab')
-                    <!-- narrative  -->
-                    @include('proposals.tabs.narrative_tab')
                 </div>
             </div>
         </div>

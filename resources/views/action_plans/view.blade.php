@@ -50,18 +50,32 @@
     <!-- Default Tabs -->
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title"></h5>
+            <div class="mt-1"></div>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">
-                        Activity
+                        Plan Activity
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
-                        Target Cohort
+                        Plan Target Cohort
                     </button>
                 </li>
+            </ul>
+            <div class="tab-content pt-2" id="myTabContent2">
+                <!-- activity  -->
+                @include('action_plans.tabs.plan_activity_tab')
+                <!-- cohort  -->
+                @include('action_plans.tabs.plan_cohort_tab')
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="mt-1"></div>
+            <ul class="nav nav-tabs" id="myTab2" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="participant-list-tab" data-bs-toggle="tab" data-bs-target="#participant-list" type="button" role="tab" aria-controls="participant-list" aria-selected="false">
                         Participant List ({{ $action_plan->participant_lists->count() }})
@@ -73,11 +87,7 @@
                     </button>
                 </li>
             </ul>
-            <div class="tab-content pt-2" id="myTabContent">
-                <!-- activity  -->
-                @include('action_plans.tabs.plan_activity_tab')
-                <!-- cohort  -->
-                @include('action_plans.tabs.plan_cohort_tab')
+            <div class="tab-content pt-2" id="myTabContent2">
                 <!-- participant list  -->
                 @include('action_plans.tabs.participant_list_tab')
                 <!-- narrative  -->
