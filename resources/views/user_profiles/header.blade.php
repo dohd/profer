@@ -3,7 +3,7 @@
     User Profile Management
     <div class="float-end">
       <a href="{{ route('user_profiles.index') }}" class="btn btn-secondary">List</a>
-      <a href="{{ route('user_profiles.create') }}" class="btn btn-primary">Create</a>
+      <a href="{{ route('user_profiles.create') }}" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Create</a>
     </div>
   </h1>
   <nav>

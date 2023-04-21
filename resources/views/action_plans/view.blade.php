@@ -50,23 +50,27 @@
     <!-- Default Tabs -->
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">
-                <div class="float-end">
-                    <span class="badge bg-primary text-white" role="button" id="activity_md" data-bs-toggle="modal" data-bs-target="#activity_modal">
-                        <i class="bi bi-plus-lg"></i> Activity
-                    </span>
-                    <span class="badge bg-success text-white" role="button" id="cohort_md" data-bs-toggle="modal" data-bs-target="#cohort_modal">
-                        <i class="bi bi-plus-lg"></i> Target Cohort
-                    </span>
-                </div>
-            </h5>
-            
+            <h5 class="card-title"></h5>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Activity</button>
+                    <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">
+                        Activity
+                    </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Target Cohort</button>
+                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
+                        Target Cohort
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="participant-list-tab" data-bs-toggle="tab" data-bs-target="#participant-list" type="button" role="tab" aria-controls="participant-list" aria-selected="false">
+                        Participant List ({{ $action_plan->participant_lists->count() }})
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="narrative-tab" data-bs-toggle="tab" data-bs-target="#narrative" type="button" role="tab" aria-controls="narrative" aria-selected="false">
+                        Activity Narrative ({{ $action_plan->narratives->count() }})
+                    </button>
                 </li>
             </ul>
             <div class="tab-content pt-2" id="myTabContent">
@@ -74,6 +78,10 @@
                 @include('action_plans.tabs.plan_activity_tab')
                 <!-- cohort  -->
                 @include('action_plans.tabs.plan_cohort_tab')
+                <!-- participant list  -->
+                @include('action_plans.tabs.participant_list_tab')
+                <!-- narrative  -->
+                @include('action_plans.tabs.narrative_tab')
             </div>
         </div>
     </div>
