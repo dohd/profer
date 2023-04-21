@@ -93,6 +93,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('action_plans/proposal_items', [ActionPlanController::class, 'proposal_items'])->name('action_plans.proposal_items');
     Route::post('action_plans/select_activity_items', [ActionPlanController::class, 'select_activity_items'])->name('action_plans.select_activity_items');
     Route::post('action_plans/select_items', [ActionPlanController::class, 'select_items'])->name('action_plans.select_items');
+    Route::post('action_plans/datatable', [ActionPlanController::class, 'datatable'])->name('action_plans.datatable');
     Route::resource('action_plans', ActionPlanController::class);
 
     /**

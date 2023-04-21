@@ -1,4 +1,14 @@
 <div class="tab-pane fade show" id="home" role="tabpanel" aria-labelledby="home-tab">
+    <div class="row mb-2">
+        <div class="col-12">
+            <div class="float-end">
+                <span class="badge bg-primary text-white" role="button" id="activity_md" data-bs-toggle="modal" data-bs-target="#activity_modal">
+                    <i class="bi bi-plus-lg"></i> Activity
+                </span>
+            </div>
+        </div>
+    </div>
+    
     <div class="table-responsive">
         <table class="table table-striped datatable" id="activity_tbl">
             <thead>

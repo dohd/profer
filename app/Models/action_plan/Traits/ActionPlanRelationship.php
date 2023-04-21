@@ -5,11 +5,23 @@ namespace App\Models\action_plan\Traits;
 use App\Models\action_plan\ActionPlanActivity;
 use App\Models\action_plan\ActionPlanCohort;
 use App\Models\item\ProposalItem;
+use App\Models\narrative\Narrative;
+use App\Models\participant_list\ParticipantList;
 use App\Models\programme\Programme;
 use App\Models\proposal\Proposal;
 
 trait ActionPlanRelationship
 {
+    public function participant_lists()
+    {
+        return $this->hasMany(ParticipantList::class);
+    }
+
+    public function narratives()
+    {
+        return $this->hasMany(Narrative::class);
+    }
+
     public function activities()
     {
         return $this->hasManyThrough(ProposalItem::class, ActionPlanActivity::class, 'action_plan_id', 'id', 'id', 'activity_id');

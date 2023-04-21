@@ -26,16 +26,31 @@ class ActionPlanController extends Controller
      */
     public function index()
     {
-        $action_plans = ActionPlan::all();
-        $status_count = ActionPlan::selectRaw('status, count(*) as count')
-            ->groupBy('status')->get()
-            ->reduce(function($init, $v) {
-                $init[$v->status] = $v->count;
-                return $init;
-            }, []);
-
-        return view('action_plans.index', compact('action_plans', 'status_count'));
+        $grp_status_count = ActionPlan::selectRaw('status, COUNT(*) as count')->groupBy('status')->pluck('count', 'status');
+        $wo_ps_list_count = ActionPlan::where('status', 'approved')->doesntHave('participant_lists')->count();
+        $wo_narrative_count = ActionPlan::where('status', 'approved')->doesntHave('narratives')->count();
+        
+        return view('action_plans.index', compact('grp_status_count', 'wo_ps_list_count', 'wo_narrative_count'));
     }
+
+    /**
+     * Display list of action_plans using datatable
+     */
+    public function datatable(Request $request)
+    {
+        $q = ActionPlan::query();
+
+        // filter approved proposals
+        $q->when(request('status'), function($q) {
+            $q->where('status', 'approved');
+            switch (request('status')) {
+                case 'wo_ps_list': $q->doesntHave('participant_lists'); break;
+                case 'wo_narrative': $q->doesntHave('narratives'); break;
+            }
+        });
+        
+        return view('action_plans.partial.action_plan_datatable', ['action_plans' => $q->get()]);
+    }    
 
     /**
      * Show the form for creating a new resource.

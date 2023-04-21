@@ -1,4 +1,14 @@
 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+    <div class="row mb-2">
+        <div class="col-12">
+            <div class="float-end">
+                <span class="badge bg-primary text-white" role="button" id="cohort_md" data-bs-toggle="modal" data-bs-target="#cohort_modal">
+                    <i class="bi bi-plus-lg"></i> Target Cohort
+                </span>
+            </div>
+        </div>
+    </div>
+    
     <div class="table-responsive">
         <table class="table table-striped datatable" id="cohort_list_tbl">
             <thead>
