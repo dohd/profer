@@ -58,8 +58,8 @@
                                     <th scope="row" class="p-3 num">{{ $i+1 }}</th>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->gender }}</td>
-                                    <td>{{ $item->age_group? $item->age_group->bracket : '' }}</td>
-                                    <td>{{ $item->disability? $item->disability->code : ''}}</td>
+                                    <td>{{ @$item->age_group->bracket }}</td>
+                                    <td>{{ @$item->disability->name }}</td>
                                     <td>{{ $item->phone }}</td>
                                     <td>{{ $item->email }}</td>
                                     <td>{{ $item->designation }}</td>

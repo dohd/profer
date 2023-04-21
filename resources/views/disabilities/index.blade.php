@@ -22,7 +22,6 @@
                                 <tr>
                                     <th scope="row">{{ $i+1 }}</th>
                                     <td><a href="{{ route('disabilities.show', $disability) }}">{{ $disability->name }}</a></td>
-                                    <td>{{ $disability->code }}</td>
                                     <td>{!! $disability->action_buttons !!}</td>
                                 </tr>
                             @endforeach

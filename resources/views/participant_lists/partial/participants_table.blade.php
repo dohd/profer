@@ -39,7 +39,7 @@
                     <select name="disability_id[]" class="form-select custom dsblty" data-placeholder="Ds">
                         <option value=""></option>
                         @foreach ($disabilities as $item)
-                            <option value="{{ $item->id }}">{{ $item->code }}</option>
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
                         @endforeach
                     </select>
                 </td>
@@ -78,7 +78,7 @@
                             <select name="disability_id[]" class="form-select custom dsblty" data-placeholder="Ds">
                                 <option value=""></option>
                                 @foreach ($disabilities as $item)
-                                    <option value="{{ $item->id }}" {{ $item->id == $list_item->disability_id? 'selected' : '' }}>{{ $item->code }}</option>
+                                    <option value="{{ $item->id }}" {{ $item->id == $list_item->disability_id? 'selected' : '' }}>{{ $item->name }}</option>
                                 @endforeach
                             </select>
                         </td>
