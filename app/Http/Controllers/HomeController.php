@@ -47,7 +47,7 @@ class HomeController extends Controller
         $proposal_count = Proposal::count();
 
         // monthly participant chart
-        $sql = 'MONTH(date) as month, SUM(male_count) as male_count, SUM(female_count) as female_count';
+        $sql = 'MONTH(date) as month, SUM(male_count) as male_count, SUM(female_count) as female_count, SUM(total_count) as total_count';
         $monthly_pts = ParticipantList::selectRaw($sql)->groupBy('date')->get();
 
         // donor activity distribution chart
@@ -69,7 +69,7 @@ class HomeController extends Controller
             ->pluck('name'); 
 
         // region participant chart
-        $sql = 'region_id, SUM(male_count) as male_count, SUM(female_count) as female_count';
+        $sql = 'region_id, SUM(male_count) as male_count, SUM(female_count) as female_count, SUM(total_count) as total_count';
         $region_pts = ParticipantList::selectRaw($sql)->groupBy('region_id')->get();
         $region_dist = Region::whereIn('id', $region_pts->pluck('region_id')->toArray())
             ->pluck('name'); 

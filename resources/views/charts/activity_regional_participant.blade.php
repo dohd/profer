@@ -7,14 +7,16 @@
       <div id="regionalActivityParticipant"></div>
 
       <script>
-        const regionDist = @json(@$region_dist);
-        const regionPts = @json(@$region_pts);
         const maleDist = [];
         const femaleDist = [];
+        const totalDist = [];
+        const regionPts = @json(@$region_pts);
         regionPts.forEach(v => {
           maleDist.push(v['male_count']);
           femaleDist.push(v['female_count']);
+          totalDist.push(v['total_count']);
         });
+        const regionDist = @json(@$region_dist);
 
         document.addEventListener("DOMContentLoaded", () => {
           new ApexCharts(document.querySelector("#regionalActivityParticipant"), {
@@ -28,8 +30,13 @@
                 // data: [76, 85, 101, 98, 87, 105, 91, 114, 94, 25, 15, 42],
                 data: femaleDist,
               },
+              {
+                name: 'Total',
+                // data: [76, 85, 101, 98, 87, 105, 91, 114, 94, 25, 15, 42],
+                data: totalDist,
+              },
             ],
-            colors: ['#6f42c1', '#d63384'],
+            colors: ['#6f42c1', '#d63384', '#e6b400'],
             chart: {
               type: 'bar',
               height: 350
@@ -55,7 +62,7 @@
             },
             yaxis: {
               title: {
-                text: 'Region'
+                text: 'Regions'
               },
             },
             fill: {

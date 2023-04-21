@@ -9,6 +9,7 @@
         <script>
           const maleCount = [];
           const femaleCount = [];
+          const totalCount = [];
           const monthlyPts = @json(@$monthly_pts);
           for (let i = 1; i < 13; i++) {
             let isChecked = false;
@@ -17,11 +18,13 @@
                 isChecked = true;
                 maleCount.push(v['male_count']*1);
                 femaleCount.push(v['female_count']*1);
+                totalCount.push(v['total_count']*1);
               }
             });
             if (!isChecked) {
               maleCount.push(0);
               femaleCount.push(0);
+              totalCount.push(0);
             }
           }
 
@@ -36,6 +39,11 @@
                   name: 'Female',
                   // data: [76, 85, 101, 98, 87, 105, 91, 114, 94, 25, 15, 42]
                   data: femaleCount,
+                },
+                {
+                  name: 'Total',
+                  // data: [76, 85, 101, 98, 87, 105, 91, 114, 94, 25, 15, 42]
+                  data: totalCount,
                 },
               ],
               chart: {
@@ -62,7 +70,7 @@
               },
               yaxis: {
                 title: {
-                  text: 'Count'
+                  text: 'Range'
                 }
               },
               fill: {
