@@ -23,7 +23,13 @@
                     @foreach ($details as $key => $val)
                         <tr>
                             <th width="30%">{{ $key }}</th>
-                            <td>{{ $val}}</td>
+                            <td>
+                                @if ($key == 'Project Title' && $item->proposal)
+                                    <a href="{{ route('proposals.show', $item->proposal) }}">{{ $val }}</a>
+                                @else
+                                    {{ $val}}
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                     <tr>

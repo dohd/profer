@@ -12,7 +12,8 @@
                         <thead>
                             <tr>
                                 <th scope="col">#No</th>
-                                <th scope="col">Project Title</th>
+                                <th scope="col">#Code</th>
+                                
                                 <th scope="col">Activity</th>
                                 <th scope="col">Region</th>
                                 <th scope="col">Ps</th>
@@ -24,7 +25,7 @@
                             @foreach ($participant_lists as $i => $item)
                                 <tr>
                                     <th scope="row">{{ $i+1 }}</th>
-                                    <td><a href="{{ route('proposals.show', $item->proposal) }}">{{ @$item->proposal->title }}</a></td>
+                                    <td><a href="{{ route('participant_lists.show', $item) }}">{{ tidCode('participant_list', $item->tid) }}</a></td>
                                     <td>{{ @$item->proposal_item->name }}</td>
                                     <td>{{ @$item->region->name }}</td>
                                     <td>{{ $item->total_count }}</td>
