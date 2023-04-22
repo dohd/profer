@@ -22,7 +22,7 @@
       <li class="message-item">
         <a href="#">
           <img
-            src="assets/img/messages-1.jpg"
+            {{-- src="assets/img/messages-1.jpg" --}}
             alt=""
             class="rounded-circle"
           />
@@ -43,7 +43,7 @@
       <li class="message-item">
         <a href="#">
           <img
-            src="assets/img/messages-2.jpg"
+            {{-- src="assets/img/messages-2.jpg" --}}
             alt=""
             class="rounded-circle"
           />
@@ -64,7 +64,7 @@
       <li class="message-item">
         <a href="#">
           <img
-            src="assets/img/messages-3.jpg"
+            {{-- src="assets/img/messages-3.jpg" --}}
             alt=""
             class="rounded-circle"
           />
