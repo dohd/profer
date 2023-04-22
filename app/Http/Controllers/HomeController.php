@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\action_plan\ActionPlanActivity;
 use App\Models\age_group\AgeGroup;
 use App\Models\cohort\Cohort;
 use App\Models\donor\Donor;
@@ -86,19 +87,23 @@ class HomeController extends Controller
         ));
     }
 
-    // register
+    public function event_calendar()
+    {
+        $events = ActionPlanActivity::with('activity')->get();
+        
+        return view('layouts.event_calendar', compact('events'));
+    }
+
     public function register()
     {
         return view('register');
     }
 
-    // login
     public function login()
     {
         return view('login');
     }
 
-    // error 404
     public function error_404()
     {
         return view('error_404');

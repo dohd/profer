@@ -43,6 +43,7 @@ Route::group(['middleware' => 'auth'], function() {
      * Dashboard
      */
     Route::get('home', [HomeController::class, 'index'])->name('home');
+    Route::get('event_calendar', [HomeController::class, 'event_calendar'])->name('event_calendar');
 
     /**
      * User Profiles

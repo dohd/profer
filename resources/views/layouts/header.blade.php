@@ -35,6 +35,12 @@
       </li>
       <!-- End Search Icon-->
 
+      <li class="nav-item d-block">
+        <a class="nav-link nav-icon" href="{{ route('event_calendar') }}">
+          <i class="bi bi-calendar-event"></i>
+        </a>
+      </li>
+
       <!-- Notification Nav -->
       @include('layouts.notification_popover')
       <!-- End Notification Nav -->
