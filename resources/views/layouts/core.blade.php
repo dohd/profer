@@ -27,6 +27,7 @@
   <link href="{{ asset('vendor/remixicon/remixicon.css') }}" rel="stylesheet">
   <link href="{{ asset('vendor/simple-datatables/style.css') }}" rel="stylesheet">
   <link href="{{ asset('vendor/select2/select2-4.0.13.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('vendor/vkurko-calendar-0.18.1/calendar.min.css') }}" rel="stylesheet">
 
   <!-- Template Main CSS File -->
   <link href="{{ asset('css/style.css') }}" rel="stylesheet">
@@ -75,7 +76,7 @@
   <script src="{{ asset('vendor/php-email-form/validate.js') }}"></script>
   <script src="{{ asset('vendor/jquery/jquery-3.6.1.min.js') }}"></script>
   <script src="{{ asset('vendor/select2/select2-4.0.13.min.js') }}"></script>
-
+  <script src="{{ asset('vendor/vkurko-calendar-0.18.1/calendar.min.js') }}"></script>
   <!-- Template Main JS File -->
   <script src="{{ asset('js/main.js') }}"></script>
 
