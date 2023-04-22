@@ -12,6 +12,7 @@
                         <thead>
                             <tr>
                                 <th scope="col">#No</th>
+                                <th scope="col">#Code</th>
                                 <th scope="col">Project Title</th>
                                 <th scope="col">Date</th>
                                 <th scope="col">Action</th>
@@ -21,6 +22,7 @@
                             @foreach ($log_frames as $i => $log_frame)
                                 <tr>
                                     <th scope="row">{{ $i+1 }}</th>
+                                    <td><a href="{{ route('log_frames.show', $log_frame) }}">{{ tidCode('log_frame', $log_frame->tid) }}</a></td>
                                     <td><a href="{{ route('proposals.show', $log_frame->proposal) }}">{{ $log_frame->proposal->title }}</a></td>
                                     <td>{{ dateFormat($log_frame->date) }}</td>
                                     <td>{!! $log_frame->action_buttons !!}</td>
