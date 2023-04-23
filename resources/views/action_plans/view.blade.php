@@ -62,6 +62,28 @@
         if ($(this).val() == 'review') row.removeClass('d-none');
         else row.addClass('d-none');
     }).change();    
+
+    // on click summary tab
+    $('#summaryTabList .nav-link:first').click(function() {
+        if (localStorage.tabIndex_1) {
+            $('.nav-item button[data-bs-target="'+ localStorage.tabIndex_1 +'"]').click();
+        } else {
+            $('#activityTabList .nav-link:first').click();
+            localStorage.tabIndex_1 = localStorage.tabIndex;
+        }
+        localStorage.tabIndex = '#summaryTab';
+    });
+    $('#activityTabList .nav-link').on('click', function() {
+        localStorage.tabIndex_1 = $(this).attr('data-bs-target');
+        localStorage.tabIndex = '#summaryTab';
+    });
+    // summary tab state on initial render
+    if (localStorage.tabIndex == '#summaryTab') {
+        if (localStorage.tabIndex_1)
+            $('.nav-item button[data-bs-target="'+ localStorage.tabIndex_1 +'"]').click();
+        else $('#activityTabList .nav-link:first').click();
+        localStorage.tabIndex = '#summaryTab';
+    }
 </script>
 @include('action_plans.modal_js')
 @stop

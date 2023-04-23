@@ -13,12 +13,7 @@
                 <th width="30%">{{ $key }}</th>
                 <td>
                     @if ($key == 'Project Title')
-                        @if ($action_plan->proposal)
-                            <a href="{{ route('proposals.show', $action_plan->proposal) }}">{{ $val }}</a> 
-                        @else
-                            {{ $val }}
-                        @endif
-                        || <span class="badge bg-{{ $action_plan->status == 'approved'? 'success' : 'secondary' }}">{{ $action_plan->status }}</span>
+                        {{ $val }} || <span class="badge bg-{{ $action_plan->status == 'approved'? 'success' : 'secondary' }}">{{ $action_plan->status }}</span>
                     @else
                         {{ $val }}
                     @endif
