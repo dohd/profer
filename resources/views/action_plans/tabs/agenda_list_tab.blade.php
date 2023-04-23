@@ -1,3 +1,3 @@
-<div class="tab-pane fade show" id="agenda" role="tabpanel" aria-labelledby="agenda-list-tab">
+<div class="tab-pane fade show" id="agendaListTab" role="tabpanel" aria-labelledby="agendaListTab">
     
 </div> 

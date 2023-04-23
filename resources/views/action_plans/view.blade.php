@@ -18,22 +18,22 @@
                 <!-- Action Plan Nav Link -->
                 <ul class="nav nav-tabs" id="summaryTabList" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary" type="button" role="tab" aria-controls="summary" aria-selected="false">
+                        <button class="nav-link" id="summary" data-bs-toggle="tab" data-bs-target="#summaryTab" type="button" role="tab" aria-controls="summaryTab" aria-selected="false">
                             Summary
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="agenda-list-tab" data-bs-toggle="tab" data-bs-target="#agenda" type="button" role="tab" aria-controls="agenda_list" aria-selected="false">
+                        <button class="nav-link" id="agendaList" data-bs-toggle="tab" data-bs-target="#agendaListTab" type="button" role="tab" aria-controls="agendaListTab" aria-selected="false">
                             Agenda List (0)
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="participant-list-tab" data-bs-toggle="tab" data-bs-target="#participant" type="button" role="tab" aria-controls="participant-list" aria-selected="false">
+                        <button class="nav-link" id="psList" data-bs-toggle="tab" data-bs-target="#psListTab" type="button" role="tab" aria-controls="psListTab" aria-selected="false">
                             Participant List ({{ $action_plan->participant_lists->count() }})
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="narrative-tab" data-bs-toggle="tab" data-bs-target="#narrative" type="button" role="tab" aria-controls="narrative" aria-selected="false">
+                        <button class="nav-link" id="narrative" data-bs-toggle="tab" data-bs-target="#narrativeTab" type="button" role="tab" aria-controls="narrativeTab" aria-selected="false">
                             Activity Narrative ({{ $action_plan->narratives->count() }})
                         </button>
                     </li>

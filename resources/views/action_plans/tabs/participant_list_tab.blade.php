@@ -1,4 +1,4 @@
-<div class="tab-pane fade show" id="participant" role="tabpanel" aria-labelledby="participant-list-tab">
+<div class="tab-pane fade show" id="psListTab" role="tabpanel" aria-labelledby="psListTab">
     <div class="row mb-2">
         <div class="col-12">
             <div class="float-end">
