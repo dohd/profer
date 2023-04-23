@@ -15,8 +15,8 @@
                 <tr>
                     <th>#</th>
                     <th width="40%">Activity</th>
-                    <th>Cohort</th>
-                    <th>Targeted No.</th>
+                    <th>Target Cohort</th>
+                    <th>Target No.</th>
                     <th>Action</th>
                 </tr>
             </thead>
