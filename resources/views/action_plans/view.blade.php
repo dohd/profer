@@ -39,7 +39,7 @@
                 </ul>
                 <div class="tab-content pt-2" id="myTabContent2">
                     <!-- summary -->
-                    @include('action_plans.tabs.summary_tab')
+                    @include('action_plans.tabs.action_plan_summary_tab')
                     <!-- activity  -->
                     @include('action_plans.tabs.agenda_list_tab')
                     <!-- activity  -->
@@ -55,12 +55,12 @@
 
 @section('script')
 <script>
-    // on status change
+    // on change status
     $('#status').change(function() {
         const row = $('#note').parents('.row');
         if ($(this).val() == 'review') row.removeClass('d-none');
         else row.addClass('d-none');
-    }).change();
+    }).change();    
 </script>
 @include('action_plans.modal_js')
 @stop

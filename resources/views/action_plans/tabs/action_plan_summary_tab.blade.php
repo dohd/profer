@@ -1,4 +1,4 @@
-<div class="tab-pane fade show" id="summary" role="tabpanel" aria-labelledby="summary-tab">
+<div class="tab-pane fade" id="summary" role="tabpanel" aria-labelledby="summary-tab">
     <table class="table table-bordered">
         @php
             $details = [
@@ -35,12 +35,12 @@
 
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">
+            <button class="nav-link" id="plan-activity" data-bs-toggle="tab" data-bs-target="#plan-activity" type="button" role="tab" aria-controls="plan-activity" aria-selected="false">
                 Plan Activity
             </button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
+            <button class="nav-link" id="plan-cohort" data-bs-toggle="tab" data-bs-target="#plan-cohort" type="button" role="tab" aria-controls="plan-cohort" aria-selected="false">
                 Plan Target Cohort
             </button>
         </li>
