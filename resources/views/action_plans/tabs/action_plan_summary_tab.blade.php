@@ -2,9 +2,10 @@
     <table class="table table-bordered">
         @php
             $details = [
+                'Code' => tidCode('action_plan', $action_plan->tid),
                 'Project Title' => @$action_plan->proposal->title,
                 'Key Programme' => @$action_plan->programme->name,
-                'Date' => dateFormat($action_plan->date),
+                'Date' => dateFormat($action_plan->date, 'd-M-Y'),
                 'Overseen By' => $action_plan->main_assigned_to,
             ];
         @endphp
@@ -12,7 +13,7 @@
             <tr>
                 <th width="30%">{{ $key }}</th>
                 <td>
-                    @if ($key == 'Project Title')
+                    @if ($key == 'Code')
                         {{ $val }} || <span class="badge bg-{{ $action_plan->status == 'approved'? 'success' : 'secondary' }}">{{ $action_plan->status }}</span>
                     @else
                         {{ $val }}
