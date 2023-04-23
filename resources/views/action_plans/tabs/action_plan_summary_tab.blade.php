@@ -33,7 +33,7 @@
         @endif
     </table>
 
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <ul class="nav nav-tabs" id="activityTabList" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="plan-activity" data-bs-toggle="tab" data-bs-target="#plan-activity" type="button" role="tab" aria-controls="plan-activity" aria-selected="false">
                 Plan Activity
@@ -45,7 +45,7 @@
             </button>
         </li>
     </ul>
-    <div class="tab-content pt-2" id="myTabContent2">
+    <div class="tab-content pt-2" id="activityTabContent">
         <!-- activity  -->
         @include('action_plans.tabs.plan_activity_tab')
         <!-- cohort  -->

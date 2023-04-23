@@ -15,9 +15,10 @@
                 </div>
             </h5>
             <div class="card-content p-2">
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <!-- Action Plan Nav Link -->
+                <ul class="nav nav-tabs" id="summaryTabList" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary" type="button" role="tab" aria-controls="summary" aria-selected="true">
+                        <button class="nav-link" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary" type="button" role="tab" aria-controls="summary" aria-selected="false">
                             Summary
                         </button>
                     </li>
@@ -37,7 +38,7 @@
                         </button>
                     </li>
                 </ul>
-                <div class="tab-content pt-2" id="myTabContent2">
+                <div class="tab-content pt-2" id="summaryTabContent">
                     <!-- summary -->
                     @include('action_plans.tabs.action_plan_summary_tab')
                     <!-- activity  -->
