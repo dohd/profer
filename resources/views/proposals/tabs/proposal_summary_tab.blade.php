@@ -14,7 +14,7 @@
                 @endif
             </p>
             <h5>
-                #Proposal No : <b>PR-{{ $proposal->tid }}</b> <br>
+                #Proposal No : <b>{{ tidCode('proposal', $proposal->tid) }}</b> <br>
                 Region : <b>{{ @$proposal->region->name }}</b> <br>
                 Sector : <b>{{ $proposal->sector }}</b> <br>
                 Donor : <b>{{ @$proposal->donor->name }}</b>
