@@ -1,12 +1,12 @@
 @extends('layouts.core')
 
-@section('title', 'Create User Profile')
+@section('title', 'Create | User Profiles')
     
 @section('content')
     @include('user_profiles.header')
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Create User Profile</h5>
+            <h5 class="card-title">Profile Details</h5>
             <div class="card-content p-2">
                 {{ Form::open(['route' => 'user_profiles.store', 'method' => 'POST', 'class' => 'form']) }}
                     @include('user_profiles.form')

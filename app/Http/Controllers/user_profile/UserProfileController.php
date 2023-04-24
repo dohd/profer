@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\user_profile;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\user_profile\UserProfile;
 use Illuminate\Http\Request;
 
@@ -38,7 +39,27 @@ class UserProfileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+        $request->validate([
+            'name' => 'required',
+            'role' => 'required',
+            'phone' => 'required',
+            'email' => 'required',
+            'address' => 'required',
+            'country' => 'required',
+        ]);
+        $data = $request->only(['name', 'role', 'phone', 'email', 'address', 'country']);
+
+        DB::beginTransaction();
+
+        try {            
+            User::create($data);
+
+            return redirect(route('donors.index'))->with(['success' => 'Donor created successfully']);
+        } catch (\Throwable $th) {
+            return errorHandler('Error creating donor!', $th);
+        }
+        
     }
 
     /**
