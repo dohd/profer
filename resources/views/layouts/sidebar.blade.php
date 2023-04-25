@@ -51,7 +51,7 @@
     {{-- proposals --}}
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('proposals.index') }}">
-        <i class="bi bi-file-text"></i></i><span>Grant Proposals</span>
+        <i class="bi bi-file-text"></i></i><span>Grant Proposal</span>
       </a>
     </li>
 
