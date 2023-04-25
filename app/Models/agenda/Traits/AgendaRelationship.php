@@ -2,10 +2,12 @@
 
 namespace App\Models\agenda\Traits;
 
+use App\Models\item\AgendaItem;
+
 trait AgendaRelationship
 {
     public function items()
     {
-        // return $this->hasMany(Proposal::class);
+        return $this->hasMany(AgendaItem::class);
     }
 }
