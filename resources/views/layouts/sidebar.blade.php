@@ -58,7 +58,7 @@
     {{-- log frame --}}
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('log_frames.index') }}">
-        <i class="bi bi-kanban"></i><span>Project Log Frame</span>
+        <i class="bi bi-kanban"></i><span>Log Frame</span>
       </a>
     </li>
 
@@ -72,7 +72,7 @@
     {{-- agenda --}}
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('agenda.index') }}">
-        <i class="bi bi-journal-text"></i><span>Agenda List</span>
+        <i class="bi bi-list-check"></i><span>Agenda List</span>
       </a>
     </li>
 
