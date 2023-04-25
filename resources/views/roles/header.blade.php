@@ -2,7 +2,7 @@
   <h1>
     Role Management
     <div class="float-end">
-      <a href="{{ route('roles.index') }}" class="btn btn-secondary">List</a>
+      <a href="{{ route('roles.index') }}" class="btn btn-secondary"><i class="bi bi-card-list"></i> List</a>
       <a href="{{ route('roles.create') }}" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Create</a>
     </div>
   </h1>

@@ -2,7 +2,7 @@
   <h1>
     Cohort Management
     <div class="float-end">
-      <a href="{{ route('cohorts.index') }}" class="btn btn-secondary">List</a>
+      <a href="{{ route('cohorts.index') }}" class="btn btn-secondary"><i class="bi bi-card-list"></i> List</a>
       <a href="{{ route('cohorts.create') }}" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Create</a>
     </div>
   </h1>
