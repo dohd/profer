@@ -4,6 +4,7 @@ namespace App\Http\Controllers\agenda;
 
 use App\Http\Controllers\Controller;
 use App\Models\agenda\Agenda;
+use App\Models\proposal\Proposal;
 use Illuminate\Http\Request;
 
 class AgendaController extends Controller
@@ -27,7 +28,9 @@ class AgendaController extends Controller
      */
     public function create()
     {
-        return view('agenda.create');
+        $proposals = Proposal::whereHas('action_plans')->pluck('title', 'id');
+
+        return view('agenda.create', compact('proposals'));
     }
 
     /**

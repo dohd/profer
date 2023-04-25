@@ -1,11 +1,47 @@
 <div class="row mb-3">
-    <div class="col-10">
-        <label for="title">Title*</label>
-        {{ Form::text('title', null, ['class' => 'form-control', 'required']) }}
+    <div class="col-8">
+        <label for="title">Project Title*</label>
+        <select name="proposal_id" id="proposal" class="form-control select2" data-placeholder="Choose Project" required>
+            <option value=""></option>
+            @foreach ($proposals as $key => $value)
+                <option value="{{ $key }}" {{ @$participant_list->proposal_id == $key? 'selected' : '' }}>{{ $value }}</option>
+            @endforeach
+        </select>   
     </div>
-    <div class="col-2">
+    <div class="col-4">
+        <label for="plan">Action Plan No*</label>
+        <select name="action_plan_id" id="action_plan" class="form-control select2" data-placeholder="Choose Action Plan" required disabled>
+            <option value=""></option>
+            @if(@$participant_list)
+                @foreach ($participant_list->action_plans as $item)
+                    <option value="{{ $item->id }}" {{ $item->id == $participant_list->action_plan_id? 'selected' : '' }}>{{ $item->code }}</option>
+                @endforeach
+            @endif
+        </select>
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="col-8">
+        <label for="title">Activity*</label>
+        <select name="proposal_item_id" id="activity" class="form-control select2" data-placeholder="Choose Activity" required disabled>
+            <option value=""></option>
+            @if(@$participant_list)
+                @foreach ($participant_list->proposal_items as $key => $value)
+                    <option value="{{ $key }}" {{ $key == $participant_list->proposal_item_id? 'selected' : '' }}>{{ $value }}</option>
+                @endforeach
+            @endif
+        </select>
+    </div>
+    <div class="col-4">
         <label for="date">Date*</label>
         {{ Form::date('date', null, ['class' => 'form-control', 'required']) }}
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-12">
+        <label for="title">Title*</label>
+        {{ Form::text('title', null, ['class' => 'form-control', 'required']) }}
     </div>
 </div>
 
