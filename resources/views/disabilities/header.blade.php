@@ -3,7 +3,7 @@
     Disability Management
     <div class="float-end">
       <a href="{{ route('disabilities.index') }}" class="btn btn-secondary">List</a>
-      <a href="{{ route('disabilities.create') }}" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Create</a>
+      <a href="{{ route('disabilities.create') }}" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Create</a>
     </div>
   </h1>
   <nav>
