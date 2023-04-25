@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\action_plan\ActionPlanController;
 use App\Http\Controllers\age_group\AgeGroupController;
+use App\Http\Controllers\agenda\AgendaController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\cohort\CohortController;
 use App\Http\Controllers\disability\DisabilityController;
@@ -96,6 +97,11 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('action_plans/select_items', [ActionPlanController::class, 'select_items'])->name('action_plans.select_items');
     Route::post('action_plans/datatable', [ActionPlanController::class, 'datatable'])->name('action_plans.datatable');
     Route::resource('action_plans', ActionPlanController::class);
+
+    /**
+     * Agenda
+     */
+    Route::resource('agenda', AgendaController::class);
 
     /**
      * Participant Lists
