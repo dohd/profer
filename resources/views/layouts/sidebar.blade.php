@@ -51,35 +51,42 @@
     {{-- proposals --}}
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('proposals.index') }}">
-        <i class="bi bi-journal-text"></i></i><span>Grant Proposals</span>
+        <i class="bi bi-file-text"></i></i><span>Grant Proposals</span>
       </a>
     </li>
 
     {{-- log frame --}}
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('log_frames.index') }}">
-        <i class="bi bi-circle"></i><span>Project Log Frame</span>
+        <i class="bi bi-kanban"></i><span>Project Log Frame</span>
       </a>
     </li>
 
     {{-- action plan --}}
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('action_plans.index') }}">
-        <i class="bi bi-calendar-event"></i><span>Action Plan</span>
+        <i class="bi bi-calendar-plus"></i><span>Action Plan</span>
+      </a>
+    </li>
+
+    {{-- agenda --}}
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ route('agenda.index') }}">
+        <i class="bi bi-journal-text"></i><span>Agenda List</span>
       </a>
     </li>
 
     {{-- participant list --}}
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('participant_lists.index') }}">
-        <i class="bi bi-clipboard-data"></i></i><span>Participant List</span>
+        <i class="bi bi-person-lines-fill"></i></i><span>Participant List</span>
       </a>
     </li>
 
     {{-- activity narrative --}}
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('narratives.index') }}">
-        <i class="bi bi-journal-text"></i></i><span>Activity Narrative</span>
+        <i class="bi bi-file-earmark-text"></i></i><span>Activity Narrative</span>
       </a>
     </li>
 
@@ -92,7 +99,7 @@
         data-bs-toggle="collapse"
         href="#"
       >
-        <i class="bi bi-card-list"></i><span>Reports</span
+        <i class="bi bi-table"></i><span>Reports</span
         ><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul
