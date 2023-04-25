@@ -1,12 +1,12 @@
 @extends('layouts.core')
 
-@section('title', 'Agenda Donor')
+@section('title', 'Create Agenda')
     
 @section('content')
     @include('agenda.header')
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Agenda Donor</h5>
+            <h5 class="card-title">Create Agenda</h5>
             <div class="card-content p-2">
                 {{ Form::open(['route' => 'agenda.store', 'method' => 'POST', 'class' => 'form']) }}
                     @include('agenda.form')

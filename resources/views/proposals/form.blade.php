@@ -51,38 +51,40 @@
 </div>
 <br>
 <h5>Objectives & Activites</h5>
-<table class="table table-striped" id="objectivesTbl">
-    <thead>
-        <tr>
-            <th scope="col" width="8%">#</th>
-            <th scope="col" width="10%">Item</th>
-            <th scope="col" width="70%">Description</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th scope="row"><input type="text" name="row_num[]" id="rownum-0" value="1" class="form-control rownum" required></th>
-            <td class="pt-3">objective</td>
-            <td><input type="text" name="name[]" id="obj-0" class="form-control obj" required></td>
-            <td>
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Action
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item pt-1 pb-1 add-obj" href="javascript:"><i class="bi bi-plus"></i>Objective</a></li>
-                      <li><a class="dropdown-item pt-1 pb-1 add-act" href="javascript:"><i class="bi bi-plus"></i>Activity</a></li>
-                      <li><a class="dropdown-item pt-1 pb-1 del" href="javascript:"><i class="bi bi-trash text-danger icon-xs"></i>Delete</a></li>
-                    </ul>
-                </div>
-            </td>
-            <input type="hidden" name="row_index[]" class="row-index">
-            <input type="hidden" name="is_obj[]" value="1">
-            <input type="hidden" name="item_id[]" class="item_id">
-        </tr>
-    </tbody>
-</table>
+<div class="responsive">
+    <table class="table table-striped" id="objectivesTbl">
+        <thead>
+            <tr>
+                <th scope="col" width="8%">#</th>
+                <th scope="col" width="10%">Item</th>
+                <th scope="col" width="70%">Description</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row"><input type="text" name="row_num[]" id="rownum-0" value="1" class="form-control rownum" required></th>
+                <td class="pt-3">objective</td>
+                <td><input type="text" name="name[]" id="obj-0" class="form-control obj" required></td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Action
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item pt-1 pb-1 add-obj" href="javascript:"><i class="bi bi-plus"></i>Objective</a></li>
+                          <li><a class="dropdown-item pt-1 pb-1 add-act" href="javascript:"><i class="bi bi-plus"></i>Activity</a></li>
+                          <li><a class="dropdown-item pt-1 pb-1 del" href="javascript:"><i class="bi bi-trash text-danger icon-xs"></i>Delete</a></li>
+                        </ul>
+                    </div>
+                </td>
+                <input type="hidden" name="row_index[]" class="row-index">
+                <input type="hidden" name="is_obj[]" value="1">
+                <input type="hidden" name="item_id[]" class="item_id">
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 @section('script')
 <script>

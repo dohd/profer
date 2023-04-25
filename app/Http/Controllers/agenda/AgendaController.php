@@ -15,7 +15,7 @@ class AgendaController extends Controller
      */
     public function index()
     {
-        $agenda = (object)[];
+        $agenda = Agenda::get();
 
         return view('agenda.index', compact('agenda'));
     }
@@ -38,7 +38,7 @@ class AgendaController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+        dd($request->all());
         $request->validate([
             'name' => 'required',
             'phone' => 'required',
@@ -87,7 +87,7 @@ class AgendaController extends Controller
      */
     public function update(Request $request, Agenda $agenda)
     {
-        // dd($request->all());
+        dd($request->all());
         $request->validate([
             'name' => 'required',
             'phone' => 'required',

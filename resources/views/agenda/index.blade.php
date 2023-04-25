@@ -1,7 +1,7 @@
 @extends('layouts.core')
 
 @section('title', 'Agenda Management')
-    
+
 @section('content')
     @include('agenda.header')
     <div class="card">
@@ -12,23 +12,18 @@
                         <thead>
                         <tr>
                             <th scope="col">#No</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Phone</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Contact Person</th>
-                            <th scope="col">Alt. Phone</th>
-                            <th scope="col">Action</th>
+                            <th scope="col">#Code</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Date</th>
                         </tr>
                         </thead>
                         <tbody>
                             @foreach ($agenda as $i => $agenda)
                                 <tr>
                                     <th scope="row">{{ $i+1 }}</th>
-                                    <td><a href="{{ route('agenda.show', $agenda) }}">{{ $agenda->name }}</a></td>
-                                    <td>{{ $agenda->phone }}</td>
-                                    <td>{{ $agenda->email }}</td>
-                                    <td>{{ $agenda->contact_person }}</td>
-                                    <td>{{ $agenda->alternative_phone }}</td>
+                                    <td><a href="{{ route('agenda.show', $agenda) }}">{{ tidCode('agenda', $agenda->tid) }}</a></td>
+                                    <td>{{ $agenda->title }}</td>
+                                    <td>{{ dateFormat($agenda->date)  }}</td>
                                     <td>{!! $agenda->action_buttons !!}</td>
                                 </tr>
                             @endforeach
@@ -38,10 +33,4 @@
             </div>
         </div>
     </div>
-@stop
-
-@section('script')
-<script>
-    
-</script>
 @stop
