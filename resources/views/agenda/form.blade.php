@@ -45,7 +45,7 @@
     </div>
 </div>
 
-<div class="responsive">
+<div class="table-responsive">
     <table class="table table-striped" id="agendaItemsTbl">
         <thead>
             <tr>
