@@ -4,7 +4,7 @@
         <select name="proposal_id" id="proposal" class="form-control select2" data-placeholder="Choose Project" required>
             <option value=""></option>
             @foreach ($proposals as $key => $value)
-                <option value="{{ $key }}" {{ @$participant_list->proposal_id == $key? 'selected' : '' }}>{{ $value }}</option>
+                <option value="{{ $key }}" {{ @$agenda->proposal_id == $key? 'selected' : '' }}>{{ $value }}</option>
             @endforeach
         </select>   
     </div>
@@ -12,11 +12,11 @@
         <label for="plan">Action Plan No.</label>
         <select name="action_plan_id" id="action_plan" class="form-control select2" data-placeholder="Choose Action Plan" required disabled>
             <option value=""></option>
-            @if(@$participant_list)
-                @foreach ($participant_list->action_plans as $item)
-                    <option value="{{ $item->id }}" {{ $item->id == $participant_list->action_plan_id? 'selected' : '' }}>{{ $item->code }}</option>
-                @endforeach
-            @endif
+            @isset($agenda)
+                <option value="{{ $agenda->action_plan_id }}" selected>
+                    {{ tidCode('action_plan', $agenda->action_plan->tid) }}/{{ @explode('-', $agenda->action_plan->date)[1] }}
+                </option>
+            @endisset
         </select>
     </div>
 </div>
@@ -25,11 +25,11 @@
         <label for="title">Activity</label>
         <select name="proposal_item_id" id="activity" class="form-control select2" data-placeholder="Choose Activity" required disabled>
             <option value=""></option>
-            @if(@$participant_list)
-                @foreach ($participant_list->proposal_items as $key => $value)
-                    <option value="{{ $key }}" {{ $key == $participant_list->proposal_item_id? 'selected' : '' }}>{{ $value }}</option>
-                @endforeach
-            @endif
+            @isset($agenda)
+                <option value="{{ $agenda->proposal_item_id }}" selected>
+                    {{ @$agenda->proposal_item->name }}
+                </option>
+            @endisset
         </select>
     </div>
     <div class="col-4">
@@ -78,9 +78,35 @@
                         </ul>
                     </div>
                 </td>
-                <input type="hidden" name="row_index[]" class="row-index">
                 <input type="hidden" name="item_id[]" class="item_id">
             </tr>
+            @isset($agenda->items)
+                @foreach ($agenda->items as $i => $item)
+                    <tr>
+                        <th scope="row">{{ $i+1 }}</th>
+                        <td>
+                            <div class="row g-0">
+                                <div class="col-6"><input type="time" name="time_from[]" value="{{ $item->time_from }}" class="form-control time-to" required></div>
+                                <div class="col-6"><input type="time" name="time_to[]" value="{{ $item->time_to }}" class="form-control time-from" required></div>
+                            </div>
+                        </td>
+                        <td><input type="text" name="topic[]" value="{{ $item->topic }}" class="form-control topic" required></td>
+                        <td><input type="text" name="assigned_to[]" value="{{ $item->assigned_to }}" class="form-control assigned-to" required></td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Action
+                                </button>
+                                <ul class="dropdown-menu">
+                                <li><a class="dropdown-item pt-1 pb-1 add" href="javascript:"><i class="bi bi-plus"></i>Add</a></li>
+                                <li><a class="dropdown-item pt-1 pb-1 del" href="javascript:"><i class="bi bi-trash text-danger icon-xs"></i>Delete</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                        <input type="hidden" name="item_id[]" value="{{ $item->id }}" class="item_id">
+                    </tr>
+                @endforeach
+            @endisset
         </tbody>
     </table>
 </div>
@@ -137,6 +163,7 @@
         }
     });
 
+    // on click row add, delete
     const initRow = $('#agendaItemsTbl tbody tr:first').html();
     $('#agendaItemsTbl').on('click', '.add, .del', function() {
         const row = $(this).parents('tr');
@@ -152,5 +179,13 @@
             $(this).find('th').text(i+1);
         });
     });    
+
+    /**Edit Agenda**/
+    const agenda = @json(@$agenda);
+    if (agenda) {        
+        $('#action_plan').attr('disabled', false);
+        $('#activity').attr('disabled', false);
+        $('#agendaItemsTbl tbody tr:first').remove();
+    }
 </script>
 @stop

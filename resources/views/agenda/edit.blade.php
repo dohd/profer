@@ -9,7 +9,7 @@
             <h5 class="card-title">Agenda Details</h5>
             <div class="card-content p-2">
                 {{ Form::model($agenda, ['route' => ['agenda.update', $agenda], 'method' => 'PATCH', 'class' => 'form']) }}
-                    @include('agendas.form')
+                    @include('agenda.form')
                     <div class="text-center">
                         <a href="{{ route('agenda.index') }}" class="btn btn-secondary">Cancel</a>
                         {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}

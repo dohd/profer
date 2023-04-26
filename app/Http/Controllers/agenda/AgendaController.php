@@ -43,6 +43,7 @@ class AgendaController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'proposal_id' => 'required',
             'action_plan_id' => 'required',
@@ -52,8 +53,7 @@ class AgendaController extends Controller
         ]);
 
         $data = $request->only(['proposal_id', 'action_plan_id', 'proposal_item_id', 'date', 'title']);
-        $data_items = $request->only(['time_from', 'time_to', 'topic', 'assigned_to', 'row_index']);
-        // dd($data, $data_items);
+        $data_items = $request->only(['time_from', 'time_to', 'topic', 'assigned_to']);
 
         DB::beginTransaction();
 
@@ -69,7 +69,6 @@ class AgendaController extends Controller
             DB::commit();
             return redirect(route('agenda.index'))->with(['success' => 'Agenda created successfully']);
         } catch (\Throwable $th) {
-            dd($th);
             return errorHandler('Error creating agenda!', $th);
         }
     }
@@ -95,7 +94,9 @@ class AgendaController extends Controller
      */
     public function edit(Agenda $agenda)
     {
-        return view('agenda.edit', compact('agenda'));
+        $proposals = Proposal::whereHas('action_plans')->pluck('title', 'id');
+
+        return view('agenda.edit', compact('agenda', 'proposals'));
     }
 
     /**
@@ -107,21 +108,40 @@ class AgendaController extends Controller
      */
     public function update(Request $request, Agenda $agenda)
     {
-        dd($request->all());
+        // dd($request->all());
         $request->validate([
-            'name' => 'required',
-            'phone' => 'required',
-            'email' => 'required',
+            'proposal_id' => 'required',
+            'action_plan_id' => 'required',
+            'proposal_item_id' => 'required',
+            'date' => 'required',
+            'title' => 'required',
         ]);
-        $data = $request->only(['name', 'phone', 'email', 'contact_person', 'alternative_phone', 'alternative_email']);
+
+        $data = $request->only(['proposal_id', 'action_plan_id', 'proposal_item_id', 'date', 'title']);
+        $data_items = $request->only(['time_from', 'time_to', 'topic', 'assigned_to', 'item_id']);
+        
+        DB::beginTransaction();
 
         try {
+            $data = inputClean($data); 
             $agenda->update($data);
+
+            // items
+            $data_items = databaseArray($data_items);
+            $data_items = fillArrayRecurse($data_items, ['agenda_id' => $agenda->id]);
+            foreach ($data_items as $item) {
+                $agenda_item = AgendaItem::firstOrNew(['id' => $item['item_id']]);
+                $agenda_item->fill($item);
+                unset($agenda_item->item_id);
+                $agenda_item->save();
+            }
+
+            DB::commit();
             return redirect(route('agenda.index'))->with(['success' => 'Agenda updated successfully']);
         } catch (\Throwable $th) {
             return errorHandler('Error updating agenda!', $th);
         }
-    }
+    }    
 
     /**
      * Remove the specified resource from storage.
