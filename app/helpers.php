@@ -71,6 +71,14 @@ if (!function_exists('dateFormat')) {
     }
 }
 
+if (!function_exists('timeFormat')) {
+    function timeFormat($time='', $format='h:i a')
+    {
+        if (!$time) return date("h:i:s a");
+        return date($format, strtotime($time));
+    }
+}
+
 if (!function_exists('databaseDate')) {
     function databaseDate($date='')
     {
