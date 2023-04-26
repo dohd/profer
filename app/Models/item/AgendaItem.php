@@ -13,7 +13,7 @@ class AgendaItem extends Model
      * The database table used by the model.
      * @var string
      */
-    protected $table = 'proposal_items';
+    protected $table = 'agenda_items';
 
     /**
      * Mass Assignable fields of model

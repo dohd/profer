@@ -62,11 +62,12 @@ class Agenda extends Model
         static::creating(function ($instance) {
             $instance->user_id = auth()->user()->id;
             $instance->ins = auth()->user()->ins;
+            $instance->tid = Agenda::max('tid') + 1;
             return $instance;
         });
 
         static::addGlobalScope('ins', function ($builder) {
-            // $builder->where('ins', '=', auth()->user()->ins);
+            $builder->where('ins', '=', auth()->user()->ins);
         });
     }
 }

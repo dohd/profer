@@ -1,6 +1,6 @@
 <div class="row mb-3">
     <div class="col-8">
-        <label for="title">Project Title*</label>
+        <label for="title">Project Title</label>
         <select name="proposal_id" id="proposal" class="form-control select2" data-placeholder="Choose Project" required>
             <option value=""></option>
             @foreach ($proposals as $key => $value)
@@ -9,7 +9,7 @@
         </select>   
     </div>
     <div class="col-4">
-        <label for="plan">Action Plan No*</label>
+        <label for="plan">Action Plan No.</label>
         <select name="action_plan_id" id="action_plan" class="form-control select2" data-placeholder="Choose Action Plan" required disabled>
             <option value=""></option>
             @if(@$participant_list)
@@ -22,7 +22,7 @@
 </div>
 <div class="row mb-3">
     <div class="col-8">
-        <label for="title">Activity*</label>
+        <label for="title">Activity</label>
         <select name="proposal_item_id" id="activity" class="form-control select2" data-placeholder="Choose Activity" required disabled>
             <option value=""></option>
             @if(@$participant_list)
@@ -33,14 +33,14 @@
         </select>
     </div>
     <div class="col-4">
-        <label for="date">Date*</label>
+        <label for="date">Date</label>
         {{ Form::date('date', null, ['class' => 'form-control', 'required']) }}
     </div>
 </div>
 
 <div class="row mb-3">
     <div class="col-12">
-        <label for="title">Title*</label>
+        <label for="title">Agenda Title</label>
         {{ Form::text('title', null, ['class' => 'form-control', 'required']) }}
     </div>
 </div>
@@ -61,8 +61,8 @@
                 <th scope="row">1</th>
                 <td>
                     <div class="row g-0">
-                        <div class="col-6"><input type="time" name="time_from[]" class="form-control time-to"></div>
-                        <div class="col-6"><input type="time" name="time_to[]" class="form-control time-from"></div>
+                        <div class="col-6"><input type="time" name="time_from[]" class="form-control time-to" required></div>
+                        <div class="col-6"><input type="time" name="time_to[]" class="form-control time-from" required></div>
                     </div>
                 </td>
                 <td><input type="text" name="topic[]" class="form-control topic" required></td>
@@ -87,6 +87,70 @@
 
 @section('script')
 <script>
+    // on proposal change
+    $('#proposal').change(function() {
+        if ($(this).val()) {
+            const url = @json(route('action_plans.select_items'));
+            const params = {
+                proposal_id: $(this).val(),
+                is_participant_list: 1,
+            };
+            // fetch action plans
+            $.post(url, params, data => {
+                $('#action_plan option:not(:first)').remove();
+                data.forEach(v => {
+                    const planId = @json(@$participant_list->action_plan_id);
+                    $('#action_plan').append(`<option value="${v.id}" ${v.id == planId? 'selected' : ''}>${v.code}</option>`);
+                });
+                $('#action_plan').prop('disabled', false);
+            });
+        } else {
+            ['action_plan', 'activity', 'region', 'cohort'].forEach(v => {
+                $('#'+v).prop('disabled', true);
+                $('#'+v).find('option:not(:first)').remove();
+            });
+        }
+    });
 
+    // on action plan change
+    $('#action_plan').change(function() {
+        if ($(this).val()) {
+            const url = @json(route('action_plans.proposal_items'));
+            const params = {
+                plan_id: $(this).val(),
+                is_participant_list: 1,
+            };
+            // fetch activities
+            $.post(url, params, data => {
+                const activityId = @json(@$participant_list->proposal_item_id);
+                $('#activity option:not(:first)').remove();
+                data.forEach(v => {
+                    $('#activity').append(`<option value="${v.id}" ${v.id == activityId? 'selected' : ''}>${v.name}</option>`);
+                });
+                $('#activity').prop('disabled', false);
+            });
+        } else {
+            ['activity', 'region', 'cohort'].forEach(v => {
+                $('#'+v).prop('disabled', true);
+                $('#'+v).find('option:not(:first)').remove();
+            });
+        }
+    });
+
+    const initRow = $('#agendaItemsTbl tbody tr:first').html();
+    $('#agendaItemsTbl').on('click', '.add, .del', function() {
+        const row = $(this).parents('tr');
+        if ($(this).is('.add')) {
+            row.after(`<tr>${initRow}</tr>`);
+        } else {
+            if (!row.siblings().length) return;
+            row.remove();
+        }
+
+        $('#agendaItemsTbl tbody tr').each(function(i) {
+            $(this).find('.row-index').val(i);
+            $(this).find('th').text(i+1);
+        });
+    });    
 </script>
 @stop
