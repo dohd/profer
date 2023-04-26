@@ -50,7 +50,7 @@
                             @foreach ($agenda->items as $i => $item)
                                 <tr>
                                     <th scope="row">{{ $i+1 }}</th>
-                                    <td><b>{{ $item->time_from }}</b> to <b>{{ $item->time_to }}</b></td>
+                                    <td><b>{{ timeFormat($item->time_from) }}</b> to <b>{{ timeFormat($item->time_to) }}</b></td>
                                     <td>{{ $item->topic }}</td>
                                     <td>{{ $item->assigned_to }}</td>
                                 </tr>
