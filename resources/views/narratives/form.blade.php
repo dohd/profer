@@ -37,13 +37,9 @@
         {{ Form::date('date', null, ['class' => 'form-control', 'required']) }}
     </div>
 </div>
-<div class="row mb-3">
-    <div class="col-12">
-        <label for="name">Note</label>
-        {{ Form::text('note', null, ['class' => 'form-control']) }}
-    </div>
-</div>
+
 <!-- Narratives Table -->
+
 @include('narratives.partial.narr_pointer_table')
 
 @section('script')

@@ -2,7 +2,7 @@
 <table class="table table-striped" id="narratives_tbl">
     <thead>
         <tr class="">
-            <th scope="col">#</th>
+            <th scope="col">No.</th>
             <th scope="col" width="30%">Narrative Indicator</th>
             <th scope="col">Response</th>
         </tr>

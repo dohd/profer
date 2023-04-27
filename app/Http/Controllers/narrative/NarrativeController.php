@@ -66,7 +66,7 @@ class NarrativeController extends Controller
             'proposal_item_id' => 'required', 
             'date' => 'required',
         ]);
-        $data = $request->only(['proposal_id', 'action_plan_id', 'proposal_item_id', 'date', 'note']);
+        $data = $request->only(['proposal_id', 'action_plan_id', 'proposal_item_id', 'date']);
         $data_items = $request->only(['narrative_pointer_id', 'response']);
 
         DB::beginTransaction();
@@ -149,7 +149,7 @@ class NarrativeController extends Controller
                 'proposal_item_id' => 'required', 
                 'date' => 'required',
             ]);
-            $data = $request->only(['proposal_id', 'action_plan_id', 'proposal_item_id', 'date', 'note']);
+            $data = $request->only(['proposal_id', 'action_plan_id', 'proposal_item_id', 'date']);
             $data_items = $request->only(['item_id', 'narrative_pointer_id', 'response']);
 
             DB::beginTransaction();
