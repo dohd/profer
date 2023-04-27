@@ -13,7 +13,7 @@
                         $details = [
                             'Agenda No.' => tidCode('agenda', $agenda->tid),
                             'Title' => $agenda->title,
-                            'Date' => dateFormat($agenda->date),
+                            'Date' => dateFormat($agenda->date, 'd-M-Y'),
                             'Project Title' => @$agenda->proposal->title,
                             'Activity' => @$agenda->proposal_item->name,
                             'Action Plan No.' => $agenda->action_plan? tidCode('action_plan', $agenda->action_plan->tid) : '',

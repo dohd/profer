@@ -14,29 +14,27 @@
             <div class="card-content p-2">
                 <table class="table table-bordered">
                     @php
-                        $action_plan_no = '';
-                        if ($narrative->action_plan) {
-                            $d = explode('-', $narrative->action_plan->date);
-                            $action_plan_no = tidCode('action_plan', $narrative->action_plan->tid) . "/{$d[1]}";
-                        }
-
                         $details = [
+                            'Narrative No.' => tidCode('narrative', $narrative->tid),
                             'Project Title' => @$narrative->proposal->title,
-                            'Action Plan No' => $action_plan_no,
+                            'Action Plan No' => $narrative->action_plan? tidCode('action_plan', $narrative->action_plan->tid) : '',
                             'Activity' => @$narrative->proposal_item->name,
                             'Date' => dateFormat($narrative->date, 'd-M-Y'),
-                            'Note' => $narrative->note,
                         ];
                     @endphp
                     @foreach ($details as $key => $val)
                     <tr>
                         <th width="30%">{{ $key }}</th>
                         <td>
-                            @if ($key == 'Project Title')
+                            @if ($key == 'Narrative No.')
                                 {{ $val }} || 
                                 <span class="badge bg-{{ $narrative->status == 'approved'? 'success' : 'secondary' }}">
                                     {{ $narrative->status }}
                                 </span>
+                            @elseif ($key == 'Project Title' && $val)
+                                <a href="{{ route('proposals.show', $narrative->proposal) }}">{{ $val }}</a>
+                            @elseif ($key == 'Action Plan No' && $val)
+                                <a href="{{ route('action_plans.show', $narrative->action_plan) }}">{{ $val }}</a>
                             @else
                                 {{ $val }}
                             @endif
@@ -54,19 +52,23 @@
                 <!-- narrative items -->
                 <table class="table table-striped" id="narratives_tbl">
                     <thead>
-                        <tr class="">
+                        <tr>
                             <th scope="col">#</th>
                             <th scope="col" width="30%">Narrative Indicator</th>
                             <th scope="col">Response</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($narrative->items as $i => $item)
-                            <tr>
-                                <th scope="row" class="pt-2">{{ $i+1 }}</th>
-                                <td class="pt-2">{{ $item->narrative_pointer? $item->narrative_pointer->value : '' }}</td>
-                                <td class="pt-2">{{ $item->response }}</td>
-                            </tr>   
+                        @php($j=0)
+                        @foreach ($narrative->items as $item)
+                            @isset($item->narrative_pointer->value)
+                                <tr>
+                                    <th scope="row" class="pt-2">{{ $j+1 }}</th>
+                                    <td class="pt-2">{{ $item->narrative_pointer->value }}</td>
+                                    <td class="pt-2">{{ $item->response }}</td>
+                                </tr>   
+                                @php($j++)
+                            @endisset
                         @endforeach
                     </tbody>
                 </table>

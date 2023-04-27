@@ -6,7 +6,7 @@
     @include('log_frames.header')
     <div class="card">
         <div class="card-body">
-            <div class="card-title h5">{{ @$log_frame->proposal->title }}</div>
+            <div class="card-title h5"><span class="text-dark">Project Title:</span> {{ @$log_frame->proposal->title }}</div>
             <div class="card-content p-2">
                 <!-- Default Tabs -->
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -36,7 +36,6 @@
                     <div class="tab-pane fade show" id="goal" role="tabpanel" aria-labelledby="goal-tab">
                         <table class="table table-striped table-bordered" id="impact_tbl">
                             <tbody>
-                                
                                 @foreach ($labels as $key => $value)
                                     <tr>
                                         <th width="30%">{{ $key }}</th>

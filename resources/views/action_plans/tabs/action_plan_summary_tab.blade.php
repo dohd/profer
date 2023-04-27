@@ -15,6 +15,8 @@
                 <td>
                     @if ($key == 'Code')
                         {{ $val }} || <span class="badge bg-{{ $action_plan->status == 'approved'? 'success' : 'secondary' }}">{{ $action_plan->status }}</span>
+                    @elseif ($key == 'Project Title' && $val)
+                        <a href="{{ route('proposals.show', $action_plan->proposal) }}">{{ $val }}</a>
                     @else
                         {{ $val }}
                     @endif

@@ -40,7 +40,6 @@
                         <tr>
                             <th>#No</th>
                             <th>#Code</th>
-                            <th>Project Title</th>
                             <th>Activity</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -50,9 +49,8 @@
                             @foreach ($narratives as $i => $narrative)
                                 <tr>
                                     <th scope="row">{{ $i+1 }}</th>
-                                    <td>{{ tidCode('activity_narrative', $narrative->tid) }}</td>
-                                    <td><a href="{{ route('proposals.show', $narrative->proposal) }}">{{ $narrative->proposal->title }}</a></td>
-                                    <td>{{ $narrative->proposal_item? $narrative->proposal_item->name : '' }}</td>
+                                    <td><a href="{{ route('narratives.show', $narrative) }}">{{ tidCode('activity_narrative', $narrative->tid) }}</a></td>
+                                    <td>{{ @$narrative->proposal_item->name }}</td>
                                     <td><span class="badge bg-{{ $narrative->status == 'approved'? 'success' : 'secondary' }}">{{ $narrative->status }}</span></td>
                                     <td>{!! $narrative->action_buttons !!}</td>
                                 </tr>
