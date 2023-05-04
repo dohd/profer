@@ -32,9 +32,8 @@ class LogFrameController extends Controller
     {
         $donors = Donor::get(['id', 'name']);
         $regions = Region::get(['id', 'name']);
-        $proposals = Proposal::where('status', 'approved')
-            ->whereDoesntHave('log_frames')->get(['id', 'title']);
-        
+        $proposals = Proposal::where('status', 'approved')->doesntHave('log_frame')->get(['id', 'title']);
+            
         return view('log_frames.create', compact('donors','regions', 'proposals'));
     }
 
