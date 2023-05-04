@@ -111,6 +111,7 @@ Route::group(['middleware' => 'auth'], function() {
     /**
      * Activity Narratives
      */
+    Route::post('narratives/narrative_table', [NarrativeController::class, 'narrative_table'])->name('narratives.table');
     Route::resource('narratives', NarrativeController::class);
 
     /**

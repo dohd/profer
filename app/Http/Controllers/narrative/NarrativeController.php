@@ -4,6 +4,7 @@ namespace App\Http\Controllers\narrative;
 
 use App\Http\Controllers\Controller;
 use App\Models\action_plan\ActionPlan;
+use App\Models\agenda\Agenda;
 use App\Models\item\NarrativeItem;
 use App\Models\item\ProposalItem;
 use App\Models\narrative\Narrative;
@@ -45,10 +46,10 @@ class NarrativeController extends Controller
      */
     public function create()
     {
-        $proposals = Proposal::whereHas('action_plans')->pluck('title', 'id');
+        $agenda = Agenda::get();
         $narrative_pointers = NarrativePointer::all();
-
-        return view('narratives.create', compact('proposals', 'narrative_pointers'));
+        
+        return view('narratives.create', compact('agenda', 'narrative_pointers'));
     }
 
     /**
@@ -59,7 +60,7 @@ class NarrativeController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+        dd($request->all());
         $request->validate([
             'proposal_id' => 'required', 
             'action_plan_id' => 'required', 
@@ -201,5 +202,16 @@ class NarrativeController extends Controller
             ->get();
     
         return view('action_plans.partials.narrative_items', compact('narrative_items'));
+    }
+
+    /**
+     * Narrative Table
+     */
+    public function narrative_table(Request $request)
+    {
+        $agenda = Agenda::find($request->agenda_id);
+        $narrative_pointers = NarrativePointer::all();
+
+        return view('narratives.partial.narrative_table', compact('agenda', 'narrative_pointers'));
     }
 }
