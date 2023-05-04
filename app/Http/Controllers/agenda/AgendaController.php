@@ -109,38 +109,47 @@ class AgendaController extends Controller
     public function update(Request $request, Agenda $agenda)
     {
         // dd($request->all());
-        $request->validate([
-            'proposal_id' => 'required',
-            'action_plan_id' => 'required',
-            'proposal_item_id' => 'required',
-            'date' => 'required',
-            'title' => 'required',
-        ]);
-
-        $data = $request->only(['proposal_id', 'action_plan_id', 'proposal_item_id', 'date', 'title']);
-        $data_items = $request->only(['time_from', 'time_to', 'topic', 'assigned_to', 'item_id']);
-        
-        DB::beginTransaction();
-
-        try {
-            $data = inputClean($data); 
-            $agenda->update($data);
-
-            // items
-            $data_items = databaseArray($data_items);
-            $data_items = fillArrayRecurse($data_items, ['agenda_id' => $agenda->id]);
-            foreach ($data_items as $item) {
-                $agenda_item = AgendaItem::firstOrNew(['id' => $item['item_id']]);
-                $agenda_item->fill($item);
-                unset($agenda_item->item_id);
-                $agenda_item->save();
+        if (request('status')) {
+            // update agenda status
+            if ($agenda->update(['status' => request('status')]))
+                return redirect()->back()->with('success', 'Status updated successfully');
+            else errorHandler('Error updating status!');
+        } else {
+            // update agenda
+            $request->validate([
+                'proposal_id' => 'required',
+                'action_plan_id' => 'required',
+                'proposal_item_id' => 'required',
+                'date' => 'required',
+                'title' => 'required',
+            ]);
+    
+            $data = $request->only(['proposal_id', 'action_plan_id', 'proposal_item_id', 'date', 'title']);
+            $data_items = $request->only(['time_from', 'time_to', 'topic', 'assigned_to', 'item_id']);
+            
+            DB::beginTransaction();
+    
+            try {
+                $data = inputClean($data); 
+                $agenda->update($data);
+    
+                // items
+                $data_items = databaseArray($data_items);
+                $data_items = fillArrayRecurse($data_items, ['agenda_id' => $agenda->id]);
+                foreach ($data_items as $item) {
+                    $agenda_item = AgendaItem::firstOrNew(['id' => $item['item_id']]);
+                    $agenda_item->fill($item);
+                    unset($agenda_item->item_id);
+                    $agenda_item->save();
+                }
+    
+                DB::commit();
+                return redirect(route('agenda.index'))->with(['success' => 'Agenda updated successfully']);
+            } catch (\Throwable $th) {
+                return errorHandler('Error updating agenda!', $th);
             }
-
-            DB::commit();
-            return redirect(route('agenda.index'))->with(['success' => 'Agenda updated successfully']);
-        } catch (\Throwable $th) {
-            return errorHandler('Error updating agenda!', $th);
         }
+        
     }    
 
     /**

@@ -6,7 +6,11 @@
     @include('agenda.header')
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Agenda Details</h5>
+            <h5 class="card-title">Agenda Details
+                <span class="badge bg-secondary text-white float-end" role="button" data-bs-toggle="modal" data-bs-target="#status_modal">
+                    <i class="bi bi-pencil-fill"></i> Status
+                </span>
+            </h5>
             <div class="card-content p-2">
                 <table class="table table-bordered">
                     @php
@@ -23,7 +27,12 @@
                         <tr>
                             <th width="30%">{{ $key }}</th>
                             <td>
-                                @if($key == 'Project Title' && $val)
+                                @if ($key == 'Agenda No.')
+                                    {{ $val }} || 
+                                    <span class="badge bg-{{ $agenda->status == 'approved'? 'success' : 'secondary' }}">
+                                        {{ $agenda->status }}
+                                    </span>
+                                @elseif($key == 'Project Title' && $val)
                                     <a href="{{ route('proposals.show', $agenda->proposal) }}">{{ $val }}</a>
                                 @elseif ($key == 'Action Plan No.' && $val)
                                     <a href="{{ route('action_plans.show', $agenda->action_plan) }}">{{ $val }}</a>
@@ -33,6 +42,12 @@
                             </td>
                         </tr>
                     @endforeach
+                    @if ($agenda->status == 'review' && $agenda->status_note)
+                        <tr>
+                            <th width="30%">Review Remark</th>
+                            <td>{{ $agenda->status_note }}</td>
+                        </tr>
+                    @endif
                 </table>
                 <br>
                 <div class="table-responsive">
@@ -61,4 +76,17 @@
             </div>
         </div>
     </div>
+    @include('agenda.partial.agenda_status')
 @stop
+
+@section('script')
+<script>
+    $('#status').change(function() {
+        if ($(this).val() == 'review') {
+            $('#note').parents('.row').removeClass('d-none');
+        } else {
+            $('#note').parents('.row').addClass('d-none');
+        }
+    }).trigger('change');
+</script>
+@endsection
