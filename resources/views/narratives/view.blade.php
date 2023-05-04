@@ -41,7 +41,7 @@
                         </td>
                     </tr>
                     @endforeach
-                    @if ($narrative->status_note)
+                    @if ($narrative->status == 'review' && $narrative->status_note)
                         <tr>
                             <th width="30%">Review Remark</th>
                             <td>{{ $narrative->status_note }}</td>

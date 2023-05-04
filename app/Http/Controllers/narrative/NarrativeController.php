@@ -85,8 +85,7 @@ class NarrativeController extends Controller
             DB::commit();
             return redirect(route('narratives.index'))->with(['success' => 'Narrative created successfully']);
         } catch (\Throwable $th) { 
-            dd($th->getMessage());
-            errorHandler('Error creating narrative!');
+            errorHandler('Error creating narrative!', $th);
         }
     }
 
@@ -173,7 +172,7 @@ class NarrativeController extends Controller
                     return redirect(route('narratives.index'))->with(['success' => 'Narrative updated successfully']);
                 }
             } catch (\Throwable $th) {
-                errorHandler('Error updating narrative!');
+                errorHandler('Error updating narrative!', $th);
             }
         }
     }
@@ -186,9 +185,12 @@ class NarrativeController extends Controller
      */
     public function destroy(Narrative $narrative)
     {
-        if ($narrative->delete()) 
+        try {
+            $narrative->delete();
             return redirect(route('narratives.index'))->with(['success' => 'Narrative deleted successfully']);
-        else errorHandler('Error deleting narrative!');
+        } catch (\Throwable $th) {
+            return errorHandler('Error deleting narrative!', $th);
+        }
     }
 
     // narrative items
