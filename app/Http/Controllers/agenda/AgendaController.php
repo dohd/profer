@@ -133,10 +133,11 @@ class AgendaController extends Controller
                 $data = inputClean($data); 
                 $agenda->update($data);
     
-                // items
+                // agenda items
+                $agenda->items()->whereNotIn('id', $data_items['item_id'])->delete();
                 $data_items = databaseArray($data_items);
-                $data_items = fillArrayRecurse($data_items, ['agenda_id' => $agenda->id]);
                 foreach ($data_items as $item) {
+                    $item['agenda_id'] = $agenda->id;
                     $agenda_item = AgendaItem::firstOrNew(['id' => $item['item_id']]);
                     $agenda_item->fill($item);
                     unset($agenda_item->item_id);
