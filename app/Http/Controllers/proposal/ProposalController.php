@@ -19,15 +19,11 @@ class ProposalController extends Controller
      */
     public function index(Request $request)
     {
-        $proposals = Proposal::latest()->get();
-
         $grp_status_count = Proposal::selectRaw('status, COUNT(*) as count')->groupBy('status')->pluck('count', 'status');
         $wo_logframe_count = Proposal::where('status', 'approved')->doesntHave('log_frame')->count();
         $wo_action_plan_count = Proposal::where('status', 'approved')->doesntHave('action_plans')->count();
 
-        return view('proposals.index', 
-            compact('proposals', 'grp_status_count', 'wo_logframe_count', 'wo_action_plan_count')
-        );
+        return view('proposals.index', compact('grp_status_count', 'wo_logframe_count', 'wo_action_plan_count'));
     }
 
     /**
@@ -46,7 +42,7 @@ class ProposalController extends Controller
             }
         });
         
-        return view('proposals.partial.proposal_datatable', ['proposals' => $q->get()]);
+        return view('proposals.partial.proposal_datatable', ['proposals' => $q->latest()->get()]);
     }
 
     /**
