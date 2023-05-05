@@ -3,12 +3,18 @@
 namespace App\Models\narrative\Traits;
 
 use App\Models\action_plan\ActionPlan;
+use App\Models\agenda\Agenda;
 use App\Models\item\NarrativeItem;
 use App\Models\item\ProposalItem;
 use App\Models\proposal\Proposal;
 
 trait NarrativeRelationship
 {   
+    public function agenda()
+    {
+        return $this->belongsTo(Agenda::class);
+    }
+
     public function action_plan()
     {
         return $this->belongsTo(ActionPlan::class);

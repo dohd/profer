@@ -16,10 +16,11 @@
                     @php
                         $details = [
                             'Narrative No.' => tidCode('narrative', $narrative->tid),
-                            'Project Title' => @$narrative->proposal->title,
-                            'Action Plan No' => $narrative->action_plan? tidCode('action_plan', $narrative->action_plan->tid) : '',
+                            'Agenda' => @$narrative->agenda->title,
+                            'Narrative Date' => dateFormat($narrative->date, 'd-M-Y'),
                             'Activity' => @$narrative->proposal_item->name,
-                            'Date' => dateFormat($narrative->date, 'd-M-Y'),
+                            'Action Plan No' => $narrative->action_plan? tidCode('action_plan', $narrative->action_plan->tid) : '',
+                            'Project Title' => @$narrative->proposal->title,
                         ];
                     @endphp
                     @foreach ($details as $key => $val)
@@ -31,6 +32,8 @@
                                 <span class="badge bg-{{ $narrative->status == 'approved'? 'success' : 'secondary' }}">
                                     {{ $narrative->status }}
                                 </span>
+                            @elseif ($key == 'Agenda' && $val)
+                                <a href="{{ route('agenda.show', $narrative->agenda) }}">{{ $val }}</a>
                             @elseif ($key == 'Project Title' && $val)
                                 <a href="{{ route('proposals.show', $narrative->proposal) }}">{{ $val }}</a>
                             @elseif ($key == 'Action Plan No' && $val)
@@ -50,28 +53,35 @@
                 </table>
 
                 <!-- narrative items -->
-                <table class="table table-striped" id="narratives_tbl">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col" width="30%">Narrative Indicator</th>
-                            <th scope="col">Response</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @php($j=0)
-                        @foreach ($narrative->items as $item)
-                            @isset($item->narrative_pointer->value)
-                                <tr>
-                                    <th scope="row" class="pt-2">{{ $j+1 }}</th>
-                                    <td class="pt-2">{{ $item->narrative_pointer->value }}</td>
-                                    <td class="pt-2">{{ $item->response }}</td>
-                                </tr>   
-                                @php($j++)
-                            @endisset
-                        @endforeach
-                    </tbody>
-                </table>
+                @foreach ($narrative->agenda->items as $j => $agenda_item)
+                    <br>
+                    <h5>
+                        <b>{{ timeFormat($agenda_item->time_from) }}</b> to <b>{{ timeFormat($agenda_item->time_to) }}</b>&nbsp;&nbsp;
+                        {{ $agenda_item->topic }}&nbsp;&nbsp;
+                    </h5>
+                    <table class="table table-striped" id="narratives_tbl">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col" width="30%">Narrative Indicator</th>
+                                <th scope="col">Response</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php($j=0)
+                            @foreach ($narrative->items as $item)
+                                @if (@$item->narrative_pointer->value && $item->agenda_item_id == $agenda_item->id)
+                                    <tr>
+                                        <th scope="row" class="pt-2">{{ $j+1 }}</th>
+                                        <td class="pt-2">{{ $item->narrative_pointer->value }}</td>
+                                        <td class="pt-2">{{ $item->response }}</td>
+                                    </tr>   
+                                    @php($j++)
+                                @endif
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endforeach
             </div>
         </div>
     </div>

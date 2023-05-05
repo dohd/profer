@@ -22,7 +22,7 @@ class NarrativeController extends Controller
      */
     public function index()
     {
-        $narratives = Narrative::all();
+        $narratives = Narrative::latest()->get();
 
         $pending_count = Narrative::where('status', 'pending')->count();
         $approved_count = Narrative::where('status', 'approved')->count();
@@ -31,7 +31,9 @@ class NarrativeController extends Controller
         return view('narratives.index', compact('narratives', 'pending_count', 'approved_count', 'review_count'));
     }
 
-    // narrative datatable
+    /**
+     * Narratives Datatable
+     */
     public function datatable()
     {
         $narratives = Narrative::all();
@@ -60,32 +62,31 @@ class NarrativeController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $request->validate([
-            'proposal_id' => 'required', 
-            'action_plan_id' => 'required', 
-            'proposal_item_id' => 'required', 
+            'agenda_id' => 'required', 
             'date' => 'required',
         ]);
-        $data = $request->only(['proposal_id', 'action_plan_id', 'proposal_item_id', 'date']);
-        $data_items = $request->only(['narrative_pointer_id', 'response']);
+
+        $data = $request->only(['agenda_id', 'date']);
+        $data_items = $request->only(['agenda_item_id', 'narrative_pointer_id', 'response']);
 
         DB::beginTransaction();
 
         try {
+            $agenda = Agenda::find($data['agenda_id'], ['proposal_id', 'proposal_item_id', 'action_plan_id']);
+            $data = $agenda->toArray() + $data;
             $narrative = Narrative::create($data);
 
             $data_items = databaseArray($data_items);
             $data_items = fillArrayRecurse($data_items, [
                 'narrative_id' => $narrative->id, 
-                'proposal_id' => $narrative->proposal_id,
-                'proposal_item_id' => $narrative->proposal_item_id,
             ]);
             NarrativeItem::insert($data_items);
 
             DB::commit();
             return redirect(route('narratives.index'))->with(['success' => 'Narrative created successfully']);
-        } catch (\Throwable $th) { 
+        } catch (\Throwable $th) {
             errorHandler('Error creating narrative!', $th);
         }
     }
