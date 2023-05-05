@@ -31,6 +31,7 @@
                             @endif
                         </td>
                         <input type="hidden" name="narrative_pointer_id[]" value="{{ $item->id }}">
+                        <input type="hidden" name="agenda_item_id[]" value="{{ $agenda_item->id }}">
                     </tr>   
                 @elseif ($item->pointer == 'pt_c')
                     <tr>
@@ -49,6 +50,7 @@
                             @endif
                         </td>
                         <input type="hidden" name="narrative_pointer_id[]" value="{{ $item->id }}">
+                        <input type="hidden" name="agenda_item_id[]" value="{{ $agenda_item->id }}">
                     </tr>   
                 @else
                     <tr>
@@ -67,6 +69,7 @@
                             @endif
                         </td>
                         <input type="hidden" name="narrative_pointer_id[]" value="{{ $item->id }}">
+                        <input type="hidden" name="agenda_item_id[]" value="{{ $agenda_item->id }}">
                     </tr>   
                 @endif
             @endforeach
