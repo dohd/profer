@@ -108,7 +108,7 @@
         data-bs-parent="#sidebar-nav"
       >
       <li>
-        <a href="{{ route('reports.narrative_indicator') }}"><i class="bi bi-circle"></i><span>Narrative Report</span></a>
+        <a href="{{ route('reports.narrative_report') }}"><i class="bi bi-circle"></i><span>Narrative Report</span></a>
       </li>
       <li>
         <a href="{{ route('reports.participant_analysis') }}"><i class="bi bi-circle"></i><span>Participant Analysis</span></a>

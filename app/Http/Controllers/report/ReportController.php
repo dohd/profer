@@ -4,12 +4,12 @@ namespace App\Http\Controllers\report;
 
 use App\Http\Controllers\Controller;
 use App\Models\age_group\AgeGroup;
+use App\Models\agenda\Agenda;
 use App\Models\cohort\Cohort;
 use App\Models\disability\Disability;
 use App\Models\donor\Donor;
-use App\Models\item\NarrativeItem;
 use App\Models\item\ParticipantListItem;
-use App\Models\narrative\Narrative;
+use App\Models\item\ProposalItem;
 use App\Models\narrative_pointer\NarrativePointer;
 use App\Models\participant_list\ParticipantList;
 use App\Models\programme\Programme;
@@ -20,10 +20,10 @@ use Illuminate\Http\Request;
 class ReportController extends Controller
 {
     /**
-     * Indicator narrative page
+     * Narrative Report Page
      */
-    public function narrative_indicator()
-    {
+    public function narrative_report()
+    {   
         // filters
         $proposals = Proposal::get(['id', 'title']);
         $narrative_pointers = NarrativePointer::get(['id', 'value']);
@@ -31,52 +31,19 @@ class ReportController extends Controller
         $regions = Region::get(['id', 'name']);
         $cohorts = Cohort::get(['id', 'name']);
 
-        return view('reports.narrative_indicator', compact('proposals', 'narrative_pointers', 'programmes', 'regions', 'cohorts'));
+        $proposal_items = ProposalItem::whereHas('agenda', fn($q) => $q->whereHas('narrative'))->get();
+            
+        return view('reports.narrative_report', compact('proposal_items', 'proposals', 'narrative_pointers', 'programmes', 'regions', 'cohorts'));
     }
 
-    // narrative indicator select options
-    public function narrative_options()
+    /**
+     * Narrative Report Data
+     */
+    public function narrative_data(Request $request)
     {
-        $narratives = Narrative::where('proposal_id', request('proposal_id'))
-            ->get(['id', 'tid', 'date'])->map(function($v) {
-                $d = explode('-', $v->date);
-                $v->code = tidCode('activity_narrative', $v->tid) . "/{$d[1]}";
-                return $v;
-            });
+        $agenda = Agenda::where('proposal_item_id', $request->proposal_item_id)->get();
 
-        return response()->json($narratives);
-    }
-
-    // narrative indicator data
-    public function narrative_indicator_data(Request $request)
-    {
-        $data = $request->only(['narrative_id', 'narrative_pointer_id']);
-
-        $narrative_item = NarrativeItem::where($data)->first();
-
-        $programmes = Programme::whereHas('action_plans', function ($q) use($narrative_item) {
-            $q->whereHas('proposal', function ($q) use($narrative_item) {
-                $q->whereHas('items', function ($q) use($narrative_item) {
-                    $q->where('proposal_items.id', $narrative_item->proposal_item_id);
-                });
-            });
-        })->pluck('name')->unique();
-        $regions = Region::whereHas('action_plans', function ($q) use($narrative_item) {
-            $q->whereHas('proposal', function ($q) use($narrative_item) {
-                $q->whereHas('items', function ($q) use($narrative_item) {
-                    $q->where('proposal_items.id', $narrative_item->proposal_item_id);
-                });
-            });
-        })->pluck('name')->unique();
-        $cohorts = Cohort::whereHas('action_plans', function ($q) use($narrative_item) {
-            $q->whereHas('proposal', function ($q) use($narrative_item) {
-                $q->whereHas('items', function ($q) use($narrative_item) {
-                    $q->where('proposal_items.id', $narrative_item->proposal_item_id);
-                });
-            });
-        })->pluck('name')->unique();
-
-        return response()->json(compact('narrative_item', 'programmes', 'regions', 'cohorts'));
+        return view('reports.partial.narrative_report_table', compact('agenda'));
     }
 
 

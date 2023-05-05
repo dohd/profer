@@ -42,7 +42,7 @@ class NarrativeController extends Controller
      */
     public function create()
     {
-        $agenda = Agenda::get();
+        $agenda = Agenda::doesntHave('narrative')->get();
         $narrative_pointers = NarrativePointer::all();
         
         return view('narratives.create', compact('agenda', 'narrative_pointers'));
@@ -138,6 +138,9 @@ class NarrativeController extends Controller
             DB::beginTransaction();
     
             try {
+                $is_exists = Narrative::where('id', '!=', $narrative->id)->where('agenda_id', $data['agenda_id'])->exists();
+                // if ($is_exists) 
+
                 $agenda = Agenda::find($data['agenda_id'], ['proposal_id', 'proposal_item_id', 'action_plan_id']);
                 $data = $agenda->toArray() + $data;
                 $narrative->update($data);

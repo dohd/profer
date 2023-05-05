@@ -1,5 +1,11 @@
 <?php
 
+if (!function_exists('spinner')) {
+    function spinner() {
+        return '<div class="d-flex justify-content-center"><div class="spinner-border text-primary ml-4" role="status"><span class="sr-only"></span></div></div>';
+    }
+}
+
 if (!function_exists('inputClean')) {
     function inputClean($input=[])
     {
@@ -121,7 +127,7 @@ if (!function_exists('printLog')) {
 if (!function_exists('errorHandler')) {
     function errorHandler($msg='Internal server error! Please try again later.', $e=null)
     {
-        if ($e) Log::error($e->getMessage() . ' {user_id:'. auth()->user()->id . '} at ' . $e->getFile() . ':' . $e->getLine());
+        if ($e) \Illuminate\Support\Facades\Log::error($e->getMessage() . ' {user_id:'. auth()->user()->id . '} at ' . $e->getFile() . ':' . $e->getLine());
         return redirect()->back()->with(['error' => $msg]);
     }
 }

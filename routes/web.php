@@ -115,11 +115,11 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('narratives', NarrativeController::class);
 
     /**
-     * Narrative Indicator Report
+     * Narrative Report
      */
-    Route::get('narrative_indicator', [ReportController::class, 'narrative_indicator'])->name('reports.narrative_indicator');
-    Route::post('narrative_options', [ReportController::class, 'narrative_options'])->name('reports.narrative_options');
-    Route::post('narrative_indicator_data', [ReportController::class, 'narrative_indicator_data'])->name('reports.narrative_indicator_data');
+    Route::post('reports/narrative_select', [ReportController::class, 'narrative_select'])->name('reports.narrative_select');
+    Route::post('reports/narrative_data', [ReportController::class, 'narrative_data'])->name('reports.narrative_data');
+    Route::get('reports/narrative_report', [ReportController::class, 'narrative_report'])->name('reports.narrative_report');
 
     /**
      * Participant Analysis Report

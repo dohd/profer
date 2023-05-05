@@ -5,13 +5,14 @@ namespace App\Models\agenda\Traits;
 use App\Models\action_plan\ActionPlan;
 use App\Models\item\AgendaItem;
 use App\Models\item\ProposalItem;
+use App\Models\narrative\Narrative;
 use App\Models\proposal\Proposal;
 
 trait AgendaRelationship
 {
-    public function items()
+    public function narrative()
     {
-        return $this->hasMany(AgendaItem::class);
+        return $this->hasOne(Narrative::class);
     }
 
     public function proposal()
@@ -27,5 +28,10 @@ trait AgendaRelationship
     public function action_plan()
     {
         return $this->belongsTo(ActionPlan::class);
+    }
+
+    public function items()
+    {
+        return $this->hasMany(AgendaItem::class);
     }
 }

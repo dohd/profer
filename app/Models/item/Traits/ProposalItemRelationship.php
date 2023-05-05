@@ -3,6 +3,7 @@
 namespace App\Models\item\Traits;
 
 use App\Models\action_plan\ActionPlanActivity;
+use App\Models\agenda\Agenda;
 use App\Models\cohort\Cohort;
 use App\Models\item\ParticipantListItem;
 use App\Models\participant_list\ParticipantList;
@@ -13,6 +14,11 @@ use App\Models\region\Region;
 
 trait ProposalItemRelationship
 {
+    public function agenda()
+    {
+        return $this->hasMany(Agenda::class);
+    }
+
     public function proposal()
     {
         return $this->belongsTo(Proposal::class);
