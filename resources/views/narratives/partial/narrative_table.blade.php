@@ -21,7 +21,7 @@
                         <td class="pt-2">
                             @if (@$narrative)
                                 @foreach ($narrative->items as $nar_item)
-                                    @if ($nar_item->narrative_pointer_id == $item->id)
+                                    @if ($nar_item->narrative_pointer_id == $item->id && $nar_item->agenda_item_id == $agenda_item->id)
                                         <input type="text" name="response[]" class="form-control" value="{{ $nar_item->response }}">
                                         <input type="hidden" name="item_id[]" value="{{ $nar_item->id }}">
                                     @endif
@@ -40,7 +40,7 @@
                         <td class="pt-2">
                             @if (@$narrative)
                                 @foreach ($narrative->items as $nar_item)
-                                    @if ($nar_item->narrative_pointer_id == $item->id)
+                                    @if ($nar_item->narrative_pointer_id == $item->id && $nar_item->agenda_item_id == $agenda_item->id)
                                         <input type="number" name="response[]" class="form-control" value="{{ $nar_item->response }}">
                                         <input type="hidden" name="item_id[]" value="{{ $nar_item->id }}">
                                     @endif
@@ -59,7 +59,7 @@
                         <td class="pt-2">
                             @if (@$narrative)
                                 @foreach ($narrative->items as $nar_item)
-                                    @if ($nar_item->narrative_pointer_id == $item->id)
+                                    @if ($nar_item->narrative_pointer_id == $item->id && $nar_item->agenda_item_id == $agenda_item->id)
                                         <textarea name="response[]" class="form-control" rows="3">{{ $nar_item->response }}</textarea>
                                         <input type="hidden" name="item_id[]" value="{{ $nar_item->id }}">
                                     @endif

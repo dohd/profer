@@ -4,7 +4,7 @@
         <select name="agenda_id" id="agenda" class="form-control select2" data-placeholder="Choose Agenda" required>
             <option value=""></option>
             @foreach ($agenda as $item)
-                <option value="{{ $item->id }}">
+                <option value="{{ $item->id }}" {{ @$narrative->agenda_id == $item->id? 'selected' : '' }}>
                     {{ $item->title }}
                 </option>
             @endforeach
@@ -24,11 +24,16 @@
         if (!this.value) return $('#table-container').html('');
         // fetch action plans
         const url = @json(route('narratives.table'));
-        const params = {agenda_id: this.value};
+        const params = {agenda_id: this.value, narrative_id: "{{ @$narrative->id }}"};
         $.post(url, params, data => {
             $('#table-container').html(data);
-            // console.log(data)
         });
     });
+
+    /** Edit mode **/
+    const narrative = @json(@$narrative);
+    if (narrative) {
+        $('#agenda').change();
+    }
 </script>
 @stop

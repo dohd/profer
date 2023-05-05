@@ -19,9 +19,9 @@
                                 </tr>
                                 <tr>
                                     <th>Count</th>
-                                    <td>{{ numberFormat($pending_count, 0) }}</td>
-                                    <td>{{ numberFormat($approved_count, 0) }}</td>
-                                    <td>{{ numberFormat($review_count, 0) }}</td>
+                                    <td>{{ numberFormat(@$status_grp['pending'], 0) }}</td>
+                                    <td>{{ numberFormat(@$status_grp['approved'], 0) }}</td>
+                                    <td>{{ numberFormat(@$status_grp['review'], 0) }}</td>
                                 </tr>
                             </tbody>
                         </table>

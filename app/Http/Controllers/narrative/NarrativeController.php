@@ -3,13 +3,10 @@
 namespace App\Http\Controllers\narrative;
 
 use App\Http\Controllers\Controller;
-use App\Models\action_plan\ActionPlan;
 use App\Models\agenda\Agenda;
 use App\Models\item\NarrativeItem;
-use App\Models\item\ProposalItem;
 use App\Models\narrative\Narrative;
 use App\Models\narrative_pointer\NarrativePointer;
-use App\Models\proposal\Proposal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -23,12 +20,9 @@ class NarrativeController extends Controller
     public function index()
     {
         $narratives = Narrative::latest()->get();
+        $status_grp = Narrative::selectRaw('status, COUNT(*) as count')->groupBy('status')->pluck('count', 'status');
 
-        $pending_count = Narrative::where('status', 'pending')->count();
-        $approved_count = Narrative::where('status', 'approved')->count();
-        $review_count = Narrative::where('status', 'review')->count();
-
-        return view('narratives.index', compact('narratives', 'pending_count', 'approved_count', 'review_count'));
+        return view('narratives.index', compact('narratives', 'status_grp'));
     }
 
     /**
@@ -110,21 +104,10 @@ class NarrativeController extends Controller
      */
     public function edit(Narrative $narrative)
     {
-        $proposals = Proposal::whereHas('action_plans')->pluck('title', 'id');
+        $agenda = Agenda::get();
         $narrative_pointers = NarrativePointer::all();
 
-        $narrative['action_plans'] = ActionPlan::where('proposal_id', $narrative->proposal_id)
-            ->get(['id', 'tid', 'date'])->map(function($v) {
-                $d = explode('-', $v->date);
-                $v->code = tidCode('action_plan', $v->tid) . "/{$d[1]}";
-                return $v;
-            });
-        $narrative['proposal_items'] = ProposalItem::whereHas('participant_lists')
-            ->whereHas('plan_activities', function ($q) use($narrative) {
-                $q->whereHas('action_plan', fn($q) => $q->where('id', $narrative->action_plan_id));
-            })->pluck('name', 'id');
-
-        return view('narratives.edit', compact('narrative', 'narrative_pointers', 'proposals'));
+        return view('narratives.edit', compact('agenda', 'narrative', 'narrative_pointers'));
     }
 
     /**
@@ -143,38 +126,33 @@ class NarrativeController extends Controller
                 return redirect()->back()->with('success', 'Status updated successfully');
             else errorHandler('Error updating status!');
         } else {
-            // update narrative
+            // 
             $request->validate([
-                'proposal_id' => 'required', 
-                'action_plan_id' => 'required', 
-                'proposal_item_id' => 'required', 
+                'agenda_id' => 'required', 
                 'date' => 'required',
             ]);
-            $data = $request->only(['proposal_id', 'action_plan_id', 'proposal_item_id', 'date']);
-            $data_items = $request->only(['item_id', 'narrative_pointer_id', 'response']);
-
+    
+            $data = $request->only(['agenda_id', 'date']);
+            $data_items = $request->only(['item_id', 'agenda_item_id', 'narrative_pointer_id', 'response']);
+    
             DB::beginTransaction();
-
+    
             try {
-                if ($narrative->update($data)) {
-                    $data_items = databaseArray($data_items);
-                    $data_items = fillArrayRecurse($data_items, [
-                        'narrative_id' => $narrative->id, 
-                        'proposal_id' => $narrative->proposal_id,
-                        'proposal_item_id' => $narrative->proposal_item_id,
-                    ]);
-                    foreach ($data_items as $item) {
-                        $narrative_item = NarrativeItem::firstOrNew(['id' => $item['item_id']]);
-                        $narrative_item->fill($item);
-                        unset($narrative_item->item_id);
-                        $narrative_item->save();
-                    }
-
-                    DB::commit();
-                    return redirect(route('narratives.index'))->with(['success' => 'Narrative updated successfully']);
+                $agenda = Agenda::find($data['agenda_id'], ['proposal_id', 'proposal_item_id', 'action_plan_id']);
+                $data = $agenda->toArray() + $data;
+                $narrative->update($data);
+    
+                $data_items = databaseArray($data_items);
+                foreach ($data_items as $item) {
+                    $narr_item = NarrativeItem::find($item['item_id']);
+                    unset($item['item_id']);
+                    $narr_item->update($item);
                 }
-            } catch (\Throwable $th) {
-                errorHandler('Error updating narrative!', $th);
+                
+                DB::commit();
+                return redirect(route('narratives.index'))->with(['success' => 'Narrative updated successfully']);
+            } catch (\Throwable $th) { dd($th);
+                errorHandler('Error updated narrative!', $th);
             }
         }
     }
@@ -195,7 +173,9 @@ class NarrativeController extends Controller
         }
     }
 
-    // narrative items
+    /**
+     * Narrative select options
+     */
     public function narrative_items()
     {
         $narrative_items = NarrativeItem::where('narrative_id', request('narrative_id'))
@@ -206,13 +186,14 @@ class NarrativeController extends Controller
     }
 
     /**
-     * Narrative Table
+     * Narrative Form Table
      */
     public function narrative_table(Request $request)
     {
         $agenda = Agenda::find($request->agenda_id);
+        $narrative = Narrative::find($request->narrative_id);
         $narrative_pointers = NarrativePointer::all();
 
-        return view('narratives.partial.narrative_table', compact('agenda', 'narrative_pointers'));
+        return view('narratives.partial.narrative_table', compact('agenda', 'narrative', 'narrative_pointers'));
     }
 }
