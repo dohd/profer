@@ -19,7 +19,7 @@ class ProposalController extends Controller
      */
     public function index(Request $request)
     {
-        $proposals = Proposal::all();
+        $proposals = Proposal::latest()->get();
 
         $grp_status_count = Proposal::selectRaw('status, COUNT(*) as count')->groupBy('status')->pluck('count', 'status');
         $wo_logframe_count = Proposal::where('status', 'approved')->doesntHave('log_frame')->count();

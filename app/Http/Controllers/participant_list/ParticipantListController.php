@@ -24,7 +24,7 @@ class ParticipantListController extends Controller
      */
     public function index()
     {
-        $participant_lists = ParticipantList::all();
+        $participant_lists = ParticipantList::latest()->get();
 
         return view('participant_lists.index', compact('participant_lists'));
     }

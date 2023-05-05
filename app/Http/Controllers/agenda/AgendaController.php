@@ -18,7 +18,7 @@ class AgendaController extends Controller
      */
     public function index()
     {
-        $agenda = Agenda::get();
+        $agenda = Agenda::latest()->get();
 
         return view('agenda.index', compact('agenda'));
     }

@@ -18,7 +18,7 @@ class LogFrameController extends Controller
      */
     public function index()
     {
-        $log_frames = LogFrame::all();
+        $log_frames = LogFrame::latest()->get();
 
         return view('log_frames.index', compact('log_frames'));
     }

@@ -49,7 +49,7 @@ class ActionPlanController extends Controller
             }
         });
         
-        return view('action_plans.partial.action_plan_datatable', ['action_plans' => $q->get()]);
+        return view('action_plans.partial.action_plan_datatable', ['action_plans' => $q->latest()->get()]);
     }    
 
     /**
