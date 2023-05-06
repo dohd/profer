@@ -112,9 +112,8 @@ class ReportController extends Controller
                 ->toArray();
 
             $ps_count_mod = [];
-            $months = array_map(fn($v) => $v['month'], $ps_count);
             foreach ($ps_count as $item) {
-                if (in_array($item['month'], $months)) {
+                if (in_array("{$item['month']}_", $ps_count_mod)) {
                     if ($item['gender'] == 'male') $ps_count_mod["{$item['month']}_"]['male_count'] += $item['count'];
                     else $ps_count_mod["{$item['month']}_"]['female_count'] += $item['count'];
                     $ps_count_mod["{$item['month']}_"]['total_count'] += $item['count'];

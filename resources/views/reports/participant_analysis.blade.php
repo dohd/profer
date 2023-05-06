@@ -76,21 +76,32 @@
                 <div class="overflow-auto">
                     <table class="table table-borderless" id="ps_analysis_tbl">
                         <thead>
-                        <tr>
-                            @php
-                                $months = [
-                                    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
-                                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-                                ];
-                            @endphp
-                            @foreach ($months as $month)
-                                <th scope="col">{{ $month }}</th>
-                            @endforeach
-                        </tr>
+                            <tr>
+                                @php
+                                    $months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                                @endphp
+                                <th>&nbsp;</th>
+                                @foreach ($months as $month)
+                                    <th scope="col">{{ $month }}</th>
+                                @endforeach
+                            </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                @foreach (range(1,12) as $item)
+                            <tr id="male_r">
+                                <th>Males</th>
+                                @foreach (range(1,12) as $i)
+                                    <td>_</td>
+                                @endforeach
+                            </tr>
+                            <tr id="female_r">
+                                <th>Females</th>
+                                @foreach (range(1,12) as $i)
+                                    <td>_</td>
+                                @endforeach
+                            </tr>
+                            <tr id="total_r">
+                                <th>Total</th>
+                                @foreach (range(1,12) as $i)
                                     <td>_</td>
                                 @endforeach
                             </tr>
@@ -106,7 +117,8 @@
 <script>
     // fetch default participants count data
     function fetchParticipantCount() {
-        $.post("{{ route('reports.participant_analysis_data') }}", {
+        const url = "{{ route('reports.participant_analysis_data') }}";
+        const params = {
             donor_id: $('#donor').val(),
             programme_id: $('#programme').val(),
             region_id: $('#region').val(),
@@ -115,11 +127,21 @@
             disability_id: $('#disability').val(),
             start_date: $('.str_date').val(),
             end_date: $('.end_date').val(),
-        }, data => {
-            $('#ps_analysis_tbl tbody td').each(function(i) {
-                $(this).text('_');
-                data.forEach(v => {
-                    if (v.month == (i+1)) $(this).text(v.total_count);
+        };
+        $.post(url, params, data => {
+            $('#ps_analysis_tbl tbody td').text('_');
+            data.forEach(v => {
+                $('#ps_analysis_tbl tbody tr').each(function() {
+                    const row_id = $(this).attr('id');
+                    $(this).find('td').each(function(i) {
+                        if (v.month == i+1) {
+                            let n;
+                            if (row_id == 'male_r') n = v.male_count;
+                            if (row_id == 'female_r') n = v.female_count;
+                            if (row_id == 'total_r') n = v.total_count;
+                            $(this).text(n);
+                        }    
+                    });
                 });
             });
         });
