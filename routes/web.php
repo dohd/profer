@@ -117,7 +117,6 @@ Route::group(['middleware' => 'auth'], function() {
     /**
      * Narrative Report
      */
-    Route::post('reports/narrative_select', [ReportController::class, 'narrative_select'])->name('reports.narrative_select');
     Route::post('reports/narrative_data', [ReportController::class, 'narrative_data'])->name('reports.narrative_data');
     Route::get('reports/narrative_report', [ReportController::class, 'narrative_report'])->name('reports.narrative_report');
 

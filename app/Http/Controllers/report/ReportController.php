@@ -105,10 +105,29 @@ class ReportController extends Controller
                 ]);
             });
     
-            $ps_count = $q->selectRaw('MONTH(date) AS month, COUNT(*) AS total_count')
-                ->groupBy('month')
+            $ps_count = $q->selectRaw('MONTH(date) AS month, gender, COUNT(*) AS count')
+                ->groupBy('month', 'gender')
                 ->orderBy('month', 'ASC')
-                ->get();
+                ->get()
+                ->toArray();
+
+            $ps_count_mod = [];
+            $months = array_map(fn($v) => $v['month'], $ps_count);
+            foreach ($ps_count as $item) {
+                if (in_array($item['month'], $months)) {
+                    if ($item['gender'] == 'male') $ps_count_mod["{$item['month']}_"]['male_count'] += $item['count'];
+                    else $ps_count_mod["{$item['month']}_"]['female_count'] += $item['count'];
+                    $ps_count_mod["{$item['month']}_"]['total_count'] += $item['count'];
+                } else {
+                    $ps_count_mod["{$item['month']}_"] = [
+                        'month' => $item['month'],
+                        'male_count' => $item['gender'] == 'male'? $item['count'] : 0,
+                        'female_count' => $item['gender'] == 'female'? $item['count'] : 0,
+                        'total_count' => $item['count'],
+                    ];
+                }
+            }
+            $ps_count = array_values($ps_count_mod);
         } else {
             $q = ParticipantList::query();
 
@@ -129,8 +148,9 @@ class ReportController extends Controller
                     databaseDate(request('end_date'))
                 ]);
             });
-    
-            $ps_count = $q->selectRaw('MONTH(date) AS month, SUM(total_count) AS total_count')
+            
+            $q_str = 'MONTH(date) AS month, SUM(male_count) AS male_count, SUM(female_count) AS female_count, SUM(total_count) AS total_count';
+            $ps_count = $q->selectRaw($q_str)
                 ->groupBy('month')
                 ->orderBy('month', 'ASC')
                 ->get();

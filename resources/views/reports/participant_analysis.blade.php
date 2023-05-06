@@ -3,13 +3,13 @@
 @section('title', 'Partipant Analysis')
     
 @section('content')
-    @include('reports.partials.participant_analysis_header')
+    @include('reports.partial.participant_analysis_header')
     <div class="card">
         <div class="card-body">
             <div class="card-content pt-4">
                 <div class="row mb-3">
                     <div class="col-6">
-                        <select name="donor_id" id="donor" class="form-select select2 filter" data-placeholder="Choose Donor">
+                        <select name="donor_id" id="donor" class="form-select select2 filter" data-placeholder="Search Donor">
                             <option value=""></option>
                             @foreach ($donors as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -17,7 +17,7 @@
                         </select>
                     </div>
                     <div class="col-6">
-                        <select name="programme_id" id="programme" class="form-select select2 filter" data-placeholder="Choose Programme">
+                        <select name="programme_id" id="programme" class="form-select select2 filter" data-placeholder="Search Programme">
                             <option value=""></option>
                             @foreach ($programmes as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -27,7 +27,7 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-3">
-                        <select name="region_id" id="region" class="form-select select2 filter" data-placeholder="Choose Region">
+                        <select name="region_id" id="region" class="form-select select2 filter" data-placeholder="Search Region">
                             <option value=""></option>
                             @foreach ($regions as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -35,7 +35,7 @@
                         </select>
                     </div>
                     <div class="col-3">
-                        <select name="cohort_id" id="cohort" class="form-select select2 filter" data-placeholder="Choose Cohort">
+                        <select name="cohort_id" id="cohort" class="form-select select2 filter" data-placeholder="Search Cohort">
                             <option value=""></option>
                             @foreach ($cohorts as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -43,7 +43,7 @@
                         </select>
                     </div>
                     <div class="col-3">
-                        <select name="age_group_id" id="age_group" class="form-select select2 filter" data-placeholder="Choose Age Group">
+                        <select name="age_group_id" id="age_group" class="form-select select2 filter" data-placeholder="Search Age Group">
                             <option value=""></option>
                             @foreach ($age_groups as $item)
                                 <option value="{{ $item->id }}">{{ $item->bracket }}</option>
@@ -51,7 +51,7 @@
                         </select>
                     </div>
                     <div class="col-3">
-                        <select name="disability_id" id="disability" class="form-select select2 filter" data-placeholder="Choose Disability">
+                        <select name="disability_id" id="disability" class="form-select select2 filter" data-placeholder="Search Disability">
                             <option value=""></option>
                             @foreach ($disabilities as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
