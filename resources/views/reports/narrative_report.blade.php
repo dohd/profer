@@ -6,11 +6,10 @@
     @include('reports.partial.narrative_report_header')
     <div class="card">
         <div class="card-body">
-            <div class="card-content pt-2">
+            <div class="card-content pt-4">
                 <div class="row mb-3">
                     <div class="col-12">
-                        <label for="activity">Activity</label>
-                        <select id="activity" class="form-select select2 filter" data-placeholder="Search by name or project">
+                        <select id="activity" class="form-select select2 filter" data-placeholder="Search Activity by name or project">
                             <option value=""></option>
                             @foreach ($proposal_items as $item)
                                 <option value="{{ $item->id }}">

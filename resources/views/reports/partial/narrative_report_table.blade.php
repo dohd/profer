@@ -10,12 +10,14 @@
                         <td class="p-0">
                             <table class="table table-bordered m-0 p-0">
                                 @if ($agenda_row->narrative)
+                                    @php($n=1)
                                     @foreach ($agenda_row->narrative->items as $item)
                                         @if (@$item->narrative_pointer->value && $item->agenda_item_id == $agenda_item->id)
                                             <tr>
-                                                <td>{{ $item->narrative_pointer->value }}</td>
+                                                <td>{{ $n }}. {{ $item->narrative_pointer->value }}</td>
                                                 <td>{{ $item->response }}</td>
-                                            </tr>   
+                                            </tr>  
+                                            @php($n++) 
                                         @endif
                                     @endforeach
                                 @endif
