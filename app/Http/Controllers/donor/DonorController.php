@@ -66,7 +66,14 @@ class DonorController extends Controller
         $proposal_items = ProposalItem::whereHas('proposal', fn($q) => $q->where('donor_id', $donor->id))
             ->whereHas('participant_lists', fn($q) => $q->where('total_count', '>', 0))
             ->with(['participant_lists' => fn($q) => $q->where('total_count', '>', 0)])
+            ->with('participant_regions')
             ->get();
+        // append regions and dates 
+        foreach ($proposal_items as $item) {
+            $item->regions = $item->participant_regions->pluck('name')->toArray();
+            $item->dates = $item->participant_lists->pluck('date')->toArray();
+            $item->dates = array_map(fn($v) => dateFormat($v), $item->dates);
+        }
 
         return view('donors.view', compact('donor', 'proposal_items'));
     }
