@@ -61,7 +61,14 @@ class DisabilityController extends Controller
     {
         $proposal_items = ProposalItem::whereHas('participants', fn($q) => $q->where('disability_id', $disability->id))
         ->with(['participants' => fn($q) => $q->where('disability_id', $disability->id)])
+        ->with('participant_regions')
         ->get();
+        // append regions and dates 
+        foreach ($proposal_items as $item) {
+            $item->regions = $item->participant_regions->pluck('name')->toArray();
+            $item->dates = $item->participants->pluck('date')->toArray();
+            $item->dates = array_map(fn($v) => dateFormat($v), $item->dates);
+        }
 
         return view('disabilities.view', compact('disability', 'proposal_items'));
     }
