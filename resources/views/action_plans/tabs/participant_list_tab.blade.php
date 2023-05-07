@@ -4,7 +4,7 @@
             <div class="float-end">
                 <a href="{{ route('participant_lists.create') }}" style="color:inherit">
                     <span class="badge bg-secondary text-white" role="button">
-                        <i class="bi bi-plus-lg"></i> Add
+                        <i class="bi bi-plus-lg"></i> Participant List
                     </span>
                 </a>
             </div>

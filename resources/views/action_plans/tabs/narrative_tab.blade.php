@@ -4,7 +4,7 @@
             <div class="float-end">
                 <a href="{{ route('narratives.create') }}" style="color:inherit">
                     <span class="badge bg-secondary text-white" role="button">
-                        <i class="bi bi-plus-lg"></i> Add
+                        <i class="bi bi-plus-lg"></i> Narrative
                     </span>
                 </a>
             </div>
