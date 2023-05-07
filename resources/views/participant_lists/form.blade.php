@@ -213,5 +213,14 @@
             $('#'+v).prop('disabled', false);
         });
     }
+
+    // short link from action plan
+    const reqParams = @json(request()->only('proposal_id', 'action_plan_id'));
+    if (reqParams) {
+        $('#proposal').val(reqParams.proposal_id).change();
+        setTimeout(() => {
+            $('#action_plan').val(reqParams.action_plan_id).change();
+        }, 500);
+    }
 </script>
 @stop

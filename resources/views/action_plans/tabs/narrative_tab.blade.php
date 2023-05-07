@@ -2,7 +2,7 @@
     <div class="row mb-2">
         <div class="col-12">
             <div class="float-end">
-                <a href="{{ route('narratives.create') }}" style="color:inherit">
+                <a href="{{ route('narratives.create') }}" style="color:inherit" target="_blank">
                     <span class="badge bg-secondary text-white" role="button">
                         <i class="bi bi-plus-lg"></i> Narrative
                     </span>
@@ -18,6 +18,7 @@
                 <th>#No</th>
                 <th>#Code</th>
                 <th>Activity</th>
+                <th>Agenda</th>
                 <th>Status</th>
                 <th>Date</th>
               </tr>
@@ -28,6 +29,7 @@
                         <th scope="row">{{ $i+1 }}</th>
                         <td><a href="{{ route('narratives.show', $narrative) }}">{{ tidCode('narrative', $narrative->tid) }}</a></td>
                         <td>{{ @$narrative->proposal_item->name }}</td>
+                        <td>{{ @$narrative->agenda->title }}</td>
                         <td><span class="badge bg-{{ $narrative->status == 'approved'? 'success' : 'secondary' }}">{{ $narrative->status }}</span></td>
                         <td>{{ dateFormat($narrative->date) }}</td>
                     </tr>

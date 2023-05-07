@@ -41,6 +41,7 @@
                             <th>#No</th>
                             <th>#Code</th>
                             <th>Activity</th>
+                            <th>Agenda</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -51,6 +52,7 @@
                                     <th scope="row">{{ $i+1 }}</th>
                                     <td><a href="{{ route('narratives.show', $narrative) }}">{{ tidCode('narrative', $narrative->tid) }}</a></td>
                                     <td>{{ @$narrative->proposal_item->name }}</td>
+                                    <td>{{ @$narrative->agenda->title }}</td>
                                     <td><span class="badge bg-{{ $narrative->status == 'approved'? 'success' : 'secondary' }}">{{ $narrative->status }}</span></td>
                                     <td>{!! $narrative->action_buttons !!}</td>
                                 </tr>
