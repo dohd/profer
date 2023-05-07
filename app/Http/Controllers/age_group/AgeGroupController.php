@@ -61,7 +61,14 @@ class AgeGroupController extends Controller
     {
         $proposal_items = ProposalItem::whereHas('participants', fn($q) => $q->where('age_group_id', $age_group->id))
         ->with(['participants' => fn($q) => $q->where('age_group_id', $age_group->id)])
+        ->with('participant_regions')
         ->get();
+        // append regions and dates 
+        foreach ($proposal_items as $item) {
+            $item->regions = $item->participant_regions->pluck('name')->toArray();
+            $item->dates = $item->participants->pluck('date')->toArray();
+            $item->dates = array_map(fn($v) => dateFormat($v), $item->dates);
+        }
 
         return view('age_groups.view', compact('age_group', 'proposal_items'));
     }
