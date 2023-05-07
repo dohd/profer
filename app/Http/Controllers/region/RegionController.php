@@ -63,7 +63,14 @@ class RegionController extends Controller
             $q->where('region_id', $region->id)->where('total_count', '>', 0);
         })
         ->with(['participant_lists' => fn($q) => $q->where('region_id', $region->id)->where('total_count', '>', 0)])
+        ->with('participant_regions')
         ->get();
+        // append regions and dates 
+        foreach ($proposal_items as $item) {
+            $item->regions = $item->participant_regions->pluck('name')->toArray();
+            $item->dates = $item->participant_lists->pluck('date')->toArray();
+            $item->dates = array_map(fn($v) => dateFormat($v), $item->dates);
+        }
 
         return view('regions.view', compact('region', 'proposal_items'));
     }

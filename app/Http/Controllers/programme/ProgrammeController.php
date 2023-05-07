@@ -64,6 +64,7 @@ class ProgrammeController extends Controller
         })
         ->whereHas('participant_lists', fn($q) => $q->where('total_count', '>', 0))
         ->with(['participant_lists' => fn($q) => $q->where('total_count', '>', 0)])
+        ->with('participant_regions')
         ->get();
         // append regions and dates 
         foreach ($proposal_items as $item) {
