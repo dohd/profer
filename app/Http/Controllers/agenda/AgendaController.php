@@ -19,8 +19,9 @@ class AgendaController extends Controller
     public function index()
     {
         $agenda = Agenda::latest()->get();
+        $status_grp = Agenda::selectRaw('status, COUNT(*) as count')->groupBy('status')->pluck('count', 'status');
 
-        return view('agenda.index', compact('agenda'));
+        return view('agenda.index', compact('agenda', 'status_grp'));
     }
 
     /**
