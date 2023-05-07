@@ -70,8 +70,6 @@ class ProposalController extends Controller
         $request->validate([
             'title' => 'required', 
             'date' => 'required',
-            'region_id' => 'required', 
-            'sector' => 'required', 
             'donor_id' => 'required', 
             'start_date' => 'required', 
             'end_date' => 'required', 
@@ -144,8 +142,6 @@ class ProposalController extends Controller
             $request->validate([
                 'title' => 'required', 
                 'date' => 'required', 
-                'region_id' => 'required', 
-                'sector' => 'required', 
                 'donor_id' => 'required', 
                 'start_date' => 'required', 
                 'end_date' => 'required', 
