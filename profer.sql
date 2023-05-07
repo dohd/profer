@@ -533,7 +533,7 @@ INSERT INTO `prefixes` (`id`, `label`, `name`, `code`, `sep`, `created_at`, `upd
 (1, 'Proposal', 'proposal', 'PR', '-', '2023-03-19 07:08:11', '2023-03-19 07:08:11'),
 (2, 'Action Plan', 'action_plan', 'AP', '-', '2023-03-19 07:08:11', '2023-03-19 07:08:11'),
 (3, 'Participant List', 'participant_list', 'PL', '-', '2023-03-19 07:09:12', '2023-03-19 07:09:12'),
-(4, 'Activity Narrative', 'activity_narrative', 'NR', '-', '2023-03-19 07:09:12', '2023-03-19 07:09:12');
+(4, 'Activity Narrative', 'narrative', 'NR', '-', '2023-03-19 07:09:12', '2023-03-19 07:09:12');
 
 -- --------------------------------------------------------
 

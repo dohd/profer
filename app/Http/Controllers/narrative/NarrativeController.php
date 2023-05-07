@@ -104,7 +104,9 @@ class NarrativeController extends Controller
      */
     public function edit(Narrative $narrative)
     {
-        $agenda = Agenda::get();
+        $edit_agenda = Agenda::find($narrative->agenda_id);
+        $agenda = Agenda::doesntHave('narrative')->get();
+        $agenda->add($edit_agenda);
         $narrative_pointers = NarrativePointer::all();
 
         return view('narratives.edit', compact('agenda', 'narrative', 'narrative_pointers'));
