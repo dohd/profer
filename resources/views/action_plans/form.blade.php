@@ -4,7 +4,9 @@
         <select name="proposal_id" id="proposal" class="form-control select2" data-placeholder="Choose Project" required>
             <option value=""></option>
             @foreach ($proposals as $proposal)
-                <option value="{{ $proposal->id }}" {{ @$action_plan->proposal_id == $proposal->id? 'selected' : '' }}>{{ $proposal->title }}</option>
+                <option value="{{ $proposal->id }}" {{ @$action_plan->proposal_id == $proposal->id? 'selected' : '' }}>
+                    {{ $proposal->title }}
+                </option>
             @endforeach
         </select>
     </div>
@@ -118,9 +120,9 @@
     });
 
     // short link from action plan
-    const reqParams = @json(request()->only('proposal_id'));
-    if (reqParams) {
-        $('#proposal').val(reqParams.proposal_id).change();
+    const proposalId = @json(request('proposal_id'));
+    if (proposalId) {
+        $('#proposal').val(proposalId).change();
     }
 </script>
 @stop

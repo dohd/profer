@@ -190,7 +190,7 @@
 
     // short link from action plan
     const reqParams = @json(request()->only('proposal_id', 'action_plan_id'));
-    if (reqParams) {
+    if (!Array.isArray(reqParams)) {
         $('#proposal').val(reqParams.proposal_id).change();
         setTimeout(() => {
             $('#action_plan').val(reqParams.action_plan_id).change();
