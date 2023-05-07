@@ -116,5 +116,11 @@
         if (!row.siblings().length) return;
         row.remove();
     });
+
+    // short link from action plan
+    const reqParams = @json(request()->only('proposal_id'));
+    if (reqParams) {
+        $('#proposal').val(reqParams.proposal_id).change();
+    }
 </script>
 @stop

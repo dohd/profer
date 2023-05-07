@@ -110,3 +110,10 @@
     </div>
 </div>
 <!-- End Default Tabs -->
+
+@section('script')
+<script>
+    // 
+</script>
+@stop
+
