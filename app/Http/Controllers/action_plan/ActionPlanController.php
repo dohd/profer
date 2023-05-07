@@ -225,7 +225,7 @@ class ActionPlanController extends Controller
                 $action_plan->update($data);
 
                 // update activity
-                $is_activity_plan = ActionPlanActivity::where('id', '!=', $action_plan->plan_activity)
+                $is_activity_plan = ActionPlanActivity::where('id', '!=', $action_plan->plan_activity->id)
                     ->where('activity_id', $action_plan->plan_activity->activity_id)->exists();
                 if ($is_activity_plan) return errorHandler('Activity exists!');
                 $action_plan->plan_activity->update($data_activity);
