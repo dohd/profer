@@ -24,7 +24,7 @@
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="agendaList" data-bs-toggle="tab" data-bs-target="#agendaListTab" type="button" role="tab" aria-controls="agendaListTab" aria-selected="false">
-                            Agenda List (0)
+                            Agenda List ({{ $action_plan->agenda->count() }})
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
