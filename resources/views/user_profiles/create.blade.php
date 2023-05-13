@@ -12,7 +12,7 @@
                     @include('user_profiles.form')
                     <div class="text-center">
                         <a href="{{ route('user_profiles.index') }}" class="btn btn-secondary">Cancel</a>
-                        {{ Form::submit('Submit', ['class' => 'btn btn-primary', 'disabled']) }}
+                        {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
                     </div>
                 {{ Form::close() }}
             </div>

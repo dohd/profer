@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\user_profile\UserProfile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserProfileController extends Controller
 {
@@ -41,25 +42,32 @@ class UserProfileController extends Controller
     {
         // dd($request->all());
         $request->validate([
-            'name' => 'required',
-            'role' => 'required',
+            'fname' => 'required',
+            'lname' => 'required',
             'phone' => 'required',
             'email' => 'required',
             'address' => 'required',
             'country' => 'required',
         ]);
-        $data = $request->only(['name', 'role', 'phone', 'email', 'address', 'country']);
+        $data = $request->only(['fname', 'lname', 'phone', 'email', 'address', 'country']);
 
         DB::beginTransaction();
 
         try {            
-            User::create($data);
+            $data['name'] = "{$data['fname']} {$data['lname']}";
+            unset($data['fname'], $data['lname']);
+            $pswd = explode('@', $data['email'])[0];
+            $user_inpt = ['name' => $data['name'], 'email' => $data['email'], 'password' => $pswd, 'ins' => auth()->user()->ins];
+            $user = User::create($user_inpt);
 
-            return redirect(route('donors.index'))->with(['success' => 'Donor created successfully']);
-        } catch (\Throwable $th) {
-            return errorHandler('Error creating donor!', $th);
+            $data['rel_id'] = $user->id;
+            UserProfile::create($data);
+
+            DB::commit();
+            return redirect(route('user_profiles.index'))->with(['success' => 'User created successfully']);
+        } catch (\Throwable $th) { dd($th);
+            return errorHandler('Error creating user!', $th);
         }
-        
     }
 
     /**
@@ -68,9 +76,9 @@ class UserProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(UserProfile $user_profile)
     {
-        //
+        return view('user_profiles.view', compact('user_profile'));
     }
 
     /**
@@ -79,9 +87,13 @@ class UserProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(UserProfile $user_profile)
     {
-        //
+        $names = explode(' ', $user_profile->name);
+        $user_profile->fname = @$names[0] ?: '';
+        $user_profile->lname = @$names[1] ?: '';
+
+        return view('user_profiles.edit', compact('user_profile'));
     }
 
     /**
@@ -91,9 +103,28 @@ class UserProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, UserProfile $user_profile)
     {
-        //
+        // dd($request->all());
+        $request->validate([
+            'fname' => 'required',
+            'lname' => 'required',
+            'phone' => 'required',
+            'email' => 'required',
+            'address' => 'required',
+            'country' => 'required',
+        ]);
+        $data = $request->only(['fname', 'lname', 'phone', 'email', 'address', 'country']);
+
+        try {            
+            $data['name'] = "{$data['fname']} {$data['lname']}";
+            unset($data['fname'], $data['lname']);
+            $user_profile->update($data);
+
+            return redirect(route('user_profiles.index'))->with(['success' => 'User created successfully']);
+        } catch (\Throwable $th) { dd($th);
+            return errorHandler('Error creating user!', $th);
+        }
     }
 
     /**
@@ -102,9 +133,9 @@ class UserProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(UserProfile $user_profile)
     {
-        //
+        return redirect(route('user_profiles.index'))->with(['success' => 'User deleted successfully']);
     }
 
     /**
