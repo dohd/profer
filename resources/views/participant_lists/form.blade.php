@@ -220,7 +220,7 @@
         $('#proposal').val(reqParams.proposal_id).change();
         setTimeout(() => {
             $('#action_plan').val(reqParams.action_plan_id).change();
-        }, 500);
+        }, 1000);
     }
 </script>
 @stop
