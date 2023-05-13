@@ -119,27 +119,9 @@
     {{-- user management --}}
     <li class="nav-heading">User Management</li>
     <li class="nav-item">
-      <a
-        class="nav-link collapsed"
-        data-bs-target="#user-management"
-        data-bs-toggle="collapse"
-        href="#"
-      >
-        <i class="bi bi-people"></i><span>User Management</span
-        ><i class="bi bi-chevron-down ms-auto"></i>
+      <a class="nav-link collapsed" href="{{ route('user_profiles.index') }}">
+        <i class="bi bi-people"></i><span>User Management</span>
       </a>
-      <ul
-        id="user-management"
-        class="nav-content collapse"
-        data-bs-parent="#sidebar-nav"
-      >
-        <li>
-          <a href="{{ route('roles.index') }}"><i class="bi bi-circle"></i><span>Roles & Rights</span></a>
-        </li>
-        <li>
-          <a href="{{ route('user_profiles.index') }}"><i class="bi bi-circle"></i><span>Users</span></a>
-        </li>
-      </ul>
     </li>
   </ul>
 </aside>
