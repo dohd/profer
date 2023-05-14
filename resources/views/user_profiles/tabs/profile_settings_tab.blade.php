@@ -10,30 +10,12 @@
               Changes made to your account
             </label>
           </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="newProducts" checked>
-            <label class="form-check-label" for="newProducts">
-              Information on new products and services
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="proOffers">
-            <label class="form-check-label" for="proOffers">
-              Marketing and promo offers
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="securityNotify" checked disabled>
-            <label class="form-check-label" for="securityNotify">
-              Security alerts
-            </label>
-          </div>
         </div>
       </div>
 
       <div class="text-center">
         <button type="submit" class="btn btn-primary" disabled>Save Changes</button>
       </div>
-    </form><!-- End settings Form -->
-
+    </form>
+    <!-- End settings Form -->
   </div>

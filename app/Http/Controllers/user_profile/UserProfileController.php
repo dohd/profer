@@ -17,7 +17,7 @@ class UserProfileController extends Controller
      */
     public function index()
     {
-        $user_profiles = UserProfile::get();
+        $user_profiles = UserProfile::where('rel_id', '!=', auth()->user()->id)->latest()->get();
 
         return view('user_profiles.index', compact('user_profiles'));
     }
@@ -146,6 +146,8 @@ class UserProfileController extends Controller
      */
     public function active_profile()
     {
-        return view('user_profiles.active_profile');
+        $user_profile = UserProfile::where('rel_id', auth()->user()->id)->first();
+
+        return view('user_profiles.active_profile', compact('user_profile'));
     }
 }

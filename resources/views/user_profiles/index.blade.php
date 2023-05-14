@@ -21,7 +21,14 @@
                         @foreach ($user_profiles as $i => $user_profile)
                             <tr>
                                 <th scope="row">{{ $i+1 }}</th>
-                                <td>{{ $user_profile->name }}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img src="{{ asset('img/profile-img.jpeg') }}" alt="Profile" class="rounded-circle" width="40" height="40"/>
+                                        <span class="d-none d-md-block ps-2">
+                                            <a href="{{ route('user_profiles.show', $user_profile) }}">{{ $user_profile->name }}</a>
+                                        </span> 
+                                    </div>
+                                </td>
                                 <td>{{ $user_profile->phone }}</td>
                                 <td>{{ $user_profile->email }}</td>
                                 <td>{!! $user_profile->action_buttons !!}</td>

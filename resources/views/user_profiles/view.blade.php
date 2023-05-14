@@ -11,7 +11,11 @@
                 <table class="table table-bordered">
                     @php
                         $details = [
-                            'User Profile' => $user_profile->name,
+                            'Full Name' => $user_profile->name,
+                            'Phone' => $user_profile->phone,
+                            'Email' => $user_profile->email,
+                            'Address' => $user_profile->address,
+                            'Town' => $user_profile->town,
                         ];
                     @endphp
                     @foreach ($details as $key => $val)
