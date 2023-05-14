@@ -40,8 +40,8 @@ class DisabilityController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        $request->validate(['name' => 'required', 'code' => 'required']);
-        $data = $request->only(['name', 'code']);
+        $request->validate(['name' => 'required']);
+        $data = $request->only(['name']);
 
         try {            
             if (Disability::create($data)) 
@@ -94,8 +94,8 @@ class DisabilityController extends Controller
     public function update(Request $request, Disability $disability)
     {
         // dd($request->all());
-        $request->validate(['name' => 'required', 'code' => 'required']);
-        $data = $request->only(['name', 'code']);
+        $request->validate(['name' => 'required']);
+        $data = $request->only(['name']);
 
         try {            
             if ($disability->update($data)) 
