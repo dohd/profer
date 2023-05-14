@@ -8,7 +8,7 @@
     </li>
     <!-- End Dashboard Nav -->
 
-    <li class="nav-heading">Key Indicators</li>
+    <li class="nav-heading">Key Parameters</li>
 
     <li class="nav-item">
       <a
@@ -17,7 +17,7 @@
         data-bs-toggle="collapse"
         href="#"
       >
-        <i class="bi bi-tag"></i><span>Key Indicators</span
+        <i class="bi bi-tag"></i><span>Key Parameters</span
         ><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul
