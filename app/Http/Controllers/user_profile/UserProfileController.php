@@ -17,7 +17,8 @@ class UserProfileController extends Controller
      */
     public function index()
     {
-        $user_profiles = UserProfile::where('rel_id', '!=', auth()->user()->id)->latest()->get();
+        $user_profiles = UserProfile::whereHas('user_login', fn($q) => $q->whereNull('is_super'))
+            ->where('rel_id', '!=', auth()->user()->id)->latest()->get();
 
         return view('user_profiles.index', compact('user_profiles'));
     }
@@ -57,11 +58,12 @@ class UserProfileController extends Controller
             $data['name'] = "{$data['fname']} {$data['lname']}";
             unset($data['fname'], $data['lname']);
             $pswd = explode('@', $data['email'])[0];
-            $user_inpt = ['name' => $data['name'], 'email' => $data['email'], 'password' => $pswd, 'ins' => auth()->user()->ins];
+            $user_inpt = ['name' => $data['name'], 'email' => $data['email'], 'password' => $pswd];
             $user = User::create($user_inpt);
 
             $data['rel_id'] = $user->id;
-            UserProfile::create($data);
+            $user_profile = UserProfile::create($data);
+            $user->update(['ins' => $user_profile->ins]);
 
             DB::commit();
             return redirect(route('user_profiles.index'))->with(['success' => 'User created successfully']);
@@ -135,7 +137,16 @@ class UserProfileController extends Controller
      */
     public function destroy(UserProfile $user_profile)
     {
-        return redirect(route('user_profiles.index'))->with(['success' => 'User deleted successfully']);
+        DB::beginTransaction();
+
+        try {            
+            $user_profile->user_login()->delete();
+            if ($user_profile->delete()) DB::commit();
+            
+            return redirect(route('user_profiles.index'))->with(['success' => 'User Profile deleted successfully']);
+        } catch (\Throwable $th) { dd($th);
+            return errorHandler('Error deleting user!', $th);
+        }
     }
 
     /**

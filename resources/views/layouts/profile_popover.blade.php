@@ -17,7 +17,7 @@
     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
       <li class="dropdown-header">
         <h6>{{ auth()->user()->name }}</h6>
-        <span>Web Designer</span>
+        <span>Admin</span>
       </li>
       <li>
         <hr class="dropdown-divider" />
