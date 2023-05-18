@@ -88,15 +88,22 @@
             row.remove();
         }
 
+        // update row index and numbering
+        let objectiveNum = 0;
         $('#objectivesTbl tbody tr').each(function(i) {
-            $(this).find('.row-index').val(i);
+            let row = $(this);
+            row.find('.row-index').val(i);
+            if (row.find('.obj').length) {
+                objectiveNum++;
+                row.find('.rownum').val(objectiveNum);
+            }
         });
     });
 
     function objRow(i,v) {
         return `
             <tr>
-                <th scope="row"><input type="text" name="row_num[]" id="rownum-${i+1}" value="${i+1}" class="form-control rownum" required></th>
+                <th scope="row"><input type="text" name="row_num[]" id="rownum-${i+1}" class="form-control rownum" required></th>
                 <td class="pt-3">objective</td>
                 <td><input type="text" name="name[]" id="obj-${i+1}" class="form-control obj" required></td>
                 <td>
