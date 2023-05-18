@@ -3,6 +3,7 @@
 use App\Http\Controllers\action_plan\ActionPlanController;
 use App\Http\Controllers\age_group\AgeGroupController;
 use App\Http\Controllers\agenda\AgendaController;
+use App\Http\Controllers\case_study\CaseStudyController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\cohort\CohortController;
 use App\Http\Controllers\disability\DisabilityController;
@@ -115,16 +116,17 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('narratives', NarrativeController::class);
 
     /**
-     * Narrative Report
+     * Case Studies
+     */
+    Route::resource('case_studies', CaseStudyController::class);
+
+    /**
+     * Reports
      */
     Route::post('reports/narrative_data', [ReportController::class, 'narrative_data'])->name('reports.narrative_data');
     Route::get('reports/narrative_report', [ReportController::class, 'narrative_report'])->name('reports.narrative_report');
-
-    /**
-     * Participant Analysis Report
-     */
-    Route::get('participant_analysis', [ReportController::class, 'participant_analysis'])->name('reports.participant_analysis');
-    Route::post('participant_analysis_data', [ReportController::class, 'participant_analysis_data'])->name('reports.participant_analysis_data');
+    Route::get('reports/participant_analysis', [ReportController::class, 'participant_analysis'])->name('reports.participant_analysis');
+    Route::post('reports/participant_analysis_data', [ReportController::class, 'participant_analysis_data'])->name('reports.participant_analysis_data');
 });
 
 

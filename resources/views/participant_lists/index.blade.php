@@ -13,7 +13,6 @@
                             <tr>
                                 <th scope="col">#No</th>
                                 <th scope="col">#Code</th>
-                                
                                 <th scope="col">Activity</th>
                                 <th scope="col">Region</th>
                                 <th scope="col">Ps</th>

@@ -90,6 +90,13 @@
       </a>
     </li>
 
+    {{-- case study --}}
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ route('case_studies.index') }}">
+        <i class="bi bi-file-earmark-text"></i></i><span>Case Studies</span>
+      </a>
+    </li>
+
     {{-- reports --}}
     <li class="nav-heading">Reports</li>
     <li class="nav-item">
