@@ -179,6 +179,10 @@
         @include('charts.participant_age_dist')
         <!-- End Participant Age Distribution -->
 
+        <!-- Participant Gender Distribution -->
+        @include('charts.participant_gender_dist')
+        <!-- End Participant Gender Distribution -->
+
         <!-- Participant Cohort Distribution -->
         @include('charts.participant_cohort_dist')
         <!-- End Participant Cohort Distribution -->

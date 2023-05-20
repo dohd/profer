@@ -1,19 +1,19 @@
 <div class="card">
   <div class="card-body">
-    <h5 class="card-title">Participant Age Distribution</h5>
+    <h5 class="card-title">Participant Gender Distribution</h5>
 
     <!-- Pie Chart -->
-    <div id="participantAgeDistribution"></div>
+    <div id="participantGenderDistribution"></div>
 
     <script>
-      let ageDist = @json(@$age_dist);
-      let ageGroupDist = @json(@$age_group_dist);
-      ageGroupDist = ageGroupDist.map(v => v['count']);
-
+      let genderDist = @json(@$gender_dist);
+      let genderGroupDist = @json(@$gender_group_dist);
+      genderGroupDist = genderGroupDist.map(v => v['count']);
+      
       document.addEventListener("DOMContentLoaded", () => {
-        new ApexCharts(document.querySelector("#participantAgeDistribution"), {
+        new ApexCharts(document.querySelector("#participantGenderDistribution"), {
           // series: [44, 60, 13,],
-          series: ageGroupDist,
+          series: genderGroupDist,
           chart: {
             height: 350,
             type: 'pie',
@@ -22,7 +22,7 @@
             }
           },
           // labels: ['Under 18', 'Btwn 18 & 35', 'Above 35']
-          labels: ageDist,
+          labels: genderDist,
         }).render();
       });
     </script>

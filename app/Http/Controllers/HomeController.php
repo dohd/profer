@@ -63,6 +63,11 @@ class HomeController extends Controller
         $age_dist = AgeGroup::whereIn('id', $age_group_dist->pluck('age_group_id')->toArray())
             ->pluck('bracket'); 
 
+        // participant gender distribution chart
+        $sql = 'gender, Count(*) as count';
+        $gender_group_dist = ParticipantListItem::selectRaw($sql)->groupBy('gender')->get();
+        $gender_dist = collect(['male', 'female']);
+
         // participant cohort distribution chart
         $sql = 'cohort_id, SUM(total_count) as count';
         $ps_cohort_dist = ParticipantList::selectRaw($sql)->groupBy('cohort_id')->get();
@@ -80,8 +85,10 @@ class HomeController extends Controller
             'activity_done_count', 'project_done_count', 
             'project_budget', 'project_count', 'proposal_count',
             'monthly_pts', 
+            // charts
             'donor_activity_dist', 'donors_dist',
             'age_group_dist', 'age_dist',
+            'gender_group_dist', 'gender_dist',
             'ps_cohort_dist', 'cohort_dist',
             'region_pts', 'region_dist',
         ));
