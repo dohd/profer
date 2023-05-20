@@ -26,9 +26,12 @@ class ActionPlanController extends Controller
      */
     public function index()
     {
-        $grp_status_count = ActionPlan::selectRaw('status, COUNT(*) as count')->groupBy('status')->pluck('count', 'status');
-        $wo_ps_list_count = ActionPlan::where('status', 'approved')->doesntHave('participant_lists')->count();
-        $wo_narrative_count = ActionPlan::where('status', 'approved')->doesntHave('narratives')->count();
+        $grp_status_count = ActionPlan::selectRaw('status, COUNT(*) as count')
+            ->groupBy('status')->pluck('count', 'status');
+        $wo_ps_list_count = ActionPlan::where('status', 'approved')
+            ->doesntHave('participant_lists')->count();
+        $wo_narrative_count = ActionPlan::where('status', 'approved')
+            ->doesntHave('narratives')->count();
         
         return view('action_plans.index', compact('grp_status_count', 'wo_ps_list_count', 'wo_narrative_count'));
     }
@@ -124,7 +127,7 @@ class ActionPlanController extends Controller
             DB::commit();
             return redirect(route('action_plans.index'))->with(['success' => 'Action Plan created successfully']);
         } catch (\Throwable $th) { 
-            errorHandler('Error creating Action Plan!');
+            errorHandler('Error creating Action Plan!', $th);
         }
     }
 
@@ -249,7 +252,7 @@ class ActionPlanController extends Controller
                 DB::commit();
                 return redirect(route('action_plans.index'))->with(['success' => 'Action Plan updated successfully']);
             } catch (\Throwable $th) {
-                errorHandler('Error updating Action Plan!');
+                errorHandler('Error updating Action Plan!', $th);
             }  
         }
     }
@@ -262,9 +265,12 @@ class ActionPlanController extends Controller
      */
     public function destroy(ActionPlan $action_plan)
     {
-        if ($action_plan->delete())
+        try {
+            $action_plan->delete();
             return redirect(route('action_plans.index'))->with(['success' => 'Action Plan deleted successfully']);
-        else errorHandler('Error deleting Action Plan!');
+        } catch (\Throwable $th) {
+            return errorHandler('Error deleting Action Plan!', $th);
+        }
     }
 
     /**
@@ -274,16 +280,16 @@ class ActionPlanController extends Controller
     {
         $proposal_items = [];
         if ($request->plan_id) {
+            // planned activities with agenda
             $proposal_items = ProposalItem::when(request('has_participant'), function($q) {
                 $q->whereHas('participant_lists');
             })
             ->whereHas('plan_activities', fn($q) => $q->where('action_plan_id', request('plan_id')))
+            ->whereHas('agenda')
             ->get(['id', 'name']);
         } else {
-            $proposal_items = ProposalItem::where([
-                'proposal_id' => request('proposal_id'), 
-                'is_obj' => 0
-            ])->get(['id', 'name']);
+            $proposal_items = ProposalItem::where(['proposal_id' => request('proposal_id'), 'is_obj' => 0])
+                ->get(['id', 'name']);
         }
         
         return response()->json($proposal_items);
