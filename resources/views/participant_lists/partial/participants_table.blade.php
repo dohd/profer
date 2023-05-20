@@ -50,6 +50,7 @@
                 <td>
                     <a class="dropdown-item pt-1 pb-1 del" href="javascript:"><i class="bi bi-trash text-danger icon-xs ml-1"></i></a> 
                 </td>
+                <input type="hidden" name="item_id[]">
             </tr>
             <!-- end template -->
     

@@ -33,10 +33,6 @@
         </select>
     </div>
     <div class="col-3">
-        <label for="date">Date*</label>
-        {{ Form::date('date', null, ['class' => 'form-control', 'required']) }}
-    </div>
-    <div class="col-3">
         <label for="region">Region*</label>
         <select name="region_id" id="region" class="form-select select2" data-placeholder="Choose Region" required disabled>
             <option value=""></option>
@@ -47,9 +43,6 @@
             @endif
         </select>
     </div>
-</div>
-
-<div class="row mb-3">
     <div class="col-3">
         <label for="cohort">Cohort*</label>
         <select name="cohort_id" id="cohort" class="form-select select2" data-placeholder="Choose Cohort" required disabled>
@@ -61,17 +54,12 @@
             @endif
         </select>
     </div>
-    <div class="col-2">
-        <label for="male_count">Male Count</label>
-        {{ Form::number('male_count', null, ['class' => 'form-control', 'id' => 'male_count', 'required']) }}
-    </div>
-    <div class="col-2">
-        <label for="female_count">Female Count</label>
-        {{ Form::number('female_count', null, ['class' => 'form-control', 'id' => 'female_count', 'required']) }}
-    </div>
-    <div class="col-2">
-        <label for="total_count">Total Count</label>
-        {{ Form::text('total_count', null, ['class' => 'form-control', 'id' => 'total_count', 'readonly']) }}
+</div>
+
+<div class="row mb-3">
+    <div class="col-3">
+        <label for="date">Date*</label>
+        {{ Form::date('date', null, ['class' => 'form-control', 'required']) }}
     </div>
     <div class="col-3">
         <label for="prepared_by">Prepared By</label>
@@ -84,8 +72,16 @@
 @section('script')
 <script>
     // on submit form
-    $('form').submit(function() {
-        $('#participants_tbl tbody tr').each(function() {
+    $('form').submit(function(e) {
+        // validate first line
+        let rows = $('#participants_tbl tbody tr');
+        if (rows.length == 1 && !$(this).find('.name').val()) {
+            e.preventDefault();
+            rows.find('.name').attr('required', true);
+            return;
+        }
+        // remove empty lines
+        rows.each(function() {
             if (!$(this).find('.name').val()) $(this).remove();
         });
     });
@@ -112,13 +108,6 @@
         if (!row.siblings().length) return;
         row.remove();
         rowCount--;
-    });
-
-    // on change count fields
-    $(document).on('keyup', '#male_count, #female_count', function() {
-        const m = $('#male_count').val()*1 || 0;
-        const f = $('#female_count').val()*1 || 0;
-        $('#total_count').val(m+f);
     });
 
     // on proposal change
@@ -212,6 +201,8 @@
         ['action_plan', 'activity', 'region', 'cohort'].forEach(v => {
             $('#'+v).prop('disabled', false);
         });
+        const row = $('#participants_tbl tbody tr:last');
+        rowCount = row.find('.num').text()*1 || 0;
     }
 
     // short link from action plan

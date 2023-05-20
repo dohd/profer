@@ -61,12 +61,9 @@ class ParticipantListController extends Controller
             'date' => 'required', 
             'region_id' => 'required', 
             'cohort_id' => 'required',
-            'male_count' => 'required',
-            'female_count' => 'required',
         ]);
         $data = $request->only([
             'proposal_id', 'action_plan_id', 'proposal_item_id', 'date', 'region_id', 'cohort_id', 'prepared_by', 
-            'male_count', 'female_count', 'total_count'
         ]);
         $data_items = $request->only([
             'name', 'gender', 'age_group_id', 'disability_id', 'phone', 'email', 'designation', 
@@ -85,18 +82,19 @@ class ParticipantListController extends Controller
                     'participant_list_id' => $participant_list->id,
                     'date' => $data['date'],
                 ]);
-                $data_items = array_filter($data_items, fn($v) => isset($v['name']) && isset($v['gender']));
+                $data_items = array_filter($data_items, fn($v) => @$v['name'] && @$v['gender']);
                 ParticipantListItem::insert($data_items);
 
                 // update count
-                $males = $participant_list->items()->where('gender', 'male')->count();
-                $females = $participant_list->items()->where('gender', 'female')->count();
-                if (!$males && !$females) return errorHandler('Participants required!');
-                $participant_list->update([
-                    'male_count' => $males,
-                    'female_count' => $females,
-                    'total_count' => $males+$females,
-                ]);
+                $male_count = 0;
+                $female_count = 0;
+                $total_count = 0;
+                foreach ($participant_list->items as $item) {
+                    if ($item->gender == 'male') $male_count++;
+                    if ($item->gender == 'female') $female_count++;
+                    $total_count++;
+                }
+                $participant_list->update(compact('male_count', 'female_count', 'total_count'));
             }
 
             DB::commit();
@@ -167,12 +165,10 @@ class ParticipantListController extends Controller
             'date' => 'required', 
             'region_id' => 'required', 
             'cohort_id' => 'required',
-            'male_count' => 'required',
-            'female_count' => 'required',
+            
         ]);
         $data = $request->only([
             'proposal_id', 'action_plan_id', 'proposal_item_id', 'date', 'region_id', 'cohort_id', 'prepared_by', 
-            'male_count', 'female_count', 'total_count'
         ]);
         $data_items = $request->only([
             'item_id', 'name', 'gender', 'age_group_id', 'disability_id', 'phone', 'email', 'designation', 
@@ -195,7 +191,6 @@ class ParticipantListController extends Controller
                     $participant_list->items()->whereNotIn('id', array_map(fn($v) => $v['item_id'], $data_items))->delete();
                     // update or new item
                     foreach ($data_items as $value) {
-                        if (empty($value['name']) || empty($value['gender'])) continue;
                         $participant_list_item = ParticipantListItem::firstOrNew(['id' => $value['item_id']]);
                         $participant_list_item->fill($value);
                         unset($participant_list_item->item_id);
@@ -203,14 +198,15 @@ class ParticipantListController extends Controller
                     }
     
                     // update count
-                    $males = $participant_list->items()->where('gender', 'male')->count();
-                    $females = $participant_list->items()->where('gender', 'female')->count();
-                    if (!$males && !$females) return errorHandler('Participants required!');
-                    $participant_list->update([
-                        'male_count' => $males,
-                        'female_count' => $females,
-                        'total_count' => $males+$females,
-                    ]);
+                    $male_count = 0;
+                    $female_count = 0;
+                    $total_count = 0;
+                    foreach ($participant_list->items as $item) {
+                        if ($item->gender == 'male') $male_count++;
+                        if ($item->gender == 'female') $female_count++;
+                        $total_count++;
+                    }
+                    $participant_list->update(compact('male_count', 'female_count', 'total_count'));
                 }
                     
                 DB::commit();
