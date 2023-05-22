@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\case_study\CaseStudy;
 use App\Models\programme\Programme;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class CaseStudyController extends Controller
 {
@@ -51,16 +50,12 @@ class CaseStudyController extends Controller
         ]);
 
         $data = $request->only(['programme_id', 'date', 'title', 'content']);
-
-        DB::beginTransaction();
-
         try {
             $data = inputClean($data); 
-            CaseStudy::create($data);            
+            CaseStudy::create($data);    
 
-            DB::commit();
             return redirect(route('case_studies.index'))->with(['success' => 'Case Study created successfully']);
-        } catch (\Throwable $th) { dd($th);
+        } catch (\Throwable $th) {
             return errorHandler('Error creating case study!', $th);
         }
     }
@@ -107,14 +102,10 @@ class CaseStudyController extends Controller
         ]);
 
         $data = $request->only(['programme_id', 'date', 'title', 'content']);
-
-        DB::beginTransaction();
-
         try {
             $data = inputClean($data); 
             $case_study->update($data);            
 
-            DB::commit();
             return redirect(route('case_studies.index'))->with(['success' => 'Case Study updated successfully']);
         } catch (\Throwable $th) {
             return errorHandler('Error updating case study!', $th);
@@ -131,7 +122,6 @@ class CaseStudyController extends Controller
     { 
         try {
             $case_study->delete();
-
             return redirect(route('case_studies.index'))->with(['success' => 'Case Study deleted successfully']);
         } catch (\Throwable $th) {
             return errorHandler('Error deleting case study!', $th);
