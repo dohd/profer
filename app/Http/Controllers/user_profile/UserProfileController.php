@@ -67,7 +67,7 @@ class UserProfileController extends Controller
 
             DB::commit();
             return redirect(route('user_profiles.index'))->with(['success' => 'User created successfully']);
-        } catch (\Throwable $th) { dd($th);
+        } catch (\Throwable $th) {
             return errorHandler('Error creating user!', $th);
         }
     }
@@ -124,7 +124,7 @@ class UserProfileController extends Controller
             $user_profile->update($data);
 
             return redirect(route('user_profiles.index'))->with(['success' => 'User created successfully']);
-        } catch (\Throwable $th) { dd($th);
+        } catch (\Throwable $th) {
             return errorHandler('Error creating user!', $th);
         }
     }
@@ -141,9 +141,10 @@ class UserProfileController extends Controller
 
         try {            
             $user_profile->user_login()->delete();
-            if ($user_profile->delete()) DB::commit();
-            
-            return redirect(route('user_profiles.index'))->with(['success' => 'User Profile deleted successfully']);
+            if ($user_profile->delete()) {
+                DB::commit();
+                return redirect(route('user_profiles.index'))->with(['success' => 'User Profile deleted successfully']);
+            }
         } catch (\Throwable $th) { dd($th);
             return errorHandler('Error deleting user!', $th);
         }

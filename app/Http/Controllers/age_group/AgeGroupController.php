@@ -16,7 +16,7 @@ class AgeGroupController extends Controller
      */
     public function index()
     {
-        $age_groups = AgeGroup::all();
+        $age_groups = AgeGroup::latest()->get();
 
         return view('age_groups.index', compact('age_groups'));
     }

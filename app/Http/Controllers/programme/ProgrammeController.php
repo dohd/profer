@@ -16,7 +16,7 @@ class ProgrammeController extends Controller
      */
     public function index()
     {
-        $programmes = Programme::all();
+        $programmes = Programme::latest()->get();
 
         return view('programmes.index', compact('programmes'));
     }

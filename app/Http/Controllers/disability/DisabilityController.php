@@ -16,7 +16,7 @@ class DisabilityController extends Controller
      */
     public function index()
     {
-        $disabilities = Disability::all();
+        $disabilities = Disability::latest()->get();
 
         return view('disabilities.index', compact('disabilities'));
     }

@@ -16,7 +16,7 @@ class CohortController extends Controller
      */
     public function index()
     {
-        $cohorts = Cohort::all();
+        $cohorts = Cohort::latest()->get();
 
         return view('cohorts.index', compact('cohorts'));
     }

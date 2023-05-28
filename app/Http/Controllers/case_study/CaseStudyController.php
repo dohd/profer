@@ -17,7 +17,7 @@ class CaseStudyController extends Controller
      */
     public function index()
     {
-        $case_studies = CaseStudy::get();
+        $case_studies = CaseStudy::latest()->get();
 
         return view('case_studies.index', compact('case_studies'));
     }
