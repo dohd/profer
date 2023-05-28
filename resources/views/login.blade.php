@@ -39,9 +39,10 @@
               <div class="d-flex justify-content-center py-4">
                 <a href="{{ route('home') }}html" class="logo d-flex align-items-center w-auto">
                   {{-- <img src="{{ asset('img/logo.png') }}" alt=""> --}}
-                  <span class="d-none d-lg-block">Profer</span>
+                  <span class="d-lg-block">Profer</span>
                 </a>
-              </div><!-- End Logo -->
+              </div>
+              <!-- End Logo -->
   
               <div class="card mb-3">
                 <div class="card-body">

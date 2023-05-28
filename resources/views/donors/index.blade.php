@@ -3,7 +3,9 @@
 @section('title', 'Donor Management')
     
 @section('content')
-    @include('donors.header')
+    <div>
+        @include('donors.header')
+    </div>
     <div class="card">
         <div class="card-body">
             <div class="card-content p-2">

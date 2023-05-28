@@ -8,23 +8,25 @@
         <div class="card-body">
             <div class="card-content pt-4">
                 <div class="row">
-                    <div class="col-6">
-                        <table class="table table-bordered">
-                            <tbody>
-                                <tr>
-                                    <th>Status</th>
-                                    <td>Pending</td>
-                                    <td>Approved</td>
-                                    <td>Review</td>
-                                </tr>
-                                <tr>
-                                    <th>Count</th>
-                                    <td>{{ numberFormat(@$status_grp['pending'], 0) }}</td>
-                                    <td>{{ numberFormat(@$status_grp['approved'], 0) }}</td>
-                                    <td>{{ numberFormat(@$status_grp['review'], 0) }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="col-md-6 col-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <th>Status</th>
+                                        <td>Pending</td>
+                                        <td>Approved</td>
+                                        <td>Review</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Count</th>
+                                        <td>{{ numberFormat(@$status_grp['pending'], 0) }}</td>
+                                        <td>{{ numberFormat(@$status_grp['approved'], 0) }}</td>
+                                        <td>{{ numberFormat(@$status_grp['review'], 0) }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

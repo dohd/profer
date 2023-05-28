@@ -16,7 +16,7 @@
                     @php
                         $details = [
                             'Agenda No.' => tidCode('agenda', $agenda->tid),
-                            'Title' => $agenda->title,
+                            'Agenda Title' => $agenda->title,
                             'Date' => dateFormat($agenda->date, 'd-M-Y'),
                             'Project Title' => @$agenda->proposal->title,
                             'Activity' => @$agenda->proposal_item->name,
@@ -58,7 +58,6 @@
                                 <th scope="col" width="20%">Period (Start-End)</th>
                                 <th scope="col" width="50%">Topic</th>
                                 <th scope="col">Assigned To</th>
-                                
                             </tr>
                         </thead>
                         <tbody>

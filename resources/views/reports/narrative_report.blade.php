@@ -8,7 +8,7 @@
         <div class="card-body">
             <div class="card-content pt-4">
                 <div class="row mb-3">
-                    <div class="col-12">
+                    <div class="col-md-12 col-12">
                         <select id="activity" class="form-select select2 filter" data-placeholder="Search Activity by name or project">
                             <option value=""></option>
                             @foreach ($proposal_items as $item)

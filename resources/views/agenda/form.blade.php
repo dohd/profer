@@ -1,5 +1,5 @@
 <div class="row mb-3">
-    <div class="col-8">
+    <div class="col-md-8 col-12">
         <label for="title">Project Title</label>
         <select name="proposal_id" id="proposal" class="form-control select2" data-placeholder="Choose Project" required>
             <option value=""></option>
@@ -8,7 +8,7 @@
             @endforeach
         </select>   
     </div>
-    <div class="col-4">
+    <div class="col-md-4 col-12">
         <label for="plan">Action Plan No.</label>
         <select name="action_plan_id" id="action_plan" class="form-control select2" data-placeholder="Choose Action Plan" required disabled>
             <option value=""></option>
@@ -20,8 +20,8 @@
         </select>
     </div>
 </div>
-<div class="row mb-3">
-    <div class="col-8">
+<div class="row mb-md-3 col-12">
+    <div class="col-md-8 col-12">
         <label for="title">Activity</label>
         <select name="proposal_item_id" id="activity" class="form-control select2" data-placeholder="Choose Activity" required disabled>
             <option value=""></option>
@@ -32,14 +32,14 @@
             @endisset
         </select>
     </div>
-    <div class="col-4">
+    <div class="col-md-4 col-12">
         <label for="date">Date</label>
         {{ Form::date('date', null, ['class' => 'form-control', 'required']) }}
     </div>
 </div>
 
-<div class="row mb-3">
-    <div class="col-12">
+<div class="row mb-md-3 col-12">
+    <div class="col-1md-2 col-12">
         <label for="title">Agenda Title</label>
         {{ Form::text('title', null, ['class' => 'form-control', 'required']) }}
     </div>

@@ -7,8 +7,8 @@
     <div class="card">
         <div class="card-body">
             <div class="card-content pt-4">
-                <div class="row mb-3">
-                    <div class="col-6">
+                <div class="row">
+                    <div class="col-md-6 col-12 mb-3">
                         <select name="donor_id" id="donor" class="form-select select2 filter" data-placeholder="Search Donor">
                             <option value=""></option>
                             @foreach ($donors as $item)
@@ -16,7 +16,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-6">
+                    <div class="col-md-6 col-12 mb-3">
                         <select name="programme_id" id="programme" class="form-select select2 filter" data-placeholder="Search Programme">
                             <option value=""></option>
                             @foreach ($programmes as $item)
@@ -25,8 +25,8 @@
                         </select>
                     </div>
                 </div>
-                <div class="row mb-3">
-                    <div class="col-3">
+                <div class="row">
+                    <div class="col-md-3 col-12 mb-3">
                         <select name="region_id" id="region" class="form-select select2 filter" data-placeholder="Search Region">
                             <option value=""></option>
                             @foreach ($regions as $item)
@@ -34,7 +34,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-3">
+                    <div class="col-md-3 col-12 mb-3">
                         <select name="cohort_id" id="cohort" class="form-select select2 filter" data-placeholder="Search Cohort">
                             <option value=""></option>
                             @foreach ($cohorts as $item)
@@ -42,7 +42,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-3">
+                    <div class="col-md-3 col-12 mb-3">
                         <select name="age_group_id" id="age_group" class="form-select select2 filter" data-placeholder="Search Age Group">
                             <option value=""></option>
                             @foreach ($age_groups as $item)
@@ -50,7 +50,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-3">
+                    <div class="col-md-3 col-12 mb-3">
                         <select name="disability_id" id="disability" class="form-select select2 filter" data-placeholder="Search Disability">
                             <option value=""></option>
                             @foreach ($disabilities as $item)
@@ -67,13 +67,13 @@
         <div class="card-body">
             <div class="card-content p-2">
                 <div class="mt-2">
-                    <label for="date" class="d-inline-block p2" style="margin-right: .5em">Date Between</label>
-                    <div class="d-inline-block p2" style="margin-right: .5em"><input type="date" placeholder="dd-mm-yyyy" class="str_date"></div>
-                    <div class="d-inline-block p2" style="margin-right: .5em"><input type="date" placeholder="dd-mm-yyyy" class="end_date"></div>
-                    <div class="d-inline-block p2"><span class="badge bg-primary date_search" role="button">search</span></div>
+                    <label for="date" class="d-md-inline-block d-block mb-2 p2" style="margin-right:.5em">Date Between</label>
+                    <div class="d-md-inline-block d-block mb-2 p2" style="margin-right:.5em"><input type="date" placeholder="dd-mm-yyyy" class="str_date"></div>
+                    <div class="d-md-inline-block d-block mb-2 p2" style="margin-right:.5em"><input type="date" placeholder="dd-mm-yyyy" class="end_date"></div>
+                    <div class="d-md-inline-block d-block mb-2 p2"><span class="badge bg-primary date_search" role="button">search</span></div>
                     <hr>
                 </div>
-                <div class="overflow-auto">
+                <div class="table-responsive">
                     <table class="table table-borderless" id="ps_analysis_tbl">
                         <thead>
                             <tr>

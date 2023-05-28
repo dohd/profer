@@ -1,5 +1,5 @@
 <div class="row mb-3">
-    <div class="col-8">
+    <div class="col-md-8 col-12">
         <label for="title">Project Title*</label>
         <select name="proposal_id" id="proposal" class="form-control select2" data-placeholder="Choose Project" required>
             <option value=""></option>
@@ -8,7 +8,7 @@
             @endforeach
         </select>   
     </div>
-    <div class="col-4">
+    <div class="col-md-4 col-12">
         <label for="plan">Action Plan No*</label>
         <select name="action_plan_id" id="action_plan" class="form-control select2" data-placeholder="Choose Action Plan" required disabled>
             <option value=""></option>
@@ -21,7 +21,7 @@
     </div>
 </div>
 <div class="row mb-3">
-    <div class="col-6">
+    <div class="col-md-6 col-12">
         <label for="title">Activity*</label>
         <select name="proposal_item_id" id="activity" class="form-control select2" data-placeholder="Choose Activity" required disabled>
             <option value=""></option>
@@ -32,7 +32,7 @@
             @endif
         </select>
     </div>
-    <div class="col-3">
+    <div class="col-md-3 col-12">
         <label for="region">Region*</label>
         <select name="region_id" id="region" class="form-select select2" data-placeholder="Choose Region" required disabled>
             <option value=""></option>
@@ -43,7 +43,7 @@
             @endif
         </select>
     </div>
-    <div class="col-3">
+    <div class="col-md-3 col-12">
         <label for="cohort">Cohort*</label>
         <select name="cohort_id" id="cohort" class="form-select select2" data-placeholder="Choose Cohort" required disabled>
             <option value=""></option>
@@ -57,11 +57,11 @@
 </div>
 
 <div class="row mb-3">
-    <div class="col-3">
+    <div class="col-md-3 col-12">
         <label for="date">Date*</label>
         {{ Form::date('date', null, ['class' => 'form-control', 'required']) }}
     </div>
-    <div class="col-3">
+    <div class="col-md-3 col-12">
         <label for="prepared_by">Prepared By</label>
         {{ Form::text('prepared_by', null, ['class' => 'form-control']) }}
     </div>

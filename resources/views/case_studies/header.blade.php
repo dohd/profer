@@ -1,11 +1,14 @@
 <div class="pagetitle">
-  <h1>
-    Case Study Management
-    <div class="float-end">
-      <a href="{{ route('case_studies.index') }}" class="btn btn-secondary"><i class="bi bi-card-list"></i> List</a>
-      <a href="{{ route('case_studies.create') }}" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Create</a>
+  <div class="row">
+    <div class="col-6">
+      <h1>Case Study Management</h1>
     </div>
-  </h1>
+    <div class="col-6">
+      <a href="{{ route('case_studies.create') }}" class="btn btn-primary float-end ms-1"><i class="bi bi-plus-circle"></i> Create</a>
+      <a href="{{ route('case_studies.index') }}" class="btn btn-secondary float-end"><i class="bi bi-card-list"></i> List</a>
+    </div>
+  </div>
+  
   <nav>
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>

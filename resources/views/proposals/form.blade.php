@@ -1,15 +1,15 @@
 <div class="row mb-3">
-    <div class="col-12">
+    <div class="col-md-12 col-12">
         <label for="title">Project Title*</label>
         {{ Form::text('title', null, ['class' => 'form-control', 'required']) }}
     </div>
 </div>
 <div class="row mb-3">
-    <div class="col-2">
+    <div class="col-md-2 col-12">
         <label for="date">Date*</label>
         {{ Form::date('date', null, ['class' => 'form-control', 'required']) }}
     </div>
-    <div class="col-4">
+    <div class="col-md-4 col-12">
         <label for="sector" class="col-12">Donor*</label>
         <select name="donor_id" id="donor" class="form-select select2" data-placeholder="Choose Donor" required>
             <option value=""></option>
@@ -18,21 +18,21 @@
             @endforeach
         </select>
     </div>
-    <div class="col-2">
+    <div class="col-md-2 col-12">
         <label for="start_date">Project Start*</label>
         {{ Form::date('start_date', null, ['class' => 'form-control', 'required']) }}
     </div>
-    <div class="col-2">
+    <div class="col-md-2 col-12">
         <label for="end_date">Project End*</label>
         {{ Form::date('end_date', null, ['class' => 'form-control', 'required']) }}
     </div>
-    <div class="col-2">
+    <div class="col-md-2 col-12">
         <label for="budget">Estimated Budget*</label>
         {{ Form::text('budget', numberFormat(@$proposal->budget), ['class' => 'form-control', 'id' => 'budget', 'required']) }}
     </div>
 </div>
 <br>
-<div class="responsive">
+<div class="table-responsive">
     <table class="table table-striped" id="objectivesTbl">
         <thead>
             <tr>

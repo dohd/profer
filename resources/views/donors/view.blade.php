@@ -11,12 +11,12 @@
                 <table class="table table-bordered">
                     @php
                         $details = [
-                            'Name' => $donor->name,
-                            'Phone' => $donor->phone,
-                            'Email' => $donor->email,
+                            'Donor Name' => $donor->name,
+                            'Donor Email' => $donor->email,
+                            'Donor Phone' => $donor->phone,
                             'Contact Person' => $donor->contact_person,
-                            'Alternative Email' => $donor->alternative_email,
-                            'Alternative Phone' => $donor->alternative_phone,
+                            'Contact Person Email' => $donor->alternative_email,
+                            'Contact Person Phone' => $donor->alternative_phone,
                         ];
                     @endphp
                     @foreach ($details as $key => $val)

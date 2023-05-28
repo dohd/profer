@@ -1,5 +1,5 @@
 
-<div class="responsive">
+<div class="table-responsive">
     <table class="table table-striped" id="participants_tbl">
         <thead>
             <tr class="">

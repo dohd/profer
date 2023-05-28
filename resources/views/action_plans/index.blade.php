@@ -8,25 +8,27 @@
         <div class="card-body">
             <div class="card-content pt-4">
                 <div class="row">
-                    <div class="col-sm-5 col-xs-12">
-                        <table class="table table-bordered">
-                            <tbody>
-                                <tr>
-                                    <th>Status</th>
-                                    <td>Pending</td>
-                                    <td>Approved</td>
-                                    <td>Review</td>
-                                </tr>
-                                <tr>
-                                    <th>Count</th>
-                                    <td>{{ numberFormat(@$grp_status_count['pending'], 0) }}</td>
-                                    <td>{{ numberFormat(@$grp_status_count['approved'], 0) }}</td>
-                                    <td>{{ numberFormat(@$grp_status_count['review'], 0) }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="col-sm-5 col-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <th>Status</th>
+                                        <td>Pending</td>
+                                        <td>Approved</td>
+                                        <td>Review</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Count</th>
+                                        <td>{{ numberFormat(@$grp_status_count['pending'], 0) }}</td>
+                                        <td>{{ numberFormat(@$grp_status_count['approved'], 0) }}</td>
+                                        <td>{{ numberFormat(@$grp_status_count['review'], 0) }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="col-sm-7 col-xs-12">
+                    <div class="col-sm-7 col-12">
                         <div class="table-responsive">
                             <table class="table table-bordered">
                                 <tbody>
