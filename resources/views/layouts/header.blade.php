@@ -42,11 +42,11 @@
       </li>
 
       <!-- Notification Nav -->
-      @include('layouts.notification_popover')
+      {{-- @include('layouts.notification_popover') --}}
       <!-- End Notification Nav -->
 
       <!-- Messages Nav -->
-      @include('layouts.message_popover')
+      {{-- @include('layouts.message_popover') --}}
       <!-- End Messages Nav -->
 
       <!-- Profile Nav -->
