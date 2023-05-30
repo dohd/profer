@@ -1,15 +1,18 @@
-@extends('layouts.core')
-
-@section('title', 'View | Agenda Management')
-    
-@section('content')
-    @include('agenda.header')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Agenda</title>
+    <style>
+        
+    </style>
+</head>
+<body>
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Agenda Details
-                <a href="{{ route('pdfs.print_agenda', $agenda) }}" class="badge bg-danger text-white ms-1" target="_blank">
-                    <i class="bi bi-file-earmark-pdf-fill"></i> print
-                </a>
                 <span class="badge bg-secondary text-white float-end" role="button" data-bs-toggle="modal" data-bs-target="#status_modal">
                     <i class="bi bi-pencil-fill"></i> Status
                 </span>
@@ -78,17 +81,5 @@
             </div>
         </div>
     </div>
-    @include('agenda.partial.agenda_status')
-@stop
-
-@section('script')
-<script>
-    $('#status').change(function() {
-        if ($(this).val() == 'review') {
-            $('#note').parents('.row').removeClass('d-none');
-        } else {
-            $('#note').parents('.row').addClass('d-none');
-        }
-    }).trigger('change');
-</script>
-@endsection
+</body>
+</html>

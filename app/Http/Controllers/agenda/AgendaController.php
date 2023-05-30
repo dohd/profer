@@ -82,9 +82,7 @@ class AgendaController extends Controller
      */
     public function show(Agenda $agenda)
     {
-        $proposal_items = [];
-
-        return view('agenda.view', compact('agenda', 'proposal_items'));
+        return view('agenda.view', compact('agenda'));
     }
 
     /**

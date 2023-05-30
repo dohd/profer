@@ -12,6 +12,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\log_frame\LogFrameController;
 use App\Http\Controllers\narrative\NarrativeController;
 use App\Http\Controllers\participant_list\ParticipantListController;
+use App\Http\Controllers\pdf\PdfController;
 use App\Http\Controllers\programme\ProgrammeController;
 use App\Http\Controllers\proposal\ProposalController;
 use App\Http\Controllers\region\RegionController;
@@ -127,6 +128,11 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('reports/narrative_report', [ReportController::class, 'narrative_report'])->name('reports.narrative_report');
     Route::get('reports/participant_analysis', [ReportController::class, 'participant_analysis'])->name('reports.participant_analysis');
     Route::post('reports/participant_analysis_data', [ReportController::class, 'participant_analysis_data'])->name('reports.participant_analysis_data');
+
+    /**
+     * PDFs
+     */
+    Route::get('pdfs/agenda/{agenda}', [PdfController::class, 'print_agenda'])->name('pdfs.print_agenda');
 });
 
 
