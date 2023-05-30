@@ -11,7 +11,7 @@
                 <input type="hidden" name="action_plan_id" value="{{ $action_plan->id }}">
                 <div class="modal-body">
                     <div class="row mb-3">
-                        <div class="col-12">
+                        <div class="col-md-12 col-12">
                             <label for="activity">Activity</label>
                             <select name="activity_id" class="form-control" id="cohort_activity" data-placeholder="Choose Activity" required>
                                 <option value=""></option>
@@ -22,41 +22,41 @@
                         </div>
                     </div>
 
-                    <table class="table table-striped" id="cohorts_tbl">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th width="50%">Cohort</th>
-                                <th scope="col">Targeted No.</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- row template -->
-                            <tr>
-                                <th scope="row" class="p-3 num">1</th>
-                                <td>
-                                    <select name="cohort_id[]" class="form-select custom cohort_id" data-placeholder="Choose Cohort" required>
-                                        <option value=""></option>
-                                        @foreach ($cohorts as $key => $value)
-                                            <option value="{{ $key }}">{{ ucfirst($value) }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td><input type="text" name="target_no[]" class="form-control target_no" required></td>
-                                <td>
-                                    <div class="d-inline"></div>
-                                    <a class="dropdown-item pt-1 pb-1 del" href="javascript:">
-                                        <i class="bi bi-trash text-danger icon-xs ml-1"></i>
-                                    </a> 
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="cohorts_tbl">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th width="50%">Cohort</th>
+                                    <th scope="col">Targeted No.</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- row template -->
+                                <tr>
+                                    <th scope="row" class="p-3 num">1</th>
+                                    <td>
+                                        <select name="cohort_id[]" class="form-select custom cohort_id" data-placeholder="Choose Cohort" required>
+                                            <option value=""></option>
+                                            @foreach ($cohorts as $key => $value)
+                                                <option value="{{ $key }}">{{ ucfirst($value) }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td><input type="text" name="target_no[]" class="form-control target_no" required></td>
+                                    <td>
+                                        <div class="d-inline"></div>
+                                        <a class="dropdown-item pt-1 pb-1 del" href="javascript:">
+                                            <i class="bi bi-trash text-danger icon-xs ml-1"></i>
+                                        </a> 
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <h5>
-                        <span class="badge bg-primary addrow" role="button">
-                            <i class="bi bi-plus-lg"></i> row
-                        </span>
+                        <span class="badge bg-primary addrow" role="button"><i class="bi bi-plus-lg"></i> row </span>                       
                     </h5>
                 </div>
                 <div class="modal-footer">
