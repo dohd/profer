@@ -22,23 +22,23 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-4">
+                        <div class="col-md-4 col-12">
                             <label for="start_date">Start Date*</label>
                             {{ Form::date('start_date', null, ['class' => 'form-control', 'id' => 'start_date', 'required']) }}
                         </div>
-                        <div class="col-4">
+                        <div class="col-md-4 col-12">
                             <label for="end_date">End Date*</label>
                             {{ Form::date('end_date', null, ['class' => 'form-control', 'id' => 'end_date', 'required']) }}
                         </div>
 
-                        <div class="col-4">
+                        <div class="col-md-4 col-12">
                             <label for="assigned_to">Assigned To</label>
                             {{ Form::text('assigned_to', null, ['class' => 'form-control', 'id' => 'assigned_to',]) }}
                         </div>
                     </div>
 
                     <div class="row mb-3">
-                        <div class="col-6">
+                        <div class="col-md-6 col-12">
                             <label for="region">Region</label>
                             <select name="region_id[]" class="form-control" id="region" data-placeholder="Choose Region" multiple>
                                 @foreach ($regions as $key => $value)
@@ -46,7 +46,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-6">
+                        <div class="col-md-6 col-12">
                             <label for="resources">Resources</label>
                             {{ Form::textarea('resources', null, ['class' => 'form-control', 'id' => 'resources', 'rows' => '2']) }}
                         </div>
