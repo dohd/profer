@@ -20,7 +20,7 @@
       <div class="col-lg-12">
         <div class="row">
           <!-- Activities Card -->
-          <div class="col-xxl-4 col-md-6">
+          <div class="col-md-4 col-12">
             <div class="card info-card sales-card">
               <div class="filter">
                 <a class="icon" href="#" data-bs-toggle="dropdown" ><i class="bi bi-three-dots"></i></a>
@@ -42,7 +42,7 @@
           <!-- End Activities Card -->
 
           <!-- Grants Card -->
-          <div class="col-xxl-4 col-md-6">
+          <div class="col-md-4 col-12">
             <div class="card info-card revenue-card">
               <div class="filter">
                 <a class="icon" href="#" data-bs-toggle="dropdown" ><i class="bi bi-three-dots"></i></a>
@@ -65,7 +65,7 @@
           <!-- End Grants Card -->
 
           <!-- Donors Card -->
-          <div class="col-xxl-4 col-xl-12">
+          {{-- <div class="col-xxl-4 col-xl-12">
             <div class="card info-card customers-card">
               <div class="filter">
                 <a class="icon" href="#" data-bs-toggle="dropdown" ><i class="bi bi-three-dots"></i></a>
@@ -83,11 +83,11 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> --}}
           <!-- End Donors Card -->
 
           <!-- Programmes Card -->
-          <div class="col-xxl-4 col-xl-12">
+          <div class="col-md-4 col-12">
             <div class="card info-card sales-card">
               <div class="filter">
                 <a class="icon" href="#" data-bs-toggle="dropdown" ><i class="bi bi-three-dots"></i></a>
@@ -109,7 +109,7 @@
           <!-- End Programmes Card -->
 
           <!-- Cohorts Card -->
-          <div class="col-xxl-4 col-xl-12">
+          {{-- <div class="col-xxl-4 col-xl-12">
             <div class="card info-card revenue-card">
               <div class="filter">
                 <a class="icon" href="#" data-bs-toggle="dropdown" ><i class="bi bi-three-dots"></i></a>
@@ -127,11 +127,11 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> --}}
           <!-- End Cohorts Card -->
 
           <!-- Regions Card -->
-          <div class="col-xxl-4 col-xl-12">
+          {{-- <div class="col-xxl-4 col-xl-12">
             <div class="card info-card customers-card">
               <div class="filter">
                 <a class="icon" href="#" data-bs-toggle="dropdown" ><i class="bi bi-three-dots"></i></a>
@@ -149,7 +149,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> --}}
           <!-- End Regions Card -->
         </div>
       </div>

@@ -26,6 +26,7 @@ class PdfController extends Controller
         $company = $resource;
 
         $html = view('pdfs.print_agenda', compact('resource', 'company'));
+        return $html;
         
         $mpdf = new Mpdf(config('pdf'));            
         $mpdf->WriteHTML($html);
