@@ -132,7 +132,7 @@ Route::group(['middleware' => 'auth'], function() {
     /**
      * PDFs
      */
-    Route::get('pdfs/agenda/{agenda}', [PdfController::class, 'print_agenda'])->name('pdfs.print_agenda');
+    Route::get('pdfs/agenda/{agenda}/{token}', [PdfController::class, 'print_agenda'])->name('pdfs.print_agenda');
 });
 
 
