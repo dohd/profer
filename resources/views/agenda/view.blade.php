@@ -8,7 +8,7 @@
         <div class="card-body">
             <h5 class="card-title">Agenda Details
                 <a href="{{ route('pdfs.print_agenda', ['agenda' => $agenda, 'token' => csrf_token()]) }}" class="badge bg-danger text-white ms-1" target="_blank">
-                    <i class="bi bi-file-earmark-pdf-fill"></i> print
+                    <i class="bi bi-file-earmark-pdf-fill"></i> pdf
                 </a>
                 <span class="badge bg-secondary text-white float-end" role="button" data-bs-toggle="modal" data-bs-target="#status_modal">
                     <i class="bi bi-pencil-fill"></i> Status

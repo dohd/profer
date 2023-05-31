@@ -6,36 +6,24 @@
     @include('agenda.header')
     <div class="card">
         <div class="card-body">
-            <div class="card-content pt-4">
-                <div class="row">
+            <div class="card-content p-2">
+                <div class="row my-2">
                     <div class="col-md-6 col-12">
                         <div class="table-responsive">
-                            <table class="table table-bordered">
+                            <table class="table table-sm table-bordered">
                                 <tbody>
                                     <tr>
-                                        <th>Status</th>
-                                        <td>Pending</td>
-                                        <td>Approved</td>
-                                        <td>Review</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Count</th>
-                                        <td>{{ numberFormat(@$status_grp['pending'], 0) }}</td>
-                                        <td>{{ numberFormat(@$status_grp['approved'], 0) }}</td>
-                                        <td>{{ numberFormat(@$status_grp['review'], 0) }}</td>
+                                        <th>Status </th>
+                                        <td>Pending ({{ numberFormat(@$status_grp['pending'], 0) }})</td>
+                                        <td>Approved ({{ numberFormat(@$status_grp['approved'], 0) }})</td>
+                                        <td>Review ({{ numberFormat(@$status_grp['review'], 0) }})</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="card">
-        <div class="card-body">
-            <div class="card-content p-2">
                 <div class="table-responsive">
                     <table class="table table-borderless datatable">
                         <thead>
