@@ -56,7 +56,7 @@
                             <th scope="col">#No</th>
                             <th scope="col">#Code</th>
                             <th scope="col">Title</th>
-                            <th scope="col">Start Date</th>
+                            <th scope="col" width="15%">Start Date</th>
                             <th scope="col">Budget</th>
                             <th scope="col">Status</th>
                             <th scope="col">Donor</th>

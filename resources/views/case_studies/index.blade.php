@@ -11,7 +11,7 @@
                     <table class="table table-borderless datatable">
                         <thead>
                             <tr>
-                                <th scope="col">#No.</th>
+                                <th scope="col">#No</th>
                                 <th scope="col">#Code</th>
                                 <th scope="col">Programme</th>
                                 <th scope="col">Title</th>

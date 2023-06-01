@@ -58,8 +58,8 @@
                                 <th scope="col">Project Title</th>
                                 <th scope="col">Key Programme</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Overseen By</th>
-                                <th scope="col">Date</th>
+                                <th scope="col">Overseer</th>
+                                <th scope="col" width="15%">Date</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
