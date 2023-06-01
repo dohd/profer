@@ -130,5 +130,13 @@
         <i class="bi bi-people"></i><span>User Management</span>
       </a>
     </li>
+
+    {{-- account settings --}}
+    <li class="nav-heading">Account Settings</li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ route('user_profiles.active_profile') }}">
+        <i class="bi bi-gear"></i> <span>Account Settings</span>
+      </a>
+    </li>
   </ul>
 </aside>
