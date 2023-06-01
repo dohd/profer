@@ -119,7 +119,7 @@
         row.remove();
     });
 
-    // short link from action plan
+    // short link from proposal
     const proposalId = @json(request('proposal_id'));
     if (proposalId) {
         $('#proposal').val(proposalId).change();

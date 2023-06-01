@@ -2,7 +2,7 @@
     <div class="row mb-2">
         <div class="col-12">
             <div class="float-end">
-                <a href="{{ route('narratives.create') }}" style="color:inherit" target="_blank">
+                <a href="{{ route('narratives.create') }}" style="color:inherit">
                     <span class="badge bg-secondary text-white" role="button">
                         <i class="bi bi-plus-lg"></i> Narrative
                     </span>

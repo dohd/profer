@@ -12,7 +12,7 @@
     </div>
     <div class="col-md-3 col-12">
         <label for="date">Date*</label>
-        {{ Form::date('date', null, ['class' => 'form-control', 'required']) }}
+        {{ Form::date('date', null, ['class' => 'form-control', 'placeholder' => "dd-mm-yyyy", 'required']) }}
     </div>
 </div>
 
@@ -113,7 +113,11 @@
 
 @section('script')
 <script>
-    // 
+    // short link from proposal
+    const proposalId = @json(request('proposal_id'));
+    if (proposalId) {
+        $('#proposal').val(proposalId).change();
+    }
 </script>
 @stop
 

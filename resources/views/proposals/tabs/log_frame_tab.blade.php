@@ -1,17 +1,18 @@
 <div class="tab-pane fade show" id="log-frame" role="tabpanel" aria-labelledby="log-frame-tab">
-    <div class="mt-2 mb-2">
-        <span>Logical Framework As Of: </span>
-        @if (@$proposal->log_frame)
-            <a href="{{ route('log_frames.show', $proposal->log_frame) }}">
-                 {{ dateFormat($proposal->log_frame->date, 'd-M-Y') }}
+    <div class="row my-2">
+        <div class="col-md-12 col-12">
+            <a href="{{ route('log_frames.create', ['proposal_id' => $proposal]) }}" class="badge bg-secondary text-white float-end">
+                <i class="bi bi-plus-lg"></i> Log Frame
             </a>
-        @endif
-        <div class="float-end">
-            <a href="{{ route('log_frames.create') }}" style="color:inherit" target="_blank">
-                <span class="badge bg-secondary text-white" role="button">
-                    <i class="bi bi-plus-lg"></i> Log Frame
-                </span>
-            </a>
+        </div>
+        <div class="col-md-12 col-12">
+            <span>Dated: 
+                @if (@$proposal->log_frame)
+                    <a href="{{ route('log_frames.show', $proposal->log_frame) }}">
+                        {{ dateFormat($proposal->log_frame->date, 'd-M-Y') }}
+                    </a>
+                @endif
+            </span>
         </div>
     </div>
 
@@ -28,7 +29,6 @@
                     'Assign To' => 'assign_to'
                 ];
             @endphp
-
             <thead>
                 <tr>
                     <th class="bg-light"></th>

@@ -8,7 +8,7 @@
                         'action_plan_id' => $action_plan->id,
                     ];
                 @endphp
-                <a href="{{ route('participant_lists.create', $params) }}" style="color:inherit" target="_blank">
+                <a href="{{ route('participant_lists.create', $params) }}" style="color:inherit">
                     <span class="badge bg-secondary text-white" role="button">
                         <i class="bi bi-plus-lg"></i> Participant List
                     </span>

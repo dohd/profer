@@ -2,8 +2,7 @@
     <div class="row mt-2 mb-2">
         <div class="col-12">
             <div class="float-end">
-                @php($params=['proposal_id' => $proposal->id])
-                <a href="{{ route('action_plans.create', $params) }}" style="color:inherit" target="_blank">
+                <a href="{{ route('action_plans.create', ['proposal_id' => $proposal]) }}" style="color:inherit">
                     <span class="badge bg-secondary text-white" role="button">
                         <i class="bi bi-plus-lg"></i> Action Plan
                     </span>
