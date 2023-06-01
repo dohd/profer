@@ -7,11 +7,11 @@
     <div class="card">
         <div class="card-body">
             <div class="card-content p-2">
-                <div class="my-2">
-                    <div class="row">
-                        <div class="col-md-5 col-12">
+                <div class="my-3">
+                    <div class="row mb-2">
+                        <div class="col-md-7 col-12">
                             <div class="table-responsive">
-                                <table class="table table-sm table-bordered">
+                                <table class="table table-sm table-bordered mb-2">
                                     <tbody>
                                         <tr>
                                             <th rowspan="2">Status</th>
@@ -24,28 +24,26 @@
                             </div>
                         </div>
     
+                        <div class="col-md-5 col-12">
+                            <select id="wo_status_filter" class="custom-control col-8">
+                                <option value="">Filter Approved Proposals</option>
+                                <option value="wo_logframe">Pending Log Frame</option>
+                                <option value="wo_action_plan">Pending Action Plan</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-7 col-12">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="table-responsive">
-                                        <table class="table table-sm table-bordered">
-                                            <tbody>
-                                                <tr>
-                                                    <th>Appr. Proposal</th>
-                                                    <td>Without Log Frame ({{ numberFormat(@$wo_logframe_count, 0) }})</td>
-                                                    <td>Without Action Plan ({{ numberFormat(@$wo_action_plan_count, 0) }})</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <select id="wo_status_filter" class="custom-control col-5">
-                                        <option value="">Filter Approved Proposal</option>
-                                        <option value="wo_logframe">Without Log Frame</option>
-                                        <option value="wo_action_plan">Without Action Plan</option>
-                                    </select>
-                                </div>
+                            <div class="table-responsive">
+                                <table class="table table-sm table-bordered m-0">
+                                    <tbody>
+                                        <tr>
+                                            <th>Approved</th>
+                                            <td>Pending Log Frame ({{ numberFormat(@$wo_logframe_count, 0) }})</td>
+                                            <td>Pending Action Plan ({{ numberFormat(@$wo_action_plan_count, 0) }})</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
