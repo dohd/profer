@@ -10,3 +10,16 @@
 .select2-selection__arrow {
   min-height: 34px !important;
 }
+
+/**
+ * Modify Table padding and border
+ * */
+ .table-cstm th {
+    padding: 5px 8px;
+ }
+
+ .table-cstm td {
+  padding-left: 8px;
+  padding-right: 8px;
+  border: none;
+ }
