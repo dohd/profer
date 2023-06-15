@@ -1,12 +1,5 @@
 <div class="tab-pane fade show active profile-overview" id="profile-overview">
-  <h5 class="card-title">About</h5>
-  <p class="small fst-italic">
-    Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. 
-    Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. 
-    Fuga sequi sed ea saepe at unde.
-  </p>
-
-  <h5 class="card-title">Profile Details</h5>
+  <h5 class="card-title">Details</h5>
   @php
     $details = [
       'Full Name' => $user_profile->name,

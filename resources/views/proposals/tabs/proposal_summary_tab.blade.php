@@ -34,9 +34,9 @@
         <div class="col-12">
             <!-- Proposal items -->
             <h6>Objectives & Activities</h6>
-            <table class="table table-bordered" id="objectivesTbl">
+            <table class="table table-striped" id="objectivesTbl">
                 <thead>
-                    <tr class="">
+                    <tr class="table-primary">
                         <th scope="col" width="5%" class="text-center">No.</th>
                         <th scope="col" width="8%">Item</th>
                         <th scope="col">Description</th>
@@ -45,7 +45,7 @@
                 <tbody>
                     @foreach ($proposal->items as $item)
                         <tr>
-                            <th scope="row" class="text-center">{{ $item->row_num }} </th>
+                            <th scope="row" class="text-center">{{ $item->row_num }}</th>
                             <td>{{ $item->is_obj? 'objective' : 'activity' }}</td>
                             <td>{{ $item->name }}</td>
                         </tr>

@@ -44,9 +44,9 @@
 
                 <!-- participants -->     
                 <div class="table-responsive">
-                    <table class="table table-striped" id="participants_tbl">
+                    <table class="table table-cstm" id="participants_tbl">
                         <thead>
-                            <tr>
+                            <tr class="table-primary">
                                 <th>#</th>
                                 <th>Full Name</th>
                                 <th>Gender</th>
@@ -61,7 +61,7 @@
                         <tbody>
                             @foreach ($participant_list->items as $i => $item)
                                 <tr>
-                                    <th scope="row" class="p-3 num">{{ $i+1 }}</th>
+                                    <td class="p-3 num">{{ $i+1 }}.</td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->gender }}</td>
                                     <td>{{ @$item->age_group->bracket }}</td>

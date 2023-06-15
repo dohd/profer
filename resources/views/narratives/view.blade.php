@@ -61,7 +61,7 @@
                     </h5>
                     <table class="table table-striped" id="narratives_tbl">
                         <thead>
-                            <tr>
+                            <tr class="table-primary">
                                 <th scope="col">#</th>
                                 <th scope="col" width="30%">Narrative Indicator</th>
                                 <th scope="col">Response</th>
@@ -72,7 +72,7 @@
                             @foreach ($narrative->items as $item)
                                 @if (@$item->narrative_pointer->value && $item->agenda_item_id == $agenda_item->id)
                                     <tr>
-                                        <th scope="row" class="pt-2">{{ $j+1 }}</th>
+                                        <td scope="row" class="pt-2">{{ $j+1 }}.</td>
                                         <td class="pt-2">{{ $item->narrative_pointer->value }}</td>
                                         <td class="pt-2">{{ $item->response }}</td>
                                     </tr>   

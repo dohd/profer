@@ -8,7 +8,7 @@
         <div class="card-body">
             <div class="card-content p-2">
                 <div class="overflow-auto">
-                    <table class="table table-borderless datatable" id="log_frame_tbl">
+                    <table class="table table-borderless datatable" id="logframeTbl">
                         <thead>
                             <tr>
                                 <th scope="col">#No</th>
@@ -39,8 +39,8 @@
 @section('script')
 <script>
     $.post("{{ route('log_frames.datatable') }}", {}, data => {
-        $('#log_frame_tbl tbody').html(data);
-        new simpleDatatables.DataTable($('#log_frame_tbl')[0]);
+        $('#logframeTbl tbody').html(data);
+        new simpleDatatables.DataTable($('#logframeTbl')[0]);
     });
 </script>
 @stop

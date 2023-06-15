@@ -8,6 +8,7 @@
         }
     });
 
+
     /**
      * Global delete via form handler
      **/
@@ -17,12 +18,14 @@
         }
     });
 
+
     /**
      * Initiate select2
      **/
     $('.select2').each(function() {
         $(this).css('width', '100%').select2({allowClear: true});
     });
+
 
     /**
      * Persist Bootstrap tab on page refresh

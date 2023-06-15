@@ -33,18 +33,18 @@
 </div>
 <br>
 <div class="table-responsive">
-    <table class="table table-striped" id="objectivesTbl">
+    <table class="table table-cstm" id="objectivesTbl">
         <thead>
-            <tr>
-                <th scope="col" width="8%">#</th>
-                <th scope="col" width="10%">Item</th>
-                <th scope="col" width="70%">Description</th>
+            <tr class="table-primary">
+                <th width="8%">#</th>
+                <th width="10%">Item</th>
+                <th width="70%">Description</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <th scope="row"><input type="text" name="row_num[]" id="rownum-0" value="1" class="form-control rownum" required></th>
+                <td scope="row"><input type="text" name="row_num[]" id="rownum-0" value="1" class="form-control rownum" required></td>
                 <td class="pt-3">objective</td>
                 <td><input type="text" name="name[]" id="obj-0" class="form-control obj" required></td>
                 <td>
@@ -63,6 +63,11 @@
                 <input type="hidden" name="is_obj[]" value="1">
                 <input type="hidden" name="item_id[]" class="item_id">
             </tr>
+            @foreach(range(1,2) as $i)
+                <tr>
+                    <td colspan="100%">&nbsp;</td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 </div>
@@ -82,7 +87,9 @@
             row.after(actRow(activityIndex));
         }
         if ($(this).is('.del')) {
-            if (!row.siblings().length) return;
+            let siblings = row.siblings();
+            if (!siblings.find('.act').length && !siblings.find('.obj').length) 
+                return;
             if (row.find('.obj').length) objectiveIndex--;
             else activityIndex--;
             row.remove();
@@ -103,7 +110,7 @@
     function objRow(i,v) {
         return `
             <tr>
-                <th scope="row"><input type="text" name="row_num[]" id="rownum-${i+1}" class="form-control rownum" required></th>
+                <td scope="row"><input type="text" name="row_num[]" id="rownum-${i+1}" class="form-control rownum" required></td>
                 <td class="pt-3">objective</td>
                 <td><input type="text" name="name[]" id="obj-${i+1}" class="form-control obj" required></td>
                 <td>
@@ -128,7 +135,7 @@
     function actRow(v,i) {
         return `
             <tr>
-                <th scope="row"><input type="hidden" name="row_num[]"></th>
+                <td scope="row"><input type="hidden" name="row_num[]"></td>
                 <td class="pt-3">activity</td>
                 <td><input type="text" name="name[]" id="act-${i+1}" class="form-control act" required  ></td>
                 <td>
