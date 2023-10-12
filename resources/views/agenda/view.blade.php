@@ -7,9 +7,10 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Agenda Details
-                <a href="{{ route('pdfs.print_agenda', ['agenda' => $agenda, 'token' => csrf_token()]) }}" class="badge bg-danger text-white ms-1" target="_blank">
-                    <i class="bi bi-file-earmark-pdf-fill"></i> pdf
-                </a>
+                {{-- <a href="{{ route('pdfs.print_agenda', ['agenda' => $agenda, 'token' => csrf_token()]) }}" class="badge bg-danger text-white ms-1" target="_blank"> --}}
+                {{-- <a href="javascript:" class="badge bg-danger text-white ms-1" target="_blank">
+                    <i class="bi bi-file-earmark-pdf-fill"></i> Pdf
+                </a> --}}
                 <span class="badge bg-secondary text-white float-end" role="button" data-bs-toggle="modal" data-bs-target="#status_modal">
                     <i class="bi bi-pencil-fill"></i> Status
                 </span>
@@ -66,7 +67,7 @@
                         <tbody>
                             @foreach ($agenda->items as $i => $item)
                                 <tr>
-                                    <th scope="row">{{ $i+1 }}</th>
+                                    <th scope="row">{{ $i+1 }}.</th>
                                     <td><b>{{ timeFormat($item->time_from) }}</b> to <b>{{ timeFormat($item->time_to) }}</b></td>
                                     <td>{{ $item->topic }}</td>
                                     <td>{{ $item->assigned_to }}</td>
