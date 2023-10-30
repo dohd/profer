@@ -72,11 +72,10 @@
   <script src="{{ asset('vendor/echarts/echarts.min.js') }}"></script>
   <script src="{{ asset('vendor/quill/quill.min.js') }}"></script>
   <script src="{{ asset('vendor/simple-datatables/simple-datatables.js') }}"></script>
-  <script src="{{ asset('vendor/tinymce/tinymce.min.js') }}"></script>
-  <script src="{{ asset('vendor/php-email-form/validate.js') }}"></script>
   <script src="{{ asset('vendor/jquery/jquery-3.6.1.min.js') }}"></script>
   <script src="{{ asset('vendor/select2/select2-4.0.13.min.js') }}"></script>
   <script src="{{ asset('vendor/vkurko-calendar-0.18.1/calendar.min.js') }}"></script>
+  <script src="{{ asset('vendor/validator/jquery.validate.min.js') }}"></script>
   <!-- Template Main JS File -->
   <script src="{{ asset('js/main.js') }}"></script>
 

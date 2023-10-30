@@ -1,14 +1,37 @@
 <script>
-    /**
-     * Jquery ajax setup
-     **/
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-Token': "{{ csrf_token() }}",
-        }
-    });
+/**
+ * Jquery Ajax Setup
+ **/
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-Token': "{{ csrf_token() }}",
+    }
+});
 
 
+/**
+ * Flash Message
+ * */
+function flashMessage(data) {
+    let alert = '';
+    let message = '';
+    if (data.responseJSON) {
+        alert = @json(errorFlashMessage());
+        message = data.responseJSON.message;
+    } else {
+        alert = @json(successFlashMessage());
+        message = data.message;
+    }
+    $('div#main').prepend(alert);
+    $('div.alert strong').html(message);
+    scroll(0,0);  
+    setTimeout(() => {
+        if (data.redirectTo) location.href = data.redirectTo;
+        $('div.alert').remove();
+    }, 2000);
+}
+
+$(() => {
     /**
      * Global delete via form handler
      **/
@@ -37,4 +60,19 @@
     const activeTab = $('.nav-item button[data-bs-target="'+ tabIndex +'"]');
     if (tabIndex && activeTab.length) activeTab.click(); 
     else $('.nav-tabs .nav-link:first').click();
+
+
+    /**
+     * Quill RichText Editor
+     **/
+    $('div.richtext').each(function() {
+        const editor = new Quill('#'+ $(this).attr('id'), {theme: 'snow'});
+    });
+    $('div.richtext').on('keyup', function() {
+        let inputId = $(this).attr('id').split('_')[0];
+        let value = $(this).find('.ql-editor').html();
+        if (value == '<p><br></p>') value = '';
+        $('#'+inputId).val(value);
+    });
+});
 </script>
