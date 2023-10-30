@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\case_study\CaseStudy;
 use App\Models\programme\Programme;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CaseStudyController extends Controller
 {
@@ -40,23 +41,27 @@ class CaseStudyController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        // dd($request->all());
-        $request->validate([
+    {   
+        $validator = Validator::make($request->all(), [
             'programme_id' => 'required',
             'date' => 'required',
             'title' => 'required',
-            'content' => 'required',
+            'situation' => 'required',
+            'intervention' => 'required',
+            'impact' => 'required',
         ]);
-
-        $data = $request->only(['programme_id', 'date', 'title', 'content']);
+        
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'message' => 'Input all required(*) fields'], 400);
+        }
+        
         try {
-            $data = inputClean($data); 
-            CaseStudy::create($data);    
+            $input = inputClean($request->except('_token')); 
+            $case_study = CaseStudy::create($input); 
 
-            return redirect(route('case_studies.index'))->with(['success' => 'Case Study created successfully']);
+            return response()->json(['success' => true, 'message' => 'Case Study created successfully', 'redirectTo' => route('case_studies.edit', $case_study)]);
         } catch (\Throwable $th) {
-            return errorHandler('Error creating case study!', $th);
+            return response()->json(['success' => false, 'message' => $th->getMessage()], 500);
         }
     }
 
@@ -93,23 +98,27 @@ class CaseStudyController extends Controller
      */
     public function update(Request $request, CaseStudy $case_study)
     {
-        // dd($request->all());
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'programme_id' => 'required',
             'date' => 'required',
             'title' => 'required',
-            'content' => 'required',
+            'situation' => 'required',
+            'intervention' => 'required',
+            'impact' => 'required',
         ]);
-
-        $data = $request->only(['programme_id', 'date', 'title', 'content']);
+        
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'message' => 'Input all required(*) fields'], 400);
+        }
+        
         try {
-            $data = inputClean($data); 
-            $case_study->update($data);            
+            $input = inputClean($request->except('_token')); 
+            $case_study->update($input);
 
-            return redirect(route('case_studies.index'))->with(['success' => 'Case Study updated successfully']);
+            return response()->json(['success' => true, 'message' => 'Case Study updated successfully']);
         } catch (\Throwable $th) {
-            return errorHandler('Error updating case study!', $th);
-        }        
+            return response()->json(['success' => false, 'message' => $th->getMessage()], 500);
+        }
     }    
 
     /**

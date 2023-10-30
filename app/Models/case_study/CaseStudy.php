@@ -21,7 +21,17 @@ class CaseStudy extends Model
      * Mass Assignable fields of model
      * @var array
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'tid', 
+        'programme_id', 
+        'date', 
+        'title', 
+        'situation', 
+        'intervention', 
+        'impact', 
+        'user_id', 
+        'ins'
+    ];
 
     /**
      * Default values for model fields
@@ -67,7 +77,7 @@ class CaseStudy extends Model
         });
 
         static::addGlobalScope('ins', function ($builder) {
-            $builder->where('ins', '=', auth()->user()->ins);
+            $builder->where('ins', auth()->user()->ins);
         });
     }
 }
