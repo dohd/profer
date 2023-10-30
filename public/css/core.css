@@ -1,4 +1,12 @@
 /**
+* Quill Richtext styling
+**/
+.richtext {
+  height: 250px; 
+  margin-bottom: 5px;
+}
+
+/**
 * Modify select2 height
 **/
 .select2-selection__rendered {
@@ -14,12 +22,11 @@
 /**
  * Modify Table padding and border
  * */
- .table-cstm th {
-    padding: 5px 8px;
- }
-
- .table-cstm td {
+.table-cstm th {
+  padding: 5px 8px;
+}
+.table-cstm td {
   padding-left: 8px;
   padding-right: 8px;
   border: none;
- }
+}
