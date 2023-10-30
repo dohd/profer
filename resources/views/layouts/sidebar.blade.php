@@ -8,44 +8,6 @@
     </li>
     <!-- End Dashboard Nav -->
 
-    <li class="nav-heading">Key Parameters</li>
-
-    <li class="nav-item">
-      <a
-        class="nav-link collapsed"
-        data-bs-target="#key-indicator"
-        data-bs-toggle="collapse"
-        href="#"
-      >
-        <i class="bi bi-tag"></i><span>Key Parameters</span
-        ><i class="bi bi-chevron-down ms-auto"></i>
-      </a>
-      <ul
-        id="key-indicator"
-        class="nav-content collapse"
-        data-bs-parent="#sidebar-nav"
-      >
-        <li>
-          <a href="{{ route('donors.index') }}"><i class="bi bi-circle"></i><span>Donors</span></a>
-        </li>
-        <li>
-          <a href="{{ route('programmes.index') }}"><i class="bi bi-circle"></i><span>Key Programmes</span></a>
-        </li>
-        <li>
-          <a href="{{ route('regions.index') }}"><i class="bi bi-circle"></i><span>Target Regions</span></a>
-        </li>
-        <li>
-          <a href="{{ route('cohorts.index') }}"><i class="bi bi-circle"></i><span>Target Cohorts</span></a>
-        </li>
-        <li>
-          <a href="{{ route('age_groups.index') }}"><i class="bi bi-circle"></i><span>Age Groups</span></a>
-        </li>
-        <li>
-          <a href="{{ route('disabilities.index') }}"><i class="bi bi-circle"></i><span>Disabilities</span></a>
-        </li>
-      </ul>
-    </li>
-
     <li class="nav-heading">Programme Management</li>
 
     {{-- proposals --}}
@@ -121,18 +83,50 @@
         <a href="{{ route('reports.participant_analysis') }}"><i class="bi bi-circle"></i><span>Participant Analysis</span></a>
       </li>
       </ul>
+    </li>    
+    
+    {{-- account settings --}}
+    <li class="nav-heading">Account Settings</li>
+    <li class="nav-item">
+      <a
+        class="nav-link collapsed"
+        data-bs-target="#key-indicator"
+        data-bs-toggle="collapse"
+        href="#"
+      >
+        <i class="bi bi-tag"></i><span>Key Parameters</span
+        ><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul
+        id="key-indicator"
+        class="nav-content collapse"
+        data-bs-parent="#sidebar-nav"
+      >
+        <li>
+          <a href="{{ route('donors.index') }}"><i class="bi bi-circle"></i><span>Donors</span></a>
+        </li>
+        <li>
+          <a href="{{ route('programmes.index') }}"><i class="bi bi-circle"></i><span>Key Programmes</span></a>
+        </li>
+        <li>
+          <a href="{{ route('regions.index') }}"><i class="bi bi-circle"></i><span>Target Regions</span></a>
+        </li>
+        <li>
+          <a href="{{ route('cohorts.index') }}"><i class="bi bi-circle"></i><span>Target Cohorts</span></a>
+        </li>
+        <li>
+          <a href="{{ route('age_groups.index') }}"><i class="bi bi-circle"></i><span>Age Groups</span></a>
+        </li>
+        <li>
+          <a href="{{ route('disabilities.index') }}"><i class="bi bi-circle"></i><span>Disabilities</span></a>
+        </li>
+      </ul>
     </li>
-
-    {{-- user management --}}
-    <li class="nav-heading">User Management</li>
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('user_profiles.index') }}">
         <i class="bi bi-people"></i><span>User Management</span>
       </a>
     </li>
-
-    {{-- account settings --}}
-    <li class="nav-heading">Account Settings</li>
     <li class="nav-item">
       <a class="nav-link collapsed" href="javascript:">
         <i class="bi bi-gear"></i> <span>Account Settings</span>
