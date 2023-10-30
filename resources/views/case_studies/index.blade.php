@@ -22,7 +22,7 @@
                         <tbody>
                             @foreach ($case_studies as $i => $item)
                                 <tr>
-                                    <th scope="row">{{ $i+1 }}</th>
+                                    <th scope="row" style="height: {{ !$i? '80px': 'inherit' }}">{{ $i+1 }}</th>
                                     <td><a href="{{ route('case_studies.show', $item) }}">{{ tidCode('case_study', $item->tid) }}</a></td>
                                     <td>{{ @$item->programme->name }}</td>
                                     <td>{{ $item->title }}</td>
