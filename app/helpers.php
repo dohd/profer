@@ -1,5 +1,25 @@
 <?php
 
+if (!function_exists('successFlashMessage')) {
+    function successFlashMessage() {
+        return '<div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle me-1"></i>
+        <strong></strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>';
+    }
+}
+
+if (!function_exists('errorFlashMessage')) {
+    function errorFlashMessage() {
+        return '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-octagon me-1"></i>
+        <strong></strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>';
+    }
+}
+
 if (!function_exists('spinner')) {
     function spinner() {
         return '<div class="d-flex justify-content-center"><div class="spinner-border text-primary ml-4" role="status"><span class="sr-only"></span></div></div>';
