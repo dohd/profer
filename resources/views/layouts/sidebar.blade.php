@@ -59,6 +59,14 @@
       </a>
     </li>
 
+    {{-- document imports --}}
+    <li class="nav-heading">Imports</li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="#">
+        <i class="bi bi-upload"></i><span>Document Import</span>
+      </a>
+    </li>
+
     {{-- reports --}}
     <li class="nav-heading">Reports</li>
     <li class="nav-item">
