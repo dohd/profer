@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Models\document_import\Traits;
+namespace App\Models\file_import\Traits;
 
 
-trait DocumentImportRelationship
+trait FileImportRelationship
 {
     public function programme()
     {

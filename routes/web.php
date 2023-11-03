@@ -7,7 +7,7 @@ use App\Http\Controllers\case_study\CaseStudyController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\cohort\CohortController;
 use App\Http\Controllers\disability\DisabilityController;
-use App\Http\Controllers\document_import\DocumentImportController;
+use App\Http\Controllers\file_import\FileImportController;
 use App\Http\Controllers\donor\DonorController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\log_frame\LogFrameController;
@@ -123,9 +123,11 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('case_studies', CaseStudyController::class);
 
     /**
-     * Document Imports
+     * File Imports
      */
-    Route::resource('document_imports', DocumentImportController::class);
+    Route::post('file_imports/datatable', [FileImportController::class, 'datatable'])->name('file_imports.datatable');
+    Route::resource('file_imports', FileImportController::class);
+
 
     /**
      * Reports

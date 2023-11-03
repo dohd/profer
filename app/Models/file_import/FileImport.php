@@ -1,31 +1,34 @@
 <?php
 
-namespace App\Models\document_import;
+namespace App\Models\file_import;
 
-use App\Models\document_import\Traits\DocumentImportAttribute;
-use App\Models\document_import\Traits\DocumentImportRelationship;
+use App\Models\file_import\Traits\FileImportAttribute;
+use App\Models\file_import\Traits\FileImportRelationship;
 use App\Models\ModelTrait;
 use Illuminate\Database\Eloquent\Model;
 
-class DocumentImport extends Model
+class FileImport extends Model
 {
-    use ModelTrait, DocumentImportAttribute, DocumentImportRelationship;
+    use ModelTrait, FileImportAttribute, FileImportRelationship;
 
     /**
      * The database table used by the model.
      * @var string
      */
-    protected $table = 'document_imports';
+    protected $table = 'file_imports';
 
     /**
      * Mass Assignable fields of model
      * @var array
      */
     protected $fillable = [
-        'name',
+        'category',
+        'category_dir',
+        'origin_name',
+        'file_name',
         'date',
         'user_id', 
-        'ins'
+        'ins',
     ];
 
     /**

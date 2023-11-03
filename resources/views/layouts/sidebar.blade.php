@@ -59,11 +59,11 @@
       </a>
     </li>
 
-    {{-- document imports --}}
+    {{-- file imports --}}
     <li class="nav-heading">Imports</li>
     <li class="nav-item">
-      <a class="nav-link collapsed" href="#">
-        <i class="bi bi-upload"></i><span>Document Import</span>
+      <a class="nav-link collapsed" href="{{ route('file_imports.index') }}">
+        <i class="bi bi-upload"></i><span>File Import</span>
       </a>
     </li>
 
