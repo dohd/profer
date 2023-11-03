@@ -39,15 +39,15 @@ trait ModelTrait
      */
     public function getButtonWrapperAttribute($view, $edit, $delete)
     {
+        $li = array_reduce([$view, $edit, $delete], function ($init, $curr){
+            return $curr? $init . "<li>{$curr}</li>" : $init;
+        }, '');
+        
         return '<div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Action
             </button>
-            <ul class="dropdown-menu">
-                <li>'. $view .'</li>
-                <li>'. $edit .'</li>
-                <li>'. $delete .'</li>
-            </ul>
+            <ul class="dropdown-menu">'. $li .'</ul>
         </div>
         ';
     }
