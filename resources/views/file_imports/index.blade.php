@@ -25,7 +25,7 @@
                         </div>
                         <div class="col-md-4 col-12">
                             <label class="form-label" for="file">File</label>
-                            {{ Form::file('import_file', ['class' => 'form-control', 'id' => 'import_file', 'accept' => '.csv, .pdf, .xls, .xlsx, .doc, .docx', 'required' => 'required' ]) }}
+                            {{ Form::file('file', ['class' => 'form-control', 'id' => 'file', 'accept' => '.csv, .pdf, .xls, .xlsx, .doc, .docx', 'required' => 'required' ]) }}
                         </div>
                         <div class="col-md-2 col-12">
                             {{ Form::submit('Upload', ['class' => 'btn btn-primary', 'style' => 'margin-top: 2em']) }}

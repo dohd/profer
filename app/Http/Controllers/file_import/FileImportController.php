@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\file_import;
 
 use App\Http\Controllers\Controller;
+use App\Imports\MeetingStatsImport;
 use App\Models\file_import\FileImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Excel;
 
 class FileImportController extends Controller
 {
@@ -50,11 +52,15 @@ class FileImportController extends Controller
         $request->validate([
             'date' => 'required',
             'category_dir' => 'required',
-            'import_file' => 'required',
+            'file' => 'required|mimes:csv,pdf,xls,xlsx,doc,docx',
         ]);
+        $file = $request->file('file');
         $input = inputClean($request->except('_token')); 
-        $input['file_name'] = $this->uploadFile($request->file('import_file'), $input['category_dir']);
+        $input['file_name'] = $this->uploadFile($file, $input['category_dir']);
         $input['origin_name'] = implode('_', array_slice(explode('_', $input['file_name']), 1));
+
+        // Process the Excel file
+        // Excel::import(new MeetingStatsImport, $file);
         
         try {
             $file_import = FileImport::create($input); 

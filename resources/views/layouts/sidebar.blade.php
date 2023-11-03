@@ -59,6 +59,13 @@
       </a>
     </li>
 
+    {{-- meeting statistics --}}
+    {{-- <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ route('case_studies.index') }}">
+        <i class="bi bi-activity"></i></i><span>Meeting Statistics</span>
+      </a>
+    </li> --}}
+
     {{-- file imports --}}
     <li class="nav-heading">Imports</li>
     <li class="nav-item">
@@ -84,6 +91,9 @@
         class="nav-content collapse"
         data-bs-parent="#sidebar-nav"
       >
+      <li>
+        <a href="{{ route('reports.monthly_meetings') }}"><i class="bi bi-circle"></i><span>Monthly Meetings</span></a>
+      </li>
       <li>
         <a href="{{ route('reports.narrative_report') }}"><i class="bi bi-circle"></i><span>Narrative Report</span></a>
       </li>
