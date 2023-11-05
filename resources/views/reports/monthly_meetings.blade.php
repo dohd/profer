@@ -8,7 +8,7 @@
         <div class="card-body">
             <div class="card-content p-2">
                 <div class="row">
-                    <div class="col-md-3 col-12">
+                    {{-- <div class="col-md-3 col-12">
                         <label for="month">Report Month</label>
                         <select id="month" class="custom-select col-12 mt-2">
                             <option value="">-- Select Month --</option>
@@ -18,6 +18,10 @@
                                 </option>
                             @endforeach
                         </select>
+                    </div> --}}
+                    <div class="col-md-3">
+                        <label for="month">Report Month</label>
+                        <input type="text" value="{{ date('m-Y') }}" id="month" class="form-control datepicker" readonly>
                     </div>
                 </div>
             </div>
@@ -134,21 +138,16 @@
 
 @section('script')
 <script>
-    // on activity change
-    const tableTempl = $('.table-responsive').html();
-    $('#activity').change(function() {
-        if (!this.value) return $('.table-responsive').html(tableTempl);  
-
-        const spinner = @json(spinner());
-        $('.table-responsive').html(spinner);
-        // fetch report
-        const url = "{{ route('reports.narrative_data') }}";
-        const params = {proposal_item_id: this.value || 0};
-        $.post(url, params, data => {
-            $('.table-responsive').html(tableTempl);
-            $('.table-responsive tbody').html(data);
-        });       
-    })
+    $('#month').datepicker({
+        autoHide: true,
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        format: 'MM-yyyy',
+        onClose: function(dateText, inst) { 
+            $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+        }
+    });
 </script>
 @stop
 
