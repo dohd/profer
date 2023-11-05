@@ -24,9 +24,9 @@
         <div class="col-12">
             <h4 class="text-center text-primary"><b>{{ strtoupper($proposal->title) }}</b></h4>
             <h5 class="text-center">
-                Period <b>{{ date('d-M-Y', strtotime($proposal->start_date)) }}</b> to <b>{{ date('d-M-Y', strtotime($proposal->end_date)) }}</b> <br>
-                Budget <b>{{ number_format($proposal->budget, 2) }}</b>
+                Period <b>{{ date('d-M-Y', strtotime($proposal->start_date)) }}</b> to <b>{{ date('d-M-Y', strtotime($proposal->end_date)) }}</b>
             </h5>
+            <h5 class="text-center">Budget <b>{{ number_format($proposal->budget, 2) }}</b></h5>
         </div>
     </div>
 
