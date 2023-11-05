@@ -5,6 +5,7 @@ use App\Http\Controllers\age_group\AgeGroupController;
 use App\Http\Controllers\agenda\AgendaController;
 use App\Http\Controllers\case_study\CaseStudyController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\budget\BudgetController;
 use App\Http\Controllers\cohort\CohortController;
 use App\Http\Controllers\disability\DisabilityController;
 use App\Http\Controllers\file_import\FileImportController;
@@ -76,6 +77,11 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('proposals/items', [ProposalController::class, 'proposal_items'])->name('proposals.items');
     Route::post('proposals/datatable', [ProposalController::class, 'datatable'])->name('proposals.datatable');
     Route::resource('proposals', ProposalController::class);
+
+    /**
+     * Project Budget
+     */
+    Route::resource('budgets', BudgetController::class);
 
     /**
      * Log Frames
