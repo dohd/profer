@@ -17,6 +17,13 @@
       </a>
     </li>
 
+    {{-- project budget --}}
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ route('budgets.index') }}">
+        <i class="bi bi-cash-stack"></i></i><span>Project Budget</span>
+      </a>
+    </li>
+
     {{-- log frame --}}
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('log_frames.index') }}">
@@ -58,13 +65,6 @@
         <i class="bi bi-file-earmark-text"></i></i><span>Case Studies</span>
       </a>
     </li>
-
-    {{-- meeting statistics --}}
-    {{-- <li class="nav-item">
-      <a class="nav-link collapsed" href="{{ route('case_studies.index') }}">
-        <i class="bi bi-activity"></i></i><span>Meeting Statistics</span>
-      </a>
-    </li> --}}
 
     {{-- file imports --}}
     <li class="nav-heading">Imports</li>
