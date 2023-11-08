@@ -19,9 +19,12 @@
                             @endforeach
                         </select>
                     </div> --}}
-                    <div class="col-md-3">
+                    <div class="col-md-3 col-12">
                         <label for="month">Report Month</label>
                         <input type="text" value="{{ date('m-Y') }}" id="month" class="form-control datepicker" readonly>
+                    </div>
+                    <div class="col-md-2 col-12">
+                        {{ Form::submit('Generate', ['class' => 'btn btn-primary mt-4']) }}
                     </div>
                 </div>
             </div>
