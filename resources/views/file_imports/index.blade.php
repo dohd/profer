@@ -17,7 +17,15 @@
                             <label for="file_category">File Category</label>
                             <select name="category_dir" id="category_dir" class="custom-control col-12 mt-3">
                                 <option value="">-- Select Category --</option>
-                                @foreach (['participant_list' => 'Participant List'] as $key => $value)
+                                @php
+                                    $categories = [
+                                        'monthly_meetings' => 'External Meetings',
+                                        'bnf_list_self_advocates' => 'Self-Advocates (Benefeciary List)',
+                                        'bnf_list_families' => 'Families (Benefeciary List)',
+                                        'bnf_list_support_group' => 'Support Group (Benefeciary List)',
+                                    ];
+                                @endphp
+                                @foreach ($categories as $key => $value)
                                     <option value="{{ $key }}">{{ $value }}</option>
                                 @endforeach
                             </select>
