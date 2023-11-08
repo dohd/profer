@@ -8,7 +8,7 @@
         <div class="card-body">
             <h5 class="card-title">Participant List Details</h5>
             <div class="card-content p-2">
-                {{ Form::model($participant_list, ['route' => ['participant_lists.update', $participant_list], 'method' => 'PATCH', 'class' => 'form']) }}
+                {{ Form::model($participant_list, ['route' => ['participant_lists.update', $participant_list], 'method' => 'PATCH', 'files' => true, 'class' => 'form']) }}
                     @include('participant_lists.form')
                     <div class="text-center">
                         <a href="{{ route('participant_lists.index') }}" class="btn btn-secondary">Cancel</a>

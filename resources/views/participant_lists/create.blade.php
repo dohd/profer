@@ -8,7 +8,7 @@
         <div class="card-body">
             <h5 class="card-title">Create Participant List</h5>
             <div class="card-content p-2">
-                {{ Form::open(['route' => 'participant_lists.store', 'method' => 'POST', 'class' => 'form']) }}
+                {{ Form::open(['route' => 'participant_lists.store', 'method' => 'POST', 'files' => true, 'class' => 'form']) }}
                     @include('participant_lists.form')
                     <div class="text-center">
                         <a href="{{ route('participant_lists.index') }}" class="btn btn-secondary">Cancel</a>
