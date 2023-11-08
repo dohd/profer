@@ -1,6 +1,6 @@
 @extends('layouts.core')
 
-@section('title', 'Monthly Meetings Report')
+@section('title', 'External Meetings Report')
     
 @section('content')
     @include('reports.partial.monthly_meetings_header')
@@ -33,7 +33,7 @@
     
     <div class="card">
         <div class="card-body">
-            <div class="card-title p-0 pt-2 m-0">MONTHLY MEETING REPORT - NOVEMBER 2023</div>
+            <div class="card-title p-0 pt-2 m-0">MEETING DATA REPORT - NOVEMBER 2023</div>
             <div class="card-content p-2">
                 <div class="table-responsive">
                     <table class="table table-bordered mt-3">
@@ -58,28 +58,34 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <td>Sample Meeting</td>
-                            <td>Nairobi</td>
-                            <td>Teachers</td>
-                            <td>01-11-2023</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>6</td>                    
+                            <tr>
+                                <td>Sample Meeting</td>
+                                <td>Nairobi</td>
+                                <td>Teachers</td>
+                                <td>01-11-2023</td>
+                                @foreach (range(1,6) as $n)
+                                    <td>1</td>
+                                @endforeach
+                                <td>6</td>                    
+                            </tr>
+                            <tr>
+                                <td>Sample Meeting 2</td>
+                                <td>Mombasa</td>
+                                <td>Farmers</td>
+                                <td>10-12-2023</td>
+                                @foreach (range(1,6) as $n)
+                                    <td>2</td>
+                                @endforeach
+                                <td>12</td>                    
+                            </tr>
                         </tbody>
                         <tfoot class="bg-light bg-gradient">
                             <tr>
                                 <th colspan="4">Total</th>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>6</td>  
+                                @foreach (range(1,6) as $n)
+                                    <td>3</td>
+                                @endforeach
+                                <td>18</td>  
                             </tr>
                         </tfoot>
                     </table>
@@ -111,25 +117,28 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <td colspan="4">Physical Disability</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>6</td>
+                            <tr>
+                                <td colspan="4">Physical Disability</td>
+                                @foreach (range(1,6) as $n)
+                                    <td>1</td>
+                                @endforeach
+                                <td>6</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">Multiple Disability</td>
+                                @foreach (range(1,6) as $n)
+                                    <td>2</td>
+                                @endforeach
+                                <td>12</td>
+                            </tr>
                         </tbody>
                         <tfoot class="bg-light bg-gradient">
                             <tr>
                                 <th colspan="4">Total</th>
-                                <th>1</th>
-                                <th>1</th>
-                                <th>1</th>
-                                <th>1</th>
-                                <th>1</th>
-                                <th>1</th>
-                                <th>6</th>
+                                @foreach (range(1,6) as $n)
+                                    <td>3</td>
+                                @endforeach
+                                <th>18</th>
                             </tr>
                         </tfoot>
                     </table>
