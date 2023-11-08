@@ -20,6 +20,14 @@ use Illuminate\Http\Request;
 class ReportController extends Controller
 {
     /**
+     * Beneficiary List Report 
+     */
+    public function beneficiary_list()
+    {
+        return view('reports.beneficiary_list');
+    }
+
+    /**
      * Monthly Meetings Report 
      */
     public function monthly_meetings()

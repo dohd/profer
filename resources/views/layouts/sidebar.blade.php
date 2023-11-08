@@ -92,7 +92,10 @@
         data-bs-parent="#sidebar-nav"
       >
       <li>
-        <a href="{{ route('reports.monthly_meetings') }}"><i class="bi bi-circle"></i><span>Monthly Meetings</span></a>
+        <a href="{{ route('reports.monthly_meetings') }}"><i class="bi bi-circle"></i><span>External Meetings</span></a>
+      </li>
+      <li>
+        <a href="{{ route('reports.beneficiary_list') }}"><i class="bi bi-circle"></i><span>Beneficiary List</span></a>
       </li>
       <li>
         <a href="{{ route('reports.narrative_report') }}"><i class="bi bi-circle"></i><span>Narrative Report</span></a>

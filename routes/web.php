@@ -139,6 +139,7 @@ Route::group(['middleware' => 'auth'], function() {
     /**
      * Reports
      */
+    Route::get('reports/beneficiary_list', [ReportController::class, 'beneficiary_list'])->name('reports.beneficiary_list');
     Route::get('reports/monthly_meetings', [ReportController::class, 'monthly_meetings'])->name('reports.monthly_meetings');
     Route::get('reports/narrative_report', [ReportController::class, 'narrative_report'])->name('reports.narrative_report');
     Route::get('reports/participant_analysis', [ReportController::class, 'participant_analysis'])->name('reports.participant_analysis');
