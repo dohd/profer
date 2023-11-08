@@ -20,10 +20,8 @@ class ProposalController extends Controller
     public function index(Request $request)
     {
         $grp_status_count = Proposal::selectRaw('status, COUNT(*) as count')->groupBy('status')->pluck('count', 'status');
-        $wo_logframe_count = Proposal::where('status', 'approved')->doesntHave('log_frame')->count();
-        $wo_action_plan_count = Proposal::where('status', 'approved')->doesntHave('action_plans')->count();
 
-        return view('proposals.index', compact('grp_status_count', 'wo_logframe_count', 'wo_action_plan_count'));
+        return view('proposals.index', compact('grp_status_count'));
     }
 
     /**
