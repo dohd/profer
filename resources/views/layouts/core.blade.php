@@ -78,6 +78,7 @@
   <script src="{{ asset('vendor/vkurko-calendar-0.18.1/calendar.min.js') }}"></script>
   <script src="{{ asset('vendor/validator/jquery.validate.min.js') }}"></script>
   <script src="{{ asset('vendor/datepicker/datepicker.min.js') }}"></script>
+  <script src="{{ asset('vendor/accounting/accounting.min.js') }}"></script>
 
   <!-- Template Main JS File -->
   <script src="{{ asset('js/main.js') }}"></script>
