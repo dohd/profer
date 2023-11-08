@@ -1,17 +1,17 @@
 @extends('layouts.core')
 
-@section('title', 'Edit | Programme Management')
+@section('title', 'Edit | Project Budget')
     
 @section('content')
-    @include('programmes.header')
+    @include('budgets.header')
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Programme Details</h5>
+            <h5 class="card-title">Edit Project Budget</h5>
             <div class="card-content p-2">
-                {{ Form::model($programme, ['route' => ['programmes.update', $programme], 'method' => 'PATCH', 'class' => 'form']) }}
-                    @include('programmes.form')
+                {{ Form::model($budget, ['route' => ['budgets.update', $budget], 'method' => 'PATCH', 'class' => 'form']) }}
+                    @include('budgets.form')
                     <div class="text-center">
-                        <a href="{{ route('programmes.index') }}" class="btn btn-secondary">Cancel</a>
+                        <a href="{{ route('budgets.index') }}" class="btn btn-secondary">Cancel</a>
                         {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
                     </div>
                 {{ Form::close() }}

@@ -12,17 +12,18 @@
                         <thead>
                         <tr>
                             <th scope="col">#No.</th>
-                            <th scope="col">#Project No.</th>
-                            <th scope="col">Project</th>
+                            <th scope="col">Budgeted Project</th>
+                            <th scope="col">Budget Status</th>
                             <th scope="col">Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                            @foreach ([] as $i => $programme)
+                            @foreach ($budgets as $i => $budget)
                                 <tr>
-                                    <th scope="row">{{ $i+1 }}</th>
-                                    <td><a href="{{ route('programmes.show', $programme) }}">{{ $programme->name }}</a></td>
-                                    <td>{!! $programme->action_buttons !!}</td>
+                                    <th scope="row" style="height: {{ !$i? '80px': '' }}">{{ $i+1 }}</th>
+                                    <td>({{ tidCode('proposal', @$budget->proposal->tid) }}) {{ @$budget->proposal->title }}</td>
+                                    <td><span class="badge bg-{{ $budget->status == 'approved'? 'success' : 'secondary' }}">{{ $budget->status }}</span></td>
+                                    <td>{!! $budget->action_buttons !!}</td>
                                 </tr>
                             @endforeach
                         </tbody>

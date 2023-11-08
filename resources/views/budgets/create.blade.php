@@ -1,6 +1,6 @@
 @extends('layouts.core')
 
-@section('title', 'Create Project Budget')
+@section('title', 'Create | Project Budget')
 
 @section('content')
     @include('budgets.header')
