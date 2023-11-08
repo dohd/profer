@@ -1,30 +1,30 @@
 <?php
 
-namespace App\Models\budget;
+namespace App\Models\item;
 
-use App\Models\budget\Traits\BudgetAttribute;
-use App\Models\budget\Traits\BudgetRelationship;
-use App\Models\ModelTrait;
+use App\Models\item\Traits\BudgetItemRelationship;
 use Illuminate\Database\Eloquent\Model;
 
-class Budget extends Model
-{
-    use ModelTrait, BudgetAttribute, BudgetRelationship;
-
+class BudgetItem extends Model
+{  
+    use BudgetItemRelationship;
+    
     /**
      * The database table used by the model.
      * @var string
      */
-    protected $table = 'budgets';
+    protected $table = 'budget_items';
 
     /**
      * Mass Assignable fields of model
      * @var array
      */
     protected $fillable = [
-        'proposal_id',
-        'user_id', 
-        'ins',
+        'budget_id',
+        'proposal_item_id',
+        'type',
+        'name',
+        'budget',
     ];
 
     /**
@@ -62,15 +62,5 @@ class Budget extends Model
     protected static function boot()
     {
         parent::boot();
-
-        static::creating(function ($instance) {
-            $instance->user_id = auth()->user()->id;
-            $instance->ins = auth()->user()->ins;
-            return $instance;
-        });
-
-        static::addGlobalScope('ins', function ($builder) {
-            $builder->where('ins', auth()->user()->ins);
-        });
     }
 }

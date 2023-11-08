@@ -81,6 +81,7 @@ Route::group(['middleware' => 'auth'], function() {
     /**
      * Project Budget
      */
+    Route::post('budgets/proposal_items', [BudgetController::class, 'proposal_items'])->name('budgets.proposal_items');
     Route::resource('budgets', BudgetController::class);
 
     /**
