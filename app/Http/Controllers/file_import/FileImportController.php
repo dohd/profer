@@ -63,7 +63,7 @@ class FileImportController extends Controller
         // Excel::import(new MeetingStatsImport, $file);
         
         try {
-            $file_import = FileImport::create($input); 
+            FileImport::create($input); 
 
             return redirect(route('file_imports.index'))->with(['success' => 'File uploaded successfully']);
         } catch (\Throwable $th) {
@@ -91,10 +91,7 @@ class FileImportController extends Controller
      */
     public function destroy(FileImport $file_import)
     { 
-        $file_path = 'files' . DIRECTORY_SEPARATOR . $file_import->category_dir . DIRECTORY_SEPARATOR;
-        if (Storage::disk('public')->exists($file_path . $file_import->file_name)) {
-            Storage::disk('public')->delete($file_path . $file_import->file_name);
-        }
+        $this->deleteFile($file_import);
         
         try {
             $file_import->delete();
@@ -112,7 +109,17 @@ class FileImportController extends Controller
         $file_name = time() . '_' . $file->getClientOriginalName();
         $file_path = 'files' . DIRECTORY_SEPARATOR . $category . DIRECTORY_SEPARATOR;
         Storage::disk('public')->put($file_path . $file_name, file_get_contents($file->getRealPath()));
-        
         return $file_name;
+    }
+
+    /**
+     * Delete file from storage
+     */
+    public function deleteFile($record)
+    {
+        $file_path = 'files' . DIRECTORY_SEPARATOR . $record->category_dir . DIRECTORY_SEPARATOR;
+        $file_exists = Storage::disk('public')->exists($file_path . $record->file_name);
+        if ($file_exists) Storage::disk('public')->delete($file_path . $record->file_name);
+        return $file_exists;
     }
 }
