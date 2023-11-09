@@ -130,11 +130,15 @@ class ProposalController extends Controller
     {
         // dd($request->all());
         if ($request->status) {
-            // update log_frame status
+            // update proposal status
             $data = $request->only('status', 'status_note');
             if (empty($data['status_note'])) unset($data['status_note']);
-            if ($proposal->update($data)) return redirect()->back()->with('success', 'Status updated successfully');
-            else errorHandler('Error updating status!');
+            try {
+                $proposal->update($data);
+                return redirect()->back()->with('success', 'Status updated successfully');
+            } catch (\Throwable $th) {
+                errorHandler('Error updating status!');
+            }
         } else {
             // update proposal
             $request->validate([
