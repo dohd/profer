@@ -104,25 +104,37 @@ class BudgetController extends Controller
     public function update(Request $request, Budget $budget)
     {
         // dd($request->all());
-        $request->validate([
-            'proposal_id' => 'required',
-        ]);
-        
-        try {
-            // $input = inputClean($request->except('_token'));
-            // $budget = Budget::create($input);
+        if ($request->status) {
+            // update budget status
+            $data = $request->only('status', 'status_note');
+            if (empty($data['status_note'])) unset($data['status_note']);
+            try {
+                $budget->update($data);
+                return redirect()->back()->with('success', 'Status updated successfully');
+            } catch (\Throwable $th) {
+                errorHandler('Error updating status!');
+            }
+        } else {
+            $request->validate([
+                'proposal_id' => 'required',
+            ]);
+            
+            try {
+                // $input = inputClean($request->except('_token'));
+                // $budget = Budget::create($input);
 
-            // budget items
-            // $input_items = $request->only('budget', 'name', 'proposal_item_id', 'type');
-            // $input_items['budget'] = array_map(fn($v) => numberClean($v), $input_items['budget']);
-            // $data_items = databaseArray($input_items);
-            // $data_items = fillArrayRecurse($data_items, ['budget_id' => $budget->id]);
-            // BudgetItem::insert($data_items);
+                // budget items
+                // $input_items = $request->only('budget', 'name', 'proposal_item_id', 'type');
+                // $input_items['budget'] = array_map(fn($v) => numberClean($v), $input_items['budget']);
+                // $data_items = databaseArray($input_items);
+                // $data_items = fillArrayRecurse($data_items, ['budget_id' => $budget->id]);
+                // BudgetItem::insert($data_items);
 
-            // DB::commit();
-            return redirect(route('budgets.index'))->with(['success' => 'Budget updated successfully']);
-        } catch (\Throwable $th) {
-            errorHandler('Error creating budget!');
+                // DB::commit();
+                return redirect(route('budgets.index'))->with(['success' => 'Budget updated successfully']);
+            } catch (\Throwable $th) {
+                errorHandler('Error creating budget!');
+            }
         }
     }    
 
