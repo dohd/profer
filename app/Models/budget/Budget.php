@@ -23,6 +23,8 @@ class Budget extends Model
      */
     protected $fillable = [
         'proposal_id',
+        'status',
+        'status_note',
         'user_id', 
         'ins',
     ];

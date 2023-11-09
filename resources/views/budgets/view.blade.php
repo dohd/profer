@@ -13,6 +13,23 @@
                 </span>
             </h5>
             <div class="card-content p-2">
+                <div class="row mb-2">
+                    <div class="col-12">
+                        @if (in_array($budget->status, ['approved', 'pending']))
+                            <b>Approval Status: </b>
+                            <span class="badge bg-{{ $budget->status == 'approved'? 'success' : 'secondary' }}">{{ $budget->status }}</span>
+                        @endif
+                        <p class="text-center">
+                            @if ($budget->status_note && $budget->status == 'rejected')
+                                <b>Approval Status: </b>
+                                <span class="badge bg-danger text-white">Rejected</span>
+                                <br>
+                                {{ $budget->status_note }}
+                            @endif
+                        </p>
+                    </div>
+                </div>
+
                 <div class="table-responsive">
                     <table class="table table-cstm" id="budgetItemsTbl">
                         <thead>
