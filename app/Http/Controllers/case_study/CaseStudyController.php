@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\case_study\CaseStudy;
 use App\Models\programme\Programme;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class CaseStudyController extends Controller
@@ -50,13 +51,31 @@ class CaseStudyController extends Controller
             'intervention' => 'required',
             'impact' => 'required',
         ]);
-        
         if ($validator->fails()) {
             return response()->json(['success' => false, 'message' => 'Input all required(*) fields'], 400);
         }
-        
+
+        $validator = Validator::make($request->all(), [
+            'image1' => $request->image1? 'required|mimes:png,jpg,jpeg' : 'nullable',
+            'image2' => $request->image2? 'required|mimes:png,jpg,jpeg' : 'nullable',
+            'image3' => $request->image3? 'required|mimes:png,jpg,jpeg' : 'nullable',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'message' => 'Unsupported image format! Use png, jpg or jpeg'], 400);
+        }
+
+        $input = $request->except('_token');
+        $images = $request->only('image1', 'image2', 'image3');
+        foreach ($images as $key => $value) {
+            $file = $request->file($key);
+            if ($file) {
+                $file_name = $this->uploadFile($file);
+                $input[$key] = $file_name;
+            }
+        }
+
         try {
-            $input = inputClean($request->except('_token')); 
+            $input = inputClean($input); 
             $case_study = CaseStudy::create($input); 
 
             return response()->json(['success' => true, 'message' => 'Case Study created successfully', 'redirectTo' => route('case_studies.edit', $case_study)]);
@@ -106,13 +125,31 @@ class CaseStudyController extends Controller
             'intervention' => 'required',
             'impact' => 'required',
         ]);
-        
         if ($validator->fails()) {
             return response()->json(['success' => false, 'message' => 'Input all required(*) fields'], 400);
         }
+
+        $validator = Validator::make($request->all(), [
+            'image1' => $request->image1? 'required|mimes:png,jpg,jpeg' : 'nullable',
+            'image2' => $request->image2? 'required|mimes:png,jpg,jpeg' : 'nullable',
+            'image3' => $request->image3? 'required|mimes:png,jpg,jpeg' : 'nullable',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'message' => 'Unsupported image format! Use png, jpg or jpeg'], 400);
+        }
+
+        $input = $request->except('_token');
+        $images = $request->only('image1', 'image2', 'image3');
+        foreach ($images as $key => $value) {
+            $file = $request->file($key);
+            if ($file) {
+                $file_name = $this->uploadFile($file);
+                $input[$key] = $file_name;
+            }
+        }
         
         try {
-            $input = inputClean($request->except('_token')); 
+            $input = inputClean($input); 
             $case_study->update($input);
 
             return response()->json(['success' => true, 'message' => 'Case Study updated successfully']);
@@ -135,5 +172,46 @@ class CaseStudyController extends Controller
         } catch (\Throwable $th) {
             return errorHandler('Error deleting case study!', $th);
         }
+    }
+
+    /**
+     * Remove the image from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function delete_image(Request $request)
+    { 
+        try {
+            $case_study = CaseStudy::find($request->case_study_id);
+            $this->deleteFile($case_study[$request->field]);
+            $case_study->update([$request->field => null]);
+
+            return response()->json(['success' => true, 'message' => 'Image deleted successfully', 'redirectTo' => route('case_studies.show', $case_study)]);
+        } catch (\Throwable $th) {
+            return response()->json(['success' => false, 'message' => $th->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Upload file to storage
+     */
+    public function uploadFile($file)
+    {
+        $file_name = time() . '_' . $file->getClientOriginalName();
+        $file_path = 'images' . DIRECTORY_SEPARATOR . 'case_studies' . DIRECTORY_SEPARATOR;
+        Storage::disk('public')->put($file_path . $file_name, file_get_contents($file->getRealPath()));
+        return $file_name;
+    }
+
+    /**
+     * Delete file from storage
+     */
+    public function deleteFile($file_name)
+    {
+        $file_path = 'images' . DIRECTORY_SEPARATOR . 'case_studies' . DIRECTORY_SEPARATOR;
+        $file_exists = Storage::disk('public')->exists($file_path . $file_name);
+        if ($file_exists) Storage::disk('public')->delete($file_path . $file_name);
+        return $file_exists;
     }
 }

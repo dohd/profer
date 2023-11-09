@@ -8,7 +8,7 @@
         <div class="card-body">
             <h5 class="card-title">Create Case Study</h5>
             <div class="card-content p-2">
-                {{ Form::open(['route' => 'case_studies.store', 'method' => 'POST', 'class' => 'form']) }}
+                {{ Form::open(['route' => 'case_studies.store', 'method' => 'POST', 'files' => true, 'class' => 'form']) }}
                     @include('case_studies.form')
                     <div class="text-center">
                         <a href="{{ route('case_studies.index') }}" class="btn btn-secondary">Cancel</a>

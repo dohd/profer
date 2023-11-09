@@ -20,6 +20,7 @@ use App\Http\Controllers\proposal\ProposalController;
 use App\Http\Controllers\region\RegionController;
 use App\Http\Controllers\report\ReportController;
 use App\Http\Controllers\role\RoleController;
+use App\Http\Controllers\storage\StorageController;
 use App\Http\Controllers\user_profile\UserProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -127,6 +128,7 @@ Route::group(['middleware' => 'auth'], function() {
     /**
      * Case Studies
      */
+    Route::post('case_studies/delete_image', [CaseStudyController::class, 'delete_image'])->name('case_studies.delete_image');
     Route::resource('case_studies', CaseStudyController::class);
 
     /**
@@ -151,6 +153,11 @@ Route::group(['middleware' => 'auth'], function() {
      * PDFs
      */
     Route::get('pdfs/agenda/{agenda}/{token}', [PdfController::class, 'print_agenda'])->name('pdfs.print_agenda');
+
+    /**
+     * Storage
+     */
+    Route::get('storage/{file_params}', [StorageController::class, 'file_render'])->name('storage.file_render');
 });
 
 

@@ -29,6 +29,12 @@ class CaseStudy extends Model
         'situation', 
         'intervention', 
         'impact', 
+        'image1',
+        'image2',
+        'image3',
+        'caption1',
+        'caption2',
+        'caption3',
         'user_id', 
         'ins'
     ];

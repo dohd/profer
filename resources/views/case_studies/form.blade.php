@@ -42,6 +42,23 @@
         <div class="richtext" id="impact_text">{!! @$case_study->impact !!}</div>
     </div>
 </div>
+<div class="row mb-3">
+    <div class="col-md-4 col-12">
+        <label class="form-label" for="file">Image 1</label>
+        {{ Form::file('image1', ['class' => 'form-control', 'id' => 'image1', 'accept' => '.png, .jpg, .jpeg' ]) }}
+        {{ Form::text('caption1', null, ['class' => 'form-control mt-1', 'placeholder' => 'Image 1 Caption']) }}
+    </div>
+    <div class="col-md-4 col-12">
+        <label class="form-label" for="file">Image 2</label>
+        {{ Form::file('image2', ['class' => 'form-control', 'id' => 'image2', 'accept' => '.png, .jpg, .jpeg' ]) }}
+        {{ Form::text('caption2', null, ['class' => 'form-control mt-1', 'placeholder' => 'Image 2 Caption']) }}
+    </div>
+    <div class="col-md-4 col-12">
+        <label class="form-label" for="file">Image 3</label>
+        {{ Form::file('image3', ['class' => 'form-control', 'id' => 'image3', 'accept' => '.png, .jpg, .jpeg' ]) }}
+        {{ Form::text('caption3', null, ['class' => 'form-control mt-1', 'placeholder' => 'Image 3 Caption']) }}
+    </div>
+</div>
 
 @section('script')
 <script>
@@ -54,13 +71,16 @@
     $(".form").validate({
         submitHandler: function (form) {
             event.preventDefault();
-            $.post($(form).attr('action'), $(form).serialize())
-            .done(function(data) {
-                flashMessage(data);
-            })
-            .catch(function(data) {
-                flashMessage(data)
-            });
+            const formData = new FormData(form);
+            $.ajax({
+                url: $(form).attr('action'),
+                type: 'POST',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+            }).done((data) => flashMessage(data))
+            .catch((data) => flashMessage(data));
         },
     });
 </script>
