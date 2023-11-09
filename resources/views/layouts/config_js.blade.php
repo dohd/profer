@@ -18,9 +18,12 @@ function flashMessage(data) {
     if (data.responseJSON) {
         alert = @json(errorFlashMessage());
         message = data.responseJSON.message;
-    } else {
+    } else if(data.message) {
         alert = @json(successFlashMessage());
         message = data.message;
+    } else {
+        alert = @json(errorFlashMessage());
+        message = 'Oops! Something went wrong. Please try again later';
     }
     $('div#main').prepend(alert);
     $('div.alert strong').html(message);
