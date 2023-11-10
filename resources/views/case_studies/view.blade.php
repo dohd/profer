@@ -84,9 +84,11 @@
         const field = $(this).attr('name');
         const case_study_id = @json($case_study->id);
         const url = @json(route('case_studies.delete_image'));
-        $.post(url, {case_study_id, field})
-        .done((data) => flashMessage(data))
-        .catch((data) => flashMessage(data));
+        if (confirm('Are you sure?')) {
+            $.post(url, {case_study_id, field})
+            .done((data) => flashMessage(data))
+            .catch((data) => flashMessage(data));
+        }
     });
 </script>
 @endsection
