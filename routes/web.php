@@ -82,6 +82,7 @@ Route::group(['middleware' => 'auth'], function() {
     /**
      * Project Budget
      */
+    Route::post('budgets/budget_tracker/{budget}', [BudgetController::class, 'budget_tracker'])->name('budgets.budget_tracker');
     Route::post('budgets/edit_expenses/{budget_expense}', [BudgetController::class, 'edit_expenses'])->name('budgets.edit_expenses');
     Route::post('budgets/update_expenses/{budget_expense}', [BudgetController::class, 'update_expenses'])->name('budgets.update_expenses');
     Route::post('budgets/destroy_expenses/{budget_expense}', [BudgetController::class, 'destroy_expenses'])->name('budgets.destroy_expenses');
