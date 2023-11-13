@@ -66,7 +66,7 @@
     }).trigger('change');
 
     // Expense month
-    $('#month').datepicker({
+    $('#query-month').datepicker({
         autoHide: true,
         changeMonth: true,
         changeYear: true,
@@ -75,6 +75,25 @@
         onClose: function(dateText, inst) { 
             $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
         }
+    });
+
+    // Search month on budget tracker
+    $('#query-btn').click(function() {
+        $('#budgetItemsTbl tbody').html('');
+        const query_month = $('#query-month').val();
+        $.post("{{ route('budgets.budget_tracker', $budget) }}", {query_month})
+        .done((data) => {
+            $('#budgetItemsTbl tbody').html(data);
+            const budgetGrandtotal = accounting.unformat($('#budget-grandtotal').val());
+            const costGrandtotal = accounting.unformat($('#cost-grandtotal').val());
+            $('.budget-grandtotal').text(accounting.formatNumber(budgetGrandtotal,2));
+            $('.cost-grandtotal').text(accounting.formatNumber(costGrandtotal,2));
+        })
+        .catch((res) => res);
+    }).trigger('click');
+    $('#reload-btn').click(function() {
+        $('#query-month').val('');
+        $('#query-btn').click();
     });
 </script>
 @include('budgets.modal_js')

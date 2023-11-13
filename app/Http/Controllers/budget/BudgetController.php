@@ -281,4 +281,30 @@ class BudgetController extends Controller
 
         return response()->json($cost_items);
     }
+
+    /**
+     * Budget Tracker
+     */
+    function budget_tracker(Budget $budget)
+    {
+        $expense_totals = BudgetExpense::when(request('query_month'), function($q) {
+            $params = explode('-', request('query_month'));
+            $q->whereMonth('date', $params[0])->whereYear('date', $params[1]);
+        })
+        ->selectRaw('cost_item_id, SUM(amount) as total')
+        ->groupBy('cost_item_id')->get();
+
+        $budget_items = $budget->items;
+        foreach ($budget_items as $i => $item) {
+            foreach ($expense_totals as $group) {
+                if ($item->id == $group->cost_item_id) {
+                    $budget_items[$i]['total_cost'] = $group->total;
+                    $budget_items[$i]['burn_rate'] = round(($group->total/$item->budget) * 100); 
+                }
+            }
+        }
+        $budget->items = $budget_items;
+        
+        return view('budgets.partial.budget_tracker', compact('budget', 'expense_totals'));
+    }
 }
