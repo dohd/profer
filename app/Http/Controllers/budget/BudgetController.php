@@ -79,9 +79,9 @@ class BudgetController extends Controller
      */
     public function show(Budget $budget)
     {
-        $objectives = $budget->proposal? $budget->proposal->objectives : [];
+        $item_categories = $budget->items()->whereIn('type', ['objective', 'personnel_cost', 'overhead_cost'])->get();
         
-        return view('budgets.view', compact('budget', 'objectives'));
+        return view('budgets.view', compact('budget', 'item_categories'));
     }
 
     /**
@@ -168,7 +168,8 @@ class BudgetController extends Controller
      */
     public function edit_expenses(BudgetExpense $budget_expense)
     {
-        $budget_expense['activity'] = $budget_expense->activity;
+        $budget_expense['cost_item'] = $budget_expense->cost_item;
+        
         return response()->json($budget_expense);
     }
 
@@ -179,11 +180,11 @@ class BudgetController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store_expenses(Request $request)
-    {
+    {   
         $request->validate([
             'budget_id' => 'required',
-            'objective_id' => 'required',
-            'activity_id' => 'required',
+            'item_category_id' => 'required',
+            'cost_item_id' => 'required',
             'date' => 'required',
             'amount' => 'required',
         ]);
@@ -255,23 +256,29 @@ class BudgetController extends Controller
     /**
      * Expense Activities
      */
-    public function expense_activities(Request $request)
+    public function cost_items(Request $request)
     {
-        $proposal_id = $request->proposal_id;
-        $objective_id = $request->objective_id;
+        $category_id = $request->category_id;
+        $budget_id = $request->budget_id;
 
-        $n = 0;
-        $activities = [];
-        $proposal_items = ProposalItem::where('proposal_id', $proposal_id)
-        ->get(['id', 'name', 'is_obj']);
+        $proposal_items = BudgetItem::where('budget_id', $budget_id)
+        ->get(['id', 'name', 'type']);
+
+        $cost_items = [];
+        $is_item = false;
         foreach ($proposal_items as $i => $item) {
-            if ($n == 1) {
-                if ($item->is_obj) break;
-                $activities[] = $item;
+            if ($is_item) {
+                if ($cost_items && end($cost_items)['type'] != $item->type) {
+                    break;
+                } elseif ($item->name == 'Subtotal') {
+                    continue;
+                }
+                $cost_items[] = $item;
+            } elseif ($item->id == $category_id) {
+                $is_item = true;
             }
-            if ($item->id == $objective_id) $n++;
         }
 
-        return response()->json($activities);
+        return response()->json($cost_items);
     }
 }

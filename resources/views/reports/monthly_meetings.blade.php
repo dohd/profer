@@ -8,17 +8,6 @@
         <div class="card-body">
             <div class="card-content p-2">
                 <div class="row">
-                    {{-- <div class="col-md-3 col-12">
-                        <label for="month">Report Month</label>
-                        <select id="month" class="custom-select col-12 mt-2">
-                            <option value="">-- Select Month --</option>
-                            @foreach (range(1,12) as $no)
-                                <option value="{{ $no }}">
-                                    {{ DateTime::createFromFormat('!m', $no)->format('F') }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div> --}}
                     <div class="col-md-3 col-12">
                         <label for="month">Report Month</label>
                         <input type="text" value="{{ date('m-Y') }}" id="month" class="form-control datepicker" readonly>
