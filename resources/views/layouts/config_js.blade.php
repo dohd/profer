@@ -4,10 +4,9 @@
  **/
 $.ajaxSetup({
     headers: {
-        'X-CSRF-Token': "{{ csrf_token() }}",
+        'X-CSRF-Token': "{{ csrf_token() }}",   
     }
 });
-
 
 /**
  * Flash Message
@@ -34,6 +33,13 @@ function flashMessage(data) {
     }, 2000);
 }
 
+/**
+ * Initiate select2
+ **/
+$('.select2').each(function() {
+    $(this).css('width', '100%').select2({allowClear: true});
+});
+
 $(() => {
     /**
      * Global delete via form handler
@@ -43,15 +49,6 @@ $(() => {
             $(this).children('form').submit();
         }
     });
-
-
-    /**
-     * Initiate select2
-     **/
-    $('.select2').each(function() {
-        $(this).css('width', '100%').select2({allowClear: true});
-    });
-
 
     /**
      * Persist Bootstrap tab on page refresh
