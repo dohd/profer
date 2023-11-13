@@ -1,4 +1,4 @@
-<div class="row mb-3">
+<div class="row mb-1">
     <div class="col-md-10 col-12">
         <label for="title">Project Name<span class="text-danger">*</span></label>
         <select name="proposal_id" id="proposal" class="form-control select2" data-placeholder="Choose Project" required>
@@ -7,6 +7,7 @@
                 <option 
                     value="{{ $proposal->id }}" 
                     project_no="{{ $proposal->tid }}"
+                    donor="{{ @$proposal->donor->name }}"
                     {{ @$budget->proposal_id == $proposal->id? 'selected' : '' }}
                 >
                     {{ $proposal->title }}
@@ -15,36 +16,27 @@
         </select>
     </div>
     <div class="col-md-2 col-12">
-        <label for="project_no">Project Number<span class="text-danger">*</span></label>
-        {{ Form::text('project_no', null, ['class' => 'form-control', 'id' => 'project_no', 'required' => 'required']) }}
+        <label for="project_no">Project Number</label>
+        {{ Form::text('project_no', null, ['class' => 'form-control', 'id' => 'project_no', 'disabled' => 'disabled']) }}
     </div>
 </div>
 <div class="row mb-3">
-    <div class="col-md-6 col-12">
-        <label for="project_partner">Project Patner</label>
-        {{ Form::text('project_patner', null, ['class' => 'form-control']) }}
-    </div>
-    <div class="col-md-3 col-12">
-        <label for="agreement_period">Project Agreement Period<span class="text-danger">*</span></label>
-        {{ Form::text('project_agreement_period', null, ['class' => 'form-control']) }}
-    </div>
-    <div class="col-md-3 col-12">
-        <label for="project_period">Project Period<span class="text-danger">*</span></label>
-        {{ Form::text('project_period', null, ['class' => 'form-control']) }}
+    <div class="col-md-12 col-12">
+        <label for="project_partner">Project Partner</label>
+        {{ Form::text('donor', null, ['class' => 'form-control', 'id' => 'donor', 'placeholder' => 'Project Partner', 'disabled' => 'disabled']) }}
     </div>
 </div>
 <br>
-<div class="table-responsive">
+<div class="table-responsive mb-2">
     <table class="table table-cstm" id="budgetItemsTbl">
         <thead>
             <tr class="table-primary">
                 <th width="70%">Description</th>
-                <th width="12%">Budget</th>
+                <th width="18%">Budget</th>
             </tr>
         </thead>
         <tbody></tbody>
         <tfoot>
-            <tr><td colspan="2"></td></tr>
             <tr class="bg-light bg-gradient">
                 <td class="p-1"><b>Grand Total</b></td>
                 <td class="p-1 grandtotal fw-bold"><b>0.00</b></td>
@@ -55,20 +47,43 @@
 
 @section('script')
 <script>
+    const budget = @json(@$budget);
+
     // on proposal change
     $('#proposal').change(function() {
         $('#project_no').val($(this).find(':selected').attr('project_no'));
+        $('#donor').val($(this).find(':selected').attr('donor'));
+        // fetch activities
+        const is_edit = Boolean(budget);
+        const proposal_id = $(this).val();
         $('#budgetItemsTbl tbody').html('');
-        $.post("{{ route('budgets.proposal_items') }}", {proposal_id: $(this).val()})
+        $.post("{{ route('budgets.proposal_items') }}", {proposal_id, is_edit})
         .done((res) => {
             $('#budgetItemsTbl tbody').html(res);
         })
-        .catch((res) => res)
+        .catch((res) => res);
+    });
+
+    // on adding row
+    let itemRow = '';
+    $('table').on('click', '.add-row', function() {
+        itemRow = $(this).parents('tr').prev().prev().clone();
+        itemRow.removeClass('d-none tmp-row');
+        const lastRow = $(this).parents('tr').prev().prev();
+        lastRow.before(`<tr>${itemRow.html()}<tr>`);
+    });
+
+    // on deleting row
+    $('table').on('click', '.del', function() {
+        const row = $(this).parents('tr');
+        const prev_row = row.prev();
+        if (prev_row && prev_row.find('.budget').length) row.remove();
+        prev_row.find('.budget:first').keyup();
     });
 
     // compute totals
-    $('table').on('keyup blur', '.budget', function() {
-        if (event.type == 'blur') {
+    $('table').on('keyup focusout', '.budget', function(e) {
+        if (e.type == 'blur' || e.type == 'focusout') {
             this.value = accounting.formatNumber(accounting.unformat(this.value),2);
             return;
         }
@@ -89,6 +104,15 @@
         });
         $('table .grandtotal').text(accounting.formatNumber(grandtotal,2));
     });
+
+    // edit mode
+    if (budget) {
+        $('#proposal').change();
+        setTimeout(() => {
+            const input = $('table .budget:first');
+            if (input.length) input.keyup();
+        }, 1000);
+    }
     
 </script>
 @stop

@@ -30,89 +30,25 @@
                     </div>
                 </div>
 
-                <div class="table-responsive">
-                    <table class="table table-cstm" id="budgetItemsTbl">
-                        <thead>
-                            <tr class="table-primary">
-                                <th width="70%">Description</th>
-                                <th width="12%">Budget</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                                $grandtotal = 0;
-                            @endphp
-                            @foreach ($budget->items as $item)
-                                @if ($item->type == 'objective')
-                                    <tr class="bg-info bg-gradient">
-                                        <td class="p-1" colspan="2"><b>{{ $item->name }}</b></td>
-                                    </tr>
-                                @elseif ($item->type == 'activity')
-                                    <tr>
-                                        <td class="p-1">{{ $item->name }}</td>
-                                        <td class="fw-bold">{{ numberFormat($item->budget) }}</td>
-                                    </tr>
-                                @elseif ($item->type == 'subtotal')                                    
-                                    <tr class="bg-light bg-gradient">
-                                        <td class="p-1"><b>Subtotal</b></td>
-                                        <td class="fw-bold">{{ numberFormat($item->budget) }}</td>
-                                    </tr>  
-                                    @php
-                                        $grandtotal += $item->budget;
-                                    @endphp     
-                                @endif
-                            @endforeach
-                            <tr class="bg-info bg-gradient">
-                                <td class="p-1" colspan="2"><b>Personnel Costs</b></td>
-                            </tr>
-                            @foreach ($budget->items as $item)
-                                @if ($item->type == 'personnel_cost')
-                                    @if ($item->name == 'Subtotal')
-                                        <tr class="bg-light bg-gradient">
-                                            <td class="p-1"><b>Subtotal</b></td>
-                                            <td class="fw-bold">{{ numberFormat($item->budget) }}</td>
-                                        </tr> 
-                                        @php
-                                            $grandtotal += $item->budget;
-                                        @endphp  
-                                    @else
-                                        <tr>
-                                            <td class="p-1">{{ $item->name }}</td>
-                                            <td class="fw-bold">{{ numberFormat($item->budget) }}</td>
-                                        </tr>     
-                                    @endif
-                                @endif
-                            @endforeach
-                            <tr class="bg-info bg-gradient">
-                                <td class="p-1" colspan="2"><b>Overhead Costs</b></td>
-                            </tr>
-                            @foreach ($budget->items as $item)
-                                @if ($item->type == 'overhead_cost')
-                                    @if ($item->name == 'Subtotal')
-                                        <tr class="bg-light bg-gradient">
-                                            <td class="p-1"><b>Subtotal</b></td>
-                                            <td class="fw-bold">{{ numberFormat($item->budget) }}</td>
-                                        </tr> 
-                                        @php
-                                            $grandtotal += $item->budget;
-                                        @endphp 
-                                    @else
-                                        <tr>
-                                            <td class="p-1">{{ $item->name }}</td>
-                                            <td class="fw-bold">{{ numberFormat($item->budget) }}</td>
-                                        </tr>     
-                                    @endif
-                                @endif
-                            @endforeach
-                        </tbody>
-                        <tfoot>
-                            <tr><td colspan="2"></td></tr>
-                            <tr class="bg-light bg-gradient">
-                                <td class="p-1"><b>Grand Total</b></td>
-                                <td class="p-1 grandtotal fw-bold">{{ numberFormat($grandtotal) }}</td>
-                            </tr>
-                        </tfoot>
-                    </table>
+                <div class="card-content">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="budget-summary-tab" data-bs-toggle="tab" data-bs-target="#budget-summary" type="button" role="tab" aria-controls="summary" aria-selected="true">
+                                Budget Tracker
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="actual-expense-tab" data-bs-toggle="tab" data-bs-target="#actual-expense" type="button" role="tab" aria-controls="log-frame" aria-selected="false">
+                                Actual Expense
+                            </button>
+                        </li>
+                    </ul>
+                    <div class="tab-content pt-2" id="myTabContent">
+                        <!-- budget summary -->
+                        @include('budgets.tabs.budget_summary_tab')
+                        <!-- actual expense  -->
+                        @include('budgets.tabs.actual_expense_tab')
+                    </div>
                 </div>
             </div>
         </div>
@@ -122,12 +58,24 @@
 
 @section('script')
 <script>
+    // On status change
     $('#status').change(function() {
-        if ($(this).val() == 'review') {
-            $('#note').parents('.row').removeClass('d-none');
-        } else {
-            $('#note').parents('.row').addClass('d-none');
-        }
+        const row =$('#note').parents('.row');
+        if ($(this).val() == 'review') row.removeClass('d-none');
+        else row.addClass('d-none');
     }).trigger('change');
+
+    // Expense month
+    $('#month').datepicker({
+        autoHide: true,
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        format: 'MM-yyyy',
+        onClose: function(dateText, inst) { 
+            $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+        }
+    });
 </script>
+@include('budgets.modal_js')
 @endsection
