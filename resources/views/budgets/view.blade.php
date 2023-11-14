@@ -6,27 +6,29 @@
     @include('budgets.header')
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">
+            <h5 class="card-title pb-1">
                 Project Budget Details
                 <span class="badge bg-secondary text-white float-end" role="button" data-bs-toggle="modal" data-bs-target="#status_modal">
                     <i class="bi bi-pencil-fill"></i> Status
                 </span>
             </h5>
             <div class="card-content p-2">
-                <div class="row mb-2">
-                    <div class="col-12">
+                <div class="row mb-3">
+                    <div class="col-md-12 col-12">
                         @if (in_array($budget->status, ['approved', 'pending']))
-                            <b>Approval Status: </b>
                             <span class="badge bg-{{ $budget->status == 'approved'? 'success' : 'secondary' }}">{{ $budget->status }}</span>
                         @endif
                         <p class="text-center">
                             @if ($budget->status_note && $budget->status == 'rejected')
-                                <b>Approval Status: </b>
                                 <span class="badge bg-danger text-white">Rejected</span>
                                 <br>
                                 {{ $budget->status_note }}
                             @endif
                         </p>
+                        <h5>
+                            Budget For : <b>({{ tidCode('proposal', @$budget->proposal->tid) }}) {{ @$budget->proposal->title }}</b> <br>
+                            Project Partner : <b>{{ @$budget->proposal->donor->name }}</b>
+                        </h5>
                     </div>
                 </div>
 
