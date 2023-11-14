@@ -92,6 +92,9 @@ class BudgetController extends Controller
      */
     public function edit(Budget $budget)
     {
+        if ($budget->expenses->count()) 
+            return errorHandler('Expended budget cannot be edited!');
+
         $proposals = Proposal::get(['id', 'tid', 'title']);
 
         return view('budgets.edit', compact('budget', 'proposals'));
@@ -153,6 +156,7 @@ class BudgetController extends Controller
     public function destroy(Budget $budget)
     { 
         try {
+            $budget->items()->delete();
             $budget->delete();
             return redirect(route('budgets.index'))->with(['success' => 'Case Study deleted successfully']);
         } catch (\Throwable $th) {
