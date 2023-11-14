@@ -3,11 +3,9 @@
         <div class="col-md-3 col-12">
             <input type="text" id="query-month" class="form-control datepicker" placeholder="Select Expense Month" readonly>
         </div>
-        <div class="col-md-2 col-2" style="width: 10%">
-            <button type="button" id="query-btn" class="btn btn-primary btn-sm mt-1 ms-1"><i class="bi bi-search"></i> Search</button>
-        </div>
-        <div class="col-md-1 col-1">
-            <button type="button" id="reload-btn" class="btn btn-success btn-sm mt-1">
+        <div class="col-md-2 col-2 pt-1">
+            <button type="button" id="query-btn" class="btn btn-primary btn-sm ms-1"><i class="bi bi-search"></i> Search</button>
+            <button type="button" id="reload-btn" class="btn btn-success btn-sm">
                 <i class="bi bi-arrow-clockwise"></i>
             </button>
         </div>
