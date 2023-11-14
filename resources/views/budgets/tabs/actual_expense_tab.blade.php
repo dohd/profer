@@ -2,9 +2,11 @@
     <div class="row mb-2">
         <div class="col-12">
             <div class="float-end">
-                <span class="badge bg-primary text-white" role="button" id="activity_md" data-bs-toggle="modal" data-bs-target="#expense_modal">
-                    <i class="bi bi-plus-lg"></i> Expense
-                </span>
+                @if ($budget->status == 'approved')
+                    <span class="badge bg-success text-white" role="button" id="activity_md" data-bs-toggle="modal" data-bs-target="#expense_modal">
+                        <i class="bi bi-plus-lg"></i> Expense
+                    </span>
+                @endif
             </div>
         </div>
     </div>
