@@ -8,60 +8,40 @@
         <div class="card-body">
             <div class="card-content">
                 {{ Form::open(['route' => 'file_imports.store', 'method' => 'POST', 'files' => true, 'class' => 'form']) }}
-                    <div class="row p-2">
-                        <div class="col-md-3 col-12">
-                            <label for="date">Date</label>
-                            {{ Form::date('date', null, ['class' => 'form-control mt-2']) }}
-                        </div>
-                        <div class="col-md-3 col-12">
-                            <label for="file_category">File Category</label>
-                            <select name="category_dir" id="category_dir" class="custom-control col-12 mt-3">
-                                <option value="">-- Select Category --</option>
-                                @php
-                                    $categories = [
-                                        'monthly_meetings' => 'External Meetings',
-                                        'bnf_list_self_advocates' => 'Self-Advocates (Benefeciary List)',
-                                        'bnf_list_families' => 'Families (Benefeciary List)',
-                                        'bnf_list_support_group' => 'Support Group (Benefeciary List)',
-                                    ];
-                                @endphp
+                    <div class="row mb-2 p-2">
+                        <div class="col-md-6 col-12 mt-2 mb-3">
+                            @php
+                                $categories = [
+                                    'self_advocates' => 'Self-Advocates (Beneficiary List)',
+                                    'families' => 'Families (Beneficiary List)',
+                                    'support_groups' => 'Support Groups (Beneficiary List)',
+                                    // 'monthly_meetings' => 'External Meetings',
+                                ];
+                            @endphp
+                            <select name="category" id="category" class="custom-control col-12" required>
+                                <option value="">-- Select Template Category --</option>
                                 @foreach ($categories as $key => $value)
                                     <option value="{{ $key }}">{{ $value }}</option>
                                 @endforeach
                             </select>
-                            {{ Form::hidden('category', null, ['id' => 'category']) }}
                         </div>
-                        <div class="col-md-4 col-12">
-                            <label class="form-label" for="file">File</label>
-                            {{ Form::file('file', ['class' => 'form-control', 'id' => 'file', 'accept' => '.csv, .pdf, .xls, .xlsx, .doc, .docx', 'required' => 'required' ]) }}
+                        <div class="col-md-12 bg-light pt-3 mb-2">
+                            <p>
+                                Data format should be as per downloaded template. 
+                                <a href="#" class="ms-1 dn-link" download><u><b>Click here to download</b></u></a>
+                            </p>
                         </div>
-                        <div class="col-md-2 col-12">
-                            {{ Form::submit('Upload', ['class' => 'btn btn-primary', 'style' => 'margin-top: 2em']) }}
+                        <hr style="border: none; border-bottom: 2px solid black;">
+                        
+                        <div class="col-md-6 col-12">
+                            <label class="form-label" for="file">Import File</label>
+                            {{ Form::file('file', ['class' => 'form-control', 'id' => 'file', 'accept' => '.xls, .xlsx', 'required' => 'required' ]) }}
+                        </div>
+                        <div class="col-md-2 col-12 pt-4">
+                            <button type="submit" class="btn btn-primary mt-2"><i class="bi bi-upload"></i> Import</button>
                         </div>
                     </div>
                 {{ Form::close() }}
-            </div>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-body">
-            <div class="card-content p-2">
-                <div class="table-responsive">
-                    <table class="table table-borderless" id="fileImportsTbl">
-                        <thead>
-                            <tr>
-                                <th scope="col">#No</th>
-                                <th scope="col">File Name</th>
-                                <th scope="col">File Category</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
             </div>
         </div>
     </div>
@@ -69,16 +49,20 @@
 
 @section('script')
 <script>
-    $('#category_dir').change(function() {
-        $('#category').val($(this).find(':selected').text());
-    });
-    
-
-    // fetch file imports
-    $.post("{{ route('file_imports.datatable') }}", data => {
-        $('#fileImportsTbl tbody').html(data);
-        new simpleDatatables.DataTable($('#fileImportsTbl')[0]);
-    });
+    $('#category').change(function() {
+        if (this.value) {
+            $('.dn-link').attr('href', "{{ asset('storage/import_templates') }}/" + this.value  + '.xls');
+        } else {
+            $('.dn-link').attr('href', '#');
+        }  
+        
+        // rules
+        $('.dn-link').parents('p').next().remove();
+        if (this.value == 'families' || this.value == 'self_advocates') {
+            const el = '<p><span class="text-danger">*</span> <b><i>Column4 - DOB must be Fomarted as General Text instead of Date</i></b></p>';
+            $('.dn-link').parents('p').after(el);
+        }      
+    }).trigger('change');
 </script>
 @stop
 

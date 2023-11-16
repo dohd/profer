@@ -91,18 +91,18 @@
         class="nav-content collapse"
         data-bs-parent="#sidebar-nav"
       >
-      <li>
-        <a href="{{ route('reports.monthly_meetings') }}"><i class="bi bi-circle"></i><span>External Meetings</span></a>
-      </li>
-      <li>
-        <a href="{{ route('reports.beneficiary_list') }}"><i class="bi bi-circle"></i><span>Beneficiary List</span></a>
-      </li>
-      <li>
-        <a href="{{ route('reports.narrative_report') }}"><i class="bi bi-circle"></i><span>Narrative Report</span></a>
-      </li>
-      <li>
-        <a href="{{ route('reports.participant_analysis') }}"><i class="bi bi-circle"></i><span>Participant Analysis</span></a>
-      </li>
+        <li>
+          <a href="{{ route('reports.beneficiary_list') }}"><i class="bi bi-circle"></i><span>Beneficiary List</span></a>
+        </li>
+        <li>
+          <a href="{{ route('reports.narrative_report') }}"><i class="bi bi-circle"></i><span>Narrative Report</span></a>
+        </li>
+        <li>
+          <a href="{{ route('reports.participant_analysis') }}"><i class="bi bi-circle"></i><span>Participant Analysis</span></a>
+        </li>
+        <li>
+          <a href="{{ route('reports.monthly_meetings') }}"><i class="bi bi-circle"></i><span>External Meetings</span></a>
+        </li>
       </ul>
     </li>    
     
