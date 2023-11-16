@@ -1,6 +1,15 @@
+<!-- Participants -->
+{{-- <div class="row mb-3">
+    <div class="col-md-12 col-12">
+        <fieldset class="border rounded-3 p-3">
+            <legend class="float-none w-auto px-1 fs-5">Participants</legend>
+        </fieldset>
+    </div>
+</div> --}}
+
 <div class="row mb-3">
     <div class="col-md-8 col-12">
-        <label for="title">Project Title*</label>
+        <label for="title">Project Title<span class="text-danger">*</span></label>
         <select name="proposal_id" id="proposal" class="form-control select2" data-placeholder="Choose Project" required>
             <option value=""></option>
             @foreach ($proposals as $key => $value)
@@ -9,7 +18,7 @@
         </select>   
     </div>
     <div class="col-md-4 col-12">
-        <label for="plan">Action Plan No*</label>
+        <label for="plan">Action Plan No<span class="text-danger">*</span></label>
         <select name="action_plan_id" id="action_plan" class="form-control select2" data-placeholder="Choose Action Plan" required disabled>
             <option value=""></option>
             @if(@$participant_list)
@@ -21,19 +30,8 @@
     </div>
 </div>
 <div class="row mb-3">
-    <div class="col-md-6 col-12">
-        <label for="title">Activity*</label>
-        <select name="proposal_item_id" id="activity" class="form-control select2" data-placeholder="Choose Activity" required disabled>
-            <option value=""></option>
-            @if(@$participant_list)
-                @foreach ($participant_list->proposal_items as $key => $value)
-                    <option value="{{ $key }}" {{ $key == $participant_list->proposal_item_id? 'selected' : '' }}>{{ $value }}</option>
-                @endforeach
-            @endif
-        </select>
-    </div>
     <div class="col-md-3 col-12">
-        <label for="region">Region*</label>
+        <label for="region">Region<span class="text-danger">*</span></label>
         <select name="region_id" id="region" class="form-select select2" data-placeholder="Choose Region" required disabled>
             <option value=""></option>
             @if(@$participant_list)
@@ -44,7 +42,7 @@
         </select>
     </div>
     <div class="col-md-3 col-12">
-        <label for="cohort">Cohort*</label>
+        <label for="cohort">Cohort<span class="text-danger">*</span></label>
         <select name="cohort_id" id="cohort" class="form-select select2" data-placeholder="Choose Cohort" required disabled>
             <option value=""></option>
             @if(@$participant_list)
@@ -54,20 +52,51 @@
             @endif
         </select>
     </div>
+    
+    <div class="col-md-6 col-12">
+        <label for="title">Activity<span class="text-danger">*</span></label>
+        <select name="proposal_item_id" id="activity" class="form-control select2" data-placeholder="Choose Activity" required disabled>
+            <option value=""></option>
+            @if(@$participant_list)
+                @foreach ($participant_list->proposal_items as $key => $value)
+                    <option value="{{ $key }}" {{ $key == $participant_list->proposal_item_id? 'selected' : '' }}>{{ $value }}</option>
+                @endforeach
+            @endif
+        </select>
+    </div>
 </div>
 
 <div class="row mb-3">
+    <div class="col-md-6 col-12">
+        <label for="no_participants">Participants Count<span class="text-danger">*</span></label>
+        <div class="row g-0">
+            <div class="col-md-4">{{ Form::text('male_count', null, ['class' => 'form-control', 'placeholder' => 'MALE', 'required' => 'required']) }}</div>
+            <div class="col-md-4">{{ Form::text('female_count', null, ['class' => 'form-control', 'placeholder' => 'FEMALE', 'required' => 'required']) }}</div>
+            <div class="col-md-4">{{ Form::text('total_count', null, ['class' => 'form-control', 'placeholder' => 'TOTAL', 'required' => 'required']) }}</div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 col-12">
+        <label class="form-label" for="file">Partipant List</label>
+        {{ Form::file('file', ['class' => 'form-control', 'id' => 'file', 'accept' => '.csv, .pdf, .xls, .xlsx, .doc, .docx' ]) }}
+    </div>
+</div>
+<div class="row mb-3">
     <div class="col-md-3 col-12">
-        <label for="date">Date*</label>
-        {{ Form::date('date', null, ['class' => 'form-control', 'required']) }}
+        <label for="date">Activity Date<span class="text-danger">*</span></label>
+        {{ Form::date('date', null, ['class' => 'form-control', 'required' => 'required']) }}
     </div>
     <div class="col-md-3 col-12">
         <label for="prepared_by">Prepared By</label>
         {{ Form::text('prepared_by', null, ['class' => 'form-control']) }}
     </div>
+    
 </div>
+<!-- End Participants -->
+
+
 <!-- Participants Table -->
-@include('participant_lists.partial.participants_table')
+{{-- @include('participant_lists.partial.participants_table') --}}
 
 @section('script')
 <script>
