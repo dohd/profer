@@ -152,6 +152,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('reports/narrative_report', [ReportController::class, 'narrative_report'])->name('reports.narrative_report');
     Route::get('reports/participant_analysis', [ReportController::class, 'participant_analysis'])->name('reports.participant_analysis');
     
+    Route::post('reports/beneficiary_list_data', [ReportController::class, 'beneficiary_list_data'])->name('reports.beneficiary_list_data');
     Route::post('reports/narrative_data', [ReportController::class, 'narrative_data'])->name('reports.narrative_data');
     Route::post('reports/participant_analysis_data', [ReportController::class, 'participant_analysis_data'])->name('reports.participant_analysis_data');
 

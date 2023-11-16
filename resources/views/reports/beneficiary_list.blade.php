@@ -12,22 +12,23 @@
                         <label for="category">Beneficiary Category</label>
                         <select id="category" class="custom-select col-12 mt-2">
                             <option value="">-- Select Category --</option>
-                            @foreach (['Self-Advocates', 'Families', 'Support Group'] as $key => $value)
-                                <option value="{{ $value }}">
+                            @foreach (['self-advocates' => 'Self-Advocates', 'families' => 'Families', 'support-groups' => 'Support Group'] as $key => $value)
+                                <option value="{{ $key }}">
                                     {{ $value }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-md-2 col-12">
-                        {{ Form::submit('Generate', ['class' => 'btn btn-primary mt-4']) }}
+                    <div class="col-md-2 col-12 pt-3">
+                        {{ Form::submit('Generate', ['class' => 'btn btn-primary btn-sm mt-3', 'id' => 'submit']) }}
                     </div>
                 </div>
             </div>
         </div>
     </div>
     
-    <div class="card">
+    <!-- Self Advocates -->
+    <div class="card self-advocates">
         <div class="card-body">
             <div class="card-title p-0 pt-2 m-0">SELF-ADVOCATES</div>
             <div class="card-content p-2">
@@ -76,8 +77,10 @@
             </div>
         </div>
     </div> 
+    <!-- End Self Advocates -->
 
-    <div class="card">
+    <!-- Families -->
+    <div class="card families">
         <div class="card-body">
             <div class="card-title p-0 pt-2 m-0">FAMILIES</div>
             <div class="card-content p-2">
@@ -117,8 +120,10 @@
             </div>
         </div>
     </div> 
+    <!-- End families -->
 
-    <div class="card">
+    <!-- Support Group -->
+    <div class="card support-groups">
         <div class="card-body">
             <div class="card-title p-0 pt-2 m-0">SUPPORT GROUP</div>
             <div class="card-content p-2">
@@ -135,16 +140,16 @@
                                 <th>Location</th>
                                 <th>Sub location</th>
                                 <th>Village</th>
-                                <th>Year of formation</th>
+                                <th>Year of Formation</th>
                                 <th>Activity 1</th>
                                 <th>Activity 2</th>
-                                <th>Other activity</th>
+                                <th>Other Activity</th>
                                 <th>Males PWID</th>
                                 <th>Female PWID</th>
                                 <th>Total PWID</th>
-                                <th>Male caregivers</th>
-                                <th>Female caregivers</th>
-                                <th>Total caregivers</th>
+                                <th>Male Caregivers</th>
+                                <th>Female Caregivers</th>
+                                <th>Total Caregivers</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -155,11 +160,38 @@
             </div>
         </div>
     </div> 
+    <!-- End Support Group -->
 @stop
 
 @section('script')
 <script>
-    
+    $('#submit').click(function() {
+        const category = $('#category').val();
+        if (category == 'self-advocates') {
+            $('div .' + category).removeClass('d-none');
+            $('div .families').addClass('d-none');
+            $('div .support-groups').addClass('d-none');
+        } else if (category == 'families') {
+            $('div .' + category).removeClass('d-none');
+            $('div .self-advocates').addClass('d-none');
+            $('div .support-groups').addClass('d-none');
+        } else if (category == 'support-groups') {
+            $('div .' + category).removeClass('d-none');
+            $('div .families').addClass('d-none');
+            $('div .self-advocates').addClass('d-none');
+        } else {
+            $('div.card').each(function() { $(this).removeClass('d-none') });
+        }
+
+        $('div.card').each(function() { $(this).find('table tbody').html('') });
+        if (category) {
+            $.post("{{ route('reports.beneficiary_list_data') }}", {category})
+            .done(data => {
+                $('div .' + category).find('table tbody').html(data);
+            })
+            .catch(err => err);
+        }
+    });
 </script>
 @stop
 

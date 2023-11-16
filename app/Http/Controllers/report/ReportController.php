@@ -5,6 +5,9 @@ namespace App\Http\Controllers\report;
 use App\Http\Controllers\Controller;
 use App\Models\age_group\AgeGroup;
 use App\Models\agenda\Agenda;
+use App\Models\beneficiary_list\Family;
+use App\Models\beneficiary_list\SelfAdvocate;
+use App\Models\beneficiary_list\SupportGroup;
 use App\Models\cohort\Cohort;
 use App\Models\disability\Disability;
 use App\Models\donor\Donor;
@@ -25,6 +28,26 @@ class ReportController extends Controller
     public function beneficiary_list()
     {
         return view('reports.beneficiary_list');
+    }
+
+    /**
+     * Beneficiary List Data
+     */
+    public function beneficiary_list_data(Request $request)
+    {
+        $category = $request->category;
+        $support_groups = [];
+        $families = [];
+        $self_advocates = [];
+        if ($category == 'support-groups') {
+            $support_groups = SupportGroup::get();
+        } elseif ($category == 'families') {
+            $families = Family::get();
+        } elseif ($category == 'self-advocates') {
+            $self_advocates = SelfAdvocate::get();
+        }
+        
+        return view('reports.partial.beneficiary_list_category', compact('support_groups', 'families', 'self_advocates'));
     }
 
     /**

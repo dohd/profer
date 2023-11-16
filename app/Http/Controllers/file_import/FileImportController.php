@@ -3,11 +3,16 @@
 namespace App\Http\Controllers\file_import;
 
 use App\Http\Controllers\Controller;
-use App\Imports\MeetingStatsImport;
+use App\Imports\FamilyImport;
+use App\Imports\SelfAdvocateImport;
+use App\Imports\SupportGroupImport;
 use App\Models\file_import\FileImport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Excel;
+use Maatwebsite\Excel\Facades\Excel;
+
+// use Excel;
 
 class FileImportController extends Controller
 {
@@ -50,24 +55,28 @@ class FileImportController extends Controller
     public function store(Request $request)
     {   
         $request->validate([
-            'date' => 'required',
-            'category_dir' => 'required',
-            'file' => 'required|mimes:csv,pdf,xls,xlsx,doc,docx',
+            'category' => 'required',
+            'file' => 'required|mimes:xls,xlsx',
         ]);
         $file = $request->file('file');
-        $input = inputClean($request->except('_token')); 
-        $input['file_name'] = $this->uploadFile($file, $input['category_dir']);
-        $input['origin_name'] = implode('_', array_slice(explode('_', $input['file_name']), 1));
-
-        // Process the Excel file
-        // Excel::import(new MeetingStatsImport, $file);
+        $category = $request->category;
         
         try {
-            FileImport::create($input); 
+            DB::beginTransaction();
+            
+            if ($category == 'support_groups') {
+                Excel::import(new SupportGroupImport, $file);
+            } elseif ($category == 'self_advocates') {
+                Excel::import(new SelfAdvocateImport, $file);
+            } elseif ($category == 'families') {
+                Excel::import(new FamilyImport, $file);
+            }
 
-            return redirect(route('file_imports.index'))->with(['success' => 'File uploaded successfully']);
+            DB::commit();
+
+            return redirect(route('file_imports.index'))->with(['success' => 'Data imported successfully']);
         } catch (\Throwable $th) {
-            errorHandler('Error uploading file!');
+            errorHandler('Error importing data! ' . $th->getMessage());
         }
     }
 
