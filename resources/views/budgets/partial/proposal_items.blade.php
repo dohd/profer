@@ -31,7 +31,7 @@
         @elseif ($item->type == 'subtotal' && $prev_item && in_array($prev_item->type, ['objective', 'activity']))
             <tr class="bg-light bg-gradient">
                 <td class="p-1"><b>Subtotal</b></td>
-                <td class="grp-{{ $grp }} p-1 subtotal"><b>{{ numberFormat($item->budget) }}</b></td>
+                <td class="grp-{{ $grp }} p-1 fw-bold subtotal">{{ numberFormat($item->budget) }}</td>
                 <input type="hidden" name="budget[]">
                 <input type="hidden" name="name[]" value="Subtotal">
                 <input type="hidden" name="proposal_item_id[]">
@@ -81,7 +81,7 @@
                 {{-- end js row template --}}
                 <tr class="bg-light bg-gradient">
                     <td class="p-1"><b>Subtotal</b></td>
-                    <td class="grp-{{ $grp }} p-1 subtotal"><b>{{ numberFormat($item->budget) }}</b></td>
+                    <td class="grp-{{ $grp }} p-1 fw-bold subtotal">{{ numberFormat($item->budget) }}</td>
                     <input type="hidden" name="budget[]" value="{{ numberFormat($item->budget) }}">
                     <input type="hidden" name="name[]" value="Subtotal">
                     <input type="hidden" name="proposal_item_id[]">
@@ -153,7 +153,7 @@
                 {{-- end js row template --}}
                 <tr class="bg-light bg-gradient">
                     <td class="p-1"><b>Subtotal</b></td>
-                    <td class="grp-{{ $grp }} p-1 subtotal"><b>{{ numberFormat($item->budget) }}</b></td>
+                    <td class="grp-{{ $grp }} p-1 fw-bold subtotal">{{ numberFormat($item->budget) }}</td>
                     <input type="hidden" name="budget[]" value="{{ numberFormat($item->budget) }}">
                     <input type="hidden" name="name[]" value="Subtotal">
                     <input type="hidden" name="proposal_item_id[]">
@@ -227,7 +227,7 @@
         @if ($is_btwn || $is_last)
             <tr class="bg-light bg-gradient">
                 <td class="p-1"><b>Subtotal</b></td>
-                <td class="grp-{{ $grp }} p-1 subtotal"><b>0.00</b></td>
+                <td class="grp-{{ $grp }} p-1 fw-bold subtotal">0.00</td>
                 <input type="hidden" name="budget[]">
                 <input type="hidden" name="name[]" value="Subtotal">
                 <input type="hidden" name="proposal_item_id[]">
@@ -287,7 +287,7 @@
     {{-- end js row template --}}
     <tr class="bg-light bg-gradient">
         <td class="p-1"><b>Subtotal</b></td>
-        <td class="grp-{{ $grp }} p-1 subtotal"><b>0.00</b></td>
+        <td class="grp-{{ $grp }} p-1 fw-bold subtotal">0.00</td>
         <input type="hidden" name="budget[]">
         <input type="hidden" name="name[]" value="Subtotal">
         <input type="hidden" name="proposal_item_id[]">
@@ -351,7 +351,7 @@
     {{-- end js row template --}}
     <tr class="bg-light bg-gradient">
         <td class="p-1"><b>Subtotal</b></td>
-        <td class="grp-{{ $grp }} p-1 subtotal"><b>0.00</b></td>
+        <td class="grp-{{ $grp }} p-1 fw-bold subtotal">0.00</td>
         <input type="hidden" name="budget[]" value="">
         <input type="hidden" name="name[]" value="Subtotal">
         <input type="hidden" name="proposal_item_id[]" value="">
