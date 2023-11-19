@@ -71,6 +71,7 @@
         itemRow.removeClass('d-none tmp-row');
         const lastRow = $(this).parents('tr').prev().prev();
         lastRow.before(`<tr>${itemRow.html()}<tr>`);
+        $("tr:not(:has(*))").remove();
     });
 
     // on deleting row
