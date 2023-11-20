@@ -7,7 +7,9 @@ use App\Models\action_plan\ActionPlan;
 use App\Models\action_plan\ActionPlanActivity;
 use App\Models\action_plan\ActionPlanCohort;
 use App\Models\action_plan\ActionPlanRegion;
+use App\Models\age_group\AgeGroup;
 use App\Models\cohort\Cohort;
+use App\Models\disability\Disability;
 use App\Models\item\ProposalItem;
 use App\Models\programme\Programme;
 use App\Models\proposal\Proposal;
@@ -301,12 +303,11 @@ class ActionPlanController extends Controller
     public function select_items(Request $request)
     {
         $action_plans = ActionPlan::where('proposal_id', $request->proposal_id)
-            ->get(['id', 'tid', 'date'])
-            ->map(function($v) {
-                $d = explode('-', $v->date);
-                $v->code = tidCode('action_plan', $v->tid) . "/{$d[1]}";
-                return $v;
-            });
+        ->get(['id', 'tid', 'date'])
+        ->map(function($v) {
+            $v->code = tidCode('', $v->tid)  . '/' . date('Y', strtotime($v->date));
+            return $v;
+        });
         
         return response()->json($action_plans);
     }
@@ -319,6 +320,7 @@ class ActionPlanController extends Controller
         $regions = Region::whereHas('plan_regions', function ($q) {
             $q->whereHas('plan_activity', fn($q) => $q->where('activity_id', request('activity_id')));
         })->get(['id', 'name']);
+
         $cohorts = Cohort::whereHas('plan_cohorts', function ($q) {
             $q->whereHas('plan_activity', fn($q) => $q->where('activity_id', request('activity_id')));
         })->get(['id', 'name']);
