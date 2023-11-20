@@ -36,13 +36,11 @@ class ParticipantListController extends Controller
      */
     public function create()
     {
-        $proposals = Proposal::whereHas('action_plans')->pluck('title', 'id');
+        $proposals = Proposal::whereHas('action_plans')->get(['id', 'title']);
         $age_groups = AgeGroup::get(['id', 'bracket']);
         $disabilities = Disability::get(['id', 'name']);
         
-        return view('participant_lists.create', 
-            compact('age_groups', 'disabilities', 'proposals')
-        );
+        return view('participant_lists.create', compact('age_groups', 'disabilities', 'proposals'));
     }
 
     /**
