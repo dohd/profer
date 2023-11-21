@@ -13,6 +13,7 @@ use App\Http\Controllers\donor\DonorController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\log_frame\LogFrameController;
 use App\Http\Controllers\narrative\NarrativeController;
+use App\Http\Controllers\attendance\AttendanceController;
 use App\Http\Controllers\participant_list\ParticipantListController;
 use App\Http\Controllers\pdf\PdfController;
 use App\Http\Controllers\programme\ProgrammeController;
@@ -124,6 +125,12 @@ Route::group(['middleware' => 'auth'], function() {
      * Participant Lists
      */
     Route::resource('participant_lists', ParticipantListController::class);
+
+    /**
+     * Attendance
+     */
+    Route::post('attendances/delete_file', [AttendanceController::class, 'delete_file'])->name('attendances.delete_file');
+    Route::resource('attendances', AttendanceController::class);
 
     /**
      * Activity Narratives
