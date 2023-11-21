@@ -20,7 +20,7 @@
     {{-- project budget --}}
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('budgets.index') }}">
-        <i class="bi bi-cash-stack"></i></i><span>Project Budget</span>
+        <i class="bi bi-cash-stack"></i></i><span>Budgeting</span>
       </a>
     </li>
 
@@ -41,28 +41,28 @@
     {{-- agenda --}}
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('agenda.index') }}">
-        <i class="bi bi-list-check"></i><span>Agenda List</span>
+        <i class="bi bi-list-check"></i><span>Agenda</span>
       </a>
     </li>
-
-    {{-- participant list --}}
+    
+    {{-- attendance --}}
     <li class="nav-item">
-      <a class="nav-link collapsed" href="{{ route('participant_lists.index') }}">
-        <i class="bi bi-person-lines-fill"></i></i><span>Participant List</span>
+      <a class="nav-link collapsed" href="{{ route('attendances.index') }}">
+        <i class="bi bi-person-lines-fill"></i></i><span>Attendance</span>
       </a>
     </li>
 
     {{-- activity narrative --}}
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('narratives.index') }}">
-        <i class="bi bi-file-earmark-text"></i></i><span>Activity Narrative</span>
+        <i class="bi bi-file-text"></i></i><span>Narrative Report</span>
       </a>
     </li>
 
     {{-- case study --}}
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('case_studies.index') }}">
-        <i class="bi bi-file-earmark-text"></i></i><span>Case Studies</span>
+        <i class="bi bi-file-earmark-text"></i></i><span>Case Study</span>
       </a>
     </li>
 
