@@ -172,6 +172,7 @@ Route::group(['middleware' => 'auth'], function() {
      * Storage
      */
     Route::get('storage/{file_params}', [StorageController::class, 'file_render'])->name('storage.file_render');
+    Route::get('storage/download/{file_params}', [StorageController::class, 'file_download'])->name('storage.file_download');
 });
 
 

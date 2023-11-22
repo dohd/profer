@@ -16,7 +16,7 @@
                             'Action Plan' => tidCode('', @$attendance->action_plan->tid) . '/' . dateFormat(@$attendance->action_plan->date, 'Y'),
                             'Date' => dateFormat($attendance->date, 'd-M-Y'),
                             'Prepared By' => $attendance->prepared_by,
-                            'Attendance Sheet' => $attendance->doc_file ?:'file-name',
+                            'Attendance Sheet' => $attendance->doc_file,
                         ];
                     @endphp
                     @foreach ($details as $key => $val)
@@ -26,7 +26,7 @@
                                 @if ($key == 'Project Title' && $val)
                                     <a href="{{ route('proposals.show', $attendance->proposal) }}">{{ $val }}</a>
                                 @elseif ($key == 'Attendance Sheet' && $val)
-                                    <a href="{{ route('storage.file_render', 'attendance,' . $attendance->doc_file) }}" target="_blank">{{ $val }}<i class="bi bi-download h5 ms-2"></i></a>
+                                    <a href="{{ route('storage.file_download', 'attendance,' . $attendance->doc_file) }}" target="_blank">{{ $val }}<i class="bi bi-download h5 ms-2"></i></a>
                                     <span class="del ms-3" style="cursor: pointer;" name="doc_file"><i class="bi bi-trash text-danger icon-xs"></i></span>
                                 @else  
                                     {{ $val}}  
@@ -66,7 +66,7 @@
                             @endforeach
                             <tr class="bg-light bg-gradient">
                                 <td></td>
-                                <td colspan="4"><b>Totals</b></td>
+                                <td colspan="4"><b>Total</b></td>
                                 <td><b>{{ $attendance->items->sum('male') }}</b></td>
                                 <td><b>{{ $attendance->items->sum('female') }}</b></td>
                                 <td><b>{{ $attendance->items->sum('total') }}</b></td>
