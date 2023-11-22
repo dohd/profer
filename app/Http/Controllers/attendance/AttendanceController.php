@@ -66,16 +66,18 @@ class AttendanceController extends Controller
         if ($validator->fails()) {
             return redirect(route('attendances.index'))->with(['error' => 'Unsupported file format!']);
         }
+
+        $input = $request->except('_token');
         $file = $request->file('doc_file');
-        if ($file) $this->uploadFile($file);
+        if ($file) $input['doc_file'] = $this->uploadFile($file);
        
         DB::beginTransaction();
 
         try {
-            $input = inputClean($request->except('_token'));
+            $input = inputClean($input);
             $attendance = Attendance::create($input);
 
-            $input_items = $input['attendance_items'];
+            $input_items = $request->attendance_items;
             foreach ($input_items as $key => $value) {
                 $input_items[$key] = array_replace($value, [
                     'attendance_id' => $attendance->id,
@@ -151,13 +153,24 @@ class AttendanceController extends Controller
             'date' => 'required',
         ]);
 
+        $validator = Validator::make($request->all(), [
+            'doc_file' => $request->doc_file? 'required|mimes:csv,pdf,xls,xlsx,doc,docx' : 'nullable',
+        ]);
+        if ($validator->fails()) {
+            return redirect(route('attendances.index'))->with(['error' => 'Unsupported file format!']);
+        }
+
+        $input = $request->except('_token');
+        $file = $request->file('doc_file');
+        if ($file) $input['doc_file'] = $this->uploadFile($file);
+
         DB::beginTransaction();
 
         try {     
-            $input = inputClean($request->except('_token'));
+            $input = inputClean($input);
             $attendance->update($input);
 
-            $input_items = $input['attendance_items'];
+            $input_items = $request->attendance_items;
             foreach ($input_items as $key => $value) {
                 $input_items[$key] = array_replace($value, [
                     'attendance_id' => $attendance->id,
