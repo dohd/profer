@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\role\Role;
 use App\Models\user_profile\UserProfile;
 
 trait UserRelationship
@@ -9,5 +10,10 @@ trait UserRelationship
     public function profile()
     {
         return $this->hasOne(UserProfile::class, 'rel_id');
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
 }
