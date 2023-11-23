@@ -5,6 +5,8 @@ namespace App\Http\Controllers\role;
 use App\Http\Controllers\Controller;
 use App\Models\role\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role as SpatieRole;
 
 class RoleController extends Controller
 {
@@ -38,15 +40,25 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-        $request->validate(['name' => 'required']);
-        $data = $request->only(['name']);
+        $request->validate([
+            'name' => 'required|unique:roles,name',
+            'permissions' => 'required',
+        ]);
+
+        DB::beginTransaction();
 
         try {            
-            if (Role::create($data))
-            return redirect(route('roles.index'))->with(['success' => 'Role created successfully']);
+            $role = SpatieRole::create([
+                'name' => $request->input('name'), 
+                'user_id' => auth()->user()->id,
+                'ins' => auth()->user()->ins,
+            ]);
+            $role->syncPermissions($request->input('permissions'));
+
+            DB::commit();
+            return redirect(route('roles.index'))->with(['success' => 'Role & Rights created successfully']);
         } catch (\Throwable $th) {
-            errorHandler('Error creating role!');
+            return errorHandler('Error creating Role!', $th);
         }
     }
 
@@ -56,9 +68,9 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Role $region)
+    public function show(Role $role)
     {
-        return view('roles.view', compact('region'));
+        return view('roles.view', compact('role'));
     }
 
     /**
@@ -67,9 +79,9 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Role $region)
+    public function edit(SpatieRole $role)
     {
-        return view('roles.edit', compact('region'));
+        return view('roles.edit', compact('role'));
     }
 
     /**
@@ -79,17 +91,23 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $region)
+    public function update(Request $request, SpatieRole $role)
     {
-        // dd($request->all());
-        $request->validate(['name' => 'required']);
-        $data = $request->only(['name']);
+        $request->validate([
+            'name' => 'required',
+            'permissions' => 'required',
+        ]);
+
+        DB::beginTransaction();
 
         try {            
-            if ($region->update($data))
-            return redirect(route('roles.index'))->with(['success' => 'Role updated successfully']);
+            $role->update(['name' => $request->input('name')]);
+            $role->syncPermissions($request->input('permissions'));
+
+            DB::commit();
+            return redirect(route('roles.index'))->with(['success' => 'Role & Rights updated successfully']);
         } catch (\Throwable $th) {
-            errorHandler('Error updating role!');
+            return errorHandler('Error updating role!', $th);
         }
     }
 
@@ -99,13 +117,15 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Role $region)
+    public function destroy(SpatieRole $role)
     {
-        try {            
-            if ($region->delete())
-            return redirect(route('roles.index'))->with(['success' => 'Role deleted successfully']);
+        try {          
+            $role->permissions()->detach();
+            $role->delete();
+
+            return redirect(route('roles.index'))->with(['success' => 'Role & Rights deleted successfully']);
         } catch (\Throwable $th) {
-            errorHandler('Error deleting role!');
+            return errorHandler('Error deleting Role!', $th);
         }
     }
 }

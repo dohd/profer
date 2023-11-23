@@ -12,7 +12,7 @@
                     @include('roles.form')
                     <div class="text-center">
                         <a href="{{ route('roles.index') }}" class="btn btn-secondary">Cancel</a>
-                        {{ Form::submit('Submit', ['class' => 'btn btn-primary', 'disabled']) }}
+                        {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
                     </div>
                 {{ Form::close() }}
             </div>

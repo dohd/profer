@@ -149,9 +149,14 @@
       </a>
     </li>
     <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ route('roles.index') }}">
+        <i class="bi bi-shield-check"></i><span>Roles & Rights</span>
+      </a>
+    </li>
+    {{-- <li class="nav-item">
       <a class="nav-link collapsed" href="javascript:">
         <i class="bi bi-gear"></i> <span>Account Settings</span>
       </a>
-    </li>
+    </li> --}}
   </ul>
 </aside>
