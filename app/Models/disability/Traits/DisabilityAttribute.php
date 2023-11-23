@@ -11,7 +11,7 @@ trait DisabilityAttribute
     public function getActionButtonsAttribute()
     {
         return $this->getButtonWrapperAttribute(
-            $this->getViewButtonAttribute('disabilities.show', ''),
+            null,
             $this->getEditButtonAttribute('disabilities.edit', ''),
             $this->getDeleteButtonAttribute('disabilities.destroy', ''),
         );

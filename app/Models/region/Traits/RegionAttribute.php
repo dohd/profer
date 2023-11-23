@@ -11,7 +11,7 @@ trait RegionAttribute
     public function getActionButtonsAttribute()
     {
         return $this->getButtonWrapperAttribute(
-            $this->getViewButtonAttribute('regions.show', ''),
+            null,
             $this->getEditButtonAttribute('regions.edit', ''),
             $this->getDeleteButtonAttribute('regions.destroy', ''),
         );
