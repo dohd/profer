@@ -50,13 +50,14 @@
 @section('script')
 <script>
     $('#category').change(function() {
+        // default anchor link
         if (this.value) {
             $('.dn-link').attr('href', "{{ asset('storage/import_templates') }}/" + this.value  + '.xls');
         } else {
             $('.dn-link').attr('href', '#');
         }  
         
-        // rules
+        // template rules
         $('.dn-link').parents('p').next().remove();
         if (this.value == 'families' || this.value == 'self_advocates') {
             const el = '<p><span class="text-danger">*</span> <b><i>Column4 - DOB must be Fomarted as General Text instead of Date</i></b></p>';
