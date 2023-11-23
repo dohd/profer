@@ -5,6 +5,7 @@ namespace App\Models;
 trait ModelTrait
 {
     /**
+     * View Button Attribute
      * @return string
      */
     public function getViewButtonAttribute($route, $permission='')
@@ -13,6 +14,7 @@ trait ModelTrait
     }
 
     /**
+     * Edit Button Attribute
      * @return string
      */
     public function getEditButtonAttribute($route, $permission='')
@@ -21,6 +23,7 @@ trait ModelTrait
     }
 
     /**
+     * Delete Button Attribute
      * @return string
      */
     public function getDeleteButtonAttribute($route, $permission='')
@@ -35,11 +38,13 @@ trait ModelTrait
     }
 
     /**
+     * Buttons Wrapper Container
+     * 
      * @return string
      */
     public function getButtonWrapperAttribute($view, $edit, $delete)
     {
-        $li = array_reduce([$view, $edit, $delete], function ($init, $curr){
+        $li = array_reduce([$view, $edit, $delete], function ($init, $curr) {
             return $curr? $init . "<li>{$curr}</li>" : $init;
         }, '');
         
