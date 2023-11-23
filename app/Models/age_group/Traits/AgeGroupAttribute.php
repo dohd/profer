@@ -11,7 +11,7 @@ trait AgeGroupAttribute
     public function getActionButtonsAttribute()
     {
         return $this->getButtonWrapperAttribute(
-            $this->getViewButtonAttribute('age_groups.show', ''),
+            null,
             $this->getEditButtonAttribute('age_groups.edit', ''),
             $this->getDeleteButtonAttribute('age_groups.destroy', ''),
         );

@@ -11,7 +11,7 @@ trait DonorAttribute
     public function getActionButtonsAttribute()
     {
         return $this->getButtonWrapperAttribute(
-            $this->getViewButtonAttribute('donors.show', ''),
+            null,
             $this->getEditButtonAttribute('donors.edit', ''),
             $this->getDeleteButtonAttribute('donors.destroy', ''),
         );

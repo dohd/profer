@@ -11,7 +11,7 @@ trait CohortAttribute
     public function getActionButtonsAttribute()
     {
         return $this->getButtonWrapperAttribute(
-            $this->getViewButtonAttribute('cohorts.show', ''),
+            null,
             $this->getEditButtonAttribute('cohorts.edit', ''),
             $this->getDeleteButtonAttribute('cohorts.destroy', ''),
         );

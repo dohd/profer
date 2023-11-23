@@ -11,7 +11,7 @@ trait ProgrammeAttribute
     public function getActionButtonsAttribute()
     {
         return $this->getButtonWrapperAttribute(
-            $this->getViewButtonAttribute('programmes.show', ''),
+            null,
             $this->getEditButtonAttribute('programmes.edit', ''),
             $this->getDeleteButtonAttribute('programmes.destroy', ''),
         );
