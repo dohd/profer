@@ -11,9 +11,9 @@ trait LogFrameAttribute
     public function getActionButtonsAttribute()
     {
         return $this->getButtonWrapperAttribute(
-            $this->getViewButtonAttribute('log_frames.show', ''),
-            $this->getEditButtonAttribute('log_frames.edit', ''),
-            $this->getDeleteButtonAttribute('log_frames.destroy', ''),
+            $this->getViewButtonAttribute('log_frames.show', 'view-log-frame'),
+            $this->getEditButtonAttribute('log_frames.edit', 'edit-log-frame'),
+            $this->getDeleteButtonAttribute('log_frames.destroy', 'delete-log-frame'),
         );
     }
 

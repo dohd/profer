@@ -12,8 +12,8 @@ trait DisabilityAttribute
     {
         return $this->getButtonWrapperAttribute(
             null,
-            $this->getEditButtonAttribute('disabilities.edit', ''),
-            $this->getDeleteButtonAttribute('disabilities.destroy', ''),
+            $this->getEditButtonAttribute('disabilities.edit', 'edit-disability'),
+            $this->getDeleteButtonAttribute('disabilities.destroy', 'delete-disability'),
         );
     }
 }

@@ -12,8 +12,8 @@ trait DonorAttribute
     {
         return $this->getButtonWrapperAttribute(
             null,
-            $this->getEditButtonAttribute('donors.edit', ''),
-            $this->getDeleteButtonAttribute('donors.destroy', ''),
+            $this->getEditButtonAttribute('donors.edit', 'edit-donor'),
+            $this->getDeleteButtonAttribute('donors.destroy', 'delete-donor'),
         );
     }
 }

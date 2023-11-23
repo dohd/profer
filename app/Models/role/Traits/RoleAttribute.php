@@ -12,8 +12,8 @@ trait RoleAttribute
     {
         return $this->getButtonWrapperAttribute(
             null,
-            $this->getEditButtonAttribute('roles.edit', ''),
-            $this->getDeleteButtonAttribute('roles.destroy', ''),
+            $this->getEditButtonAttribute('roles.edit', 'edit-role'),
+            $this->getDeleteButtonAttribute('roles.destroy', 'delete-role'),
         );
     }
 }

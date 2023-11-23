@@ -11,9 +11,4 @@ trait UserRelationship
     {
         return $this->hasOne(UserProfile::class, 'rel_id');
     }
-
-    public function role()
-    {
-        return $this->belongsTo(Role::class);
-    }
 }

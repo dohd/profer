@@ -21,7 +21,7 @@
                         <tbody>
                             @foreach ($log_frames as $i => $log_frame)
                                 <tr>
-                                    <th scope="row">{{ $i+1 }}</th>
+                                    <th scope="row" style="height: {{ count($log_frames) == 1? '80px': '' }}">{{ $i+1 }}</th>
                                     <td><a href="{{ route('log_frames.show', $log_frame) }}">{{ tidCode('log_frame', $log_frame->tid) }}</a></td>
                                     <td>{{ $log_frame->proposal->title }}</td>
                                     <td>{{ dateFormat($log_frame->date) }}</td>

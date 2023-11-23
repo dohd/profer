@@ -11,9 +11,9 @@ trait BudgetAttribute
     public function getActionButtonsAttribute()
     {
         return $this->getButtonWrapperAttribute(
-            $this->getViewButtonAttribute('budgets.show', ''), 
-            $this->getEditButtonAttribute('budgets.edit', ''),
-            $this->getDeleteButtonAttribute('budgets.destroy', ''),
+            $this->getViewButtonAttribute('budgets.show', 'view-budgeting'), 
+            $this->getEditButtonAttribute('budgets.edit', 'edit-budgeting'),
+            $this->getDeleteButtonAttribute('budgets.destroy', 'delete-budgeting'),
         );
     }
 }

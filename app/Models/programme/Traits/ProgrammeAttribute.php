@@ -12,8 +12,8 @@ trait ProgrammeAttribute
     {
         return $this->getButtonWrapperAttribute(
             null,
-            $this->getEditButtonAttribute('programmes.edit', ''),
-            $this->getDeleteButtonAttribute('programmes.destroy', ''),
+            $this->getEditButtonAttribute('programmes.edit', 'edit-programme'),
+            $this->getDeleteButtonAttribute('programmes.destroy', 'delete-programme'),
         );
     }
 }

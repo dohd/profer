@@ -11,9 +11,9 @@ trait AgendaAttribute
     public function getActionButtonsAttribute()
     {
         return $this->getButtonWrapperAttribute(
-            $this->getViewButtonAttribute('agenda.show', ''),
-            $this->getEditButtonAttribute('agenda.edit', ''),
-            $this->getDeleteButtonAttribute('agenda.destroy', ''),
+            $this->getViewButtonAttribute('agenda.show', 'view-agenda'),
+            $this->getEditButtonAttribute('agenda.edit', 'edit-agenda'),
+            $this->getDeleteButtonAttribute('agenda.destroy', 'delete-agenda'),
         );
     }
 }

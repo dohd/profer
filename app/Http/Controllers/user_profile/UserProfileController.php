@@ -59,7 +59,9 @@ class UserProfileController extends Controller
                 'created_by' => auth()->user()->id,
                 'ins' => auth()->user()->ins,
             ]);
-            User::create($input);
+            $user = User::create($input);
+            $role = Role::find($input['role_id']);
+            $user->assignRole($role->name);
 
             DB::commit();
             return redirect(route('user_profiles.index'))->with(['success' => 'User created successfully']);
@@ -113,8 +115,10 @@ class UserProfileController extends Controller
         try {            
             
             $input = $request->only(['name', 'username', 'phone', 'email', 'role_id']);
+            $role = Role::find($input['role_id']);
+            $user_profile->syncRoles([$role->name]);
             $user_profile->update($input);
-
+            
             DB::commit();
             return redirect(route('user_profiles.index'))->with(['success' => 'User updated successfully']);
         } catch (\Throwable $th) {
@@ -130,7 +134,9 @@ class UserProfileController extends Controller
      */
     public function destroy(User $user_profile)
     {
-        try {            
+        try {     
+            $role = Role::find($user_profile->role_id);
+            $user_profile->removeRole($role->name);       
             $user_profile->delete();
 
             return redirect(route('user_profiles.index'))->with(['success' => 'User deleted successfully']);
