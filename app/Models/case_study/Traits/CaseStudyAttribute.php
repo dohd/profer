@@ -11,9 +11,9 @@ trait CaseStudyAttribute
     public function getActionButtonsAttribute()
     {
         return $this->getButtonWrapperAttribute(
-            $this->getViewButtonAttribute('case_studies.show', ''),
-            $this->getEditButtonAttribute('case_studies.edit', ''),
-            $this->getDeleteButtonAttribute('case_studies.destroy', ''),
+            $this->getViewButtonAttribute('case_studies.show', 'create-case-study'),
+            $this->getEditButtonAttribute('case_studies.edit', 'edit-case-study'),
+            $this->getDeleteButtonAttribute('case_studies.destroy', 'delete-case-study'),
         );
     }
 }

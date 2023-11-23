@@ -12,8 +12,8 @@ trait CohortAttribute
     {
         return $this->getButtonWrapperAttribute(
             null,
-            $this->getEditButtonAttribute('cohorts.edit', ''),
-            $this->getDeleteButtonAttribute('cohorts.destroy', ''),
+            $this->getEditButtonAttribute('cohorts.edit', 'edit-cohort'),
+            $this->getDeleteButtonAttribute('cohorts.destroy', 'delete-cohort'),
         );
     }
 }

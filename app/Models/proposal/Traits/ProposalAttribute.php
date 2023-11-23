@@ -11,9 +11,9 @@ trait ProposalAttribute
     public function getActionButtonsAttribute()
     {
         return $this->getButtonWrapperAttribute(
-            $this->getViewButtonAttribute('proposals.show', ''),
-            $this->getEditButtonAttribute('proposals.edit', ''),
-            $this->getDeleteButtonAttribute('proposals.destroy', ''),
+            $this->getViewButtonAttribute('proposals.show', 'view-proposal'),
+            $this->getEditButtonAttribute('proposals.edit', 'edit-proposal'),
+            $this->getDeleteButtonAttribute('proposals.destroy', 'delete-proposal'),
         );
     }
 

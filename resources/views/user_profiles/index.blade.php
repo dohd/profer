@@ -16,6 +16,7 @@
                             <th width="20%">Name</th>
                             <th>Phone</th>
                             <th>Email</th>
+                            <th>Status</th>
                             <th>Action</th>
                           </tr>
                         </thead>
@@ -23,7 +24,7 @@
                             @foreach ($users as $i => $user)
                                 <tr>
                                     <th scope="row" style="height: {{ count($users) == 1? '80px': '' }}">{{ $i+1 }}</th>
-                                    <td>{{ @$user->role->name }}</td>
+                                    <td>{{ @$user->roles()->first()->name }}</td>
                                     <td>
                                         <div class="row g-0">
                                             <div class="col-md-3 col-12">
@@ -36,6 +37,11 @@
                                     </td>
                                     <td>{{ $user->phone }}</td>
                                     <td>{{ $user->email }}</td>
+                                    <td>
+                                        <span class="badge bg-{{ $user->is_active? 'success' : 'secondary' }}" style="cursor:pointer;">
+                                            {{ $user->is_active? 'active' : 'inactive' }} <i class="bi bi-caret-down-fill"></i>
+                                        </span>
+                                    </td>
                                     <td>{!! $user->action_buttons !!}</td>
                                 </tr>
                             @endforeach

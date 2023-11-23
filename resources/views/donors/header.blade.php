@@ -4,7 +4,9 @@
       <h1>Donor Management</h1>
     </div>
     <div class="col-6">
-      <a href="{{ route('donors.create') }}" class="btn btn-primary float-end ms-1"><i class="bi bi-plus-circle"></i> Create</a>
+      @can('create-donor')
+        <a href="{{ route('donors.create') }}" class="btn btn-primary float-end ms-1"><i class="bi bi-plus-circle"></i> Create</a>
+      @endcan
       <a href="{{ route('donors.index') }}" class="btn btn-secondary float-end"><i class="bi bi-card-list"></i> List</a>
     </div>
   </div>

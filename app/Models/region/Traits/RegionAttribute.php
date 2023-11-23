@@ -12,8 +12,8 @@ trait RegionAttribute
     {
         return $this->getButtonWrapperAttribute(
             null,
-            $this->getEditButtonAttribute('regions.edit', ''),
-            $this->getDeleteButtonAttribute('regions.destroy', ''),
+            $this->getEditButtonAttribute('regions.edit', 'edit-region'),
+            $this->getDeleteButtonAttribute('regions.destroy', 'delete-region'),
         );
     }
 }

@@ -10,7 +10,8 @@ trait ModelTrait
      */
     public function getViewButtonAttribute($route, $permission='')
     {
-        return '<a class="dropdown-item pt-1 pb-1 view" href="'. route($route, $this). '"><i class="bi bi-eye-fill"></i>View</a>';
+        if ($this->userHasPermission($permission))
+            return '<a class="dropdown-item pt-1 pb-1 view" href="'. route($route, $this). '"><i class="bi bi-eye-fill"></i>View</a>';
     }
 
     /**
@@ -19,7 +20,8 @@ trait ModelTrait
      */
     public function getEditButtonAttribute($route, $permission='')
     {
-        return '<a class="dropdown-item pt-1 pb-1 edit" href="'. route($route, $this) . '"><i class="bi bi-pencil-square"></i>Edit</a>';
+        if ($this->userHasPermission($permission))
+            return '<a class="dropdown-item pt-1 pb-1 edit" href="'. route($route, $this) . '"><i class="bi bi-pencil-square"></i>Edit</a>';
     }
 
     /**
@@ -28,13 +30,14 @@ trait ModelTrait
      */
     public function getDeleteButtonAttribute($route, $permission='')
     {
-        return '<a class="dropdown-item pt-1 pb-1 destroy" href="javascript:">
-                <i class="bi bi-trash text-danger icon-xs"></i>Delete
-                <form action="'. route($route, $this) .'" method="POST">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <input type="hidden" name="_token" value="'. csrf_token() .'">
-                </form>
-            </a>';
+        if ($this->userHasPermission($permission))
+            return '<a class="dropdown-item pt-1 pb-1 destroy" href="javascript:">
+                    <i class="bi bi-trash text-danger icon-xs"></i>Delete
+                    <form action="'. route($route, $this) .'" method="POST">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="'. csrf_token() .'">
+                    </form>
+                </a>';
     }
 
     /**
@@ -55,5 +58,18 @@ trait ModelTrait
             <ul class="dropdown-menu">'. $li .'</ul>
         </div>
         ';
+    }
+
+    /**
+     * Validate Permission
+     */
+    public function userHasPermission($permission='')
+    {
+        try {
+            $role = auth()->user()->roles()->first();
+            return $role->hasPermissionTo($permission);
+        } catch (\Throwable $th) {
+            return false;
+        }
     }
 }

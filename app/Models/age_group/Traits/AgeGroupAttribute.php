@@ -12,8 +12,8 @@ trait AgeGroupAttribute
     {
         return $this->getButtonWrapperAttribute(
             null,
-            $this->getEditButtonAttribute('age_groups.edit', ''),
-            $this->getDeleteButtonAttribute('age_groups.destroy', ''),
+            $this->getEditButtonAttribute('age_groups.edit', 'edit-age-group'),
+            $this->getDeleteButtonAttribute('age_groups.destroy', 'delete-age-group'),
         );
     }
 }

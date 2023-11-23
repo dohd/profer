@@ -36,14 +36,14 @@
                         </tr>
                         </thead>
                         <tbody>
-                            @foreach ($agenda as $i => $agenda)
+                            @foreach ($agenda as $i => $row)
                                 <tr>
-                                    <th scope="row">{{ $i+1 }}</th>
-                                    <td><a href="{{ route('agenda.show', $agenda) }}">{{ tidCode('agenda', $agenda->tid) }}</a></td>
-                                    <td>{{ $agenda->title }}</td>
-                                    <td><span class="badge bg-{{ $agenda->status == 'approved'? 'success' : 'secondary' }}">{{ $agenda->status }}</span></td>
-                                    <td>{{ dateFormat($agenda->date)  }}</td>
-                                    <td>{!! $agenda->action_buttons !!}</td>
+                                    <th scope="row" style="height: {{ count($agenda) == 1? '80px' : '' }}">{{ $i+1 }}</th>
+                                    <td><a href="{{ route('agenda.show', $row) }}">{{ tidCode('agenda', $row->tid) }}</a></td>
+                                    <td>{{ $row->title }}</td>
+                                    <td><span class="badge bg-{{ $row->status == 'approved'? 'success' : 'secondary' }}">{{ $row->status }}</span></td>
+                                    <td>{{ dateFormat($row->date)  }}</td>
+                                    <td>{!! $row->action_buttons !!}</td>
                                 </tr>
                             @endforeach
                         </tbody>

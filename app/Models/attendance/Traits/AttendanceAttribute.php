@@ -11,9 +11,9 @@ trait AttendanceAttribute
     public function getActionButtonsAttribute()
     {
         return $this->getButtonWrapperAttribute(
-            $this->getViewButtonAttribute('attendances.show', ''),
-            $this->getEditButtonAttribute('attendances.edit', ''),
-            $this->getDeleteButtonAttribute('attendances.destroy', ''),
+            $this->getViewButtonAttribute('attendances.show', 'view-attendance'),
+            $this->getEditButtonAttribute('attendances.edit', 'edit-attendance'),
+            $this->getDeleteButtonAttribute('attendances.destroy', 'delete-attendance'),
         );
     }
 }

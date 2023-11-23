@@ -11,9 +11,9 @@ trait ActionPlanAttribute
     public function getActionButtonsAttribute()
     {
         return $this->getButtonWrapperAttribute(
-            $this->getViewButtonAttribute('action_plans.show', ''),
-            $this->getEditButtonAttribute('action_plans.edit', ''),
-            $this->getDeleteButtonAttribute('action_plans.destroy', ''),
+            $this->getViewButtonAttribute('action_plans.show', 'view-action-plan'),
+            $this->getEditButtonAttribute('action_plans.edit', 'edit-action-plan'),
+            $this->getDeleteButtonAttribute('action_plans.destroy', 'delete-action-plan'),
         );
     }
 
