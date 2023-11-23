@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\user_profile;
 
 use App\Http\Controllers\Controller;
+use App\Models\role\Role;
 use App\Models\User;
-use App\Models\user_profile\UserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,10 +17,9 @@ class UserProfileController extends Controller
      */
     public function index()
     {
-        $user_profiles = UserProfile::whereHas('user_login', fn($q) => $q->whereNull('is_super'))
-            ->where('rel_id', '!=', auth()->user()->id)->latest()->get();
+        $users = User::whereNotNull('created_by')->get();
 
-        return view('user_profiles.index', compact('user_profiles'));
+        return view('user_profiles.index', compact('users'));
     }
 
     /**
@@ -30,7 +29,9 @@ class UserProfileController extends Controller
      */
     public function create()
     {
-        return view('user_profiles.create');
+        $roles = Role::get();
+
+        return view('user_profiles.create', compact('roles'));
     }
 
     /**
@@ -41,29 +42,24 @@ class UserProfileController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $request->validate([
-            'fname' => 'required',
-            'lname' => 'required',
+            'name' => 'required',
+            'username' => 'required|unique:users,username',
             'phone' => 'required',
-            'email' => 'required',
-            'address' => 'required',
-            'country' => 'required',
+            'email' => 'required|unique:users,username',
+            'role_id' => 'required',
         ]);
-        $data = $request->only(['fname', 'lname', 'phone', 'email', 'address', 'country']);
 
         DB::beginTransaction();
 
         try {            
-            $data['name'] = "{$data['fname']} {$data['lname']}";
-            unset($data['fname'], $data['lname']);
-            $pswd = explode('@', $data['email'])[0];
-            $user_inpt = ['name' => $data['name'], 'email' => $data['email'], 'password' => $pswd];
-            $user = User::create($user_inpt);
-
-            $data['rel_id'] = $user->id;
-            $user_profile = UserProfile::create($data);
-            $user->update(['ins' => $user_profile->ins]);
+            
+            $input = array_replace($request->except('_token'), [
+                'password' => $request->phone,
+                'created_by' => auth()->user()->id,
+                'ins' => auth()->user()->ins,
+            ]);
+            User::create($input);
 
             DB::commit();
             return redirect(route('user_profiles.index'))->with(['success' => 'User created successfully']);
@@ -78,7 +74,7 @@ class UserProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(UserProfile $user_profile)
+    public function show(User $user_profile)
     {
         return view('user_profiles.view', compact('user_profile'));
     }
@@ -89,13 +85,10 @@ class UserProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(UserProfile $user_profile)
+    public function edit(User $user_profile)
     {
-        $names = explode(' ', $user_profile->name);
-        $user_profile->fname = @$names[0] ?: '';
-        $user_profile->lname = @$names[1] ?: '';
-
-        return view('user_profiles.edit', compact('user_profile'));
+        $roles = Role::get();
+        return view('user_profiles.edit', compact('user_profile', 'roles'));
     }
 
     /**
@@ -105,27 +98,27 @@ class UserProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, UserProfile $user_profile)
+    public function update(Request $request, User $user_profile)
     {
-        // dd($request->all());
         $request->validate([
-            'fname' => 'required',
-            'lname' => 'required',
+            'name' => 'required',
+            'username' => 'required',
             'phone' => 'required',
             'email' => 'required',
-            'address' => 'required',
-            'country' => 'required',
+            'role_id' => 'required',
         ]);
-        $data = $request->only(['fname', 'lname', 'phone', 'email', 'address', 'country']);
+
+        DB::beginTransaction();
 
         try {            
-            $data['name'] = "{$data['fname']} {$data['lname']}";
-            unset($data['fname'], $data['lname']);
-            $user_profile->update($data);
+            
+            $input = $request->only(['name', 'username', 'phone', 'email', 'role_id']);
+            $user_profile->update($input);
 
-            return redirect(route('user_profiles.index'))->with(['success' => 'User created successfully']);
+            DB::commit();
+            return redirect(route('user_profiles.index'))->with(['success' => 'User updated successfully']);
         } catch (\Throwable $th) {
-            return errorHandler('Error creating user!', $th);
+            return errorHandler('Error updating User!', $th);
         }
     }
 
@@ -135,18 +128,14 @@ class UserProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(UserProfile $user_profile)
+    public function destroy(User $user_profile)
     {
-        DB::beginTransaction();
-
         try {            
-            $user_profile->user_login()->delete();
-            if ($user_profile->delete()) {
-                DB::commit();
-                return redirect(route('user_profiles.index'))->with(['success' => 'User Profile deleted successfully']);
-            }
-        } catch (\Throwable $th) { dd($th);
-            return errorHandler('Error deleting user!', $th);
+            $user_profile->delete();
+
+            return redirect(route('user_profiles.index'))->with(['success' => 'User deleted successfully']);
+        } catch (\Throwable $th) { 
+            return errorHandler('Error deleting User!', $th);
         }
     }
 
@@ -158,7 +147,7 @@ class UserProfileController extends Controller
      */
     public function active_profile()
     {
-        $user_profile = UserProfile::where('rel_id', auth()->user()->id)->first();
+        $user_profile = auth()->user();
 
         return view('user_profiles.active_profile', compact('user_profile'));
     }
