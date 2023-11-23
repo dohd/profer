@@ -11,7 +11,7 @@ trait RoleAttribute
     public function getActionButtonsAttribute()
     {
         return $this->getButtonWrapperAttribute(
-            $this->getViewButtonAttribute('roles.show', ''),
+            null,
             $this->getEditButtonAttribute('roles.edit', ''),
             $this->getDeleteButtonAttribute('roles.destroy', ''),
         );
