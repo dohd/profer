@@ -30,16 +30,14 @@
                                             <div class="col-md-3 col-12">
                                                 <img src="{{ asset('img/profile-img.jpeg') }}" alt="Profile" class="rounded-circle" width="40" height="40"/>
                                             </div>
-                                            <div class="col-md-9 col-12 pt-2">
-                                                <a href="{{ route('user_profiles.show', $user) }}">{{ $user->name }}</a>
-                                            </div>
+                                            <div class="col-md-9 col-12 pt-2 ps-1">{{ $user->name }}</div>
                                         </div>
                                     </td>
                                     <td>{{ $user->phone }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>
-                                        <span class="badge bg-{{ $user->is_active? 'success' : 'secondary' }}" style="cursor:pointer;">
-                                            {{ $user->is_active? 'active' : 'inactive' }} <i class="bi bi-caret-down-fill"></i>
+                                        <span class="badge bg-{{ $user->is_active? 'success' : 'secondary' }} modal-btn" style="cursor:pointer;" role="button" data-bs-toggle="modal" data-bs-target="#status_modal" data-url="{{ route('user_profiles.update', $user) }}">
+                                            {{ $user->is_active? 'Active' : 'Inactive' }} <i class="bi bi-caret-down-fill"></i>
                                         </span>
                                     </td>
                                     <td>{!! $user->action_buttons !!}</td>
@@ -51,4 +49,19 @@
             </div>
         </div>
     </div>
+    @include('user_profiles.partial.status_modal')
+@stop
+
+@section('script')
+<script>
+    const formAttr = {url: '', status: 'Active'};
+    $('table').on('click', '.modal-btn', function() {
+        formAttr.url = $(this).attr('data-url');
+        formAttr.status = $(this).text().replace(/\s+/g,'');
+    });
+    $('#status_modal').on('shown.bs.modal', function() {
+        $(this).find('form').attr('action', formAttr.url);
+        $(this).find('select#status').val((formAttr.status == 'Active'? 1 : 0));
+    });
+</script>
 @stop

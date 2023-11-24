@@ -53,7 +53,6 @@ class UserProfileController extends Controller
         DB::beginTransaction();
 
         try {            
-            
             $input = array_replace($request->except('_token'), [
                 'password' => $request->phone,
                 'created_by' => auth()->user()->id,
@@ -102,27 +101,36 @@ class UserProfileController extends Controller
      */
     public function update(Request $request, User $user_profile)
     {
-        $request->validate([
-            'name' => 'required',
-            'username' => 'required',
-            'phone' => 'required',
-            'email' => 'required',
-            'role_id' => 'required',
-        ]);
-
-        DB::beginTransaction();
-
-        try {            
-            
-            $input = $request->only(['name', 'username', 'phone', 'email', 'role_id']);
-            $role = Role::find($input['role_id']);
-            $user_profile->syncRoles([$role->name]);
-            $user_profile->update($input);
-            
-            DB::commit();
-            return redirect(route('user_profiles.index'))->with(['success' => 'User updated successfully']);
-        } catch (\Throwable $th) {
-            return errorHandler('Error updating User!', $th);
+        if ($request->status != null) {
+            try {
+                $user_profile->update(['is_active' => $request->input('status')]);
+                return redirect()->back()->with('success', 'Status updated successfully');
+            } catch (\Throwable $th) {
+                return errorHandler('Error updating status!', $th);
+            }
+        } else {
+            $request->validate([
+                'name' => 'required',
+                'username' => 'required',
+                'phone' => 'required',
+                'email' => 'required',
+                'role_id' => 'required',
+            ]);
+    
+            DB::beginTransaction();
+    
+            try {            
+                
+                $input = $request->only(['name', 'username', 'phone', 'email', 'role_id']);
+                $role = Role::find($input['role_id']);
+                $user_profile->syncRoles([$role->name]);
+                $user_profile->update($input);
+                
+                DB::commit();
+                return redirect(route('user_profiles.index'))->with(['success' => 'User updated successfully']);
+            } catch (\Throwable $th) {
+                return errorHandler('Error updating User!', $th);
+            }
         }
     }
 
