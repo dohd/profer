@@ -23,29 +23,6 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="col-md-5 col-12">
-                            <select name="" id="wo_status_filter" class="custom-control col-8">
-                                <option value="">Filter Approved Plans</option>
-                                <option value="wo_ps_list">Pending Participant List</option>
-                                <option value="wo_narrative">Pending Activity Narrative</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col-md-7 col-12">
-                            <div class="table-responsive">
-                                <table class="table table-sm table-bordered m-0">
-                                    <tbody>
-                                        <tr>
-                                            <th>Approved</th>
-                                            <td>Pending Participant List ({{ numberFormat(@$wo_ps_list_count, 0) }})</td>
-                                            <td>Pending Activity Narrative ({{ numberFormat(@$wo_narrative_count, 0) }})</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
