@@ -123,16 +123,12 @@
 <script>
     $('#select-all').click(function() {
         if ($(this).prop('checked')) {
-            $('.perm').each(function() {
-                $(this).prop('checked', true);
-            });
+            $('.perm').prop('checked', true);
         } else {
-            $('.perm').each(function() {
-                $(this).prop('checked', false);
-            });
+            $('.perm').prop('checked', false);
         }
     });
-
+    
     const permissions = @json(@$role->permissions);
     if (permissions) {
         $('.perm').each(function() {
