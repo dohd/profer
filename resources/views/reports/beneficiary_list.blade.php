@@ -1,6 +1,6 @@
 @extends('layouts.core')
 
-@section('title', 'Beneficiary List Database')
+@section('title', 'Rightholder List Database')
     
 @section('content')
     @include('reports.partial.beneficiary_list_header')
@@ -9,7 +9,7 @@
             <div class="card-content p-2">
                 <div class="row">
                     <div class="col-md-3 col-12">
-                        <label for="category">Beneficiary Category</label>
+                        <label for="category">Rightholder Category</label>
                         <select id="category" class="custom-select col-12 mt-2">
                             <option value="">-- Select Category --</option>
                             @foreach (['self-advocates' => 'Self-Advocates', 'families' => 'Families', 'support-groups' => 'Support Group'] as $key => $value)
@@ -37,7 +37,7 @@
                         <thead class="bg-light bg-gradient">
                             <tr>
                                 <th>#Code</th>
-                                <th>Beneficiary Name</th>
+                                <th>Rightholder Name</th>
                                 <th>Gender</th>
                                 <th>DOB</th>
                                 <th>Main disability</th>
