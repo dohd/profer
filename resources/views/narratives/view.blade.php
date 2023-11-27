@@ -7,9 +7,11 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Narrative Details
-                <span class="badge bg-secondary text-white float-end" role="button" data-bs-toggle="modal" data-bs-target="#status_modal">
-                    <i class="bi bi-pencil-fill"></i> Status
-                </span>
+                @can('approve-narrative-report')
+                    <span class="badge bg-secondary text-white float-end" role="button" data-bs-toggle="modal" data-bs-target="#status_modal">
+                        <i class="bi bi-pencil-fill"></i> Status
+                    </span>
+                @endcan
             </h5>
             <div class="card-content p-2">
                 <table class="table table-bordered">

@@ -8,9 +8,11 @@
         <div class="card-body">
             <h5 class="card-title pb-1">
                 Project Budget Details
-                <span class="badge bg-secondary text-white float-end" role="button" data-bs-toggle="modal" data-bs-target="#status_modal">
-                    <i class="bi bi-pencil-fill"></i> Status
-                </span>
+                @can('approve-budgeting')
+                    <span class="badge bg-secondary text-white float-end" role="button" data-bs-toggle="modal" data-bs-target="#status_modal">
+                        <i class="bi bi-pencil-fill"></i> Status
+                    </span>
+                @endcan
             </h5>
             <div class="card-content p-2">
                 <div class="row mb-3">
