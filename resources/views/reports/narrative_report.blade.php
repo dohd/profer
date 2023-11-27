@@ -1,6 +1,6 @@
 @extends('layouts.core')
 
-@section('title', 'Narrative Indicator')
+@section('title', 'Narrative Report')
     
 @section('content')
     @include('reports.partial.narrative_report_header')
@@ -8,8 +8,8 @@
         <div class="card-body">
             <div class="card-content pt-4">
                 <div class="row mb-3">
-                    <div class="col-md-12 col-12">
-                        <select id="activity" class="form-select select2 filter" data-placeholder="Search Activity by name or project">
+                    <div class="col-md-10 col-12">
+                        <select id="activity" class="form-select select2 filter" data-placeholder="Search Activity Name">
                             <option value=""></option>
                             @foreach ($proposal_items as $item)
                                 <option value="{{ $item->id }}">
@@ -17,6 +17,9 @@
                                 </option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="col-md-2 col-12">
+                        {{ Form::submit('Generate', ['class' => 'btn btn-primary btn-sm', 'id' => 'submit']) }}
                     </div>
                 </div>
             </div>
@@ -54,18 +57,20 @@
     // on activity change
     const tableTempl = $('.table-responsive').html();
     $('#activity').change(function() {
-        if (!this.value) return $('.table-responsive').html(tableTempl);  
-
-        const spinner = @json(spinner());
-        $('.table-responsive').html(spinner);
+        if (this.value) return;
+        $('.table-responsive').html(tableTempl);     
+    });
+    $('#submit').click(function() {
+        if (!$('#activity').val()) return $('.table-responsive').html(tableTempl); 
+        $('.table-responsive').html("{{ spinner() }}");
         // fetch report
         const url = "{{ route('reports.narrative_data') }}";
-        const params = {proposal_item_id: this.value || 0};
+        const params = {proposal_item_id: $('#activity').val() || 0};
         $.post(url, params, data => {
             $('.table-responsive').html(tableTempl);
             $('.table-responsive tbody').html(data);
-        });       
-    })
+        });   
+    });
 </script>
 @stop
 
