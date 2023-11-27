@@ -27,13 +27,14 @@
                 <div class="table-responsive">
                     <table class="table table-borderless datatable">
                         <thead>
-                        <tr>
-                            <th scope="col">#No</th>
-                            <th scope="col">#Code</th>
-                            <th scope="col">Agenda Title</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Date</th>
-                        </tr>
+                            <tr>
+                                <th>#No</th>
+                                <th>#Code</th>
+                                <th>Agenda Title</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
                         </thead>
                         <tbody>
                             @foreach ($agenda as $i => $row)
