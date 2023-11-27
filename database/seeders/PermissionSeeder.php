@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class PermissionSeeder extends Seeder
 {
@@ -27,7 +29,10 @@ class PermissionSeeder extends Seeder
                 ];
             }
         }
-            
         DB::table('permissions')->insert($permissions);
+        $role = Role::findById(1);
+        $permissions = array_map(fn($v) => $v['name'], $permissions);
+        // $permissions = Permission::find();
+        // $role->givePermissionTo($permissions);
     }
 }
