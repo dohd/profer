@@ -9,78 +9,79 @@
     <!-- End Dashboard Nav -->
 
     <li class="nav-heading">Programme Management</li>
+    @canany(['view-proposal', 'view-budgeting', 'view-log-frame', 'view-action-plan', 'view-agenda', 'view-attendance', 'view-narrative-report', 'view-case-study'])
+      {{-- proposals --}}
+      @can('view-proposal')
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="{{ route('proposals.index') }}">
+            <i class="bi bi-file-text"></i></i><span>Grant Proposal</span>
+          </a>
+        </li>
+      @endcan
 
-    {{-- proposals --}}
-    @can('view-proposal')
+      {{-- project budget --}}
+      @can('view-budgeting')
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('proposals.index') }}">
-          <i class="bi bi-file-text"></i></i><span>Grant Proposal</span>
+        <a class="nav-link collapsed" href="{{ route('budgets.index') }}">
+          <i class="bi bi-cash-stack"></i></i><span>Budgeting</span>
         </a>
       </li>
-    @endcan
+      @endcan
 
-    {{-- project budget --}}
-    @can('view-budgeting')
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="{{ route('budgets.index') }}">
-        <i class="bi bi-cash-stack"></i></i><span>Budgeting</span>
-      </a>
-    </li>
-    @endcan
+      {{-- log frame --}}
+      @can('view-log-frame')
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('log_frames.index') }}">
+          <i class="bi bi-kanban"></i><span>Log Frame</span>
+        </a>
+      </li>
+      @endcan
 
-    {{-- log frame --}}
-    @can('view-log-frame')
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="{{ route('log_frames.index') }}">
-        <i class="bi bi-kanban"></i><span>Log Frame</span>
-      </a>
-    </li>
-    @endcan
+      {{-- action plan --}}
+      @can('view-action-plan')
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('action_plans.index') }}">
+          <i class="bi bi-calendar-plus"></i><span>Action Plan</span>
+        </a>
+      </li>
+      @endcan
 
-    {{-- action plan --}}
-    @can('view-action-plan')
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="{{ route('action_plans.index') }}">
-        <i class="bi bi-calendar-plus"></i><span>Action Plan</span>
-      </a>
-    </li>
-    @endcan
+      {{-- agenda --}}
+      @can('view-agenda')
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('agenda.index') }}">
+          <i class="bi bi-list-check"></i><span>Agenda</span>
+        </a>
+      </li>
+      @endcan
 
-    {{-- agenda --}}
-    @can('view-agenda')
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="{{ route('agenda.index') }}">
-        <i class="bi bi-list-check"></i><span>Agenda</span>
-      </a>
-    </li>
-    @endcan
+      {{-- attendance --}}
+      @can('view-attendance')
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('attendances.index') }}">
+          <i class="bi bi-person-lines-fill"></i></i><span>Attendance</span>
+        </a>
+      </li>
+      @endcan
 
-    {{-- attendance --}}
-    @can('view-attendance')
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="{{ route('attendances.index') }}">
-        <i class="bi bi-person-lines-fill"></i></i><span>Attendance</span>
-      </a>
-    </li>
-    @endcan
+      {{-- activity narrative --}}
+      @can('view-narrative-report')
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('narratives.index') }}">
+          <i class="bi bi-file-text"></i></i><span>Narrative Report</span>
+        </a>
+      </li>
+      @endcan
 
-    {{-- activity narrative --}}
-    @can('view-narrative-report')
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="{{ route('narratives.index') }}">
-        <i class="bi bi-file-text"></i></i><span>Narrative Report</span>
-      </a>
-    </li>
-    @endcan
-
-    {{-- case study --}}
-    @can('view-case-study')
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="{{ route('case_studies.index') }}">
-        <i class="bi bi-file-earmark-text"></i></i><span>Case Study</span>
-      </a>
-    </li>
-    @endcan
+      {{-- case study --}}
+      @can('view-case-study')
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('case_studies.index') }}">
+          <i class="bi bi-file-earmark-text"></i></i><span>Case Study</span>
+        </a>
+      </li>
+      @endcan
+    @endcanany
 
     {{-- file imports --}}
     <li class="nav-heading">Imports</li>
@@ -108,7 +109,7 @@
         data-bs-parent="#sidebar-nav"
       >
         <li>
-          <a href="{{ route('reports.beneficiary_list') }}"><i class="bi bi-circle"></i><span>Beneficiary List</span></a>
+          <a href="{{ route('reports.beneficiary_list') }}"><i class="bi bi-circle"></i><span>Rightholder List</span></a>
         </li>
         <li>
           <a href="{{ route('reports.narrative_report') }}"><i class="bi bi-circle"></i><span>Narrative Report</span></a>
@@ -124,53 +125,55 @@
     
     {{-- account settings --}}
     <li class="nav-heading">Account Settings</li>
-    <li class="nav-item">
-      <a
-        class="nav-link collapsed"
-        data-bs-target="#key-indicator"
-        data-bs-toggle="collapse"
-        href="#"
-      >
-        <i class="bi bi-tag"></i><span>Key Parameters</span
-        ><i class="bi bi-chevron-down ms-auto"></i>
-      </a>
-      <ul
-        id="key-indicator"
-        class="nav-content collapse"
-        data-bs-parent="#sidebar-nav"
-      >
-        @can('view-donor')
-          <li>
-            <a href="{{ route('donors.index') }}"><i class="bi bi-circle"></i><span>Donors</span></a>
-          </li>
-        @endcan
-        @can('view-donor')
-          <li>
-            <a href="{{ route('programmes.index') }}"><i class="bi bi-circle"></i><span>Key Programmes</span></a>
-          </li>
-        @endcan
-        @can('view-donor')
-          <li>
-            <a href="{{ route('regions.index') }}"><i class="bi bi-circle"></i><span>Target Regions</span></a>
-          </li>
-        @endcan
-        @can('view-donor')
-          <li>
-            <a href="{{ route('cohorts.index') }}"><i class="bi bi-circle"></i><span>Target Cohorts</span></a>
-          </li>
-        @endcan
-        @can('view-donor')
-          <li>
-            <a href="{{ route('age_groups.index') }}"><i class="bi bi-circle"></i><span>Age Groups</span></a>
-          </li>
-        @endcan
-        @can('view-donor')
-          <li>
-            <a href="{{ route('disabilities.index') }}"><i class="bi bi-circle"></i><span>Disabilities</span></a>
-          </li>
-        @endcan
-      </ul>
-    </li>
+    @canany(['view-donor', 'view-programme', 'view-region', 'view-cohort', 'view-age-group', 'view-disability'])
+      <li class="nav-item">
+        <a
+          class="nav-link collapsed"
+          data-bs-target="#key-indicator"
+          data-bs-toggle="collapse"
+          href="#"
+        >
+          <i class="bi bi-tag"></i><span>Key Parameters</span
+          ><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul
+          id="key-indicator"
+          class="nav-content collapse"
+          data-bs-parent="#sidebar-nav"
+        >
+          @can('view-donor')
+            <li>
+              <a href="{{ route('donors.index') }}"><i class="bi bi-circle"></i><span>Donors</span></a>
+            </li>
+          @endcan
+          @can('view-programme')
+            <li>
+              <a href="{{ route('programmes.index') }}"><i class="bi bi-circle"></i><span>Key Programmes</span></a>
+            </li>
+          @endcan
+          @can('view-region')
+            <li>
+              <a href="{{ route('regions.index') }}"><i class="bi bi-circle"></i><span>Target Regions</span></a>
+            </li>
+          @endcan
+          @can('view-cohort')
+            <li>
+              <a href="{{ route('cohorts.index') }}"><i class="bi bi-circle"></i><span>Target Cohorts</span></a>
+            </li>
+          @endcan
+          @can('view-age-group')
+            <li>
+              <a href="{{ route('age_groups.index') }}"><i class="bi bi-circle"></i><span>Age Groups</span></a>
+            </li>
+          @endcan
+          @can('view-disability')
+            <li>
+              <a href="{{ route('disabilities.index') }}"><i class="bi bi-circle"></i><span>Disabilities</span></a>
+            </li>
+          @endcan
+        </ul>
+      </li>
+    @endcanany  
     
     {{-- roles & permissions --}}
     @can('view-role')
