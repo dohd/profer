@@ -64,6 +64,13 @@
                                 [ 'class' => 'form-check-input perm', 'id'=> 'view-' . $key]); !!}
                                 <label class="form-check-label" for="view"> View </label>
                             </div>
+                            @if (in_array($key, ['proposal', 'budgeting', 'action-plan', 'agenda', 'narrative-report']))
+                                <div class="form-check mx-5">
+                                    {!! Form::checkbox('permissions[]', 'approve-' . $key, false,
+                                    [ 'class' => 'form-check-input perm', 'id'=> 'approve-' . $key]); !!}
+                                    <label class="form-check-label" for="approve"> Approve </label>
+                                </div>
+                            @endif
                         </div>
                     </td>
                 </tr>

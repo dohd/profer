@@ -7,9 +7,11 @@
     <div class="card">
         <div class="card-body">
             <div class="card-title h5">Proposal Details
-                <span class="badge bg-secondary text-white float-end" role="button" data-bs-toggle="modal" data-bs-target="#status_modal">
-                    <i class="bi bi-pencil-fill"></i> Status
-                </span>
+                @can('approve-proposal')
+                    <span class="badge bg-secondary text-white float-end" role="button" data-bs-toggle="modal" data-bs-target="#status_modal">
+                        <i class="bi bi-pencil-fill"></i> Status
+                    </span>
+                @endcan
             </div>
             
             <div class="card-content">

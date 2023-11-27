@@ -8,11 +8,13 @@
         <div class="card-body">
             <h5 class="card-title">
                 Action Plan
-                <div class="float-end">
-                    <span class="badge bg-secondary text-white" role="button" data-bs-toggle="modal" data-bs-target="#status_modal">
-                        <i class="bi bi-pencil-fill"></i> Status
-                    </span>
-                </div>
+                @can('approve-action-plan')
+                    <div class="float-end">
+                        <span class="badge bg-secondary text-white" role="button" data-bs-toggle="modal" data-bs-target="#status_modal">
+                            <i class="bi bi-pencil-fill"></i> Status
+                        </span>
+                    </div>
+                @endcan
             </h5>
             <div class="card-content p-2">
                 <!-- Action Plan Nav Link -->

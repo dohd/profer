@@ -7,12 +7,15 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Agenda Details
-                <a href="{{ route('pdfs.print_agenda', ['agenda' => $agenda, 'token' => csrf_token()]) }}" class="badge bg-danger text-white ms-1" target="_blank">
+                <a href="{{ route('pdfs.print_agenda', ['agenda' => $agenda, 'token' => csrf_token()]) }}" class="badge bg-danger text-white ms-1 d-none" target="_blank">
                     <i class="bi bi-file-earmark-pdf-fill"></i> pdf
                 </a>
-                <span class="badge bg-secondary text-white float-end" role="button" data-bs-toggle="modal" data-bs-target="#status_modal">
-                    <i class="bi bi-pencil-fill"></i> Status
-                </span>
+
+                @can('approve-agenda')
+                    <span class="badge bg-secondary text-white float-end" role="button" data-bs-toggle="modal" data-bs-target="#status_modal">
+                        <i class="bi bi-pencil-fill"></i> Status
+                    </span>
+                @endcan
             </h5>
             <div class="card-content p-2">
                 <table class="table table-bordered">
