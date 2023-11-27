@@ -39,7 +39,7 @@
               <div class="d-flex justify-content-center py-4">
                 <a href="{{ route('home') }}html" class="logo d-flex align-items-center w-auto">
                   {{-- <img src="{{ asset('img/logo.png') }}" alt=""> --}}
-                  <span class="d-lg-block">Profer</span>
+                  <span class="d-lg-block">Proffer</span>
                 </a>
               </div>
               <!-- End Logo -->
@@ -86,7 +86,7 @@
                 </div>
               </div>
               <div class="credits">
-                Designed by <a href="#">Eteral Solutions</a>
+                Designed by <a href="#">Proffer Systems</a>
               </div>
             </div>
           </div>
