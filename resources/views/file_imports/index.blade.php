@@ -12,10 +12,9 @@
                         <div class="col-md-6 col-12 mt-2 mb-3">
                             @php
                                 $categories = [
-                                    'self_advocates' => 'Self-Advocates (Beneficiary List)',
-                                    'families' => 'Families (Beneficiary List)',
-                                    'support_groups' => 'Support Groups (Beneficiary List)',
-                                    // 'monthly_meetings' => 'External Meetings',
+                                    'self_advocates' => 'Self-Advocates (Rightholder List)',
+                                    'families' => 'Families (Rightholder List)',
+                                    'support_groups' => 'Support Groups (Rightholder List)',
                                 ];
                             @endphp
                             <select name="category" id="category" class="custom-control col-12" required>
