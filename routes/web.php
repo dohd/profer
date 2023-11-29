@@ -16,6 +16,7 @@ use App\Http\Controllers\narrative\NarrativeController;
 use App\Http\Controllers\attendance\AttendanceController;
 use App\Http\Controllers\participant_list\ParticipantListController;
 use App\Http\Controllers\pdf\PdfController;
+use App\Http\Controllers\prefix\PrefixController;
 use App\Http\Controllers\programme\ProgrammeController;
 use App\Http\Controllers\proposal\ProposalController;
 use App\Http\Controllers\region\RegionController;
@@ -64,7 +65,12 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('roles', RoleController::class);
 
     /**
-     * key indicators
+     * Prefixes
+     */
+    Route::resource('prefixes', PrefixController::class);
+
+    /**
+     * key parameters
      */
     Route::resource('donors', DonorController::class);
     Route::resource('programmes', ProgrammeController::class);
