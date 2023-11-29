@@ -174,6 +174,15 @@
         </ul>
       </li>
     @endcanany  
+
+    {{-- prefixes --}}
+    @can('view-role')
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('prefixes.index') }}">
+          <i class="bi bi-asterisk"></i><span>Code Prefixes</span>
+        </a>
+      </li>
+    @endcan
     
     {{-- roles & permissions --}}
     @can('view-role')
