@@ -38,8 +38,8 @@
 
               <div class="d-flex justify-content-center py-4">
                 <a href="{{ route('home') }}html" class="logo d-flex align-items-center w-auto">
-                  {{-- <img src="{{ asset('img/logo.png') }}" alt=""> --}}
-                  <span class="d-lg-block">Proffer</span>
+                  <img src="{{ asset('img/kaih-logo.png') }}" alt="logo">
+                  <span class="d-lg-block">MEAL</span>
                 </a>
               </div>
               <!-- End Logo -->
