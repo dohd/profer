@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-use App\Models\role\Role;
-use App\Models\user_profile\UserProfile;
+use App\Models\tenant\Tenant;
 
 trait UserRelationship
 {
-    public function profile()
+    public function tenant()
     {
-        return $this->hasOne(UserProfile::class, 'rel_id');
+        return $this->belongsTo(Tenant::class, 'ins');
     }
 }

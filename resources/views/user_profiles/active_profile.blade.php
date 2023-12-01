@@ -18,11 +18,20 @@
       <div class="col-xl-4">
         <div class="card">
           <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-            <img src="{{ asset('img/profile-img.jpeg') }}" alt="Profile" class="rounded-circle">
-            <h2>{{ auth()->user()->name }}</h2>
-            <h3>Admin</h3>
-            <div class="social-links mt-2">
-              {{-- <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a> --}}
+            <div>
+              <img 
+                src="{{ route('storage.file_render', 'images,user_profiles,' . $user_profile->profile_pic) }}" 
+                onerror="this.onerror=null; this.src='{{ asset('img/profile-img.jpeg') }}'"
+                alt="profile-picture" 
+                class="rounded-circle"
+              >
+              @if ($user_profile->profile_pic)
+                <span class="float-end del" style="cursor: pointer;" data-toggle="tooltip" title="Remove profile picture">
+                  <i class="bi bi-trash text-danger icon-xs"></i>
+                </span>
+              @endif
+              <h2>{{ $user_profile->username }}</h2>
+              <h3>{{ $role->name }}</h3>
             </div>
           </div>
         </div>
@@ -49,19 +58,10 @@
             <div class="tab-content pt-2">
               <!-- Overview -->
               @include('user_profiles.tabs.overview_tab')
-              <!-- End Overview -->
-
               <!-- Profile Edit -->
               @include('user_profiles.tabs.profile_edit_tab')
-              <!-- End Profile Edit -->
-
-              <!-- Profile Settings -->
-              {{-- @include('user_profiles.tabs.profile_settings_tab') --}}
-              <!-- End Profile Settings -->
-
               <!-- Profile Change Password -->
               @include('user_profiles.tabs.profile_change_password_tab')
-              <!-- End Profile Change Password -->
             </div>
             <!-- End Bordered Tabs -->
           </div>
@@ -70,3 +70,15 @@
     </div>
   </section>
 @stop
+
+@section('script')
+<script>
+  $(document).on('click', '.del', function() {
+    if (confirm('Are you sure?')) {
+      $.post("{{ route('user_profiles.delete_profile_pic', $user_profile) }}")
+      .done((data) => flashMessage(data))
+      .catch((data) => flashMessage(data));
+    }
+  });
+</script>
+@endsection

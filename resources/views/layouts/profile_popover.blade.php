@@ -4,11 +4,12 @@
       href="#"
       data-bs-toggle="dropdown"
     >
-      <img
-        src="{{ asset('img/profile-img.jpeg') }}"
-        alt="Profile"
+      <img 
+        src="{{ route('storage.file_render', 'images,user_profiles,' . auth()->user()->profile_pic) }}" 
+        onerror="this.onerror=null; this.src='{{ asset('img/profile-img.jpeg') }}'"
+        alt="profile-picture" 
         class="rounded-circle"
-      />
+      >
       <span class="d-none d-md-block dropdown-toggle ps-2">
         {{ auth()->user()->username }}
       </span> 
