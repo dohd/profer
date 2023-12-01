@@ -56,6 +56,8 @@ Route::group(['middleware' => 'auth'], function() {
     /**
      * User Profiles
      */
+    Route::post('user_profiles/delete_profile_pic/{user}', [UserProfileController::class, 'delete_profile_pic'])->name('user_profiles.delete_profile_pic');
+    Route::post('user_profiles/update_active_profile/{user}', [UserProfileController::class, 'update_active_profile'])->name('user_profiles.update_active_profile');
     Route::get('user_profiles/active_profile', [UserProfileController::class, 'active_profile'])->name('user_profiles.active_profile');
     Route::resource('user_profiles', UserProfileController::class);
 

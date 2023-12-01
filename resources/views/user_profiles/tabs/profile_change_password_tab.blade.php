@@ -1,31 +1,31 @@
 <div class="tab-pane fade pt-3" id="profile-change-password">
     <!-- Change Password Form -->
-    <form>
+    {{ Form::open(['route' => array('user_profiles.update_active_profile', $user_profile), 'method' => 'POST']) }}
       <div class="row mb-3">
-        <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+        <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label" style="color:rgba(1, 41, 112, 0.6); font-weight:600">Current Password<span class="text-danger">*</span></label>
         <div class="col-md-8 col-lg-9">
-          <input name="password" type="password" class="form-control" id="currentPassword">
+          <input name="current_password" type="password" class="form-control">
         </div>
       </div>
 
       <div class="row mb-3">
-        <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+        <label for="newPassword" class="col-md-4 col-lg-3 col-form-label" style="color:rgba(1, 41, 112, 0.6); font-weight:600">New Password<span class="text-danger">*</span></label>
         <div class="col-md-8 col-lg-9">
-          <input name="newpassword" type="password" class="form-control" id="newPassword">
+          <input name="password" type="password" class="form-control">
         </div>
       </div>
 
       <div class="row mb-3">
-        <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+        <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label" style="color:rgba(1, 41, 112, 0.6); font-weight:600">Confirm Password<span class="text-danger">*</span></label>
         <div class="col-md-8 col-lg-9">
-          <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+          <input name="confirm_password" type="password" class="form-control">
         </div>
       </div>
 
       <div class="text-center">
-        <button type="submit" class="btn btn-primary" disabled>Change Password</button>
+        <button type="submit" class="btn btn-primary">Change Password</button>
       </div>
-    </form>
+    {{ Form::close() }}
     <!-- End Change Password Form -->
   </div>
   
