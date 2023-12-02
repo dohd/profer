@@ -46,6 +46,10 @@
     </div>
 </div>
 
+{{ Form::hidden('male_total', null, ['id' => 'male-total']) }}
+{{ Form::hidden('female_total', null, ['id' => 'female-total']) }}
+{{ Form::hidden('grand_total', null, ['id' => 'grand-total']) }}
+
 <!-- Statistics section -->
 @include('attendances.partial.stats_section')
 <!-- End Statistics section -->
@@ -156,6 +160,18 @@
         const male = accounting.unformat(row.find('.male').val());
         const female = accounting.unformat(row.find('.female').val());
         row.find('.total').val(male+female);
+
+        let maleTotal = 0;
+        let femaleTotal = 0;
+        $('form').find('.male').each(function() {
+            maleTotal += accounting.unformat($(this).val());
+        });
+        $('form').find('.female').each(function() {
+            femaleTotal += accounting.unformat($(this).val());
+        });
+        $('#male-total').val(maleTotal);
+        $('#female-total').val(femaleTotal);
+        $('#grand-total').val(maleTotal+femaleTotal);
     });
 </script>
 @stop
