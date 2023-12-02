@@ -28,9 +28,16 @@
                                     <td>
                                         <div class="row g-0">
                                             <div class="col-md-3 col-12">
-                                                <img src="{{ asset('img/profile-img.jpeg') }}" alt="Profile" class="rounded-circle" width="40" height="40"/>
+                                                <img 
+                                                    src="{{ route('storage.file_render', 'images,user_profiles,' . $user->profile_pic) }}" 
+                                                    onerror="this.onerror=null; this.src='{{ asset('img/profile-img.jpeg') }}'"
+                                                    alt="dp" 
+                                                    class="rounded-circle"
+                                                    width="40" 
+                                                    height="40"
+                                                >
                                             </div>
-                                            <div class="col-md-9 col-12 pt-2 ps-1">{{ $user->name }}</div>
+                                            <div class="col-md-9 col-12 pt-1 ps-1">{{ $user->name }}</div>
                                         </div>
                                     </td>
                                     <td>{{ $user->phone }}</td>
