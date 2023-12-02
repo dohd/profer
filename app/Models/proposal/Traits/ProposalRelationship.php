@@ -4,6 +4,7 @@ namespace App\Models\proposal\Traits;
 
 use App\Models\action_plan\ActionPlan;
 use App\Models\agenda\Agenda;
+use App\Models\attendance\Attendance;
 use App\Models\donor\Donor;
 use App\Models\item\ProposalItem;
 use App\Models\log_frame\LogFrame;
@@ -36,6 +37,11 @@ trait ProposalRelationship
     public function participant_lists()
     {
         return $this->hasMany(ParticipantList::class);
+    }
+
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
     }
 
     public function donor()
