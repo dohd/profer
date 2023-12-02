@@ -9,7 +9,7 @@
     <!-- End Dashboard Nav -->
 
     <li class="nav-heading">Programme Management</li>
-    @canany(['view-proposal', 'view-budgeting', 'view-log-frame', 'view-action-plan', 'view-agenda', 'view-attendance', 'view-narrative-report', 'view-case-study'])
+    @canany(['view-proposal', 'view-budgeting', 'view-log-frame', 'view-action-plan', 'view-agenda', 'view-attendance', 'view-activity-narrative', 'view-case-study'])
       {{-- proposals --}}
       @can('view-proposal')
         <li class="nav-item">
@@ -65,7 +65,7 @@
       @endcan
 
       {{-- activity narrative --}}
-      @can('view-narrative-report')
+      @can('view-activity-narrative')
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('narratives.index') }}">
           <i class="bi bi-file-text"></i></i><span>Activity Narrative</span>

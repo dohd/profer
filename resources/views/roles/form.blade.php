@@ -35,7 +35,7 @@
                     'action-plan' => 'Action Plan', 
                     'agenda' => 'Agenda', 
                     'attendance' => 'Attendance', 
-                    'narrative-report' => 'Narrative Report', 
+                    'activity-narrative' => 'Activity Narrative', 
                     'case-study' => 'Case Study',
                 ];
             @endphp
@@ -64,7 +64,7 @@
                                 [ 'class' => 'form-check-input perm', 'id'=> 'view-' . $key]); !!}
                                 <label class="form-check-label" for="view"> View </label>
                             </div>
-                            @if (in_array($key, ['proposal', 'budgeting', 'action-plan', 'agenda', 'narrative-report']))
+                            @if (in_array($key, ['proposal', 'budgeting', 'action-plan', 'agenda', 'activity-narrative']))
                                 <div class="form-check mx-5">
                                     {!! Form::checkbox('permissions[]', 'approve-' . $key, false,
                                     [ 'class' => 'form-check-input perm', 'id'=> 'approve-' . $key]); !!}

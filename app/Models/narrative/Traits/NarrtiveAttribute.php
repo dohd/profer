@@ -11,9 +11,9 @@ trait NarrtiveAttribute
     public function getActionButtonsAttribute()
     {
         return $this->getButtonWrapperAttribute(
-            $this->getViewButtonAttribute('narratives.show', 'create-narrative-report'),
-            $this->getEditButtonAttribute('narratives.edit', 'edit-narrative-report'),
-            $this->getDeleteButtonAttribute('narratives.destroy', 'delete-narrative-report'),
+            $this->getViewButtonAttribute('narratives.show', 'create-activity-narrative'),
+            $this->getEditButtonAttribute('narratives.edit', 'edit-activity-narrative'),
+            $this->getDeleteButtonAttribute('narratives.destroy', 'delete-activity-narrative'),
         );
     }
 
