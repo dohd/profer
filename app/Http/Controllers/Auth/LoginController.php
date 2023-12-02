@@ -41,6 +41,16 @@ class LoginController extends Controller
     }
 
     /**
+     * Login conditional field
+     * 
+     * @return array
+     */
+    protected function credentials(Request $request)
+    {
+        return array_merge($request->only('email', 'password'), ['is_active' => 1]);
+    }
+
+    /**
      * Show the application's login form.
      *
      * @return \Illuminate\View\View
