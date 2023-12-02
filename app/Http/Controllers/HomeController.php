@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\action_plan\ActionPlanActivity;
 use App\Models\age_group\AgeGroup;
+use App\Models\attendance\Attendance;
 use App\Models\cohort\Cohort;
 use App\Models\donor\Donor;
-use App\Models\item\ParticipantListItem;
+use App\Models\item\AttendanceItem;
 use App\Models\item\ProposalItem;
-use App\Models\participant_list\ParticipantList;
 use App\Models\programme\Programme;
 use App\Models\proposal\Proposal;
 use App\Models\region\Region;
@@ -32,15 +32,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // indicators
+        // key parameters
         $donor_count = Donor::count();
         $programmes_count = Programme::count();
         $regions_count = Region::count();
         $cohorts_count = Cohort::count();
 
         // activities
-        $activity_done_count = ProposalItem::whereHas('participant_lists')->count();
-        $project_done_count = Proposal::whereHas('participant_lists')->count();
+        $activity_done_count = ProposalItem::whereHas('attendances')->count();
+        $project_done_count = Proposal::whereHas('attendances')->count();
 
         // projects
         $project_budget = Proposal::where('status', 'approved')->sum('budget');
@@ -48,38 +48,39 @@ class HomeController extends Controller
         $proposal_count = Proposal::count();
 
         // monthly participant chart
-        $sql = 'MONTH(date) as month, SUM(male_count) as male_count, SUM(female_count) as female_count, SUM(total_count) as total_count';
-        $monthly_pts = ParticipantList::selectRaw($sql)->groupBy('date')->get();
+        $sql = 'MONTH(date) as month, SUM(male_total) as male_count, SUM(female_total) as female_count, SUM(grand_total) as total_count';
+        $monthly_pts = Attendance::selectRaw($sql)->groupBy('date')->get();
 
         // donor activity distribution chart
         $sql = 'proposal_id, COUNT(*) as count';
-        $donor_activity_dist = ParticipantList::selectRaw($sql)->groupBy('proposal_id')->get();
+        $donor_activity_dist = Attendance::selectRaw($sql)->groupBy('proposal_id')->get();
         $donors_dist = Donor::whereHas('proposals', fn($q) => $q->whereIn('proposals.id', $donor_activity_dist->pluck('proposal_id')->toArray()))
             ->pluck('name'); 
 
         // participant age distribution chart
         $sql = 'age_group_id, Count(*) as count';
-        $age_group_dist = ParticipantListItem::selectRaw($sql)->groupBy('age_group_id')->get();
+        $age_group_dist = AttendanceItem::selectRaw($sql)->groupBy('age_group_id')->get();
         $age_dist = AgeGroup::whereIn('id', $age_group_dist->pluck('age_group_id')->toArray())
             ->pluck('bracket'); 
 
         // participant gender distribution chart
-        $sql = 'gender, Count(*) as count';
-        $gender_group_dist = ParticipantListItem::selectRaw($sql)->groupBy('gender')->get();
-        $gender_dist = collect(['male', 'female']);
+        $sql = 'SUM(male_total) as male_count, SUM(female_total) as female_count';
+        $gender_group_dist = Attendance::selectRaw($sql)->get()->first();
+        $gender_group_dist = $gender_group_dist? array_values($gender_group_dist->toArray()) : [];
+        $gender_group_label = ['Male', 'Female'];
 
         // participant cohort distribution chart
-        $sql = 'cohort_id, SUM(total_count) as count';
-        $ps_cohort_dist = ParticipantList::selectRaw($sql)->groupBy('cohort_id')->get();
+        $sql = 'cohort_id, SUM(total) as count';
+        $ps_cohort_dist = AttendanceItem::selectRaw($sql)->groupBy('cohort_id')->get();
         $cohort_dist = Cohort::whereIn('id', $ps_cohort_dist->pluck('cohort_id')->toArray())
             ->pluck('name'); 
 
         // region participant chart
-        $sql = 'region_id, SUM(male_count) as male_count, SUM(female_count) as female_count, SUM(total_count) as total_count';
-        $region_pts = ParticipantList::selectRaw($sql)->groupBy('region_id')->get();
+        $sql = 'region_id, SUM(male) as male_count, SUM(female) as female_count, SUM(total) as total_count';
+        $region_pts = AttendanceItem::selectRaw($sql)->groupBy('region_id')->get();
         $region_dist = Region::whereIn('id', $region_pts->pluck('region_id')->toArray())
             ->pluck('name'); 
-        
+
         return view('home', compact(
             'donor_count', 'programmes_count', 'regions_count', 'cohorts_count', 
             'activity_done_count', 'project_done_count', 
@@ -88,7 +89,7 @@ class HomeController extends Controller
             // charts
             'donor_activity_dist', 'donors_dist',
             'age_group_dist', 'age_dist',
-            'gender_group_dist', 'gender_dist',
+            'gender_group_dist', 'gender_group_label',
             'ps_cohort_dist', 'cohort_dist',
             'region_pts', 'region_dist',
         ));

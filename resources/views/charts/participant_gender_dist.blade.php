@@ -6,13 +6,13 @@
     <div id="participantGenderDistribution"></div>
 
     <script>
-      let genderDist = @json(@$gender_dist);
       let genderGroupDist = @json(@$gender_group_dist);
-      genderGroupDist = genderGroupDist.map(v => v['count']);
+      genderGroupDist = genderGroupDist.map(v => v*1);
+      genderGroupLabel = @json(@$gender_group_label);
       
       document.addEventListener("DOMContentLoaded", () => {
         new ApexCharts(document.querySelector("#participantGenderDistribution"), {
-          // series: [44, 60, 13,],
+          // series: [44, 60],
           series: genderGroupDist,
           chart: {
             height: 350,
@@ -22,7 +22,7 @@
             }
           },
           // labels: ['Under 18', 'Btwn 18 & 35', 'Above 35']
-          labels: genderDist,
+          labels: genderGroupLabel,
         }).render();
       });
     </script>

@@ -4,7 +4,9 @@ namespace App\Models\item\Traits;
 
 use App\Models\action_plan\ActionPlanActivity;
 use App\Models\agenda\Agenda;
+use App\Models\attendance\Attendance;
 use App\Models\cohort\Cohort;
+use App\Models\item\AttendanceItem;
 use App\Models\item\ParticipantListItem;
 use App\Models\participant_list\ParticipantList;
 use App\Models\programme\Programme;
@@ -57,5 +59,10 @@ trait ProposalItemRelationship
     public function participant_cohorts()
     {
         return $this->hasManyThrough(Region::class, Cohort::class, 'proposal_item_id', 'id', 'id', 'cohort_id');
+    }
+
+    public function attendances()
+    {
+        return $this->hasManyThrough(AttendanceItem::class, Attendance::class, 'proposal_item_id', 'attendance_id', 'id', 'id');
     }
 }
