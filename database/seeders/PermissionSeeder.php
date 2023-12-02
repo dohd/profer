@@ -20,9 +20,9 @@ class PermissionSeeder extends Seeder
         // php artisan db:seed --class=PermissionSeeder
 
         $permissions = [];
-        $items = ['proposal', 'budgeting', 'log-frame', 'action-plan', 'agenda', 'attendance', 'narrative-report', 'case-study', 'user'];
-        foreach ($items as $i => $item) {
-            foreach (['create', 'edit', 'delete', 'view'] as $j => $verb) {
+        $rights = [];
+        foreach ($rights as $i => $item) {
+            foreach (['edit', 'view'] as $j => $verb) {
                 $permissions[] = [
                     'name' => $verb . '-' . $item, 
                     'guard_name' => 'web'
@@ -30,9 +30,12 @@ class PermissionSeeder extends Seeder
             }
         }
         DB::table('permissions')->insert($permissions);
-        $role = Role::findById(1);
-        $permissions = array_map(fn($v) => $v['name'], $permissions);
-        // $permissions = Permission::find();
-        // $role->givePermissionTo($permissions);
+        printLog('============== Permissions Loaded Successfully =================');
+        $super_user_role = Role::findById(1);
+        $permissions = Permission::where('name', 'LIKE', '%code-prefix%')->get();
+        foreach ($permissions as $key => $value) {
+            $super_user_role->givePermissionTo($value);
+        }
+        printLog('============== Permissions Assigned Successfully =================');
     }
 }
