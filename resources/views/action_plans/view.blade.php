@@ -24,7 +24,7 @@
                             Summary
                         </button>
                     </li>
-                    <li class="nav-item" role="presentation">
+                    {{-- <li class="nav-item" role="presentation">
                         <button class="nav-link" id="agendaList" data-bs-toggle="tab" data-bs-target="#agendaListTab" type="button" role="tab" aria-controls="agendaListTab" aria-selected="false">
                             Agenda List ({{ $action_plan->agenda->count() }})
                         </button>
@@ -38,7 +38,7 @@
                         <button class="nav-link" id="narrative" data-bs-toggle="tab" data-bs-target="#narrativeTab" type="button" role="tab" aria-controls="narrativeTab" aria-selected="false">
                             Activity Narrative ({{ $action_plan->narratives->count() }})
                         </button>
-                    </li>
+                    </li> --}}
                 </ul>
                 <div class="tab-content pt-2" id="summaryTabContent">
                     <!-- summary -->
