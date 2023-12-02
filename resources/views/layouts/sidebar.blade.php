@@ -68,7 +68,7 @@
       @can('view-narrative-report')
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('narratives.index') }}">
-          <i class="bi bi-file-text"></i></i><span>Narrative Report</span>
+          <i class="bi bi-file-text"></i></i><span>Activity Narrative</span>
         </a>
       </li>
       @endcan
@@ -109,16 +109,16 @@
         data-bs-parent="#sidebar-nav"
       >
         <li>
-          <a href="{{ route('reports.beneficiary_list') }}"><i class="bi bi-circle"></i><span>Rightholder List</span></a>
-        </li>
-        <li>
           <a href="{{ route('reports.narrative_report') }}"><i class="bi bi-circle"></i><span>Narrative Report</span></a>
         </li>
         <li>
-          <a href="{{ route('reports.participant_analysis') }}"><i class="bi bi-circle"></i><span>Participant Analysis</span></a>
+          <a href="{{ route('reports.beneficiary_list') }}"><i class="bi bi-circle"></i><span>Rightholder List</span></a>
         </li>
         <li>
           <a href="{{ route('reports.monthly_meetings') }}"><i class="bi bi-circle"></i><span>External Meetings</span></a>
+        </li>
+        <li>
+          <a href="{{ route('reports.participant_analysis') }}"><i class="bi bi-circle"></i><span>Participant Analysis</span></a>
         </li>
       </ul>
     </li>    

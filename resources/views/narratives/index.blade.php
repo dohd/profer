@@ -39,7 +39,7 @@
                         <tbody>
                             @foreach ($narratives as $i => $narrative)
                                 <tr>
-                                    <th scope="row">{{ $i+1 }}</th>
+                                    <th style="height: {{ count($narratives) == 1? '80px': '' }}">{{ $i+1 }}</th>
                                     <td><a href="{{ route('narratives.show', $narrative) }}">{{ tidCode('narrative', $narrative->tid) }}</a></td>
                                     <td>{{ @$narrative->proposal_item->name }}</td>
                                     <td>{{ @$narrative->agenda->title }}</td>
