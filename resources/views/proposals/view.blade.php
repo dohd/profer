@@ -21,7 +21,7 @@
                             Summary
                         </button>
                     </li>
-                    <li class="nav-item" role="presentation">
+                    {{-- <li class="nav-item" role="presentation">
                         <button class="nav-link" id="log-frame-tab" data-bs-toggle="tab" data-bs-target="#log-frame" type="button" role="tab" aria-controls="log-frame" aria-selected="false">
                             Log Frame ({{ $proposal->log_frame? 1 : 0 }})
                         </button>
@@ -30,7 +30,7 @@
                         <button class="nav-link" id="action-plan-tab" data-bs-toggle="tab" data-bs-target="#action-plan" type="button" role="tab" aria-controls="action-plan" aria-selected="false">
                             Action Plan ({{ $proposal->action_plans->count() }})
                         </button>
-                    </li>
+                    </li> --}}
                 </ul>
                 <div class="tab-content pt-2" id="myTabContent">
                     <!-- proposal summary  -->
