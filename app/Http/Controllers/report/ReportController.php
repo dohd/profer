@@ -70,7 +70,9 @@ class ReportController extends Controller
         $regions = Region::get(['id', 'name']);
         $cohorts = Cohort::get(['id', 'name']);
 
-        $proposal_items = ProposalItem::whereHas('agenda', fn($q) => $q->whereHas('narrative'))->get();
+        $proposal_items = ProposalItem::whereHas('agenda', function($q) {
+            $q->whereHas('narrative')->where('status', 'approved');
+        })->get();
             
         return view('reports.narrative_report', compact('proposal_items', 'proposals', 'narrative_pointers', 'programmes', 'regions', 'cohorts'));
     }
@@ -80,7 +82,10 @@ class ReportController extends Controller
      */
     public function narrative_data(Request $request)
     {
-        $agenda = Agenda::where('proposal_item_id', $request->proposal_item_id)->get();
+        $agenda = Agenda::whereHas('narrative')
+        ->where('status', 'approved')
+        ->where('proposal_item_id', request('proposal_item_id'))
+        ->get();
 
         return view('reports.partial.narrative_report_table', compact('agenda'));
     }

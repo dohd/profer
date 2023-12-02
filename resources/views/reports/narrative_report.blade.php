@@ -69,6 +69,9 @@
         $.post(url, params, data => {
             $('.table-responsive').html(tableTempl);
             $('.table-responsive tbody').html(data);
+            $('.quiz').each(function() {
+                $(this).css('width', '300px');
+            });
         });   
     });
 </script>

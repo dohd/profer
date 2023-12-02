@@ -1,6 +1,6 @@
 <div class="row mb-3">
     <div class="col-md-8 col-12">
-        <label for="agenda">Agenda*</label>
+        <label for="agenda">Agenda<span class="text-danger">*</span></label>
         <select name="agenda_id" id="agenda" class="form-control select2" data-placeholder="Choose Agenda" required>
             <option value=""></option>
             @foreach ($agenda as $item)
@@ -11,7 +11,7 @@
         </select>
     </div>
     <div class="col-md-4 col-12">
-        <label for="date">Date*</label>
+        <label for="date">Date<span class="text-danger">*</span></label>
         {{ Form::date('date', null, ['class' => 'form-control', 'required']) }}
     </div>
 </div>
