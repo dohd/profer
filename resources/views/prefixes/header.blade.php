@@ -4,7 +4,9 @@
       <h1>Code Prefixes</h1>
     </div>
     <div class="col-6">
-      <a href="{{ route('prefixes.index') }}" class="btn btn-secondary float-end"><i class="bi bi-card-list"></i> List</a>
+      @can('view-code-prefix')
+      <a href="{{ route('prefixes.index') }}" class="btn btn-secondary float-end"><i class="bi bi-card-list"></i> List</a> 
+      @endcan
     </div>
   </div>
   

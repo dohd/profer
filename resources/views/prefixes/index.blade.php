@@ -14,7 +14,9 @@
                                 <th>#No.</th>
                                 <th>Label</th>
                                 <th>Code</th>
-                                <th>Action</th>
+                                @can('edit-code-prefix')
+                                    <th>Action</th>
+                                @endcan
                             </tr>
                         </thead>
                         <tbody>
@@ -23,11 +25,11 @@
                                     <th scope="row">{{ $i+1 }}</th>
                                     <td>{{ $prefix->label }}</td>
                                     <td>{{ $prefix->code }}</td>
-                                    <td>
-                                        @can('view-role')
+                                    @can('edit-code-prefix')
+                                        <td>
                                             <a href="{{ route('prefixes.edit', $prefix) }}"><i class="bi bi-pencil-square"></i> Edit</a>
-                                        @endcan
-                                    </td>
+                                        </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                         </tbody>

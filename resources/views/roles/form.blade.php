@@ -88,39 +88,57 @@
                     'cohort' => 'Target Cohort', 
                     'age-group' => 'Age Group', 
                     'disability' => 'Disability', 
+                    'code-prefix' => 'Code Prefixes',
                     'role' => 'Roles & Rights', 
                     'user' => 'User Management',
                 ];
             @endphp
             @foreach ($modules as $key => $module)
-            <tr>
-                <td class="text-nowrap fw-bolder">{{ $module }}</td>
-                <td>
-                    <div class="d-flex">
-                        <div class="form-check mx-5">
-                            {!! Form::checkbox('permissions[]', 'create-' . $key, false,
-                            [ 'class' => 'form-check-input perm', 'id' => 'create-' . $key]); !!}
-                            <label class="form-check-label" for="create"> Create </label>
+                <tr>
+                    <td class="text-nowrap fw-bolder">{{ $module }}</td>
+                    <td>
+                        <div class="d-flex">
+                            @if ($key == 'code-prefix')
+                                <div class="form-check mx-5">
+                                    {!! Form::checkbox('permissions[]', 'create-' . $key, false,
+                                    [ 'class' => 'form-check-input perm', 'disabled' => 'disabled', 'id' => 'create-' . $key]); !!}
+                                    <label class="form-check-label" for="create"> Create </label>
+                                </div>    
+                            @else
+                                <div class="form-check mx-5">
+                                    {!! Form::checkbox('permissions[]', 'create-' . $key, false,
+                                    [ 'class' => 'form-check-input perm', 'id' => 'create-' . $key]); !!}
+                                    <label class="form-check-label" for="create"> Create </label>
+                                </div>
+
+                            @endif
+                            <div class="form-check mx-5">
+                                {!! Form::checkbox('permissions[]', 'edit-' . $key, false,
+                                [ 'class' => 'form-check-input perm', 'id'=> 'edit-' . $key]); !!}
+                                <label class="form-check-label" for="edit"> Edit </label>
+                            </div>
+                            @if ($key == 'code-prefix')
+                                <div class="form-check mx-5">
+                                    {!! Form::checkbox('permissions[]', 'delete-' . $key, false,
+                                    [ 'class' => 'form-check-input perm', 'disabled' => 'disabled' ,'id'=> 'delete-' . $key]); !!}
+                                    <label class="form-check-label" for="delete"> Delete </label>
+                                </div>
+                            @else
+                                <div class="form-check mx-5">
+                                    {!! Form::checkbox('permissions[]', 'delete-' . $key, false,
+                                    [ 'class' => 'form-check-input perm', 'id'=> 'delete-' . $key]); !!}
+                                    <label class="form-check-label" for="delete"> Delete </label>
+                                </div>
+                            @endif
+                            <div class="form-check mx-5">
+                                {!! Form::checkbox('permissions[]', 'view-' . $key, false,
+                                [ 'class' => 'form-check-input perm', 'id'=> 'view-' . $key]); !!}
+                                <label class="form-check-label" for="view"> View </label>
+                            </div>
                         </div>
-                        <div class="form-check mx-5">
-                            {!! Form::checkbox('permissions[]', 'edit-' . $key, false,
-                            [ 'class' => 'form-check-input perm', 'id'=> 'edit-' . $key]); !!}
-                            <label class="form-check-label" for="edit"> Edit </label>
-                        </div>
-                        <div class="form-check mx-5">
-                            {!! Form::checkbox('permissions[]', 'delete-' . $key, false,
-                            [ 'class' => 'form-check-input perm', 'id'=> 'delete-' . $key]); !!}
-                            <label class="form-check-label" for="delete"> Delete </label>
-                        </div>
-                        <div class="form-check mx-5">
-                            {!! Form::checkbox('permissions[]', 'view-' . $key, false,
-                            [ 'class' => 'form-check-input perm', 'id'=> 'view-' . $key]); !!}
-                            <label class="form-check-label" for="view"> View </label>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        @endforeach
+                    </td>
+                </tr>
+            @endforeach
         </tbody>    
     </table>
 </div>   
