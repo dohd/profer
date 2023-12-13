@@ -213,8 +213,8 @@ class BudgetController extends Controller
     {
         $request->validate([
             'budget_id' => 'required',
-            'objective_id' => 'required',
-            'activity_id' => 'required',
+            'item_category_id' => 'required',
+            'cost_item_id' => 'required',
             'date' => 'required',
             'amount' => 'required',
         ]);
