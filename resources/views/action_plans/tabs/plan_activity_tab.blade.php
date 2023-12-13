@@ -26,9 +26,7 @@
                     <tr>
                         <td>{{ $i+1 }}</td>
                         <td>
-                            <a href="#activity_view_modal" class="view" data-bs-toggle="modal" data-id="{{ $plan_activity->id }}" data-url="{{ route('action_plans.edit_activity') }}">
                             {{ @$plan_activity->activity->name }}
-                            </a>
                         </td>
                         <td>{{ dateFormat($plan_activity->start_date) }}</td>
                         <td>{{ implode(', ', $plan_activity->regions->pluck('name')->toArray()) }}</td>
