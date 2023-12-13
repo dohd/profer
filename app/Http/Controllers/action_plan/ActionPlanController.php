@@ -287,7 +287,7 @@ class ActionPlanController extends Controller
                 $q->whereHas('participant_lists');
             })
             ->whereHas('plan_activities', fn($q) => $q->where('action_plan_id', request('plan_id')))
-            ->whereHas('agenda')
+            // ->whereHas('agenda')
             ->get(['id', 'name']);
         } else {
             $proposal_items = ProposalItem::where(['proposal_id' => request('proposal_id'), 'is_obj' => 0])
@@ -302,12 +302,22 @@ class ActionPlanController extends Controller
      */
     public function select_items(Request $request)
     {
-        $action_plans = ActionPlan::where('proposal_id', $request->proposal_id)
-        ->get(['id', 'tid', 'date'])
-        ->map(function($v) {
-            $v->code = tidCode('', $v->tid)  . '/' . date('Y', strtotime($v->date));
-            return $v;
-        });
+        if ($request->proposal_id && $request->is_participant_list) {
+            $action_plans = ActionPlan::where('status', 'approved')
+            ->where('proposal_id', $request->proposal_id)
+            ->get(['id', 'tid', 'date'])
+            ->map(function($v) {
+                $v->code = tidCode('', $v->tid)  . '/' . date('Y', strtotime($v->date));
+                return $v;
+            });
+        } else {
+            $action_plans = ActionPlan::where('proposal_id', $request->proposal_id)
+            ->get(['id', 'tid', 'date'])
+            ->map(function($v) {
+                $v->code = tidCode('', $v->tid)  . '/' . date('Y', strtotime($v->date));
+                return $v;
+            });
+        }
         
         return response()->json($action_plans);
     }
