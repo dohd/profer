@@ -5,6 +5,7 @@ namespace App\Models\proposal\Traits;
 use App\Models\action_plan\ActionPlan;
 use App\Models\agenda\Agenda;
 use App\Models\attendance\Attendance;
+use App\Models\budget\Budget;
 use App\Models\donor\Donor;
 use App\Models\item\ProposalItem;
 use App\Models\log_frame\LogFrame;
@@ -14,6 +15,11 @@ use App\Models\region\Region;
 
 trait ProposalRelationship
 {
+    public function budget()
+    {
+        return $this->hasOne(Budget::class);
+    }
+
     public function agenda()
     {
         return $this->hasMany(Agenda::class);
