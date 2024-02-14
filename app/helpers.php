@@ -28,14 +28,15 @@ if (!function_exists('spinner')) {
 
 if (!function_exists('inputClean')) {
     function inputClean($input=[])
-    {
+    {   
         $dates = ['date', 'start_date', 'end_date'];
         $totals = ['amount', 'total', 'grandtotal', 'subtotal', 'tax', 'rate', 'taxable', 'budget'];
         foreach ($input as $key => $value) {
             if (!is_array($value)) {
+                $input[$key] = trim($value);
                 if (in_array($key, $dates)) $input[$key] = databaseDate($value);
-                elseif (in_array($key, $totals)) $input[$key] = numberClean($value);
-                else $input[$key] = trim($value);
+                if (in_array($key, $totals)) $input[$key] = numberClean($value);
+
             }
         }
         return $input;
@@ -145,10 +146,10 @@ if (!function_exists('printLog')) {
 }
 
 if (!function_exists('errorHandler')) {
-    function errorHandler($msg='Internal server error! Please try again later.', $e=null)
+    function errorHandler($msg='', $e=null)
     {
         if ($e) \Illuminate\Support\Facades\Log::error($e->getMessage() . ' {user_id:'. auth()->user()->id . '} at ' . $e->getFile() . ':' . $e->getLine());
-        return redirect()->back()->with(['error' => $msg]);
+        return redirect()->back()->with(['error' => $msg ?: 'Internal server error! Please try again later.']);
     }
 }
 
