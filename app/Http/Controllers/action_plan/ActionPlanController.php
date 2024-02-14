@@ -7,9 +7,7 @@ use App\Models\action_plan\ActionPlan;
 use App\Models\action_plan\ActionPlanActivity;
 use App\Models\action_plan\ActionPlanCohort;
 use App\Models\action_plan\ActionPlanRegion;
-use App\Models\age_group\AgeGroup;
 use App\Models\cohort\Cohort;
-use App\Models\disability\Disability;
 use App\Models\item\ProposalItem;
 use App\Models\programme\Programme;
 use App\Models\proposal\Proposal;
@@ -80,7 +78,6 @@ class ActionPlanController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             'proposal_id' => 'required', 
             'programme_id' => 'required', 
@@ -129,7 +126,7 @@ class ActionPlanController extends Controller
             DB::commit();
             return redirect(route('action_plans.index'))->with(['success' => 'Action Plan created successfully']);
         } catch (\Throwable $th) { 
-            errorHandler('Error creating Action Plan!', $th);
+            return errorHandler('Error creating Action Plan!', $th);
         }
     }
 
@@ -195,13 +192,15 @@ class ActionPlanController extends Controller
      */
     public function update(Request $request, ActionPlan $action_plan)
     {
-        // dd($request->all());
         if ($request->status) {
-            // update log_frame status
-            $data = $request->only('status', 'status_note');
-            if (empty($data['status_note'])) unset($data['status_note']);
-            if ($action_plan->update($data)) return redirect()->back()->with('success', 'Status updated successfully');
-            else errorHandler('Error updating status!');
+            try {
+                $data = $request->only('status', 'status_note');
+                if (empty($data['status_note'])) unset($data['status_note']);
+                $action_plan->update($data);
+                return redirect()->back()->with('success', 'Status updated successfully');
+            } catch (\Throwable $th) {
+                return errorHandler('Error updating status!', $th);
+            }
         } else {
             $request->validate([
                 'proposal_id' => 'required', 
@@ -254,7 +253,7 @@ class ActionPlanController extends Controller
                 DB::commit();
                 return redirect(route('action_plans.index'))->with(['success' => 'Action Plan updated successfully']);
             } catch (\Throwable $th) {
-                errorHandler('Error updating Action Plan!', $th);
+                return errorHandler('Error updating Action Plan!', $th);
             }  
         }
     }

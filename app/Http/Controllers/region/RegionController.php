@@ -39,15 +39,14 @@ class RegionController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $request->validate(['name' => 'required']);
         $data = $request->only(['name']);
 
         try {            
-            if (Region::create($data))
+            Region::create($data);
             return redirect(route('regions.index'))->with(['success' => 'Region created successfully']);
         } catch (\Throwable $th) {
-            errorHandler('Error creating region!');
+            return errorHandler('Error creating region!', $th);
         }
     }
 
@@ -95,15 +94,14 @@ class RegionController extends Controller
      */
     public function update(Request $request, Region $region)
     {
-        // dd($request->all());
         $request->validate(['name' => 'required']);
         $data = $request->only(['name']);
 
         try {            
-            if ($region->update($data))
+            $region->update($data);
             return redirect(route('regions.index'))->with(['success' => 'Region updated successfully']);
         } catch (\Throwable $th) {
-            errorHandler('Error updating region!');
+            return errorHandler('Error updating region!', $th);
         }
     }
 
@@ -116,10 +114,10 @@ class RegionController extends Controller
     public function destroy(Region $region)
     {
         try {            
-            if ($region->delete())
+            $region->delete();
             return redirect(route('regions.index'))->with(['success' => 'Region deleted successfully']);
         } catch (\Throwable $th) {
-            errorHandler('Error deleting region!');
+            return errorHandler('Error deleting region!', $th);
         }
     }
 }

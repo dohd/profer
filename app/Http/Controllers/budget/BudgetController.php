@@ -66,7 +66,7 @@ class BudgetController extends Controller
             DB::commit();
             return redirect(route('budgets.index'))->with(['success' => 'Budget created successfully']);
         } catch (\Throwable $th) {
-            errorHandler('Error creating budget!');
+            return errorHandler('Error creating budget!', $th);
         }
 
     }
@@ -117,7 +117,7 @@ class BudgetController extends Controller
                 $budget->update($data);
                 return redirect()->back()->with('success', 'Status updated successfully');
             } catch (\Throwable $th) {
-                errorHandler('Error updating status!');
+                return errorHandler('Error updating status!', $th);
             }
         } else {
             $request->validate([
@@ -142,7 +142,7 @@ class BudgetController extends Controller
                 DB::commit();
                 return redirect(route('budgets.index'))->with(['success' => 'Budget updated successfully']);
             } catch (\Throwable $th) {
-                errorHandler('Error updating budget!');
+                return errorHandler('Error updating budget!', $th);
             }
         }
     }    

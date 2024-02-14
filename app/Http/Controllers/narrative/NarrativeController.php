@@ -56,7 +56,6 @@ class NarrativeController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             'agenda_id' => 'required', 
             'date' => 'required',
@@ -81,7 +80,7 @@ class NarrativeController extends Controller
             DB::commit();
             return redirect(route('narratives.index'))->with(['success' => 'Narrative created successfully']);
         } catch (\Throwable $th) {
-            errorHandler('Error creating narrative!', $th);
+            return errorHandler('Error creating narrative!', $th);
         }
     }
 
@@ -121,14 +120,14 @@ class NarrativeController extends Controller
      */
     public function update(Request $request, Narrative $narrative)
     {
-        // dd($request->all());
         if (request('status')) {
-            // update narrative status
-            if ($narrative->update(['status' => request('status')]))
+            try {
+                $narrative->update(['status' => request('status')]);
                 return redirect()->back()->with('success', 'Status updated successfully');
-            else errorHandler('Error updating status!');
+            } catch (\Throwable $th) {
+                return errorHandler('Error updating status!', $th);
+            }
         } else {
-            // 
             $request->validate([
                 'agenda_id' => 'required', 
                 'date' => 'required',
@@ -153,8 +152,8 @@ class NarrativeController extends Controller
                 
                 DB::commit();
                 return redirect(route('narratives.index'))->with(['success' => 'Narrative updated successfully']);
-            } catch (\Throwable $th) { dd($th);
-                errorHandler('Error updated narrative!', $th);
+            } catch (\Throwable $th) {
+                return errorHandler('Error updated narrative!', $th);
             }
         }
     }

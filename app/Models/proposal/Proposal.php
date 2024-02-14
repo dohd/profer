@@ -62,14 +62,14 @@ class Proposal extends Model
         static::creating(function ($instance) {
             $instance->fill([
                 'tid' => $instance->next_tid,
-                'user_id' => 1,
-                'ins' => 1,
+                'user_id' => auth()->user()->id,
+                'ins' => auth()->user()->ins,
             ]);
             return $instance;
         });
 
-        // static::addGlobalScope('ins', function ($builder) {
-        //     $builder->where('ins', '=', auth()->user()->ins);
-        // });
+        static::addGlobalScope('ins', function ($builder) {
+            // $builder->where('ins', auth()->user()->ins);
+        });
     }
 }

@@ -39,15 +39,14 @@ class PrefixController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $request->validate(['name' => 'required']);
         $data = $request->only(['name']);
 
         try {            
-            if (Prefix::create($data))
+            Prefix::create($data);
             return redirect(route('prefixes.index'))->with(['success' => 'Prefix created successfully']);
         } catch (\Throwable $th) {
-            errorHandler('Error creating prefix!');
+            return errorHandler('Error creating prefix!', $th);
         }
     }
 
@@ -100,7 +99,7 @@ class PrefixController extends Controller
             $prefix->update(['code' => $request->input('code')]);
             return redirect(route('prefixes.index'))->with(['success' => 'Prefix updated successfully']);
         } catch (\Throwable $th) {
-            errorHandler('Error updating prefix!');
+            return errorHandler('Error updating prefix!', $th);
         }
     }
 
@@ -116,7 +115,7 @@ class PrefixController extends Controller
             $prefix->delete();
             return redirect(route('prefixes.index'))->with(['success' => 'Prefix deleted successfully']);
         } catch (\Throwable $th) {
-            errorHandler('Error deleting prefix!');
+            return errorHandler('Error deleting prefix!', $th);
         }
     }
 }
