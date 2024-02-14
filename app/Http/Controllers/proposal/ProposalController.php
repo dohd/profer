@@ -9,6 +9,7 @@ use App\Models\proposal\Proposal;
 use App\Models\region\Region;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class ProposalController extends Controller
 {
@@ -64,7 +65,6 @@ class ProposalController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             'title' => 'required', 
             'date' => 'required',
@@ -90,7 +90,7 @@ class ProposalController extends Controller
             DB::commit();
             return redirect(route('proposals.index'))->with(['success' => 'Proposal created successfully']);
         } catch (\Throwable $th) {
-            errorHandler('Error creating proposal!');
+            return errorHandler('Error creating proposal!', $th);
         }
     }
 
@@ -128,7 +128,6 @@ class ProposalController extends Controller
      */
     public function update(Request $request, Proposal $proposal)
     {
-        // dd($request->all());
         if ($request->status) {
             // update proposal status
             $data = $request->only('status', 'status_note');
@@ -137,7 +136,7 @@ class ProposalController extends Controller
                 $proposal->update($data);
                 return redirect()->back()->with('success', 'Status updated successfully');
             } catch (\Throwable $th) {
-                errorHandler('Error updating status!');
+                return errorHandler('Error updating status!', $th);
             }
         } else {
             // update proposal
@@ -157,13 +156,11 @@ class ProposalController extends Controller
 
             try {
                 $data = inputClean($data);
-                $data_items = fillArrayRecurse(databaseArray($data_items), [
-                    'proposal_id' => $proposal->id
-                ]);
-
-                // delete omitted line items
-                $proposal->items()->whereNotIn('id', array_map(fn($v) => $v['item_id'], $data_items))->delete();
+                $proposal->update($data);
+                
                 // update or create line items
+                $data_items = fillArrayRecurse(databaseArray($data_items), ['proposal_id' => $proposal->id]);
+                $proposal->items()->whereNotIn('id', array_map(fn($v) => $v['item_id'], $data_items))->delete();
                 foreach ($data_items as $value) {
                     $proposal_item = ProposalItem::firstOrNew(['id' => $value['item_id']]);
                     $proposal_item->fill($value);
@@ -174,7 +171,7 @@ class ProposalController extends Controller
                 DB::commit();
                 return redirect(route('proposals.index'))->with(['success' => 'Proposal updated successfully']);
             } catch (\Throwable $th) {
-                errorHandler('Error updating proposal!');
+                return errorHandler('Error updating proposal!', $th);
             }   
         } 
     }
@@ -187,9 +184,21 @@ class ProposalController extends Controller
      */
     public function destroy(Proposal $proposal)
     {
-        if ($proposal->delete())
+        $error_msg = '';
+        if ($proposal->budget) $error_msg = 'Proposal has a budget';
+        if ($proposal->log_frame) $error_msg = 'Proposal has a Log Frame';
+        if ($proposal->action_plans()->exists()) $error_msg = 'Proposal has several Action Plans';
+        if ($proposal->agenda()->exists()) $error_msg = 'Proposal has several Agenda';
+        if ($proposal->attendances()->exists()) $error_msg = 'Proposal has several Attendance Lists';
+        if ($error_msg) throw ValidationException::withMessages(['Not Allowed! ' . $error_msg]);
+
+        try {
+            $proposal->items()->delete();
+            $proposal->delete();
             return redirect(route('proposals.index'))->with(['success' => 'Proposal deleted successfully']);
-        else errorHandler('Error deleting proposal!');
+        } catch (\Throwable $th) {
+            return errorHandler('Error deleting proposal!', $th);
+        }
     }
 
     // proposal items

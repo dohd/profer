@@ -45,16 +45,13 @@ class LogFrameController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-        $request->validate(['proposal_id' => 'required', 'date' => 'required']);
-
-        $data = $request->except('_token'); 
+        $request->validate(['proposal_id' => 'required', 'date' => 'required']); 
 
         try {
-            LogFrame::create($data);
+            LogFrame::create($request->except('_token'));
             return redirect(route('log_frames.index'))->with(['success' => 'Log Frame created successfully']);
         } catch (\Throwable $th) {
-            errorHandler('Error creating Log frame!');
+            return errorHandler('Error creating Log frame!', $th);
         }
     }
 
@@ -93,16 +90,13 @@ class LogFrameController extends Controller
      */
     public function update(Request $request, LogFrame $log_frame)
     {
-        // dd($request->all());
         $request->validate(['proposal_id' => 'required', 'date' => 'required']);
 
-        $data = $request->except('_token'); 
-
         try {
-            $log_frame->update($data);
+            $log_frame->update($request->except('_token'));
             return redirect(route('log_frames.index'))->with(['success' => 'Log Frame updated successfully']);
         } catch (\Throwable $th) {
-            errorHandler('Error updating Log Frame!');
+            return errorHandler('Error updating Log Frame!', $th);
         }
     }
 
@@ -114,8 +108,11 @@ class LogFrameController extends Controller
      */
     public function destroy(LogFrame $log_frame)
     {
-        if ($log_frame->delete())
+        try {
+            $log_frame->delete();
             return redirect(route('log_frames.index'))->with(['success' => 'Log Frame deleted successfully']);
-        else errorHandler('Error deleting Log Frame!');
+        } catch (\Throwable $th) {
+            return errorHandler('Error deleting Log Frame!', $th);
+        }
     }
 }

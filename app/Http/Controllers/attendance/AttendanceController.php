@@ -91,7 +91,7 @@ class AttendanceController extends Controller
             DB::commit();
             return redirect(route('attendances.index'))->with(['success' => 'Attendance created successfully']);
         } catch (\Throwable $th) {
-            errorHandler('Error creating Attendance!', $th);
+            return errorHandler('Error creating Attendance!', $th);
         }
     }
 
@@ -185,7 +185,7 @@ class AttendanceController extends Controller
             DB::commit();
             return redirect(route('attendances.index'))->with(['success' => 'Attendance updated successfully']);              
         } catch (\Throwable $th) {
-            errorHandler('Error updating Attendance!', $th);
+            return errorHandler('Error updating Attendance!', $th);
         }
     }
 
@@ -202,7 +202,7 @@ class AttendanceController extends Controller
             $attendance->delete();
             return redirect(route('attendances.index'))->with(['success' => 'Attendance deleted successfully']);
         } catch (\Throwable $th) {
-            errorHandler('Error deleting Attendance!', $th);
+            return errorHandler('Error deleting Attendance!', $th);
         }
     }
 

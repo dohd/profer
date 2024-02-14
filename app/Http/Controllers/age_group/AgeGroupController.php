@@ -39,15 +39,14 @@ class AgeGroupController extends Controller
      */
     public function store(Request $request)
     {   
-        // dd($request->all());
         $request->validate(['bracket' => 'required']);
         $data = $request->only(['bracket']);
 
         try {            
-            if (AgeGroup::create($data)) 
+            AgeGroup::create($data);
             return redirect(route('age_groups.index'))->with(['success' => 'Age Group created successfully']);
         } catch (\Throwable $th) {
-            errorHandler('Error creating Age Group!');
+            return errorHandler('Error creating Age Group!', $th);
         }
     }
 
@@ -93,15 +92,14 @@ class AgeGroupController extends Controller
      */
     public function update(Request $request, AgeGroup $age_group)
     {
-        // dd($request->all());
         $request->validate(['bracket' => 'required']);
         $data = $request->only(['bracket']);
 
         try {            
-            if ($age_group->update($data)) 
+            $age_group->update($data);
             return redirect(route('age_groups.index'))->with(['success' => 'Age Group updated successfully']);
         } catch (\Throwable $th) {
-            errorHandler('Error updating Age Group!');
+            return errorHandler('Error updating Age Group!', $th);
         }        
     }
 
@@ -114,10 +112,10 @@ class AgeGroupController extends Controller
     public function destroy(AgeGroup $age_group)
     {
         try {            
-            if ($age_group->delete()) 
+            $age_group->delete();
             return redirect(route('age_groups.index'))->with(['success' => 'Age Group deleted successfully']);
         } catch (\Throwable $th) {
-            errorHandler('Error deleting Age Group!');
+            return errorHandler('Error deleting Age Group!', $th);
         }  
     }
 }

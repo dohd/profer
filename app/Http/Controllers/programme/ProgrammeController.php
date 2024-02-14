@@ -39,7 +39,6 @@ class ProgrammeController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $request->validate(['name' => 'required']);
         $data = $request->only(['name']);
 
@@ -47,7 +46,7 @@ class ProgrammeController extends Controller
             Programme::create($data);
             return redirect(route('programmes.index'))->with(['success' => 'Programme created successfully']);
         } catch (\Throwable $th) {
-            errorHandler('Error creating programme!');
+           return errorHandler('Error creating programme!', $th);
         }
     }
 
@@ -96,7 +95,6 @@ class ProgrammeController extends Controller
      */
     public function update(Request $request, Programme $programme)
     {
-        // dd($request->all());
         $request->validate(['name' => 'required']);
         $data = $request->only(['name']);
 
@@ -104,7 +102,7 @@ class ProgrammeController extends Controller
             if ($programme->update($data)) 
             return redirect(route('programmes.index'))->with(['success' => 'Programme updated successfully']);
         } catch (\Throwable $th) {
-            errorHandler('Error updating programme!');
+            return errorHandler('Error updating programme!', $th);
         }
     }
 
@@ -117,10 +115,10 @@ class ProgrammeController extends Controller
     public function destroy(Programme $programme)
     {
         try {            
-            if ($programme->delete()) 
+            $programme->delete();
             return redirect(route('programmes.index'))->with(['success' => 'Programme deleted successfully']);
         } catch (\Throwable $th) {
-            errorHandler('Error deleting programme!');
+            return errorHandler('Error deleting programme!', $th);
         }
     }
 }

@@ -107,12 +107,13 @@ class AgendaController extends Controller
      */
     public function update(Request $request, Agenda $agenda)
     {
-        // dd($request->all());
         if (request('status')) {
-            // update agenda status
-            if ($agenda->update(['status' => request('status')]))
+            try {
+                $agenda->update(['status' => request('status')]);
                 return redirect()->back()->with('success', 'Status updated successfully');
-            else errorHandler('Error updating status!');
+            } catch (\Throwable $th) {
+                return errorHandler('Error updating status!', $th);
+            }
         } else {
             // update agenda
             $request->validate([

@@ -39,15 +39,14 @@ class DisabilityController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $request->validate(['name' => 'required']);
         $data = $request->only(['name']);
 
         try {            
-            if (Disability::create($data)) 
+            Disability::create($data); 
             return redirect(route('disabilities.index'))->with(['success' => 'Disability created successfully']);
         } catch (\Throwable $th) {
-            errorHandler('Error creating disability!');
+            return errorHandler('Error creating disability!', $th);
         }
     }
 
@@ -93,15 +92,14 @@ class DisabilityController extends Controller
      */
     public function update(Request $request, Disability $disability)
     {
-        // dd($request->all());
         $request->validate(['name' => 'required']);
         $data = $request->only(['name']);
 
         try {            
-            if ($disability->update($data)) 
+            $disability->update($data);
             return redirect(route('disabilities.index'))->with(['success' => 'Disability updated successfully']);
         } catch (\Throwable $th) {
-            errorHandler('Error updating disability!');
+            return errorHandler('Error updating disability!', $th);
         }
     }
 
@@ -114,10 +112,10 @@ class DisabilityController extends Controller
     public function destroy(Disability $disability)
     {
         try {            
-            if ($disability->delete()) 
+            $disability->delete();
             return redirect(route('disabilities.index'))->with(['success' => 'Disability deleted successfully']);
         } catch (\Throwable $th) {
-            errorHandler('Error deleting disability!');
+            return errorHandler('Error deleting disability!', $th);
         }
     }
 }
