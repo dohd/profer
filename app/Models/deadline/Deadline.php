@@ -1,22 +1,21 @@
 <?php
 
-namespace App\Models\agenda;
+namespace App\Models\deadline;
 
-use App\Models\agenda\Traits\AgendaAttribute;
-use App\Models\agenda\Traits\AgendaRelationship;
-use App\Models\deadline\Deadline;
+use App\Models\deadline\Traits\DeadlineAttribute;
+use App\Models\deadline\Traits\DeadlineRelationship;
 use App\Models\ModelTrait;
 use Illuminate\Database\Eloquent\Model;
 
-class Agenda extends Model
+class Deadline extends Model
 {
-    use ModelTrait, AgendaAttribute, AgendaRelationship;
+    use ModelTrait, DeadlineAttribute, DeadlineRelationship;    
 
     /**
      * The database table used by the model.
      * @var string
      */
-    protected $table = 'agenda';
+    protected $table = 'deadlines';
 
     /**
      * Mass Assignable fields of model
@@ -61,16 +60,8 @@ class Agenda extends Model
         parent::boot();
 
         static::creating(function ($instance) {
-            $deadline = Deadline::where(['active' => 1, 'module' => 'AGENDA'])
-            ->whereDate('date', '>=', date('Y-m-d'))
-            ->latest()->first();
-
-            $instance->fill([
-                'tid' => Agenda::max('tid')+1,
-                'user_id' => auth()->user()->id,
-                'ins' => auth()->user()->ins,
-                'deadline_id' => @$deadline->id,
-            ]);
+            $instance->user_id = auth()->user()->id;
+            $instance->ins = auth()->user()->ins;
             return $instance;
         });
 

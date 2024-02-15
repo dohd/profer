@@ -4,6 +4,7 @@ namespace App\Http\Controllers\agenda;
 
 use App\Http\Controllers\Controller;
 use App\Models\agenda\Agenda;
+use App\Models\deadline\Deadline;
 use App\Models\item\AgendaItem;
 use App\Models\proposal\Proposal;
 use Illuminate\Http\Request;
@@ -21,8 +22,34 @@ class AgendaController extends Controller
         $agenda = Agenda::latest()->get();
         $status_grp = Agenda::selectRaw('status, COUNT(*) as count')->groupBy('status')->pluck('count', 'status');
 
-        return view('agenda.index', compact('agenda', 'status_grp'));
+        $curr_deadline = Deadline::where(['active' => 1, 'module' => 'AGENDA'])
+        ->whereDate('date', '>=', date('Y-m-d'))
+        ->latest()->first(); 
+
+        return view('agenda.index', compact('curr_deadline', 'agenda', 'status_grp'));
     }
+
+    /**
+     * Display list of action_plans using datatable
+     */
+    public function datatable(Request $request)
+    {
+        $q = Agenda::query();
+        
+        // date filter
+        $q->when(request('date_from') && request('date_to'), function($q) {
+            $q->whereBetween('date', [databaseDate(request('date_from')), databaseDate(request('date_to'))]);
+        });
+
+        // deadline filter
+        $q->when(request('deadline'), function($q) {
+            $date = databaseDate(request('deadline'));
+            $q->whereHas('deadline', fn($q) => $q->whereDate('date', $date));
+            $q->whereDate('created_at', '<=', $date);
+        });
+        
+        return view('agenda.partial.agenda_datatable', ['agenda' => $q->latest()->get()]);
+    }  
 
     /**
      * Show the form for creating a new resource.

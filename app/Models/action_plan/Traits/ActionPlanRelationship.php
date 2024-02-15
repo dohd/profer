@@ -5,6 +5,7 @@ namespace App\Models\action_plan\Traits;
 use App\Models\action_plan\ActionPlanActivity;
 use App\Models\action_plan\ActionPlanCohort;
 use App\Models\agenda\Agenda;
+use App\Models\deadline\Deadline;
 use App\Models\item\ProposalItem;
 use App\Models\narrative\Narrative;
 use App\Models\participant_list\ParticipantList;
@@ -13,6 +14,11 @@ use App\Models\proposal\Proposal;
 
 trait ActionPlanRelationship
 {
+    public function deadline()
+    {
+        return $this->belongsTo(Deadline::class);
+    }
+
     public function agenda()
     {
         return $this->hasMany(Agenda::class);
