@@ -7,7 +7,7 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">
-                Action Plan
+                <span>Action Plan</span>
                 @can('approve-action-plan')
                     <div class="float-end">
                         <span class="badge bg-secondary text-white" role="button" data-bs-toggle="modal" data-bs-target="#status_modal">

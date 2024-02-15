@@ -14,6 +14,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\log_frame\LogFrameController;
 use App\Http\Controllers\narrative\NarrativeController;
 use App\Http\Controllers\attendance\AttendanceController;
+use App\Http\Controllers\deadline\DeadlineController;
 use App\Http\Controllers\participant_list\ParticipantListController;
 use App\Http\Controllers\pdf\PdfController;
 use App\Http\Controllers\prefix\PrefixController;
@@ -72,6 +73,11 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('prefixes', PrefixController::class);
 
     /**
+     * Deadlines
+     */
+    Route::resource('deadlines', DeadlineController::class);
+
+    /**
      * key parameters
      */
     Route::resource('donors', DonorController::class);
@@ -127,6 +133,7 @@ Route::group(['middleware' => 'auth'], function() {
     /**
      * Agenda
      */
+    Route::post('agenda/datatable', [AgendaController::class, 'datatable'])->name('agenda.datatable');
     Route::resource('agenda', AgendaController::class);
 
     /**

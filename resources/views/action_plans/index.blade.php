@@ -7,7 +7,14 @@
     <div class="card">
         <div class="card-body">
             <div class="card-content p-2">
-                <div class="my-3">
+                @if (@$curr_deadline)
+                    <div class="text-center h5">
+                        <span class="badge bg-warning">
+                            Submission Deadline: {{ dateFormat($curr_deadline->date,'l, d-M-Y') }}
+                        </span>
+                    </div>
+                @endif
+                <div class="my-2">
                     <div class="row mb-2">
                         <div class="col-md-7 col-12">
                             <div class="table-responsive">
@@ -24,20 +31,35 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                    @can('view-deadline')
+                        <div class="row g-0 mb-2">
+                            <div class="col-md-2 px-0">Deadline Date</div>
+                            <div class="col-md-2 px-0"><input type="date" id="dt-deadline"></div>
+                        </div>
+                    @endcan
+                    <div class="row g-0 mb-2">
+                        <div class="col-md-2 px-0">Search Between</div>
+                        <div class="col-md-2 px-0"><input type="date" id="dt-from"></div>
+                        <div class="col-md-2 px-0"><input type="date" id="dt-to"></div>
+                        <div class="col-md-2 px-0">
+                            <span class="badge bg-primary text-white" role="button" id="search">Search</span>
+                            <span class="badge bg-success text-white" role="button" id="refresh" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Refresh"><i class="bi bi-arrow-clockwise"></i></span>    
+                        </div>                     
+                    </div>
+                </div><hr>
 
                 <div class="table-responsive">
                     <table class="table table-borderless" id="action_plans_tbl">
                         <thead>
                             <tr>
-                                <th scope="col">#No</th>
-                                <th scope="col">#Code</th>
-                                <th scope="col">Project Title</th>
-                                <th scope="col">Key Programme</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Overseer</th>
-                                <th scope="col" width="15%">Date</th>
-                                <th scope="col">Action</th>
+                                <th>#No</th>
+                                <th>#Code</th>
+                                <th>Project Title</th>
+                                <th>Key Programme</th>
+                                <th>Status</th>
+                                <th>Overseer</th>
+                                <th width="15%">Date</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -56,12 +78,29 @@
         new simpleDatatables.DataTable($('#action_plans_tbl')[0]);
     });
 
-    // on change status filter
-    $('#wo_status_filter').change(function() {
-        $.post("{{ route('action_plans.datatable') }}", {status: $(this).val()}, data => {
-            $('#action_plans_tbl tbody').html(data);
-            new simpleDatatables.DataTable($('#action_plans_tbl')[0]);
-        });
+    // search click
+    $('#search').click(fetchRecords);
+    $('#refresh').click(function() {
+        $('#dt-from').val('');
+        $('#dt-to').val('');
+        $('#dt-deadline').val('');
+        $('#search').click();
     });
+
+    function fetchRecords(e) {
+        const params = {
+            date_from: $('#dt-from').val(),
+            date_to: $('#dt-to').val(),
+            deadline: $('#dt-deadline').val(),
+        };
+        $.post(
+            "{{ route('action_plans.datatable') }}", 
+            params, 
+            data => {
+                $('#action_plans_tbl tbody').html(data);
+                new simpleDatatables.DataTable($('#action_plans_tbl')[0]);
+            }
+        );
+    }
 </script>
 @stop

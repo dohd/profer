@@ -88,6 +88,7 @@
                     'cohort' => 'Target Cohort', 
                     'age-group' => 'Age Group', 
                     'disability' => 'Disability', 
+                    'deadline' => 'Deadline Management',
                     'code-prefix' => 'Code Prefixes',
                     'role' => 'Roles & Rights', 
                     'user' => 'User Management',

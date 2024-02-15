@@ -8,6 +8,7 @@ use App\Models\action_plan\ActionPlanActivity;
 use App\Models\action_plan\ActionPlanCohort;
 use App\Models\action_plan\ActionPlanRegion;
 use App\Models\cohort\Cohort;
+use App\Models\deadline\Deadline;
 use App\Models\item\ProposalItem;
 use App\Models\programme\Programme;
 use App\Models\proposal\Proposal;
@@ -32,8 +33,12 @@ class ActionPlanController extends Controller
             ->doesntHave('participant_lists')->count();
         $wo_narrative_count = ActionPlan::where('status', 'approved')
             ->doesntHave('narratives')->count();
+
+        $curr_deadline = Deadline::where(['active' => 1, 'module' => 'ACTION-PLAN'])
+        ->whereDate('date', '>=', date('Y-m-d'))
+        ->latest()->first();    
         
-        return view('action_plans.index', compact('grp_status_count', 'wo_ps_list_count', 'wo_narrative_count'));
+        return view('action_plans.index', compact('curr_deadline', 'grp_status_count', 'wo_ps_list_count', 'wo_narrative_count'));
     }
 
     /**
@@ -42,6 +47,18 @@ class ActionPlanController extends Controller
     public function datatable(Request $request)
     {
         $q = ActionPlan::query();
+        
+        // date filter
+        $q->when(request('date_from') && request('date_to'), function($q) {
+            $q->whereBetween('date', [databaseDate(request('date_from')), databaseDate(request('date_to'))]);
+        });
+
+        // deadline filter
+        $q->when(request('deadline'), function($q) {
+            $date = databaseDate(request('deadline'));
+            $q->whereHas('deadline', fn($q) => $q->whereDate('date', $date));
+            $q->whereDate('created_at', '<=', $date);
+        });
 
         // filter approved proposals
         $q->when(request('status'), function($q) {

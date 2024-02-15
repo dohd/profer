@@ -4,6 +4,7 @@ namespace App\Models\action_plan;
 
 use App\Models\action_plan\Traits\ActionPlanAttribute;
 use App\Models\action_plan\Traits\ActionPlanRelationship;
+use App\Models\deadline\Deadline;
 use App\Models\ModelTrait;
 use Illuminate\Database\Eloquent\Model;
 
@@ -60,16 +61,21 @@ class ActionPlan extends Model
         parent::boot();
 
         static::creating(function ($instance) {
+            $deadline = Deadline::where(['active' => 1, 'module' => 'ACTION-PLAN'])
+            ->whereDate('date', '>=', date('Y-m-d'))
+            ->latest()->first();
+
             $instance->fill([
                 'tid' => $instance->next_tid,
-                'user_id' => 1,
-                'ins' => 1,
+                'user_id' => auth()->user()->id,
+                'ins' => auth()->user()->ins,
+                'deadline_id' => @$deadline->id,
             ]);
             return $instance;
         });
 
         static::addGlobalScope('ins', function ($builder) {
-            // $builder->where('ins', '=', auth()->user()->ins);
+            // $builder->where('ins', auth()->user()->ins);
         });
     }
 }

@@ -7,6 +7,13 @@
     <div class="card">
         <div class="card-body">
             <div class="card-content p-2">
+                @if (@$curr_deadline)
+                    <div class="text-center h5">
+                        <span class="badge bg-warning">
+                            Submission Deadline: {{ dateFormat($curr_deadline->date,'l, d-M-Y') }}
+                        </span>
+                    </div>
+                @endif
                 <div class="row my-2">
                     <div class="col-md-6 col-12">
                         <div class="table-responsive">
@@ -23,9 +30,25 @@
                         </div>
                     </div>
                 </div>
+                @can('view-deadline')
+                    <div class="row g-0 mb-2">
+                        <div class="col-md-2 px-0">Deadline Date</div>
+                        <div class="col-md-2 px-0"><input type="date" id="dt-deadline"></div>
+                    </div>
+                @endcan
+                <div class="row g-0 mb-2">
+                    <div class="col-md-2 px-0">Search Between</div>
+                    <div class="col-md-2 px-0"><input type="date" id="dt-from"></div>
+                    <div class="col-md-2 px-0"><input type="date" id="dt-to"></div>
+                    <div class="col-md-2 px-0">
+                        <span class="badge bg-primary text-white" role="button" id="search">Search</span>
+                        <span class="badge bg-success text-white" role="button" id="refresh" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Refresh"><i class="bi bi-arrow-clockwise"></i></span>    
+                    </div>                     
+                </div>
+                <hr>
 
                 <div class="table-responsive">
-                    <table class="table table-borderless datatable">
+                    <table class="table table-borderless" id="agenda-tbl">
                         <thead>
                             <tr>
                                 <th>#No</th>
@@ -37,20 +60,44 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($agenda as $i => $row)
-                                <tr>
-                                    <th scope="row" style="height: {{ count($agenda) == 1? '80px' : '' }}">{{ $i+1 }}</th>
-                                    <td><a href="{{ route('agenda.show', $row) }}">{{ tidCode('agenda', $row->tid) }}</a></td>
-                                    <td>{{ $row->title }}</td>
-                                    <td><span class="badge bg-{{ $row->status == 'approved'? 'success' : 'secondary' }}">{{ $row->status }}</span></td>
-                                    <td>{{ dateFormat($row->date)  }}</td>
-                                    <td>{!! $row->action_buttons !!}</td>
-                                </tr>
-                            @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
+@stop
+
+@section('script')
+<script>
+    $.post("{{ route('agenda.datatable') }}", data => {
+        $('#agenda-tbl tbody').html(data);
+        new simpleDatatables.DataTable($('#agenda-tbl')[0]);
+    });
+
+    // search click
+    $('#search').click(fetchRecords);
+    $('#refresh').click(function() {
+        $('#dt-from').val('');
+        $('#dt-to').val('');
+        $('#dt-deadline').val('');
+        $('#search').click();
+    });
+
+    function fetchRecords(e) {
+        const params = {
+            date_from: $('#dt-from').val(),
+            date_to: $('#dt-to').val(),
+            deadline: $('#dt-deadline').val(),
+        };
+        $.post(
+            "{{ route('agenda.datatable') }}", 
+            params, 
+            data => {
+                $('#agenda-tbl tbody').html(data);
+                new simpleDatatables.DataTable($('#agenda-tbl')[0]);
+            }
+        );
+    }
+</script>
 @stop
