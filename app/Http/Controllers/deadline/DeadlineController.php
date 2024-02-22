@@ -100,9 +100,18 @@ class DeadlineController extends Controller
             'module' => 'required',
         ]);
         
+        DB::beginTransaction();
+        
         try {            
             $data = inputClean($request->except(['_token']));
             $deadline->update($data);
+            if ($deadline->active) {
+                Deadline::where('id', '!=', $deadline->id)
+                ->where(['active' => 1, 'module' => $deadline->module])
+                ->update(['active' => 0]);
+            }
+
+            DB::commit();
             return redirect(route('deadlines.index'))->with(['success' => 'Deadline updated successfully']);
         } catch (\Throwable $th) {
             return errorHandler('Error updating deadline!', $th);
