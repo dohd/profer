@@ -18,7 +18,7 @@
     
     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile" style="min-width:180px;">
        <li class="dropdown-header">
-        <span>{{ auth()->user()->roles()->first()->name }}</span>
+        <span>{{ auth()->user()->roles()->first() ? auth()->user()->roles()->first()->name : '' }}</span>
       </li>
       <li>
         <hr class="dropdown-divider" />
