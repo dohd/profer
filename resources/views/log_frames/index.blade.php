@@ -38,9 +38,9 @@
 
 @section('script')
 <script>
-    $.post("{{ route('log_frames.datatable') }}", {}, data => {
-        $('#logframeTbl tbody').html(data);
-        new simpleDatatables.DataTable($('#logframeTbl')[0]);
-    });
+    // $.post("{{ route('log_frames.datatable') }}", {}, data => {
+    //     $('#logframeTbl tbody').html(data);
+    //     new simpleDatatables.DataTable($('#logframeTbl')[0]);
+    // });
 </script>
 @stop
