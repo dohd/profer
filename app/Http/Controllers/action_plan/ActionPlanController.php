@@ -246,10 +246,15 @@ class ActionPlanController extends Controller
                 $action_plan->update($data);
 
                 // update activity
-                $is_activity_plan = ActionPlanActivity::where('id', '!=', $action_plan->plan_activity->id)
-                    ->where('activity_id', $action_plan->plan_activity->activity_id)->exists();
-                if ($is_activity_plan) return errorHandler('Activity exists!');
-                $action_plan->plan_activity->update($data_activity);
+                $action_plan_activity = $action_plan->plan_activity;
+                if ($action_plan_activity) {
+                    $is_duplicate = ActionPlanActivity::where('id', '!=', $action_plan_activity->id)
+                    ->where('activity_id', $action_plan_activity->activity_id)
+                    ->where('action_plan_id', $action_plan_activity->action_plan_id)
+                    ->exists();
+                    if ($is_duplicate) return errorHandler('Duplicate! Action Plan Activity has already been assigned');
+                    $action_plan_activity->update($data_activity);
+                }
 
                 $activity_params = [
                     'action_plan_id' => $action_plan->id,
