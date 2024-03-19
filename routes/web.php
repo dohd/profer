@@ -14,8 +14,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\log_frame\LogFrameController;
 use App\Http\Controllers\narrative\NarrativeController;
 use App\Http\Controllers\attendance\AttendanceController;
+use App\Http\Controllers\config\ConfigController;
 use App\Http\Controllers\deadline\DeadlineController;
-use App\Http\Controllers\participant_list\ParticipantListController;
 use App\Http\Controllers\pdf\PdfController;
 use App\Http\Controllers\prefix\PrefixController;
 use App\Http\Controllers\programme\ProgrammeController;
@@ -27,7 +27,6 @@ use App\Http\Controllers\storage\StorageController;
 use App\Http\Controllers\user_profile\UserProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\URL;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,46 +39,31 @@ use Illuminate\Support\Facades\URL;
 |
 */
 
-/**
- * Authentication
- */
+// Authentication
 Auth::routes();
 Route::get('/', [LoginController::class, 'index']);
 Route::get('logout', [LoginController::class, 'logout']);
-
 Route::group(['middleware' => 'auth'], function() {
-    /**
-     * Dashboard
-     */
+    // Dashboard
     Route::get('home', [HomeController::class, 'index'])->name('home');
     Route::get('event_calendar', [HomeController::class, 'event_calendar'])->name('event_calendar');
 
-    /**
-     * User Profiles
-     */
+    // User Profiles
     Route::post('user_profiles/delete_profile_pic/{user}', [UserProfileController::class, 'delete_profile_pic'])->name('user_profiles.delete_profile_pic');
     Route::post('user_profiles/update_active_profile/{user}', [UserProfileController::class, 'update_active_profile'])->name('user_profiles.update_active_profile');
     Route::get('user_profiles/active_profile', [UserProfileController::class, 'active_profile'])->name('user_profiles.active_profile');
     Route::resource('user_profiles', UserProfileController::class);
 
-    /**
-     * Roles
-     */
+    // Roles
     Route::resource('roles', RoleController::class);
 
-    /**
-     * Prefixes
-     */
+    // Prefixes
     Route::resource('prefixes', PrefixController::class);
 
-    /**
-     * Deadlines
-     */
+    // Deadlines
     Route::resource('deadlines', DeadlineController::class);
 
-    /**
-     * key parameters
-     */
+    // key Parameters
     Route::resource('donors', DonorController::class);
     Route::resource('programmes', ProgrammeController::class);
     Route::resource('regions', RegionController::class);
@@ -87,16 +71,12 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('disabilities', DisabilityController::class);
     Route::resource('age_groups', AgeGroupController::class);
 
-    /**
-     * Proposals
-     */
+    // Proposals
     Route::post('proposals/items', [ProposalController::class, 'proposal_items'])->name('proposals.items');
     Route::post('proposals/datatable', [ProposalController::class, 'datatable'])->name('proposals.datatable');
     Route::resource('proposals', ProposalController::class);
 
-    /**
-     * Project Budget
-     */
+    // Budgeting
     Route::post('budgets/budget_tracker/{budget}', [BudgetController::class, 'budget_tracker'])->name('budgets.budget_tracker');
     Route::post('budgets/edit_expenses/{budget_expense}', [BudgetController::class, 'edit_expenses'])->name('budgets.edit_expenses');
     Route::post('budgets/update_expenses/{budget_expense}', [BudgetController::class, 'update_expenses'])->name('budgets.update_expenses');
@@ -106,20 +86,15 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('budgets/proposal_items', [BudgetController::class, 'proposal_items'])->name('budgets.proposal_items');
     Route::resource('budgets', BudgetController::class);
 
-    /**
-     * Log Frames
-     */
+    // Log Frame
     Route::post('log_frames/datatable', [LogFrameController::class, 'datatable'])->name('log_frames.datatable');
     Route::resource('log_frames', LogFrameController::class);
 
-    /**
-     * Action Plans
-     */
+    // Action Plan
     Route::post('action_plans/cohort/edit', [ActionPlanController::class, 'edit_cohort'])->name('action_plans.edit_cohort');
     Route::post('action_plans/cohort/update', [ActionPlanController::class, 'update_cohort'])->name('action_plans.update_cohort');
     Route::post('action_plans/cohort/store', [ActionPlanController::class, 'store_cohort'])->name('action_plans.store_cohort');
     Route::post('action_plans/cohort/delete', [ActionPlanController::class, 'destroy_cohort'])->name('action_plans.destroy_cohort');
-
     Route::post('action_plans/activity/edit', [ActionPlanController::class, 'edit_activity'])->name('action_plans.edit_activity');
     Route::post('action_plans/activity/update', [ActionPlanController::class, 'update_activity'])->name('action_plans.update_activity');
     Route::post('action_plans/activity/store', [ActionPlanController::class, 'store_activity'])->name('action_plans.store_activity');
@@ -130,67 +105,43 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('action_plans/datatable', [ActionPlanController::class, 'datatable'])->name('action_plans.datatable');
     Route::resource('action_plans', ActionPlanController::class);
 
-    /**
-     * Agenda
-     */
+    // Agenda
     Route::post('agenda/datatable', [AgendaController::class, 'datatable'])->name('agenda.datatable');
     Route::resource('agenda', AgendaController::class);
 
-    /**
-     * Participant Lists
-     */
-    Route::resource('participant_lists', ParticipantListController::class);
-
-    /**
-     * Attendance
-     */
+    // Attendance
     Route::post('attendances/delete_file', [AttendanceController::class, 'delete_file'])->name('attendances.delete_file');
     Route::resource('attendances', AttendanceController::class);
 
-    /**
-     * Activity Narratives
-     */
+    // Activity Narrative
     Route::post('narratives/narrative_table', [NarrativeController::class, 'narrative_table'])->name('narratives.table');
     Route::resource('narratives', NarrativeController::class);
 
-    /**
-     * Case Studies
-     */
+    // Case Study
     Route::post('case_studies/delete_image', [CaseStudyController::class, 'delete_image'])->name('case_studies.delete_image');
     Route::resource('case_studies', CaseStudyController::class);
 
-    /**
-     * File Imports
-     */
+    // File Import
     Route::post('file_imports/datatable', [FileImportController::class, 'datatable'])->name('file_imports.datatable');
     Route::resource('file_imports', FileImportController::class);
 
-
-    /**
-     * Reports
-     */
+    // View Reports
     Route::get('reports/beneficiary_list', [ReportController::class, 'beneficiary_list'])->name('reports.beneficiary_list');
     Route::get('reports/monthly_meetings', [ReportController::class, 'monthly_meetings'])->name('reports.monthly_meetings');
     Route::get('reports/narrative_report', [ReportController::class, 'narrative_report'])->name('reports.narrative_report');
     Route::get('reports/participant_analysis', [ReportController::class, 'participant_analysis'])->name('reports.participant_analysis');
-    
     Route::post('reports/beneficiary_list_data', [ReportController::class, 'beneficiary_list_data'])->name('reports.beneficiary_list_data');
     Route::post('reports/narrative_data', [ReportController::class, 'narrative_data'])->name('reports.narrative_data');
     Route::post('reports/participant_analysis_data', [ReportController::class, 'participant_analysis_data'])->name('reports.participant_analysis_data');
 
-    /**
-     * PDFs
-     */
+    // PDF Report
     Route::get('pdfs/agenda/{agenda}/{token}', [PdfController::class, 'print_agenda'])->name('pdfs.print_agenda');
 
-    /**
-     * Storage
-     */
+    // Storage
     Route::get('storage/{file_params}', [StorageController::class, 'file_render'])->name('storage.file_render');
     Route::get('storage/download/{file_params}', [StorageController::class, 'file_download'])->name('storage.file_download');
+
+    // Configuration
+    Route::get('clear-cache', [ConfigController::class, 'clear_cache'])->name('config.clear_cache');
+    Route::get('site-down', [ConfigController::class, 'site_down'])->name('config.site_down');
 });
-
-
-if (env('APP_ENV') == 'production') {
-    URL::forceScheme('https');
-}
