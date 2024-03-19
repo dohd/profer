@@ -10,7 +10,7 @@ class ConfigController extends Controller
     /**
      * Clear Cache
      */
-    public function clear_cache ($file_params) 
+    public function clear_cache() 
     {   
         try {
             Artisan::call('cache:clear');
@@ -25,8 +25,9 @@ class ConfigController extends Controller
     /**
      * Maintenance Mode
      */
-    public function site_down ($file_params) 
+    public function site_down() 
     {
-        return Artisan::call('down');
+        Artisan::call('down');
+        return redirect()->back();
     }
 }
