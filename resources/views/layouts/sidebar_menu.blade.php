@@ -114,9 +114,9 @@
         <li>
           <a href="{{ route('reports.beneficiary_list') }}"><i class="bi bi-circle"></i><span>Rightholder List</span></a>
         </li>
-        <li>
+        {{-- <li>
           <a href="{{ route('reports.monthly_meetings') }}"><i class="bi bi-circle"></i><span>External Meetings</span></a>
-        </li>
+        </li> --}}
         <li>
           <a href="{{ route('reports.participant_analysis') }}"><i class="bi bi-circle"></i><span>Participant Analysis</span></a>
         </li>

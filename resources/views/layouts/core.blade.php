@@ -47,7 +47,7 @@
 
   <!-- ======= Sidebar ======= -->
   @section('sidebar')
-    @include('layouts.sidebar')
+    @include('layouts.sidebar_menu')
   @show
   <!-- End Sidebar-->
 
