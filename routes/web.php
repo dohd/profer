@@ -114,6 +114,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('attendances', AttendanceController::class);
 
     // Activity Narrative
+    Route::post('narratives/delete_file', [NarrativeController::class, 'delete_file'])->name('narratives.delete_file');
     Route::post('narratives/narrative_table', [NarrativeController::class, 'narrative_table'])->name('narratives.table');
     Route::resource('narratives', NarrativeController::class);
 

@@ -9,6 +9,8 @@ use App\Models\narrative\Narrative;
 use App\Models\narrative_pointer\NarrativePointer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class NarrativeController extends Controller
 {
@@ -61,8 +63,18 @@ class NarrativeController extends Controller
             'date' => 'required',
         ]);
 
+        $validator = Validator::make($request->all(), [
+            'doc_file' => $request->doc_file? 'required|mimes:csv,pdf,xls,xlsx,doc,docx' : 'nullable',
+        ]);
+        if ($validator->fails()) {
+            return redirect(route('narratives.index'))->with(['error' => 'Unsupported file format!']);
+        }
+
         $data = $request->only(['agenda_id', 'date']);
         $data_items = $request->only(['agenda_item_id', 'narrative_pointer_id', 'response']);
+
+        $file = $request->file('doc_file');
+        if ($file) $data['doc_file'] = $this->uploadFile($file);
 
         DB::beginTransaction();
 
@@ -132,10 +144,23 @@ class NarrativeController extends Controller
                 'agenda_id' => 'required', 
                 'date' => 'required',
             ]);
+
+            $validator = Validator::make($request->all(), [
+                'doc_file' => $request->doc_file? 'required|mimes:csv,pdf,xls,xlsx,doc,docx' : 'nullable',
+            ]);
+            if ($validator->fails()) {
+                return redirect(route('narratives.index'))->with(['error' => 'Unsupported file format!']);
+            }
     
             $data = $request->only(['agenda_id', 'date']);
             $data_items = $request->only(['item_id', 'agenda_item_id', 'narrative_pointer_id', 'response']);
-    
+
+            $file = $request->file('doc_file');
+            if ($file) {
+                $this->deleteFile($narrative->doc_file);
+                $data['doc_file'] = $this->uploadFile($file);
+            }
+
             DB::beginTransaction();
     
             try {
@@ -167,6 +192,7 @@ class NarrativeController extends Controller
     public function destroy(Narrative $narrative)
     {
         try {
+            $this->deleteFile($narrative->doc_file);
             $narrative->delete();
             return redirect(route('narratives.index'))->with(['success' => 'Narrative deleted successfully']);
         } catch (\Throwable $th) {
@@ -196,5 +222,46 @@ class NarrativeController extends Controller
         $narrative_pointers = NarrativePointer::all();
 
         return view('narratives.partial.narrative_table', compact('agenda', 'narrative', 'narrative_pointers'));
+    }
+
+    /**
+     * Remove the file from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function delete_file(Request $request)
+    { 
+        try {
+            $narrative = Narrative::find($request->narrative_id);
+            $this->deleteFile($narrative[$request->field]);
+            $narrative->update([$request->field => null]);
+
+            return response()->json(['success' => true, 'message' => 'File deleted successfully', 'redirectTo' => route('narratives.show', $narrative)]);
+        } catch (\Throwable $th) {
+            return response()->json(['success' => false, 'message' => $th->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Upload file to storage
+     */
+    public function uploadFile($file)
+    {
+        $file_name = time() . '_' . $file->getClientOriginalName();
+        $file_path = 'narrative' . DIRECTORY_SEPARATOR;
+        Storage::disk('public')->put($file_path . $file_name, file_get_contents($file->getRealPath()));
+        return $file_name;
+    }
+
+    /**
+     * Delete file from storage
+     */
+    public function deleteFile($file_name)
+    {
+        $file_path = 'narrative' . DIRECTORY_SEPARATOR;
+        $file_exists = Storage::disk('public')->exists($file_path . $file_name);
+        if ($file_exists) Storage::disk('public')->delete($file_path . $file_name);
+        return $file_exists;
     }
 }
