@@ -8,7 +8,7 @@
         <div class="card-body">
             <h5 class="card-title">Create Narrative</h5>
             <div class="card-content p-2">
-                {{ Form::open(['route' => 'narratives.store', 'method' => 'POST', 'class' => 'form']) }}
+                {{ Form::open(['route' => 'narratives.store', 'method' => 'POST', 'files' => true, 'class' => 'form']) }}
                     @include('narratives.form')
                     <div class="text-center">
                         <a href="{{ route('narratives.index') }}" class="btn btn-secondary">Cancel</a>

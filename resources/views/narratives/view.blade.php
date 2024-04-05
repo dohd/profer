@@ -17,9 +17,10 @@
                 <table class="table table-bordered">
                     @php
                         $details = [
+                            'Date' => dateFormat($narrative->date, 'd-M-Y'),
                             'Narrative No.' => tidCode('narrative', $narrative->tid),
                             'Agenda' => @$narrative->agenda->title,
-                            'Narrative Date' => dateFormat($narrative->date, 'd-M-Y'),
+                            'Attachment' => $narrative->doc_file,
                             'Activity' => @$narrative->proposal_item->name,
                             'Action Plan No' => $narrative->action_plan? tidCode('action_plan', $narrative->action_plan->tid) : '',
                             'Project Title' => @$narrative->proposal->title,
@@ -36,6 +37,9 @@
                                 </span>
                             @elseif ($key == 'Agenda' && $val)
                                 <a href="{{ route('agenda.show', $narrative->agenda) }}">{{ $val }}</a>
+                            @elseif ($key == 'Attachment' && $val)
+                                <a href="{{ route('storage.file_download', 'narrative,' . $narrative->doc_file) }}" target="_blank">{{ $val }}<i class="bi bi-download h5 ms-2"></i></a>
+                                <span class="del ms-3" style="cursor: pointer;" name="doc_file"><i class="bi bi-trash text-danger icon-xs"></i></span>
                             @elseif ($key == 'Project Title' && $val)
                                 <a href="{{ route('proposals.show', $narrative->proposal) }}">{{ $val }}</a>
                             @elseif ($key == 'Action Plan No' && $val)
@@ -65,7 +69,7 @@
                         <thead>
                             <tr class="table-primary">
                                 <th scope="col">#</th>
-                                <th scope="col" width="30%">Narrative Indicator</th>
+                                <th scope="col" width="30%">Narrative Query</th>
                                 <th scope="col">Response</th>
                             </tr>
                         </thead>
@@ -98,6 +102,18 @@
         } else {
             $('#note').parents('.row').addClass('d-none');
         }
-    }).trigger('change');
+    });
+    $('#status').change();
+
+    $(document).on('click', '.del', function() {
+        const field = $(this).attr('name');
+        const narrative_id = @json($narrative->id);
+        const url = @json(route('narratives.delete_file'));
+        if (confirm('Are you sure?')) {
+            $.post(url, {narrative_id, field})
+            .done((data) => flashMessage(data))
+            .catch((data) => flashMessage(data));
+        }
+    });
 </script>
 @endsection

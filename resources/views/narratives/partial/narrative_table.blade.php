@@ -7,9 +7,9 @@
     <table class="table table-striped" id="narratives_tbl">
         <thead>
             <tr class="">
-                <th scope="col">No.</th>
-                <th scope="col" width="30%">Question</th>
-                <th scope="col">Response</th>
+                <th>No.</th>
+                <th width="30%">Query</th>
+                <th>Response</th>
             </tr>
         </thead>
         <tbody>
