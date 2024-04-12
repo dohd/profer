@@ -179,7 +179,7 @@
     @can('view-deadline')
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('deadlines.index') }}">
-          <i class="bi bi-calendar-x"></i><span>Deadline Management</span>
+          <i class="bi bi-calendar-x"></i><span>Manage Deadlines</span>
         </a>
       </li>
     @endcan
