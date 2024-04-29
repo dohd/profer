@@ -41,13 +41,11 @@
                     </li> --}}
                 </ul>
                 <div class="tab-content pt-2" id="summaryTabContent">
-                    <!-- summary -->
+                    <!-- action plan summary -->
                     @include('action_plans.tabs.action_plan_summary_tab')
-                    <!-- activity  -->
+                    <!-- agenda list  -->
                     @include('action_plans.tabs.agenda_list_tab')
-                    <!-- activity  -->
-                    @include('action_plans.tabs.participant_list_tab')
-                    <!-- cohort  -->
+                    <!-- narrative  -->
                     @include('action_plans.tabs.narrative_tab')
                 </div>
             </div>
