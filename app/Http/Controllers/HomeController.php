@@ -49,7 +49,7 @@ class HomeController extends Controller
 
         // monthly participant chart
         $sql = 'MONTH(date) as month, SUM(male_total) as male_count, SUM(female_total) as female_count, SUM(grand_total) as total_count';
-        $monthly_pts = Attendance::selectRaw($sql)->groupBy('date')->get();
+        $monthly_pts = Attendance::selectRaw($sql)->groupBy('month')->get();
 
         // donor activity distribution chart
         $sql = 'proposal_id, COUNT(*) as count';
