@@ -30,7 +30,7 @@
             <td>{{ $i+1 }}</td>
             <td>{{ $row->name }}</td>
             <td>{{ $row->gender }}</td>
-            <td>{{ dateFormat($row->dob) }}</td>
+            <td>{{ ($row->dob) }}</td>
             <td>{{ $row->primary_beneficiary }}</td>
             <td>{{ $row->id_card_no }}</td>
             <td>{{ $row->mobile_no }}</td>
@@ -59,7 +59,7 @@
             <td>{{ $i+1 }}</td>
             <td>{{ $row->beneficiary_name }}</td>
             <td>{{ $row->gender }}</td>
-            <td>{{ dateFormat($row->dob) }}</td>
+            <td>{{ ($row->dob) }}</td>
             <td>{{ $row->disability_1 }}</td>
             <td>{{ $row->disability_2 }}</td>
             <td>{{ $row->disability_3 }}</td>
