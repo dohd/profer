@@ -97,7 +97,7 @@ class FileImportController extends Controller
 
             return redirect(route('file_imports.index'))->with(['success' => 'Data imported successfully']);
         } catch (\Throwable $th) {
-            errorHandler('Error importing data! ' . $th->getMessage());
+            return errorHandler('Error importing data! ' . $th->getMessage(), $th);
         }
     }
 
