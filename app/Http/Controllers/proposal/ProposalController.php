@@ -71,9 +71,9 @@ class ProposalController extends Controller
             'donor_id' => 'required', 
             'start_date' => 'required', 
             'end_date' => 'required', 
-            'budget' => 'required',
+            'budget_amount' => 'required',
         ]); 
-        $data = $request->only(['title', 'date', 'region_id', 'sector', 'donor_id', 'start_date', 'end_date', 'budget',]);
+        $data = $request->only(['title', 'date', 'region_id', 'sector', 'donor_id', 'start_date', 'end_date', 'budget_amount',]);
         $data_items = $request->only(['name', 'is_obj', 'row_num', 'row_index',]);
 
         DB::beginTransaction();
@@ -146,10 +146,10 @@ class ProposalController extends Controller
                 'donor_id' => 'required', 
                 'start_date' => 'required', 
                 'end_date' => 'required', 
-                'budget' => 'required',
+                'budget_amount' => 'required',
             ]);
 
-            $data = $request->only(['title', 'date', 'region_id', 'sector', 'donor_id', 'start_date', 'end_date', 'budget',]);
+            $data = $request->only(['title', 'date', 'region_id', 'sector', 'donor_id', 'start_date', 'end_date', 'budget_amount',]);
             $data_items = $request->only(['name', 'is_obj', 'row_num', 'row_index', 'item_id']);
 
             DB::beginTransaction();

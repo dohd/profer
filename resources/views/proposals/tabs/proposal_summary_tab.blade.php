@@ -26,7 +26,7 @@
             <h5 class="text-center">
                 Period <b>{{ date('d-M-Y', strtotime($proposal->start_date)) }}</b> to <b>{{ date('d-M-Y', strtotime($proposal->end_date)) }}</b>
             </h5>
-            <h5 class="text-center">Budget <b>{{ number_format($proposal->budget, 2) }}</b></h5>
+            <h5 class="text-center">Budget <b>{{ number_format($proposal->budget_amount, 2) }}</b></h5>
         </div>
     </div>
 

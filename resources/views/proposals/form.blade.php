@@ -28,7 +28,7 @@
     </div>
     <div class="col-md-2 col-12">
         <label for="budget">Estimated Budget*</label>
-        {{ Form::text('budget', numberFormat(@$proposal->budget), ['class' => 'form-control', 'id' => 'budget', 'required']) }}
+        {{ Form::text('budget_amount', numberFormat(@$proposal->budget_amount), ['class' => 'form-control', 'id' => 'budget', 'required']) }}
     </div>
 </div>
 <br>
