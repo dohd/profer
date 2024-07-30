@@ -30,7 +30,7 @@ if (!function_exists('inputClean')) {
     function inputClean($input=[])
     {   
         $dates = ['date', 'start_date', 'end_date'];
-        $totals = ['amount', 'total', 'grandtotal', 'subtotal', 'tax', 'rate', 'taxable', 'budget'];
+        $totals = ['amount', 'total', 'grandtotal', 'subtotal', 'tax', 'rate', 'taxable', 'budget_amount'];
         foreach ($input as $key => $value) {
             if (!is_array($value)) {
                 $input[$key] = trim($value);
