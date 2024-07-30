@@ -43,7 +43,7 @@ class HomeController extends Controller
         $project_done_count = Proposal::whereHas('attendances')->count();
 
         // projects
-        $project_budget = Proposal::where('status', 'approved')->sum('budget');
+        $project_budget = Proposal::where('status', 'approved')->sum('budget_amount');
         $project_count = Proposal::where('status', 'approved')->count();
         $proposal_count = Proposal::count();
 
