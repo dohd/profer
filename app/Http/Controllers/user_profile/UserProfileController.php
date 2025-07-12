@@ -49,7 +49,7 @@ class UserProfileController extends Controller
             'username' => 'required|unique:users,username',
             'phone' => 'required',
             'email' => 'required|unique:users,username',
-            'role_id' => 'required',
+            'role' => 'required',
         ]);
 
         DB::beginTransaction();
@@ -61,8 +61,10 @@ class UserProfileController extends Controller
                 'ins' => auth()->user()->ins,
             ]);
             $user = User::create($input);
-            $role = Role::find($input['role_id']);
-            $user->assignRole($role->name);
+            if (isset($input['role_id'])) {
+                $role = Role::find($input['role_id']);
+                $user->assignRole($role->name);                
+            }
 
             DB::commit();
             return redirect(route('user_profiles.index'))->with(['success' => 'User created successfully']);
@@ -116,16 +118,18 @@ class UserProfileController extends Controller
                 'username' => 'required',
                 'phone' => 'required',
                 'email' => 'required',
-                'role_id' => 'required',
+                'role' => 'required',
             ]);
     
             DB::beginTransaction();
     
             try {            
                 
-                $input = $request->only(['name', 'username', 'phone', 'email', 'role_id']);
-                $role = Role::find($input['role_id']);
-                $user_profile->syncRoles([$role->name]);
+                $input = $request->only(['name', 'username', 'phone', 'email', 'role_id', 'role']);
+                if (isset($input['role_id'])) {
+                    $role = Role::find($input['role_id']);
+                    $user_profile->syncRoles([$role->name]);
+                }
                 $user_profile->update($input);
                 
                 DB::commit();
