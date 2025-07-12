@@ -1,6 +1,6 @@
 @extends('layouts.core')
 
-@section('title', 'Region Management')
+@section('title', 'Program Management')
     
 @section('content')
     @include('regions.header')
@@ -12,7 +12,8 @@
                         <thead>
                           <tr>
                             <th scope="col">#No.</th>
-                            <th scope="col">Region</th>
+                            <th scope="col">Program</th>
+                            <th scope="col">Program Type</th>
                             <th scope="col">Action</th>
                           </tr>
                         </thead>
@@ -20,7 +21,8 @@
                             @foreach ($regions as $i => $region)
                                 <tr>
                                     <th scope="row">{{ $i+1 }}</th>
-                                    <td><a href="{{ route('regions.show', $region) }}">{{ $region->name }}</a></td>
+                                    <td>{{ $region->name }}</td>
+                                    <td>{{ $region->program_type }}</td>
                                     <td>{!! $region->action_buttons !!}</td>
                                 </tr>
                             @endforeach

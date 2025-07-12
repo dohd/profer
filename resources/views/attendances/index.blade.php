@@ -1,6 +1,6 @@
 @extends('layouts.core')
 
-@section('title', 'Attendance Management')
+@section('title', 'Family Member List')
     
 @section('content')
     @include('attendances.header')
@@ -12,12 +12,11 @@
                         <thead>
                             <tr>
                                 <th>#No</th>
-                                <th>Project</th>
-                                <th>Activity</th>
                                 <th>Date</th>
-                                <th>Male Ps</th>
-                                <th>Female Ps</th>
-                                <th>Total Ps</th>
+                                <th>Family Name</th>
+                                <th>Male Ct.</th>
+                                <th>Female Ct.</th>
+                                <th>Total Ct.</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -25,9 +24,8 @@
                             @foreach ($attendances as $i => $row)
                                 <tr>
                                     <th scope="row" style="height: {{ count($attendances) == 1? '80px': '' }}">{{ $i+1 }}</th>
-                                    <td>{{ @$row->proposal->title }}</td>
-                                    <td>{{ @$row->activity->name }}</td>
                                     <td>{{ dateFormat($row->date) }}</td>
+                                    <td>{{ @$row->activity->name }}</td>
                                     <td>{{ $row->items->sum('male') }}</td>
                                     <td>{{ $row->items->sum('female') }}</td>
                                     <td>{{ $row->items->sum('total') }}</td>

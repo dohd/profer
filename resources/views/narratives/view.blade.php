@@ -1,12 +1,12 @@
 @extends('layouts.core')
 
-@section('title', 'View | Narrative Management')
+@section('title', 'View | Study Materials')
     
 @section('content')
     @include('narratives.header')
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Narrative Details
+            <h5 class="card-title">Summary
                 @can('approve-activity-narrative')
                     <span class="badge bg-secondary text-white float-end" role="button" data-bs-toggle="modal" data-bs-target="#status_modal">
                         <i class="bi bi-pencil-fill"></i> Status
@@ -18,32 +18,18 @@
                     @php
                         $details = [
                             'Date' => dateFormat($narrative->date, 'd-M-Y'),
-                            'Narrative No.' => tidCode('narrative', $narrative->tid),
-                            'Agenda' => @$narrative->agenda->title,
-                            'Attachment' => $narrative->doc_file,
-                            'Activity' => @$narrative->proposal_item->name,
-                            'Action Plan No' => $narrative->action_plan? tidCode('action_plan', $narrative->action_plan->tid) : '',
-                            'Project Title' => @$narrative->proposal->title,
+                            'Subject' => $narrative->subject,
+                            'Material' => $narrative->doc_file,
+                            'Age Group' => @$narrative->age_group->bracket,
                         ];
                     @endphp
                     @foreach ($details as $key => $val)
                     <tr>
                         <th width="30%">{{ $key }}</th>
                         <td>
-                            @if ($key == 'Narrative No.')
-                                {{ $val }} || 
-                                <span class="badge bg-{{ $narrative->status == 'approved'? 'success' : 'secondary' }}">
-                                    {{ $narrative->status }}
-                                </span>
-                            @elseif ($key == 'Agenda' && $val)
-                                <a href="{{ route('agenda.show', $narrative->agenda) }}">{{ $val }}</a>
-                            @elseif ($key == 'Attachment' && $val)
+                            @if ($key == 'Material' && $val)
                                 <a href="{{ route('storage.file_download', 'narrative,' . $narrative->doc_file) }}" target="_blank">{{ $val }}<i class="bi bi-download h5 ms-2"></i></a>
                                 <span class="del ms-3" style="cursor: pointer;" name="doc_file"><i class="bi bi-trash text-danger icon-xs"></i></span>
-                            @elseif ($key == 'Project Title' && $val)
-                                <a href="{{ route('proposals.show', $narrative->proposal) }}">{{ $val }}</a>
-                            @elseif ($key == 'Action Plan No' && $val)
-                                <a href="{{ route('action_plans.show', $narrative->action_plan) }}">{{ $val }}</a>
                             @else
                                 {{ $val }}
                             @endif
@@ -57,37 +43,6 @@
                         </tr>
                     @endif
                 </table>
-
-                <!-- narrative items -->
-                @foreach ($narrative->agenda->items as $j => $agenda_item)
-                    <br>
-                    <h5>
-                        <b>{{ timeFormat($agenda_item->time_from) }}</b> to <b>{{ timeFormat($agenda_item->time_to) }}</b>&nbsp;&nbsp;
-                        {{ $agenda_item->topic }}&nbsp;&nbsp;
-                    </h5>
-                    <table class="table table-striped" id="narratives_tbl">
-                        <thead>
-                            <tr class="table-primary">
-                                <th scope="col">#</th>
-                                <th scope="col" width="30%">Narrative Query</th>
-                                <th scope="col">Response</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php($j=0)
-                            @foreach ($narrative->items as $item)
-                                @if (@$item->narrative_pointer->value && $item->agenda_item_id == $agenda_item->id)
-                                    <tr>
-                                        <td scope="row" class="pt-2">{{ $j+1 }}.</td>
-                                        <td class="pt-2">{{ $item->narrative_pointer->value }}</td>
-                                        <td class="pt-2">{{ $item->response }}</td>
-                                    </tr>   
-                                    @php($j++)
-                                @endif
-                            @endforeach
-                        </tbody>
-                    </table>
-                @endforeach
             </div>
         </div>
     </div>

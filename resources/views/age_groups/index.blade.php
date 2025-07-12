@@ -12,7 +12,7 @@
                         <thead>
                           <tr>
                             <th scope="col">#No</th>
-                            <th scope="col">Bracket</th>
+                            <th scope="col">Age Bracket</th>
                             <th scope="col">Action</th>
                           </tr>
                         </thead>
@@ -20,7 +20,7 @@
                             @foreach ($age_groups as $i => $age_group)
                                 <tr>
                                     <th scope="row">{{ $i+1 }}</th>
-                                    <td><a href="{{ route('age_groups.show', $age_group) }}">{{ $age_group->bracket }}</a></td>
+                                    <td>{{ $age_group->bracket }}</td>
                                     <td>{!! $age_group->action_buttons !!}</td>
                                 </tr>
                             @endforeach

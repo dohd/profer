@@ -44,9 +44,9 @@ class ProgrammeController extends Controller
 
         try {            
             Programme::create($data);
-            return redirect(route('programmes.index'))->with(['success' => 'Programme created successfully']);
+            return redirect(route('programmes.index'))->with(['success' => 'DF Zone created successfully']);
         } catch (\Throwable $th) {
-           return errorHandler('Error creating programme!', $th);
+           return errorHandler('Error creating DF Zone!', $th);
         }
     }
 
@@ -100,9 +100,9 @@ class ProgrammeController extends Controller
 
         try {            
             if ($programme->update($data)) 
-            return redirect(route('programmes.index'))->with(['success' => 'Programme updated successfully']);
+            return redirect(route('programmes.index'))->with(['success' => 'DF Zone updated successfully']);
         } catch (\Throwable $th) {
-            return errorHandler('Error updating programme!', $th);
+            return errorHandler('Error updating DF Zone!', $th);
         }
     }
 
@@ -116,9 +116,9 @@ class ProgrammeController extends Controller
     {
         try {            
             $programme->delete();
-            return redirect(route('programmes.index'))->with(['success' => 'Programme deleted successfully']);
+            return redirect(route('programmes.index'))->with(['success' => 'DF Zone deleted successfully']);
         } catch (\Throwable $th) {
-            return errorHandler('Error deleting programme!', $th);
+            return errorHandler('Error deleting DF Zone!', $th);
         }
     }
 }

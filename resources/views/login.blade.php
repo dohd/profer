@@ -38,8 +38,8 @@
 
               <div class="d-flex justify-content-center py-4">
                 <a href="{{ route('home') }}html" class="logo d-flex align-items-center w-auto">
-                  <img src="{{ asset('img/kaih-logo.png') }}" alt="logo">
-                  <span class="d-lg-block">MEAL</span>
+                  <!-- <img src="{{ asset('img/kaih-logo.png') }}" alt="logo"> -->
+                  <span class="d-lg-block">DF KPM TRACKER</span>
                 </a>
               </div>
               <!-- End Logo -->
@@ -86,7 +86,7 @@
                 </div>
               </div>
               <div class="credits">
-                Designed by <a href="#">Proffer Systems</a>
+                Designed by <a href="#">Dojotech Solutions</a>
               </div>
             </div>
           </div>

@@ -1,6 +1,6 @@
 @extends('layouts.core')
 
-@section('title', 'Programme Management')
+@section('title', 'Family Zones')
     
 @section('content')
     @include('programmes.header')
@@ -12,7 +12,7 @@
                         <thead>
                         <tr>
                             <th scope="col">#No.</th>
-                            <th scope="col">Programme</th>
+                            <th scope="col">Family Zone</th>
                             <th scope="col">Action</th>
                         </tr>
                         </thead>
@@ -20,7 +20,7 @@
                             @foreach ($programmes as $i => $programme)
                                 <tr>
                                     <th scope="row">{{ $i+1 }}</th>
-                                    <td><a href="{{ route('programmes.show', $programme) }}">{{ $programme->name }}</a></td>
+                                    <td>{{ $programme->name }}</td>
                                     <td>{!! $programme->action_buttons !!}</td>
                                 </tr>
                             @endforeach

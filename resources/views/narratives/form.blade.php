@@ -5,19 +5,25 @@
     </div>
 </div>
 <div class="row g-0 mb-3">
-    <div class="col-md-2 col-12"><label for="doc_file">Attachment</label></div>
+    <div class="col-md-2 col-12"><label for="subject">Subject<span class="text-danger">*</span></label></div>
+    <div class="col-md-8 col-12">
+        {{ Form::text('subject', null, ['class' => 'form-control', 'required']) }}
+    </div>
+</div>
+<div class="row g-0 mb-3">
+    <div class="col-md-2 col-12"><label for="doc_file">Material</label></div>
     <div class="col-md-8 col-12">
         {{ Form::file('doc_file', ['class' => 'form-control', 'id' => 'doc_file', 'accept' => '.csv, .pdf, .xls, .xlsx, .doc, .docx' ]) }}
     </div>
 </div>
 <div class="row g-0 mb-3">
-    <div class="col-md-2 col-12"><label for="agenda">Agenda<span class="text-danger">*</span></label></div>
+    <div class="col-md-2 col-12"><label for="agegroup">Age Group<span class="text-danger">*</span></label></div>
     <div class="col-md-8 col-12">
-        <select name="agenda_id" id="agenda" class="form-control select2" data-placeholder="Choose Agenda" required>
-            <option value=""></option>
-            @foreach ($agenda as $item)
-                <option value="{{ $item->id }}" {{ @$narrative->agenda_id == $item->id? 'selected' : '' }}>
-                    {{ $item->title }}
+        <select name="age_group_id" id="age-group" class="form-select" data-placeholder="Choose Age-group" required>
+            <option value="">-- Select Age --</option>
+            @foreach ($ageGroups as $agegroup)
+                <option value="{{ $agegroup->id }}" {{ $agegroup->id == @$narrative->age_group_id? 'selected' : '' }}>
+                    {{ $agegroup->bracket }}
                 </option>
             @endforeach
         </select>

@@ -12,21 +12,21 @@
                         <div class="col-md-6 col-12 mt-2 mb-3">
                             @php
                                 $categories = [
-                                    'self_advocates' => 'Self-Advocates',
-                                    'families' => 'Families',
-                                    'support_groups' => 'Support Groups',
+                                    // 'self_advocates' => 'Self-Advocates',
+                                    // 'families' => 'Families',
+                                    // 'support_groups' => 'Support Groups',
                                 ];
                             @endphp
                             <select name="category" id="category" class="custom-control col-12" required>
                                 <option value="">-- Select Template Category --</option>
-                                <optgroup label="Rightholder List">
-                                    @foreach ($categories as $key => $value)
+                                <!-- <optgroup label="Rightholder List">
+                                    @foreach ([] as $key => $value)
                                         <option value="{{ $key }}">{{ $value }}</option>
                                     @endforeach
-                                </optgroup>
-                                <optgroup label="Timesheet">
+                                </optgroup> -->
+                                <!-- <optgroup label="Timesheet">
                                     <option value="employee_timesheet">Employee Timesheet</option>
-                                </optgroup>
+                                </optgroup> -->
                             </select>
                         </div>
                         <div class="col-md-12 bg-light pt-3 mb-2">
@@ -65,7 +65,7 @@
         </div>
     </div>
 
-    <div class="card">
+    <!-- <div class="card">
         <div class="card-body">
             <div class="card-content">
                 <div class="card-content p-2">
@@ -122,7 +122,7 @@
                 </div>
             </div>
         </div>
-    </div>    
+    </div>   -->  
 @stop
 
 @section('script')

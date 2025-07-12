@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\case_study;
 
 use App\Http\Controllers\Controller;
+use App\Models\age_group\AgeGroup;
 use App\Models\case_study\CaseStudy;
 use App\Models\programme\Programme;
 use Illuminate\Http\Request;
@@ -31,8 +32,9 @@ class CaseStudyController extends Controller
     public function create()
     {
         $programmes = Programme::get();
+        $ageGroups = AgeGroup::get(['id', 'bracket']);
 
-        return view('case_studies.create', compact('programmes'));
+        return view('case_studies.create', compact('programmes', 'ageGroups'));
     }
 
     /**
@@ -44,12 +46,16 @@ class CaseStudyController extends Controller
     public function store(Request $request)
     {   
         $validator = Validator::make($request->all(), [
-            'programme_id' => 'required',
-            'date' => 'required',
             'title' => 'required',
+            'date' => 'required',
+            'full_name' => 'required',
             'situation' => 'required',
             'intervention' => 'required',
             'impact' => 'required',
+        ], [
+            'situation.required' => 'Introduction is required',
+            'intervention.required' => 'Experience is required',
+            'impact.required' => 'Personal transformation is required',
         ]);
         if ($validator->fails()) {
             return response()->json(['success' => false, 'message' => 'Input all required(*) fields'], 400);
@@ -104,8 +110,9 @@ class CaseStudyController extends Controller
     public function edit(CaseStudy $case_study)
     {
         $programmes = Programme::get();
+        $ageGroups = AgeGroup::get(['id', 'bracket']);
 
-        return view('case_studies.edit', compact('case_study', 'programmes'));
+        return view('case_studies.edit', compact('case_study', 'programmes', 'ageGroups'));
     }
 
     /**

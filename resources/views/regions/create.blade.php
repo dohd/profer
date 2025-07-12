@@ -1,12 +1,12 @@
 @extends('layouts.core')
 
-@section('title', 'Create Region')
+@section('title', 'Create Program')
     
 @section('content')
     @include('regions.header')
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Create Region</h5>
+            <h5 class="card-title">Create</h5>
             <div class="card-content p-2">
                 {{ Form::open(['route' => 'regions.store', 'method' => 'POST', 'class' => 'form']) }}
                     @include('regions.form')

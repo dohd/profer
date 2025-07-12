@@ -1,13 +1,13 @@
 @extends('layouts.core')
 
-@section('title', 'Narrative Management')
+@section('title', 'Study Materials')
     
 @section('content')
     @include('narratives.header')    
     <div class="card">
         <div class="card-body">
             <div class="card-content p-2">
-                <div class="row my-2">
+                <!-- <div class="row my-2">
                     <div class="col-md-6 col-12">
                         <div class="table-responsive">
                             <table class="table table-sm table-bordered">
@@ -22,17 +22,17 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="table-responsive">
                     <table class="table table-borderless datatable">
                         <thead>
                         <tr>
                             <th>#No</th>
-                            <th>#Code</th>
-                            <th>Activity</th>
-                            <th>Agenda</th>
-                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Subject</th>
+                            <th>Age Group</th>
+                            <th>Material</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -40,10 +40,10 @@
                             @foreach ($narratives as $i => $narrative)
                                 <tr>
                                     <th style="height: {{ count($narratives) == 1? '80px': '' }}">{{ $i+1 }}</th>
-                                    <td><a href="{{ route('narratives.show', $narrative) }}">{{ tidCode('narrative', $narrative->tid) }}</a></td>
-                                    <td>{{ @$narrative->proposal_item->name }}</td>
-                                    <td>{{ @$narrative->agenda->title }}</td>
-                                    <td><span class="badge bg-{{ $narrative->status == 'approved'? 'success' : 'secondary' }}">{{ $narrative->status }}</span></td>
+                                    <td>{{ dateFormat($narrative->date) }}</td>
+                                    <td>{{ $narrative->subject }}</td>
+                                    <td>{{ @$narrative->age_group->bracket }}</td>
+                                    <td><a href="{{ route('storage.file_download', 'narrative,' . $narrative->doc_file) }}" target="_blank">{{ $narrative->doc_file }}<i class="bi bi-download h5 ms-2"></i></a></td>
                                     <td>{!! $narrative->action_buttons !!}</td>
                                 </tr>
                             @endforeach

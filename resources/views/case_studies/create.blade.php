@@ -1,12 +1,12 @@
 @extends('layouts.core')
 
-@section('title', 'Create Case Study')
+@section('title', 'Testimonials')
     
 @section('content')
     @include('case_studies.header')
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Create Case Study</h5>
+            <h5 class="card-title">Create</h5>
             <div class="card-content p-2">
                 {{ Form::open(['route' => 'case_studies.store', 'method' => 'POST', 'files' => true, 'class' => 'form']) }}
                     @include('case_studies.form')

@@ -1,14 +1,7 @@
 <div class="row mb-3">
-    <div class="col-md-9 col-12">
-        <label for="programme">Programme Name<span class="text-danger">*</span></label>
-        <select name="programme_id" id="programme" class="form-control select2" data-placeholder="Choose Programme" required>
-            <option value=""></option>
-            @foreach ($programmes as $item)
-                <option value="{{ $item->id }}" {{ @$case_study->programme_id == $item->id? 'selected' : '' }}>
-                    {{ $item->name }}
-                </option>
-            @endforeach
-        </select>
+    <div class="col-md-7 col-12">
+        <label for="subject">Bible Study Title<span class="text-danger">*</span></label>
+        {{ Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Title', 'required' => 'required']) }}
     </div>
     <div class="col-md-3 col-12">
         <label for="date">Date<span class="text-danger">*</span></label>
@@ -16,28 +9,39 @@
     </div>
 </div>
 <div class="row mb-3">
-    <div class="col-md-12 col-12">
-        <label for="title">Title<span class="text-danger">*</span></label>
-        {{ Form::text('title', null, ['class' => 'form-control', 'id' => 'title', 'required']) }}
+    <div class="col-md-7 col-12">
+        <label for="full_name">Full Name<span class="text-danger">*</span></label>
+        {{ Form::text('full_name', null, ['class' => 'form-control', 'placeholder' => 'Full Name', 'required' => 'required']) }}
     </div>
+    <div class="col-md-3 col-12">
+        <label for="age_group">Age Group<span class="text-danger">*</span></label>
+        <select name="age_group_id" id="age-group" class="form-select" data-placeholder="Choose Age-group" required>
+            <option value="">-- Select Age --</option>
+            @foreach ($ageGroups as $agegroup)
+                <option value="{{ $agegroup->id }}" {{ $agegroup->id == @$case_study->age_group_id? 'selected' : '' }}>
+                    {{ $agegroup->bracket }}
+                </option>
+            @endforeach
+        </select>
+    </div>  
 </div>
 <div class="row mb-3">
     <div class="col-md-12 col-12">
-        <label for="situation">Situation (Before Intervention)<span class="text-danger">*</span></label>
+        <label for="situation">Introduction<span class="text-danger">*</span></label>
         {{ Form::hidden('situation', null, ['id' => 'situation']) }}
         <div class="richtext" id="situation_text">{!! @$case_study->situation !!}</div>
     </div>
 </div>
 <div class="row mb-3">
     <div class="col-md-12 col-12">
-        <label for="intervention">Project Intervention<span class="text-danger">*</span></label>
+        <label for="intervention">Experience During The Study<span class="text-danger">*</span></label>
         {{ Form::hidden('intervention', null, ['id' => 'intervention']) }}
         <div class="richtext" id="intervention_text">{!! @$case_study->intervention !!}</div>
     </div>
 </div>
 <div class="row mb-3">
     <div class="col-md-12 col-12">
-        <label for="impact">Impact (Intervention Results)<span class="text-danger">*</span></label>
+        <label for="impact">Personal Transformation<span class="text-danger">*</span></label>
         {{ Form::hidden('impact', null, ['id' => 'impact']) }}
         <div class="richtext" id="impact_text">{!! @$case_study->impact !!}</div>
     </div>

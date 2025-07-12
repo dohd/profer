@@ -1,47 +1,21 @@
 <div class="row mb-3">
     <div class="col-md-8 col-12">
-        <label for="title">Project Title<span class="text-danger">*</span></label>
-        <select name="proposal_id" id="proposal" class="form-control select2" data-placeholder="Choose Project" required>
-            <option value=""></option>
-            @foreach ($proposals as $row)
-                <option value="{{ $row->id }}" {{ $row->id == @$attendance->proposal_id? 'selected' : '' }}>{{ $row->title }}</option>
-            @endforeach
-        </select>   
+        <label for="title">Family Name</label>
+        {{ Form::text('family_name', null, ['class' => 'form-control', 'required' => 'required']) }}
     </div>
     <div class="col-md-4 col-12">
-        <label for="plan">Action Plan<span class="text-danger">*</span></label>
-        <select name="action_plan_id" id="action_plan" class="form-control" data-placeholder="Choose Action Plan" required>
-            <option value=""></option>
-            @if (isset($attendance->action_plan))
-                <option value="{{ $attendance->action_plan_id }}" selected>{{ tidCode('', $attendance->action_plan->tid) . '/' . dateFormat($attendance->action_plan->date, 'Y') }}</option>
-            @endif
-        </select>
-    </div>
-</div>
-
-<div class="row mb-3">
-    <div class="col-md-8 col-12">
-        <label for="title">Activity<span class="text-danger">*</span></label>
-        <select name="proposal_item_id" id="activity" class="form-control" data-placeholder="Choose Activity" required>
-            <option value=""></option>
-            @if (isset($attendance->activity))
-                <option value="{{ $attendance->proposal_item_id }}" selected>{{ $attendance->activity->name }}</option>
-            @endif
-        </select>
-    </div>
-    <div class="col-md-4 col-12">
-        <label for="date">Activity Date<span class="text-danger">*</span></label>
+        <label for="date">Date<span class="text-danger">*</span></label>
         {{ Form::date('date', null, ['class' => 'form-control', 'required' => 'required']) }}
     </div>
 </div>
 
 <div class="row mb-3">
     <div class="col-md-8 col-12">
-        <label for="doc_file">Attendance List</label>
+        <label for="doc_file">Member List</label>
         {{ Form::file('doc_file', ['class' => 'form-control', 'id' => 'doc_file', 'accept' => '.csv, .pdf, .xls, .xlsx, .doc, .docx' ]) }}
     </div>
     <div class="col-md-4 col-12">
-        <label for="prepared_by">Prepared By</label>
+        <label for="prepared_by">Compiled By</label>
         {{ Form::text('prepared_by', null, ['class' => 'form-control']) }}
     </div>
 </div>

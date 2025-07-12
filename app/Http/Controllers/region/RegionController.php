@@ -40,13 +40,13 @@ class RegionController extends Controller
     public function store(Request $request)
     {
         $request->validate(['name' => 'required']);
-        $data = $request->only(['name']);
+        $data = $request->only(['name', 'program_type']);
 
         try {            
             Region::create($data);
-            return redirect(route('regions.index'))->with(['success' => 'Region created successfully']);
+            return redirect(route('regions.index'))->with(['success' => 'Program created successfully']);
         } catch (\Throwable $th) {
-            return errorHandler('Error creating region!', $th);
+            return errorHandler('Error creating program!', $th);
         }
     }
 
@@ -95,13 +95,13 @@ class RegionController extends Controller
     public function update(Request $request, Region $region)
     {
         $request->validate(['name' => 'required']);
-        $data = $request->only(['name']);
+        $data = $request->only(['name', 'program_type']);
 
         try {            
             $region->update($data);
-            return redirect(route('regions.index'))->with(['success' => 'Region updated successfully']);
+            return redirect(route('regions.index'))->with(['success' => 'Program updated successfully']);
         } catch (\Throwable $th) {
-            return errorHandler('Error updating region!', $th);
+            return errorHandler('Error updating program!', $th);
         }
     }
 
@@ -115,9 +115,9 @@ class RegionController extends Controller
     {
         try {            
             $region->delete();
-            return redirect(route('regions.index'))->with(['success' => 'Region deleted successfully']);
+            return redirect(route('regions.index'))->with(['success' => 'Program deleted successfully']);
         } catch (\Throwable $th) {
-            return errorHandler('Error deleting region!', $th);
+            return errorHandler('Error deleting program!', $th);
         }
     }
 }

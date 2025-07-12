@@ -1,7 +1,7 @@
 <div class="pagetitle">
   <div class="row">
     <div class="col-6">
-      <h1>Case Study Management</h1>
+      <h1>Bible Study Testimonials</h1>
     </div>
     <div class="col-6">
       @can('create-case-study')
@@ -14,7 +14,7 @@
   <nav>
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-      <li class="breadcrumb-item active"><a href="{{ route('case_studies.index') }}">Case Studies</a></li>
+      <li class="breadcrumb-item active"><a href="{{ route('case_studies.index') }}">Bible Study Testimonials</a></li>
     </ol>
   </nav>
 </div>

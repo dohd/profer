@@ -1,12 +1,12 @@
 @extends('layouts.core')
 
-@section('title', 'Create | Attendance Management')
+@section('title', 'Create | Family Member List')
     
 @section('content')
     @include('attendances.header')
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Create Attendance</h5>
+            <h5 class="card-title">Create</h5>
             <div class="card-content p-2">
                 {{ Form::open(['route' => 'attendances.store', 'method' => 'POST', 'files' => true, 'class' => 'form']) }}
                     @include('attendances.form')

@@ -1,7 +1,7 @@
 <div class="pagetitle">
   <div class="row">
     <div class="col-6">
-      <h1>Narrative Management</h1>
+      <h1>Study Materials</h1>
     </div>
     <div class="col-6">
       @can('create-activity-narrative')
@@ -14,7 +14,7 @@
   <nav>
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-      <li class="breadcrumb-item active"><a href="{{ route('narratives.index') }}">Narratives</a></li>
+      <li class="breadcrumb-item active"><a href="{{ route('narratives.index') }}">Study Materials</a></li>
     </ol>
   </nav>
 </div>

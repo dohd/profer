@@ -1,5 +1,4 @@
 @extends('layouts.core')
-
 @section('title', 'View | Attendance Management')
     
 @section('content')
@@ -11,21 +10,17 @@
                 <table class="table table-bordered">
                     @php
                         $details = [
-                            'Project Title' => @$attendance->proposal->title,
-                            'Activity' => @$attendance->activity->name,
-                            'Action Plan' => tidCode('', @$attendance->action_plan->tid) . '/' . dateFormat(@$attendance->action_plan->date, 'Y'),
+                            'Family Name' => @$attendance->family_name,                            
                             'Date' => dateFormat($attendance->date, 'd-M-Y'),
-                            'Prepared By' => $attendance->prepared_by,
-                            'Attendance Sheet' => $attendance->doc_file,
+                            'Compiled By' => $attendance->prepared_by,
+                            'Member List File' => $attendance->doc_file,
                         ];
                     @endphp
                     @foreach ($details as $key => $val)
                         <tr>
                             <th width="30%">{{ $key }}</th>
                             <td>
-                                @if ($key == 'Project Title' && $val)
-                                    <a href="{{ route('proposals.show', $attendance->proposal) }}">{{ $val }}</a>
-                                @elseif ($key == 'Attendance Sheet' && $val)
+                                @if ($key == 'Member List File' && $val)
                                     <a href="{{ route('storage.file_download', 'attendance,' . $attendance->doc_file) }}" target="_blank">{{ $val }}<i class="bi bi-download h5 ms-2"></i></a>
                                     <span class="del ms-3" style="cursor: pointer;" name="doc_file"><i class="bi bi-trash text-danger icon-xs"></i></span>
                                 @else  
@@ -42,10 +37,11 @@
                         <thead>
                             <tr class="table-primary">
                                 <th>#</th>
-                                <th>Region</th>
-                                <th>Cohort</th>
-                                <th width="10%">Age Group</th>
-                                <th>Disability</th>
+                                <th>Member Name</th>
+                                <th>Residence</th>
+                                <th>Phone No.</th>
+                                <th>Gender</th>
+                                <th width="10%">Age Group</th>                                
                                 <th>Male</th>
                                 <th>Female</th>
                                 <th>Total</th>
@@ -55,18 +51,18 @@
                             @foreach ($attendance->items as $i => $item)
                                 <tr>
                                     <td class="p-3 num">{{ $i+1 }}</td>
-                                    <td>{{ @$item->region->name }}</td>
-                                    <td>{{ @$item->cohort->name }}</td>
+                                    <td>{{ @$item->member_name }}</td>
+                                    <td>{{ @$item->residence }}</td>
+                                    <td>{{ @$item->phone_no }}</td>
+                                    <td>{{ @$item->gender }}</td>
                                     <td>{{ @$item->age_group->bracket }}</td>
-                                    <td>{{ @$item->disability->name }}</td>
                                     <td>{{ $item->male }}</td>
                                     <td>{{ $item->female }}</td>
                                     <td>{{ $item->total }}</td>                          
                                 </tr>
                             @endforeach
                             <tr class="bg-light bg-gradient">
-                                <td></td>
-                                <td colspan="4"><b>Total</b></td>
+                                <td colspan="6"><b>Total</b></td>
                                 <td><b>{{ $attendance->items->sum('male') }}</b></td>
                                 <td><b>{{ $attendance->items->sum('female') }}</b></td>
                                 <td><b>{{ $attendance->items->sum('total') }}</b></td>

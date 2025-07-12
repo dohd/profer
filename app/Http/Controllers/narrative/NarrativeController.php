@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\narrative;
 
 use App\Http\Controllers\Controller;
+use App\Models\age_group\AgeGroup;
 use App\Models\agenda\Agenda;
 use App\Models\item\NarrativeItem;
 use App\Models\narrative\Narrative;
@@ -46,8 +47,9 @@ class NarrativeController extends Controller
     {
         $agenda = Agenda::doesntHave('narrative')->get();
         $narrative_pointers = NarrativePointer::all();
+        $ageGroups = AgeGroup::get(['id', 'bracket']);
         
-        return view('narratives.create', compact('agenda', 'narrative_pointers'));
+        return view('narratives.create', compact('agenda', 'narrative_pointers', 'ageGroups'));
     }
 
     /**
@@ -120,7 +122,9 @@ class NarrativeController extends Controller
         $agenda = Agenda::doesntHave('narrative')->get();
         $agenda->add($narr_agenda);
 
-        return view('narratives.edit', compact('agenda', 'narrative', 'narrative_pointers'));
+        $ageGroups = AgeGroup::get(['id', 'bracket']);
+
+        return view('narratives.edit', compact('agenda', 'narrative', 'narrative_pointers', 'ageGroups'));
     }
 
     /**

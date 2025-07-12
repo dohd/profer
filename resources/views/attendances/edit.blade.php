@@ -1,12 +1,12 @@
 @extends('layouts.core')
 
-@section('title', 'Edit | Attendance Management')
+@section('title', 'Edit | Family Member List')
     
 @section('content')
     @include('attendances.header')
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Attendance Details</h5>
+            <h5 class="card-title">Edit</h5>
             <div class="card-content p-2">
                 {{ Form::model($attendance, ['route' => ['attendances.update', $attendance], 'method' => 'PATCH', 'files' => true, 'class' => 'form']) }}
                     @include('attendances.form')

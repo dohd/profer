@@ -1,6 +1,6 @@
 <div class="row mb-3">
     <div class="col-md-12 col-12">
-        <label for="name">Programme Name*</label>
+        <label for="name">Family Zone*</label>
         {{ Form::text('name', null, ['class' => 'form-control', 'required']) }}
     </div>
 </div>

@@ -1,12 +1,12 @@
 @extends('layouts.core')
 
-@section('title', 'View | Case Study Management')
+@section('title', 'View | Testimonials')
     
 @section('content')
     @include('case_studies.header')
     <div class="card">
         <div class="card-body">
-            <h6 class="card-title">Case Study Details</h6>
+            <h6 class="card-title">Testimonials</h6>
             <div class="card-content p-2">
                 <p>
                     Date: <b>{{ dateFormat($case_study->date, 'd-M-Y') }}</b> <br>

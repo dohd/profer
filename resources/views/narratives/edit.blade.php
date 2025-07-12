@@ -1,12 +1,12 @@
 @extends('layouts.core')
 
-@section('title', 'Edit | Narrative Management')
+@section('title', 'Edit | Study Materials')
     
 @section('content')
     @include('narratives.header')
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Narrative Details</h5>
+            <h5 class="card-title">Edit</h5>
             <div class="card-content p-2">
                 {{ Form::model($narrative, ['route' => ['narratives.update', $narrative], 'method' => 'PATCH', 'files' => true, 'class' => 'form']) }}
                     @include('narratives.form')

@@ -1,12 +1,12 @@
 @extends('layouts.core')
 
-@section('title', 'Create | Narrative Management')
+@section('title', 'Create | Study Materials')
     
 @section('content')
     @include('narratives.header')
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Create Narrative</h5>
+            <h5 class="card-title">Create</h5>
             <div class="card-content p-2">
                 {{ Form::open(['route' => 'narratives.store', 'method' => 'POST', 'files' => true, 'class' => 'form']) }}
                     @include('narratives.form')

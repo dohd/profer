@@ -53,12 +53,12 @@ class AttendanceController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'proposal_id' => 'required', 
-            'action_plan_id' => 'required',
-            'proposal_item_id' => 'required', 
-            'date' => 'required',
-        ]);
+        // $request->validate([
+        //     'proposal_id' => 'required', 
+        //     'action_plan_id' => 'required',
+        //     'proposal_item_id' => 'required', 
+        //     'date' => 'required',
+        // ]);
 
         $validator = Validator::make($request->all(), [
             'doc_file' => $request->doc_file? 'required|mimes:csv,pdf,xls,xlsx,doc,docx' : 'nullable',
@@ -89,9 +89,9 @@ class AttendanceController extends Controller
             AttendanceItem::insert($input_items);
 
             DB::commit();
-            return redirect(route('attendances.index'))->with(['success' => 'Attendance created successfully']);
+            return redirect(route('attendances.index'))->with(['success' => 'Family Member List created successfully']);
         } catch (\Throwable $th) {
-            return errorHandler('Error creating Attendance!', $th);
+            return errorHandler('Error creating Family Member List!', $th);
         }
     }
 
@@ -146,12 +146,12 @@ class AttendanceController extends Controller
      */
     public function update(Request $request, Attendance $attendance)
     {
-        $request->validate([
-            'proposal_id' => 'required', 
-            'action_plan_id' => 'required',
-            'proposal_item_id' => 'required', 
-            'date' => 'required',
-        ]);
+        // $request->validate([
+        //     'proposal_id' => 'required', 
+        //     'action_plan_id' => 'required',
+        //     'proposal_item_id' => 'required', 
+        //     'date' => 'required',
+        // ]);
 
         $validator = Validator::make($request->all(), [
             'doc_file' => $request->doc_file? 'required|mimes:csv,pdf,xls,xlsx,doc,docx' : 'nullable',
@@ -183,9 +183,9 @@ class AttendanceController extends Controller
             AttendanceItem::insert($input_items);
 
             DB::commit();
-            return redirect(route('attendances.index'))->with(['success' => 'Attendance updated successfully']);              
+            return redirect(route('attendances.index'))->with(['success' => 'Family Member List updated successfully']);              
         } catch (\Throwable $th) {
-            return errorHandler('Error updating Attendance!', $th);
+            return errorHandler('Error updating Family Member List!', $th);
         }
     }
 
@@ -200,9 +200,9 @@ class AttendanceController extends Controller
         try {
             $attendance->items()->delete();
             $attendance->delete();
-            return redirect(route('attendances.index'))->with(['success' => 'Attendance deleted successfully']);
+            return redirect(route('attendances.index'))->with(['success' => 'Family Member List deleted successfully']);
         } catch (\Throwable $th) {
-            return errorHandler('Error deleting Attendance!', $th);
+            return errorHandler('Error deleting Family Member List!', $th);
         }
     }
 

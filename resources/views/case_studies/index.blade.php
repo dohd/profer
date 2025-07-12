@@ -1,6 +1,6 @@
 @extends('layouts.core')
 
-@section('title', 'Case Study Management')
+@section('title', 'Testimonials')
     
 @section('content')
     @include('case_studies.header')
@@ -12,10 +12,10 @@
                         <thead>
                             <tr>
                                 <th scope="col">#No</th>
-                                <th scope="col">#Code</th>
-                                <th scope="col">Programme</th>
-                                <th scope="col">Title</th>
                                 <th scope="col">Date</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Full Name</th>
+                                <th scope="col">Age Group</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -23,10 +23,10 @@
                             @foreach ($case_studies as $i => $item)
                                 <tr>
                                     <th scope="row" style="height: {{ count($case_studies) == 1? '80px': '' }}">{{ $i+1 }}</th>
-                                    <td><a href="{{ route('case_studies.show', $item) }}">{{ tidCode('case_study', $item->tid) }}</a></td>
-                                    <td>{{ @$item->programme->name }}</td>
-                                    <td>{{ $item->title }}</td>
                                     <td>{{ dateFormat($item->date) }}</td>
+                                    <td>{{ $item->title }}</td>
+                                    <td>{{ $item->full_name }}</td>
+                                    <td>{{ @$item->age_group->bracket }}</td>
                                     <td>{!! $item->action_buttons !!}</td>
                                 </tr>
                             @endforeach
