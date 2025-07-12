@@ -152,6 +152,7 @@ class AttendanceController extends Controller
         //     'proposal_item_id' => 'required', 
         //     'date' => 'required',
         // ]);
+        // dd($request->all());
 
         $validator = Validator::make($request->all(), [
             'doc_file' => $request->doc_file? 'required|mimes:csv,pdf,xls,xlsx,doc,docx' : 'nullable',

@@ -70,6 +70,8 @@ class CaseStudyController extends Controller
             return response()->json(['success' => false, 'message' => 'Unsupported image format! Use png, jpg or jpeg'], 400);
         }
 
+        // dd($request->all());
+
         $input = $request->except('_token');
         $images = $request->only('image1', 'image2', 'image3');
         foreach ($images as $key => $value) {
@@ -84,7 +86,7 @@ class CaseStudyController extends Controller
             $input = inputClean($input); 
             $case_study = CaseStudy::create($input); 
 
-            return response()->json(['success' => true, 'message' => 'Case Study created successfully', 'redirectTo' => route('case_studies.edit', $case_study)]);
+            return response()->json(['success' => true, 'message' => 'Testimonial created successfully', 'redirectTo' => route('case_studies.edit', $case_study)]);
         } catch (\Throwable $th) {
             return response()->json(['success' => false, 'message' => $th->getMessage()], 500);
         }
@@ -125,12 +127,16 @@ class CaseStudyController extends Controller
     public function update(Request $request, CaseStudy $case_study)
     {
         $validator = Validator::make($request->all(), [
-            'programme_id' => 'required',
-            'date' => 'required',
             'title' => 'required',
+            'date' => 'required',
+            'full_name' => 'required',
             'situation' => 'required',
             'intervention' => 'required',
             'impact' => 'required',
+        ], [
+            'situation.required' => 'Introduction is required',
+            'intervention.required' => 'Experience is required',
+            'impact.required' => 'Personal transformation is required',
         ]);
         if ($validator->fails()) {
             return response()->json(['success' => false, 'message' => 'Input all required(*) fields'], 400);
@@ -159,7 +165,7 @@ class CaseStudyController extends Controller
             $input = inputClean($input); 
             $case_study->update($input);
 
-            return response()->json(['success' => true, 'message' => 'Case Study updated successfully']);
+            return response()->json(['success' => true, 'message' => 'Testimonial updated successfully']);
         } catch (\Throwable $th) {
             return response()->json(['success' => false, 'message' => $th->getMessage()], 500);
         }
@@ -175,9 +181,9 @@ class CaseStudyController extends Controller
     { 
         try {
             $case_study->delete();
-            return redirect(route('case_studies.index'))->with(['success' => 'Case Study deleted successfully']);
+            return redirect(route('case_studies.index'))->with(['success' => 'Testimonial deleted successfully']);
         } catch (\Throwable $th) {
-            return errorHandler('Error deleting case study!', $th);
+            return errorHandler('Error deleting testimonial!', $th);
         }
     }
 

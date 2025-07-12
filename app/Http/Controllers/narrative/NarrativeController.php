@@ -60,9 +60,11 @@ class NarrativeController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $request->validate([
-            'agenda_id' => 'required', 
             'date' => 'required',
+            'subject' => 'required',
+            'age_group_id' => 'required',
         ]);
 
         $validator = Validator::make($request->all(), [
@@ -72,7 +74,7 @@ class NarrativeController extends Controller
             return redirect(route('narratives.index'))->with(['error' => 'Unsupported file format!']);
         }
 
-        $data = $request->only(['agenda_id', 'date']);
+        $data = $request->only(['date', 'subject', 'age_group_id']);
         $data_items = $request->only(['agenda_item_id', 'narrative_pointer_id', 'response']);
 
         $file = $request->file('doc_file');
@@ -81,8 +83,6 @@ class NarrativeController extends Controller
         DB::beginTransaction();
 
         try {
-            $agenda = Agenda::find($data['agenda_id'], ['proposal_id', 'proposal_item_id', 'action_plan_id']);
-            $data = $agenda->toArray() + $data;
             $narrative = Narrative::create($data);
 
             $data_items = databaseArray($data_items);
@@ -92,9 +92,9 @@ class NarrativeController extends Controller
             NarrativeItem::insert($data_items);
 
             DB::commit();
-            return redirect(route('narratives.index'))->with(['success' => 'Narrative created successfully']);
+            return redirect(route('narratives.index'))->with(['success' => 'Study Material created successfully']);
         } catch (\Throwable $th) {
-            return errorHandler('Error creating narrative!', $th);
+            return errorHandler('Error creating study material!', $th);
         }
     }
 
@@ -144,9 +144,11 @@ class NarrativeController extends Controller
                 return errorHandler('Error updating status!', $th);
             }
         } else {
+            // dd($request->all());
             $request->validate([
-                'agenda_id' => 'required', 
                 'date' => 'required',
+                'subject' => 'required',
+                'age_group_id' => 'required',
             ]);
 
             $validator = Validator::make($request->all(), [
@@ -156,7 +158,7 @@ class NarrativeController extends Controller
                 return redirect(route('narratives.index'))->with(['error' => 'Unsupported file format!']);
             }
     
-            $data = $request->only(['agenda_id', 'date']);
+            $data = $request->only(['date', 'subject', 'age_group_id']);
             $data_items = $request->only(['item_id', 'agenda_item_id', 'narrative_pointer_id', 'response']);
 
             $file = $request->file('doc_file');
@@ -168,8 +170,6 @@ class NarrativeController extends Controller
             DB::beginTransaction();
     
             try {
-                $agenda = Agenda::find($data['agenda_id'], ['proposal_id', 'proposal_item_id', 'action_plan_id']);
-                $data = $agenda->toArray() + $data;
                 $narrative->update($data);
     
                 $data_items = databaseArray($data_items);
@@ -180,7 +180,7 @@ class NarrativeController extends Controller
                 }
                 
                 DB::commit();
-                return redirect(route('narratives.index'))->with(['success' => 'Narrative updated successfully']);
+                return redirect(route('narratives.index'))->with(['success' => 'Study Material updated successfully']);
             } catch (\Throwable $th) {
                 return errorHandler('Error updated narrative!', $th);
             }
@@ -198,9 +198,9 @@ class NarrativeController extends Controller
         try {
             $this->deleteFile($narrative->doc_file);
             $narrative->delete();
-            return redirect(route('narratives.index'))->with(['success' => 'Narrative deleted successfully']);
+            return redirect(route('narratives.index'))->with(['success' => 'Study Material deleted successfully']);
         } catch (\Throwable $th) {
-            return errorHandler('Error deleting narrative!', $th);
+            return errorHandler('Error deleting study material!', $th);
         }
     }
 

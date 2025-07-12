@@ -22,6 +22,8 @@ class CaseStudy extends Model
      * @var array
      */
     protected $fillable = [
+        'full_name',
+        'age_group_id',
         'tid', 
         'programme_id', 
         'date', 

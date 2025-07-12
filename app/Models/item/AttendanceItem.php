@@ -20,6 +20,10 @@ class AttendanceItem extends Model
      * @var array
      */
     protected $fillable = [
+        'gender',
+        'phone_no',
+        'residence',
+        'member_name',
         'attendance_id',
         'male',
         'female',
