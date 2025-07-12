@@ -130,6 +130,7 @@ class UserProfileController extends Controller
                     $role = Role::find($input['role_id']);
                     $user_profile->syncRoles([$role->name]);
                 }
+                // dd($input);
                 $user_profile->update($input);
                 
                 DB::commit();
