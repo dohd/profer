@@ -9,20 +9,16 @@
     <!-- End Dashboard Nav -->
 
     <li class="nav-heading">Program Management</li>
-    @can('view-age-group')
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('age_groups.index') }}"><i class="bi bi-kanban"></i><span>Age Groups</span></a>
-      </li>
-    @endcan
+    
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ route('programmes.index') }}"><i class="bi bi-list-check"></i><span>Family Zones</span></a>
+    </li>
     @can('view-programme')
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('programmes.index') }}"><i class="bi bi-list-check"></i><span>Family Zones</span></a>
-      </li>
     @endcan
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ route('regions.index') }}"><i class="bi bi-file-text"></i></i><span>Programs</span></a>
+    </li>
     @can('view-region')
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('regions.index') }}"><i class="bi bi-file-text"></i></i><span>Programs</span></a>
-      </li>
     @endcan
 
     {{-- Family Member List --}}
@@ -144,6 +140,9 @@
     
     {{-- account settings --}}
     <li class="nav-heading">Account Settings</li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ route('age_groups.index') }}"><i class="bi bi-kanban"></i><span>Age Groups</span></a>
+    </li>
     <!-- @canany(['view-donor', 'view-programme', 'view-region', 'view-cohort', 'view-age-group', 'view-disability'])
       <li class="nav-item">
         <a
@@ -211,12 +210,12 @@
     @endcan -->
 
     {{-- user management --}}
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ route('user_profiles.index') }}">
+        <i class="bi bi-people"></i><span>User Management</span>
+      </a>
+    </li>
     @can('view-user')
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('user_profiles.index') }}">
-          <i class="bi bi-people"></i><span>User Management</span>
-        </a>
-      </li>
     @endcan
   </ul>
 </aside>

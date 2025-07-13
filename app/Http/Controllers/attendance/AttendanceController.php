@@ -75,6 +75,12 @@ class AttendanceController extends Controller
 
         try {
             $input = inputClean($input);
+            foreach($input as $key => $val) {
+                if (in_array($key, ['male_total', 'female_total', 'grand_total'])) {
+                    $input[$key] = numberClean($val);
+                }
+            }
+            // dd($input);
             $attendance = Attendance::create($input);
 
             $input_items = $request->attendance_items;
@@ -169,6 +175,11 @@ class AttendanceController extends Controller
 
         try {     
             $input = inputClean($input);
+            foreach($input as $key => $val) {
+                if (in_array($key, ['male_total', 'female_total', 'grand_total'])) {
+                    $input[$key] = numberClean($val);
+                }
+            }
             $attendance->update($input);
 
             $input_items = $request->attendance_items;

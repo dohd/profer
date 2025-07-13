@@ -13,9 +13,7 @@
                             <tr>
                                 <th>#No</th>
                                 <th>Date</th>
-                                <th>Family Name</th>
-                                <th>Male Ct.</th>
-                                <th>Female Ct.</th>
+                                <th>DF Name</th>
                                 <th>Total Ct.</th>
                                 <th>Action</th>
                             </tr>
@@ -25,9 +23,7 @@
                                 <tr>
                                     <th scope="row" style="height: {{ count($attendances) == 1? '80px': '' }}">{{ $i+1 }}</th>
                                     <td>{{ dateFormat($row->date) }}</td>
-                                    <td>{{ @$row->activity->name }}</td>
-                                    <td>{{ $row->items->sum('male') }}</td>
-                                    <td>{{ $row->items->sum('female') }}</td>
+                                    <td>{{ $row->family_name }}</td>
                                     <td>{{ $row->items->sum('total') }}</td>
                                     <td>{!! $row->action_buttons !!}</td>
                                 </tr>

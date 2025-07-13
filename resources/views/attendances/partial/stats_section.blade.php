@@ -33,7 +33,7 @@
                     <div class="row mb-2">
                         <div class="col-md-3 col-12">
                             <label for="age_group">Age Group<span class="text-danger">*</span></label>
-                            <select name="age_group_id" id="age-group" class="form-select" data-placeholder="Choose Age-group" required>
+                            <select name="age_group_id" id="age-group" class="form-select" data-placeholder="Choose Age-group">
                                 <option value=""></option>
                                 @foreach ($age_groups as $agegroup)
                                     <option value="{{ $agegroup->id }}" {{ $agegroup->id == $row->age_group_id? 'selected' : '' }}>{{ $agegroup->bracket }}</option>
@@ -44,10 +44,10 @@
                             <label for="no_participants">Member List Stats<span class="text-danger">*</span></label>
                             <div class="row g-0">
                                 <div class="col-md-4">
-                                    {{ Form::text('male', $row->male, ['class' => 'form-control male', 'placeholder' => 'MALE', 'required' => 'required']) }}
+                                    {{ Form::text('male', $row->male, ['class' => 'form-control male', 'placeholder' => 'MALE']) }}
                                 </div>
                                 <div class="col-md-4">
-                                    {{ Form::text('female', $row->female, ['class' => 'form-control female', 'placeholder' => 'FEMALE', 'required' => 'required']) }}
+                                    {{ Form::text('female', $row->female, ['class' => 'form-control female', 'placeholder' => 'FEMALE']) }}
                                 </div>
                                 <div class="col-md-4">
                                     {{ Form::text('total', $row->total, ['class' => 'form-control total', 'placeholder' => 'TOTAL', 'readonly' => 'readonly']) }}
@@ -96,7 +96,7 @@
                 <div class="row mb-2">
                     <div class="col-md-3 col-12">
                         <label for="age_group">Age Group<span class="text-danger">*</span></label>
-                        <select name="age_group_id" id="age-group" class="form-select" data-placeholder="Choose Age-group" required>
+                        <select name="age_group_id" id="age-group" class="form-select" data-placeholder="Choose Age-group">
                             <option value=""></option>
                             @foreach ($age_groups as $row)
                                 <option value="{{ $row->id }}">{{ $row->bracket }}</option>
@@ -107,10 +107,10 @@
                         <label for="no_participants">Member List Stats<span class="text-danger">*</span></label>
                         <div class="row g-0">
                             <div class="col-md-4">
-                                {{ Form::text('male', null, ['class' => 'form-control male', 'placeholder' => 'MALE', 'required' => 'required']) }}
+                                {{ Form::text('male', null, ['class' => 'form-control male', 'placeholder' => 'MALE']) }}
                             </div>
                             <div class="col-md-4">
-                                {{ Form::text('female', null, ['class' => 'form-control female', 'placeholder' => 'FEMALE', 'required' => 'required']) }}
+                                {{ Form::text('female', null, ['class' => 'form-control female', 'placeholder' => 'FEMALE']) }}
                             </div>
                             <div class="col-md-4">
                                 {{ Form::text('total', null, ['class' => 'form-control total', 'placeholder' => 'TOTAL', 'readonly' => 'readonly']) }}

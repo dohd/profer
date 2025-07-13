@@ -42,8 +42,6 @@
                                 <th>Phone No.</th>
                                 <th>Gender</th>
                                 <th width="10%">Age Group</th>                                
-                                <th>Male</th>
-                                <th>Female</th>
                                 <th>Total</th>
                             </tr>
                         </thead>
@@ -56,15 +54,11 @@
                                     <td>{{ @$item->phone_no }}</td>
                                     <td>{{ @$item->gender }}</td>
                                     <td>{{ @$item->age_group->bracket }}</td>
-                                    <td>{{ $item->male }}</td>
-                                    <td>{{ $item->female }}</td>
                                     <td>{{ $item->total }}</td>                          
                                 </tr>
                             @endforeach
                             <tr class="bg-light bg-gradient">
                                 <td colspan="6"><b>Total</b></td>
-                                <td><b>{{ $attendance->items->sum('male') }}</b></td>
-                                <td><b>{{ $attendance->items->sum('female') }}</b></td>
                                 <td><b>{{ $attendance->items->sum('total') }}</b></td>
                             </tr>
                         </tbody>

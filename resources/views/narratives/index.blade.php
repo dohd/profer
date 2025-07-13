@@ -7,23 +7,6 @@
     <div class="card">
         <div class="card-body">
             <div class="card-content p-2">
-                <!-- <div class="row my-2">
-                    <div class="col-md-6 col-12">
-                        <div class="table-responsive">
-                            <table class="table table-sm table-bordered">
-                                <tbody>
-                                    <tr>
-                                        <th>Status</th>
-                                        <td>Pending ({{ numberFormat(@$status_grp['pending'], 0) }})</td>
-                                        <td>Approved ({{ numberFormat(@$status_grp['approved'], 0) }})</td>
-                                        <td>Review ({{ numberFormat(@$status_grp['review'], 0) }})</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div> -->
-
                 <div class="table-responsive">
                     <table class="table table-borderless datatable">
                         <thead>
@@ -43,7 +26,11 @@
                                     <td>{{ dateFormat($narrative->date) }}</td>
                                     <td>{{ $narrative->subject }}</td>
                                     <td>{{ @$narrative->age_group->bracket }}</td>
-                                    <td><a href="{{ route('storage.file_download', 'narrative,' . $narrative->doc_file) }}" target="_blank">{{ $narrative->doc_file }}<i class="bi bi-download h5 ms-2"></i></a></td>
+                                    <td>
+                                        @if ($narrative->doc_file )
+                                        <a href="{{ route('storage.file_download', 'narrative,' . $narrative->doc_file) }}" target="_blank">{{ $narrative->doc_file }}<i class="bi bi-download h5 ms-2"></i></a>
+                                        @endif
+                                    </td>
                                     <td>{!! $narrative->action_buttons !!}</td>
                                 </tr>
                             @endforeach
