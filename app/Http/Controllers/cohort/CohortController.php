@@ -44,9 +44,9 @@ class CohortController extends Controller
 
         try {            
             Cohort::create($data);
-            return redirect(route('cohorts.index'))->with(['success' => 'Cohort created successfully']);
+            return redirect(route('cohorts.index'))->with(['success' => 'DF Name created successfully']);
         } catch (\Throwable $th) {
-            return errorHandler('Error creating cohort!', $th);
+            return errorHandler('Error creating DF Name!', $th);
         }
     }
 
@@ -99,9 +99,9 @@ class CohortController extends Controller
 
         try {            
             $cohort->update($data);
-            return redirect(route('cohorts.index'))->with(['success' => 'Cohort updated successfully']);
+            return redirect(route('cohorts.index'))->with(['success' => 'DF Name updated successfully']);
         } catch (\Throwable $th) {
-            return errorHandler('Error updating cohort!', $th);
+            return errorHandler('Error updating DF Name!', $th);
         }
     }
 
@@ -115,9 +115,9 @@ class CohortController extends Controller
     {
         try {            
             $cohort->delete();
-            return redirect(route('cohorts.index'))->with(['success' => 'Cohort deleted successfully']);
+            return redirect(route('cohorts.index'))->with(['success' => 'DF Name deleted successfully']);
         } catch (\Throwable $th) {
-            return errorHandler('Error deleting cohort!', $th);
+            return errorHandler('Error deleting DF Name!', $th);
         }
     }
 }

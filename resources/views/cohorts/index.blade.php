@@ -1,6 +1,6 @@
 @extends('layouts.core')
 
-@section('title', 'Cohort Management')
+@section('title', 'DF Names')
     
 @section('content')
     @include('cohorts.header')
@@ -12,7 +12,7 @@
                         <thead>
                           <tr>
                             <th scope="col">#No</th>
-                            <th scope="col">Cohort</th>
+                            <th scope="col">DF Name</th>
                             <th scope="col">Action</th>
                           </tr>
                         </thead>
@@ -20,7 +20,7 @@
                             @foreach ($cohorts as $i => $cohort)
                                 <tr>
                                     <th scope="row">{{ $i+1 }}</th>
-                                    <td><a href="{{ route('cohorts.show', $cohort) }}">{{ $cohort->name }}</a></td>
+                                    <td>{{ $cohort->name }}</td>
                                     <td>{!! $cohort->action_buttons !!}</td>
                                 </tr>
                             @endforeach

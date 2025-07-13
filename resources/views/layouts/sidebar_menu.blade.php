@@ -13,13 +13,13 @@
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('programmes.index') }}"><i class="bi bi-list-check"></i><span>Family Zones</span></a>
     </li>
-    @can('view-programme')
-    @endcan
+
+    {{-- DF Names --}}
     <li class="nav-item">
-      <a class="nav-link collapsed" href="{{ route('regions.index') }}"><i class="bi bi-file-text"></i></i><span>Programs</span></a>
+      <a class="nav-link collapsed" href="{{ route('cohorts.index') }}">
+        <i class="bi bi-card-heading"></i><span>DF Names</span>
+      </a>
     </li>
-    @can('view-region')
-    @endcan
 
     {{-- Family Member List --}}
     <li class="nav-item">
@@ -28,19 +28,28 @@
       </a>
     </li>  
 
-    {{-- Testimonials --}}
+    {{-- Programs --}}
     <li class="nav-item">
-      <a class="nav-link collapsed" href="{{ route('case_studies.index') }}">
-        <i class="bi bi-file-earmark-text"></i></i><span>Bible Study Testimonials</span>
-      </a>
-    </li>      
+      <a class="nav-link collapsed" href="{{ route('regions.index') }}"><i class="bi bi-file-text"></i></i><span>Programs</span></a>
+    </li>
 
     {{-- Study Materials --}}
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('narratives.index') }}">
-        <i class="bi bi-file-text"></i></i><span>Study Materials</span>
+        <i class="bi bi-archive-fill"></i></i><span>Study Materials</span>
       </a>
     </li>
+
+    {{-- Testimonials --}}
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ route('case_studies.index') }}">
+        <i class="bi bi-card-list"></i></i><span>Bible Study Testimonials</span>
+      </a>
+    </li> 
+
+    <!-- <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ route('donors.index') }}"><i class="bi bi-file-earmark-text"></i><span>Donors</span></a>
+    </li> -->
 
     <hr>
 
@@ -160,16 +169,12 @@
           data-bs-parent="#sidebar-nav"
         >
           @can('view-donor')
-            <li>
-              <a href="{{ route('donors.index') }}"><i class="bi bi-circle"></i><span>Donors</span></a>
-            </li>
+            
           @endcan
           
           
           @can('view-cohort')
-            <li>
-              <a href="{{ route('cohorts.index') }}"><i class="bi bi-circle"></i><span>Target Cohorts</span></a>
-            </li>
+            
           @endcan
           
           @can('view-disability')

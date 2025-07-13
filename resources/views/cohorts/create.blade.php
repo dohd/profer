@@ -1,12 +1,12 @@
 @extends('layouts.core')
 
-@section('title', 'Create Cohort')
+@section('title', 'DF Names')
     
 @section('content')
     @include('cohorts.header')
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Create Cohort</h5>
+            <h5 class="card-title">Create</h5>
             <div class="card-content p-2">
                 {{ Form::open(['route' => 'cohorts.store', 'method' => 'POST', 'class' => 'form']) }}
                     @include('cohorts.form')

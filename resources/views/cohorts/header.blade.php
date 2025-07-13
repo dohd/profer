@@ -1,7 +1,7 @@
 <div class="pagetitle">
   <div class="row">
     <div class="col-6">
-      <h1>Cohort Management</h1>
+      <h1>DF Names</h1>
     </div>
     <div class="col-6">
       @can('create-cohort')
@@ -14,7 +14,7 @@
   <nav>
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-      <li class="breadcrumb-item active"><a href="{{ route('cohorts.index') }}">Cohort</a></li>
+      <li class="breadcrumb-item active"><a href="{{ route('cohorts.index') }}">DF Names</a></li>
     </ol>
   </nav>
 </div>

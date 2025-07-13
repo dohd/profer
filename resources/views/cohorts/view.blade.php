@@ -1,15 +1,15 @@
 @extends('layouts.core')
 
-@section('title', 'View | Cohort Management')
+@section('title', 'View | DF Names')
     
 @section('content')
     @include('cohorts.header')
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Cohort Details</h5>
+            <h5 class="card-title">Details</h5>
             <div class="card-content p-2">
                 <h4 class="text-center"><b>{{ $cohort->name }}</b></h4>
-                <h5>Activity Report</h5>
+                <!-- <h5>Activity Report</h5>
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
@@ -37,7 +37,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
