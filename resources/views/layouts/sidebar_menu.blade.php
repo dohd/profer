@@ -9,22 +9,11 @@
     <!-- End Dashboard Nav -->
 
     <li class="nav-heading">Program Management</li>
-    
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="{{ route('programmes.index') }}"><i class="bi bi-list-check"></i><span>Family Zones</span></a>
-    </li>
-
-    {{-- DF Names --}}
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="{{ route('cohorts.index') }}">
-        <i class="bi bi-card-heading"></i><span>DF Names</span>
-      </a>
-    </li>
 
     {{-- Family Member List --}}
     <li class="nav-item">
-      <a class="nav-link collapsed" href="{{ route('attendances.index') }}">
-        <i class="bi bi-person-lines-fill"></i></i><span>Family Member List</span>
+      <a class="nav-link collapsed" href="{{ route('memberlists.index') }}">
+        <i class="bi bi-person-lines-fill"></i></i><span>DF Member List</span>
       </a>
     </li>  
 
@@ -152,6 +141,30 @@
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('age_groups.index') }}"><i class="bi bi-kanban"></i><span>Age Groups</span></a>
     </li>
+    {{-- Family Zones --}}
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ route('dfzones.index') }}"><i class="bi bi-list-check"></i><span>Family Zones</span></a>
+    </li>
+
+    {{-- DF Names --}}
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ route('dfnames.index') }}">
+        <i class="bi bi-card-heading"></i><span>DF Names</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ route('ministries.index') }}">
+        <i class="bi bi-list-check"></i><span>Ministries</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ route('departments.index') }}">
+        <i class="bi bi-back"></i><span>Departments</span>
+      </a>
+    </li>
+
     <!-- @canany(['view-donor', 'view-programme', 'view-region', 'view-cohort', 'view-age-group', 'view-disability'])
       <li class="nav-item">
         <a
@@ -168,33 +181,11 @@
           class="nav-content collapse"
           data-bs-parent="#sidebar-nav"
         >
-          @can('view-donor')
-            
-          @endcan
-          
-          
-          @can('view-cohort')
-            
-          @endcan
-          
-          @can('view-disability')
-            <li>
-              <a href="{{ route('disabilities.index') }}"><i class="bi bi-circle"></i><span>Disabilities</span></a>
-            </li>
-          @endcan
+         
         </ul>
       </li>
     @endcanany   -->
 
-
-    {{-- deadlines --}}
-    @can('view-deadline')
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('deadlines.index') }}">
-          <i class="bi bi-calendar-x"></i><span>Manage Deadlines</span>
-        </a>
-      </li>
-    @endcan
 
     {{-- prefixes --}}
     <!-- @can('view-code-prefix')

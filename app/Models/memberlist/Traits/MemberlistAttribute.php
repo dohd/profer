@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models\attendance\Traits;
+namespace App\Models\memberlist\Traits;
 
-trait AttendanceAttribute
+trait MemberlistAttribute
 {
     /**
      * Action Button Attribute to show in grid

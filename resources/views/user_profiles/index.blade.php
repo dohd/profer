@@ -24,7 +24,7 @@
                             @foreach ($users as $i => $user)
                                 <tr>
                                     <th scope="row" style="height: {{ count($users) == 1? '80px': '' }}">{{ $i+1 }}</th>
-                                    <td>{{ @$user->roles()->first()->name }}</td>
+                                    <td>{{ $user->role ?: @$user->roles()->first()->name }}</td>
                                     <td>
                                         <div class="row g-0">
                                             <div class="col-md-3 col-12">

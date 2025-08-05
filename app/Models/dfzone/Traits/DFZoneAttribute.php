@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models\cohort\Traits;
+namespace App\Models\dfzone\Traits;
 
-trait CohortAttribute
+trait DFZoneAttribute
 {
     /**
      * Action Button Attribute to show in grid
@@ -12,8 +12,8 @@ trait CohortAttribute
     {
         return $this->getButtonWrapperAttribute(
             null,
-            $this->getEditButtonAttribute('dfnames.edit', 'edit-cohort'),
-            $this->getDeleteButtonAttribute('dfnames.destroy', 'delete-cohort'),
+            $this->getEditButtonAttribute('dfzones.edit', 'edit-cohort'),
+            $this->getDeleteButtonAttribute('dfzones.destroy', 'delete-cohort'),
         );
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models\cohort\Traits;
+namespace App\Models\ministry\Traits;
 
-trait CohortAttribute
+trait MinistryAttribute
 {
     /**
      * Action Button Attribute to show in grid
@@ -12,8 +12,8 @@ trait CohortAttribute
     {
         return $this->getButtonWrapperAttribute(
             null,
-            $this->getEditButtonAttribute('dfnames.edit', 'edit-cohort'),
-            $this->getDeleteButtonAttribute('dfnames.destroy', 'delete-cohort'),
+            $this->getEditButtonAttribute('ministries.edit', 'edit-programme'),
+            $this->getDeleteButtonAttribute('ministries.destroy', 'delete-programme'),
         );
     }
 }

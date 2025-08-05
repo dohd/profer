@@ -6,16 +6,19 @@ use App\Http\Controllers\agenda\AgendaController;
 use App\Http\Controllers\case_study\CaseStudyController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\budget\BudgetController;
-use App\Http\Controllers\cohort\CohortController;
 use App\Http\Controllers\disability\DisabilityController;
 use App\Http\Controllers\file_import\FileImportController;
 use App\Http\Controllers\donor\DonorController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\log_frame\LogFrameController;
 use App\Http\Controllers\narrative\NarrativeController;
-use App\Http\Controllers\attendance\AttendanceController;
 use App\Http\Controllers\config\ConfigController;
 use App\Http\Controllers\deadline\DeadlineController;
+use App\Http\Controllers\department\DepartmentsController;
+use App\Http\Controllers\dfname\DFNamesController;
+use App\Http\Controllers\dfzone\DFZonesController;
+use App\Http\Controllers\memberlist\MemberListsController;
+use App\Http\Controllers\ministry\MinistriesController;
 use App\Http\Controllers\pdf\PdfController;
 use App\Http\Controllers\prefix\PrefixController;
 use App\Http\Controllers\programme\ProgrammeController;
@@ -65,11 +68,14 @@ Route::group(['middleware' => 'auth'], function() {
 
     // key Parameters
     Route::resource('donors', DonorController::class);
-    Route::resource('programmes', ProgrammeController::class);
     Route::resource('regions', RegionController::class);
-    Route::resource('cohorts', CohortController::class);
     Route::resource('disabilities', DisabilityController::class);
+
+    Route::resource('dfzones', DFZonesController::class);
+    Route::resource('dfnames', DFNamesController::class);
     Route::resource('age_groups', AgeGroupController::class);
+    Route::resource('ministries', MinistriesController::class);
+    Route::resource('departments', DepartmentsController::class);
 
     // Proposals
     Route::post('proposals/items', [ProposalController::class, 'proposal_items'])->name('proposals.items');
@@ -110,8 +116,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('agenda', AgendaController::class);
 
     // Attendance
-    Route::post('attendances/delete_file', [AttendanceController::class, 'delete_file'])->name('attendances.delete_file');
-    Route::resource('attendances', AttendanceController::class);
+    Route::post('memberlists/delete_file', [MemberListsController::class, 'delete_file'])->name('attendances.delete_file');
+    Route::resource('memberlists', MemberListsController::class);
 
     // Activity Narrative
     Route::post('narratives/delete_file', [NarrativeController::class, 'delete_file'])->name('narratives.delete_file');

@@ -3,7 +3,7 @@
         <label for="role">Authorized Role</label>
         <select name="role" id="role" class="form-control col-12"  required>
             <option value="">-- Select Role --</option>
-            @foreach (['Deacon', 'Overseers', 'Shepherds'] as $role)
+            @foreach (['Deacon', 'Overseer', 'Shepherd'] as $role)
                 <option name="role" value="{{ $role }}" {{ $role == @$user_profile->role? 'selected' : '' }}>
                 {{ $role }}
                 </option>

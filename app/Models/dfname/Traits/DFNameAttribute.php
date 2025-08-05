@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models\cohort\Traits;
+namespace App\Models\dfname\Traits;
 
-trait CohortAttribute
+trait DFNameAttribute
 {
     /**
      * Action Button Attribute to show in grid
