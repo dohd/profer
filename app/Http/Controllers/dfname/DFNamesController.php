@@ -29,8 +29,8 @@ class DFNamesController extends Controller
      */
     public function create()
     {
-        $zones = collect();
-        return view('dfnames.create', compact('zones'));
+        $dfzones = DFZone::latest()->get();
+        return view('dfnames.create', compact('dfzones'));
     }
 
     /**
