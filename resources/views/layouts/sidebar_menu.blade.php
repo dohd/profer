@@ -138,6 +138,7 @@
     
     {{-- account settings --}}
     <li class="nav-heading">Account Settings</li>
+    {{-- Age group --}}
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('age_groups.index') }}"><i class="bi bi-kanban"></i><span>Age Groups</span></a>
     </li>
@@ -145,20 +146,19 @@
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('dfzones.index') }}"><i class="bi bi-list-check"></i><span>Family Zones</span></a>
     </li>
-
     {{-- DF Names --}}
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('dfnames.index') }}">
         <i class="bi bi-card-heading"></i><span>DF Names</span>
       </a>
     </li>
-
+    {{-- Ministries --}}
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('ministries.index') }}">
         <i class="bi bi-list-check"></i><span>Ministries</span>
       </a>
     </li>
-
+    {{-- Departments --}}
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('departments.index') }}">
         <i class="bi bi-back"></i><span>Departments</span>

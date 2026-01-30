@@ -4,10 +4,8 @@
       <h1>Family Member List</h1>
     </div>
     <div class="col-6">
-      @can('create-attendance')
         <a href="{{ route('memberlists.create') }}" class="btn btn-primary float-end ms-1"><i class="bi bi-plus-circle"></i> Create</a>
-      @endcan
-      <a href="{{ route('memberlists.index') }}" class="btn btn-secondary float-end"><i class="bi bi-card-list"></i> List</a>
+        <a href="{{ route('memberlists.index') }}" class="btn btn-secondary float-end"><i class="bi bi-card-list"></i> List</a>
     </div>
   </div>
   
