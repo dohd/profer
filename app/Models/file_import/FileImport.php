@@ -21,7 +21,15 @@ class FileImport extends Model
      * Mass Assignable fields of model
      * @var array
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'category',
+        'category_dir',
+        'origin_name',
+        'file_name',
+        'date',
+        'user_id', 
+        'ins',
+    ];
 
     /**
      * Default values for model fields

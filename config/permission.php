@@ -89,11 +89,11 @@ return [
         'model_morph_key' => 'model_id',
 
         /*
-         * Change this if you want to use the teams feature and your related model's
-         * foreign key is other than `team_id`.
+         * Change this if you want to use the TeamLabels feature and your related model's
+         * foreign key is other than `TeamLabel_id`.
          */
 
-        'team_foreign_key' => 'team_id',
+        'TeamLabel_foreign_key' => 'TeamLabel_id',
     ],
 
     /*
@@ -104,14 +104,14 @@ return [
     'register_permission_check_method' => true,
 
     /*
-     * When set to true the package implements teams using the 'team_foreign_key'. If you want
-     * the migrations to register the 'team_foreign_key', you must set this to true
+     * When set to true the package implements TeamLabels using the 'TeamLabel_foreign_key'. If you want
+     * the migrations to register the 'TeamLabel_foreign_key', you must set this to true
      * before doing the migration. If you already did the migration then you must make a new
-     * migration to also add 'team_foreign_key' to 'roles', 'model_has_roles', and
+     * migration to also add 'TeamLabel_foreign_key' to 'roles', 'model_has_roles', and
      * 'model_has_permissions'(view the latest version of package's migration file)
      */
 
-    'teams' => false,
+    'TeamLabels' => false,
 
     /*
      * When set to true, the required permission names are added to the exception

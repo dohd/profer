@@ -16,7 +16,7 @@ class ActionPlan extends Model
      * The database table used by the model.
      * @var string
      */
-    protected $table = 'action_plans';
+    protected $table = 'departments';
 
     /**
      * Mass Assignable fields of model

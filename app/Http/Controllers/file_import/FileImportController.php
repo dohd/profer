@@ -22,10 +22,8 @@ class FileImportController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
-        $timesheets = FileImport::where('category', 'employee_timesheet')->latest()->get();
-        
-        return view('file_imports.index', compact('timesheets'));
+    {
+        return view('file_imports.index');
     }
 
     /**
@@ -58,32 +56,13 @@ class FileImportController extends Controller
     {   
         $request->validate([
             'category' => 'required',
-            'file' => 'required|mimes:xls,xlsx'
+            'file' => 'required|mimes:xls,xlsx',
         ]);
-
-        if (request('category') == 'timesheet') {
-            $request->validate([
-                'employee' => 'required',
-                'month_start' => 'required',
-            ]);
-        }
-        
         $file = $request->file('file');
         $category = $request->category;
+        
         try {
             DB::beginTransaction();
-
-            if ($category == 'employee_timesheet') {
-                $file_name = $this->uploadFile($file, 'timesheet');
-                FileImport::create([
-                    'category_dir' => 'timesheet',
-                    'file_name' => $file_name,
-                    'origin_name' => $file->getClientOriginalName(),
-                    'category' => $category,
-                    'employee' => $request->employee,
-                    'month_start' => databaseDate($request->month_start),
-                ]);
-            }
             
             if ($category == 'support_groups') {
                 Excel::import(new SupportGroupImport, $file);
@@ -97,7 +76,7 @@ class FileImportController extends Controller
 
             return redirect(route('file_imports.index'))->with(['success' => 'Data imported successfully']);
         } catch (\Throwable $th) {
-            return errorHandler('Error importing data! ' . $th->getMessage(), $th);
+            errorHandler('Error importing data! ' . $th->getMessage());
         }
     }
 

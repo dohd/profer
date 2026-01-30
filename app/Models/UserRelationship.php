@@ -2,12 +2,18 @@
 
 namespace App\Models;
 
-use App\Models\tenant\Tenant;
+use App\Models\company\Company;
+use App\Models\team\Team;
 
 trait UserRelationship
 {
-    public function tenant()
+    public function team()
     {
-        return $this->belongsTo(Tenant::class, 'ins');
+        return $this->belongsTo(Team::class);
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'ins');
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\programme;
 
 use App\Http\Controllers\Controller;
-use App\Models\item\ProposalItem;
 use App\Models\programme\Programme;
 use Illuminate\Http\Request;
 
@@ -16,7 +15,7 @@ class ProgrammeController extends Controller
      */
     public function index()
     {
-        $programmes = Programme::latest()->get();
+        $programmes = Programme::orderBy('id', 'desc')->get();
 
         return view('programmes.index', compact('programmes'));
     }
@@ -28,7 +27,9 @@ class ProgrammeController extends Controller
      */
     public function create()
     {
-        return view('programmes.create');
+        $cumulativeProgrammes = Programme::where('metric', 'Finance')->get();
+
+        return view('programmes.create', compact('cumulativeProgrammes'));
     }
 
     /**
@@ -39,14 +40,32 @@ class ProgrammeController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(['name' => 'required']);
-        $data = $request->only(['name']);
+        $request->validate([
+            'name' => 'required',
+            'metric' => 'required',
+            'compute_type' => 'required',
+            'period_from' => 'required',
+            'period_to' => 'required',
+            'score' => request('metric') == 'Finance'? 'required' : '',
+            'max_extra_score' => request('extra_score')? 'required' : '',
+        ]);
+        $input = $request->except('_token');
+        $numDateFields = $request->except([
+            'name', 'is_cumulative', 'cumulative_programme_id', 'metric', 'team_size', 
+            'compute_type', 'bandjson', 'memo',  'include_choir',                        
+        ]);
 
-        try {            
-            Programme::create($data);
-            return redirect(route('programmes.index'))->with(['success' => 'DF Zone created successfully']);
+        try {     
+            foreach ($numDateFields as $key => $value) {
+                if (in_array($key, ['period_from', 'period_to', 'amount_perc_by'])) $input[$key] = databaseDate($value);
+                else $input[$key] = numberClean($value);
+            }
+
+            Programme::create($input);
+
+            return redirect(route('programmes.index'))->with(['success' => 'Programme created successfully']);
         } catch (\Throwable $th) {
-           return errorHandler('Error creating DF Zone!', $th);
+           return errorHandler('Error creating programme!', $th);
         }
     }
 
@@ -57,22 +76,8 @@ class ProgrammeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Programme $programme)
-    {
-        $proposal_items = ProposalItem::whereHas('proposal', function ($q) use($programme) {
-            $q->whereHas('action_plans', fn($q) => $q->where('programme_id', $programme->id));
-        })
-        ->whereHas('participant_lists', fn($q) => $q->where('total_count', '>', 0))
-        ->with(['participant_lists' => fn($q) => $q->where('total_count', '>', 0)])
-        ->with('participant_regions')
-        ->get();
-        // append regions and dates 
-        foreach ($proposal_items as $item) {
-            $item->regions = $item->participant_regions->pluck('name')->toArray();
-            $item->dates = $item->participant_lists->pluck('date')->toArray();
-            $item->dates = array_map(fn($v) => dateFormat($v), $item->dates);
-        }
-        
-        return view('programmes.view', compact('programme', 'proposal_items'));
+    {   
+        return view('programmes.view', compact('programme'));
     }
 
     /**
@@ -83,7 +88,18 @@ class ProgrammeController extends Controller
      */
     public function edit(Programme $programme)
     {
-        return view('programmes.edit', compact('programme'));
+        // permit only the chair to edit 
+        $hasScores = $programme->assignScores()->exists();
+        if ($hasScores && auth()->user()->user_type != 'chair') {
+            return errorHandler("You don't have the rights to edit this program");
+        }
+
+        $cumulativeProgrammes = Programme::where('metric', 'Finance')
+        ->where('id', '!=', $programme->id)
+        ->whereNotNull('is_cumulative')
+        ->get();
+
+        return view('programmes.edit', compact('programme', 'cumulativeProgrammes'));
     }
 
     /**
@@ -95,14 +111,35 @@ class ProgrammeController extends Controller
      */
     public function update(Request $request, Programme $programme)
     {
-        $request->validate(['name' => 'required']);
-        $data = $request->only(['name']);
+        $request->validate([
+            'name' => 'required',
+            'metric' => 'required',
+            'compute_type' => 'required',
+            'period_from' => 'required',
+            'period_to' => 'required',
+            'score' => request('metric') == 'Finance'? 'required' : '',
+            'max_extra_score' => request('extra_score')? 'required' : '',
+        ]);
+        $input = $request->except('_token');
+        $numDateFields = $request->except([
+            'name', 'is_cumulative', 'cumulative_programme_id', 'metric', 'team_size', 
+            'compute_type', 'bandjson', 'memo',  'include_choir',                        
+        ]);
 
-        try {            
-            if ($programme->update($data)) 
-            return redirect(route('programmes.index'))->with(['success' => 'DF Zone updated successfully']);
+        try {    
+            foreach ($numDateFields as $key => $value) {
+                if (in_array($key, ['period_from', 'period_to', 'amount_perc_by'])) $input[$key] = databaseDate($value);
+                else $input[$key] = numberClean($value);
+            }
+            // deactivate checkboxes if not set
+            $input['is_active'] = $input['is_active'] ?? 0;
+            $input['is_cumulative'] = $input['is_cumulative'] ?? null;
+
+            $programme->update($input); 
+
+            return redirect(route('programmes.index'))->with(['success' => 'Programme updated successfully']);
         } catch (\Throwable $th) {
-            return errorHandler('Error updating DF Zone!', $th);
+            return errorHandler('Error updating programme!', $th);
         }
     }
 
@@ -114,11 +151,17 @@ class ProgrammeController extends Controller
      */
     public function destroy(Programme $programme)
     {
+        // permit only the chair to edit 
+        $hasScores = $programme->assignScores()->exists();
+        if ($hasScores && auth()->user()->user_type != 'chair') {
+            return errorHandler("You don't have the rights to delete this program");
+        }
+
         try {            
             $programme->delete();
-            return redirect(route('programmes.index'))->with(['success' => 'DF Zone deleted successfully']);
+            return redirect(route('programmes.index'))->with(['success' => 'Programme deleted successfully']);
         } catch (\Throwable $th) {
-            return errorHandler('Error deleting DF Zone!', $th);
+            return errorHandler('Error deleting programme!', $th);
         }
     }
 }

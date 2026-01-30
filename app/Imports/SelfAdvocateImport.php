@@ -5,7 +5,6 @@ namespace App\Imports;
 use App\Models\beneficiary_list\SelfAdvocate;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
-// use Illuminate\Validation\ValidationException;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
@@ -22,16 +21,19 @@ class SelfAdvocateImport implements ToCollection, WithBatchInserts, WithChunkRea
         $rows = array_map(function ($v) use($db_cols) {
             $values = array_slice($v, 1);
             $row = array_combine($db_cols, $values);
-            // if (is_numeric($row['dob'])) {}throw ValidationException::withMessages(['Column4 - DOB must be Fomarted as General Text instead of Date']);
-                
+            
+            if (is_numeric($row['dob'])) 
+                trigger_error('Column4 - DOB must be Fomarted as General Text instead of Date');
+
             $row = array_replace($row, [
-                'dob' => ($row['dob']),
+                'dob' => databaseDate($row['dob']),
                 'monthly_income' => numberClean($row['monthly_income']),
                 'user_id' => auth()->user()->id,
                 'ins' => auth()->user()->ins,
             ]);
             return $row;
         }, $rows);
+
         SelfAdvocate::insert($rows);
     }
 

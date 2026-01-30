@@ -1,29 +1,12 @@
 <div class="row mb-3">
-    <div class="col-md-7 col-12">
-        <label for="subject">Bible Study Title<span class="text-danger">*</span></label>
-        {{ Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Title', 'required' => 'required']) }}
-    </div>
-    <div class="col-md-3 col-12">
+    <div class="col-md-2 col-12">
         <label for="date">Date<span class="text-danger">*</span></label>
         {{ Form::date('date', null, ['class' => 'form-control datepicker', 'id' => 'date', 'required']) }}
     </div>
-</div>
-<div class="row mb-3">
-    <div class="col-md-7 col-12">
-        <label for="full_name">Full Name<span class="text-danger">*</span></label>
+    <div class="col-md-6 col-12">
+        <label for="full_name">Full Name<span class="text-danger">*</span> (Testifier)</label>
         {{ Form::text('full_name', null, ['class' => 'form-control', 'placeholder' => 'Full Name', 'required' => 'required']) }}
     </div>
-    <div class="col-md-3 col-12">
-        <label for="age_group">Age Group<span class="text-danger">*</span></label>
-        <select name="age_group_id" id="age-group" class="form-select" data-placeholder="Choose Age-group" required>
-            <option value="">-- Select Age --</option>
-            @foreach ($ageGroups as $agegroup)
-                <option value="{{ $agegroup->id }}" {{ $agegroup->id == @$case_study->age_group_id? 'selected' : '' }}>
-                    {{ $agegroup->bracket }}
-                </option>
-            @endforeach
-        </select>
-    </div>  
 </div>
 <div class="row mb-3">
     <div class="col-md-12 col-12">

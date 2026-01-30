@@ -30,7 +30,7 @@ function flashMessage(data) {
     setTimeout(() => {
         if (data.redirectTo) location.href = data.redirectTo;
         $('div.alert').remove();
-    }, 2000);
+    }, 4000);
 }
 
 /**

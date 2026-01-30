@@ -4,9 +4,7 @@
       <h1>Study Materials</h1>
     </div>
     <div class="col-6">
-      @can('create-activity-narrative')
-        <a href="{{ route('narratives.create') }}" class="btn btn-primary float-end ms-1"><i class="bi bi-plus-circle"></i> Create</a>
-      @endcan
+      <a href="{{ route('narratives.create') }}" class="btn btn-primary float-end ms-1"><i class="bi bi-plus-circle"></i> Create</a>
       <a href="{{ route('narratives.index') }}" class="btn btn-secondary float-end"><i class="bi bi-card-list"></i> List</a>
     </div>
   </div>

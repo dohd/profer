@@ -4,11 +4,13 @@ namespace App\Http\Controllers\user_profile;
 
 use App\Http\Controllers\Controller;
 use App\Models\role\Role;
+use App\Models\team\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class UserProfileController extends Controller
 {
@@ -20,7 +22,6 @@ class UserProfileController extends Controller
     public function index()
     {
         $users = User::where('id', '!=', auth()->user()->id)->whereNotNull('created_by')->get();
-
         return view('user_profiles.index', compact('users'));
     }
 
@@ -32,8 +33,8 @@ class UserProfileController extends Controller
     public function create()
     {
         $roles = Role::get();
-
-        return view('user_profiles.create', compact('roles'));
+        $teams = Team::get();
+        return view('user_profiles.create', compact('roles', 'teams'));
     }
 
     /**
@@ -45,26 +46,22 @@ class UserProfileController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'username' => 'required|unique:users,username',
+            'user_type' => 'required',
+            'fname' => 'required',
+            'lname' => 'required',
+            'email' => ['required', Rule::unique('users')->ignore(auth()->user()->id)],
             'phone' => 'required',
-            'email' => 'required|unique:users,username',
-            'role' => 'required',
         ]);
 
-        DB::beginTransaction();
+        try {           
+            DB::beginTransaction();
 
-        try {            
             $input = array_replace($request->except('_token'), [
                 'password' => $request->phone,
-                'created_by' => auth()->user()->id,
-                'ins' => auth()->user()->ins,
             ]);
             $user = User::create($input);
-            if (isset($input['role_id'])) {
-                $role = Role::find($input['role_id']);
-                $user->assignRole($role->name);                
-            }
+            // $role = Role::find($input['role_id']);
+            // $user->assignRole($role->name);
 
             DB::commit();
             return redirect(route('user_profiles.index'))->with(['success' => 'User created successfully']);
@@ -93,7 +90,8 @@ class UserProfileController extends Controller
     public function edit(User $user_profile)
     {
         $roles = Role::get();
-        return view('user_profiles.edit', compact('user_profile', 'roles'));
+        $teams = Team::get();
+        return view('user_profiles.edit', compact('user_profile', 'roles', 'teams'));
     }
 
     /**
@@ -114,22 +112,20 @@ class UserProfileController extends Controller
             }
         } else {
             $request->validate([
-                'name' => 'required',
-                'username' => 'required',
+                'user_type' => 'required',
+                'fname' => 'required',
+                'lname' => 'required',
+                'email' => ['required', Rule::unique('users')->ignore($user_profile->id)],
                 'phone' => 'required',
-                'email' => 'required',
-                'role' => 'required',
             ]);
     
-            DB::beginTransaction();
-    
-            try {            
+            try {
+                DB::beginTransaction();
                 
-                $input = $request->only(['name', 'username', 'phone', 'email', 'role_id', 'role']);
-                if (isset($input['role_id'])) {
-                    $role = Role::find($input['role_id']);
-                    $user_profile->syncRoles([$role->name]);
-                }
+                $input = $request->only(['fname', 'lname', 'email', 'phone', 'user_type', 'team_id']);
+                // $role = Role::find($input['role_id']);
+                // $user_profile->syncRoles([$role->name]);
+                // dd($input);
                 $user_profile->update($input);
                 
                 DB::commit();
@@ -149,8 +145,8 @@ class UserProfileController extends Controller
     public function destroy(User $user_profile)
     {
         try {     
-            $role = Role::find($user_profile->role_id);
-            $user_profile->removeRole($role->name);       
+            // $role = Role::find($user_profile->role_id);
+            // $user_profile->removeRole($role->name);       
             $user_profile->delete();
 
             return redirect(route('user_profiles.index'))->with(['success' => 'User deleted successfully']);

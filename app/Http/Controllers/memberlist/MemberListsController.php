@@ -41,15 +41,12 @@ class MemberListsController extends Controller
      */
     public function create()
     {
-        $proposals = Proposal::whereHas('action_plans')->get(['id', 'title']);
         $age_groups = AgeGroup::get(['id', 'bracket']);
-        $disabilities = Disability::get(['id', 'name']);
-
         $dfnames = DFName::latest()->get(['id', 'name']);
         $ministries = Ministry::latest()->get(['id', 'name']);
         $departments = Department::latest()->get(['id', 'name']);
         
-        return view('memberlists.create', compact('departments', 'ministries', 'dfnames', 'age_groups', 'disabilities', 'proposals'));
+        return view('memberlists.create', compact('departments', 'ministries', 'dfnames', 'age_groups'));
     }
 
     /**

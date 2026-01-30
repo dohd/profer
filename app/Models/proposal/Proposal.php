@@ -15,7 +15,7 @@ class Proposal extends Model
      * The database table used by the model.
      * @var string
      */
-    protected $table = 'proposals';
+    protected $table = 'departments';
 
     /**
      * Mass Assignable fields of model

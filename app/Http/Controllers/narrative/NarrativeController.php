@@ -45,8 +45,8 @@ class NarrativeController extends Controller
      */
     public function create()
     {
-        $agenda = Agenda::doesntHave('narrative')->get();
-        $narrative_pointers = NarrativePointer::all();
+        $agenda = collect();
+        $narrative_pointers = collect();
         $ageGroups = AgeGroup::get(['id', 'bracket']);
         
         return view('narratives.create', compact('agenda', 'narrative_pointers', 'ageGroups'));

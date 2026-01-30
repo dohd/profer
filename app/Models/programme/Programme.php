@@ -60,8 +60,11 @@ class Programme extends Model
         parent::boot();
 
         static::creating(function ($instance) {
-            $instance->user_id = auth()->user()->id;
-            $instance->ins = auth()->user()->ins;
+            $instance->fill([
+                'tid' => Programme::max('tid')+1,
+                'user_id' => auth()->user()->id,
+                'ins' => auth()->user()->ins,
+            ]);
             return $instance;
         });
 

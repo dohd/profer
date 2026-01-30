@@ -26,16 +26,12 @@ class StorageController extends Controller
      */
     public function file_download ($file_params) 
     {   
-        try {
-            $file_path = '';
-            $params = explode(',', $file_params);
-            foreach ($params as $value) {
-                $file_path .= $value . DIRECTORY_SEPARATOR;
-            }
-            return Storage::disk('public')->download($file_path);
-        } catch (\Throwable $th) {
-            \Log::error('File download: ' . $th->getMessage());
-            return response()->json(['message' => 'Resource could not be found'], 404);
+        $file_path = '';
+        $params = explode(',', $file_params);
+        foreach ($params as $value) {
+            $file_path .= $value . DIRECTORY_SEPARATOR;
         }
+
+        return Storage::disk('public')->download($file_path);
     }
 }

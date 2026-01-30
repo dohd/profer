@@ -1,7 +1,6 @@
 @extends('layouts.core')
+@section('title', 'Study Testimonials')
 
-@section('title', 'Testimonials')
-    
 @section('content')
     @include('case_studies.header')
     <div class="card">
@@ -15,7 +14,6 @@
                                 <th scope="col">Date</th>
                                 <th scope="col">Title</th>
                                 <th scope="col">Full Name</th>
-                                <th scope="col">Age Group</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -26,7 +24,6 @@
                                     <td>{{ dateFormat($item->date) }}</td>
                                     <td>{{ $item->title }}</td>
                                     <td>{{ $item->full_name }}</td>
-                                    <td>{{ @$item->age_group->bracket }}</td>
                                     <td>{!! $item->action_buttons !!}</td>
                                 </tr>
                             @endforeach

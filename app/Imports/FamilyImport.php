@@ -22,11 +22,11 @@ class FamilyImport implements ToCollection, WithBatchInserts, WithChunkReading
             $values = array_slice($v, 1);
             $row = array_combine($db_cols, $values); 
                        
-            // if (is_numeric($row['dob'])) 
-            //     trigger_error('Column4 - DOB must be Fomarted as General Text instead of Date');
+            if (is_numeric($row['dob'])) 
+                trigger_error('Column4 - DOB must be Fomarted as General Text instead of Date');
 
             $row = array_replace($row, [
-                'dob' => ($row['dob']),
+                'dob' => databaseDate($row['dob']),
                 'user_id' => auth()->user()->id,
                 'ins' => auth()->user()->ins,
             ]); 

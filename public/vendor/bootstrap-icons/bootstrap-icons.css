@@ -1492,7 +1492,7 @@ url("./fonts/bootstrap-icons.woff?8d200481aa7f02a2d63a331fc782cfaf") format("wof
 .bi-send-x-fill::before { content: "\f6be"; }
 .bi-send-x::before { content: "\f6bf"; }
 .bi-send::before { content: "\f6c0"; }
-.bi-steam::before { content: "\f6c1"; }
+.bi-sTeamLabel::before { content: "\f6c1"; }
 .bi-terminal-dash-1::before { content: "\f6c2"; }
 .bi-terminal-dash::before { content: "\f6c3"; }
 .bi-terminal-plus::before { content: "\f6c4"; }
@@ -1812,7 +1812,7 @@ url("./fonts/bootstrap-icons.woff?8d200481aa7f02a2d63a331fc782cfaf") format("wof
 .bi-indent::before { content: "\f7fe"; }
 .bi-lungs-fill::before { content: "\f7ff"; }
 .bi-lungs::before { content: "\f800"; }
-.bi-microsoft-teams::before { content: "\f801"; }
+.bi-microsoft-TeamLabels::before { content: "\f801"; }
 .bi-p-circle-1::before { content: "\f802"; }
 .bi-p-circle-fill-1::before { content: "\f803"; }
 .bi-p-circle-fill::before { content: "\f804"; }

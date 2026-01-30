@@ -38,8 +38,8 @@
 
               <div class="d-flex justify-content-center py-4">
                 <a href="{{ route('home') }}html" class="logo d-flex align-items-center w-auto">
-                  <!-- <img src="{{ asset('img/kaih-logo.png') }}" alt="logo"> -->
-                  <span class="d-lg-block">DF KPM TRACKER</span>
+                  {{-- <img src="{{ asset('img/kaih-logo.png') }}" alt="logo"> --}}
+                  <span class="d-lg-block">{{ config('app.name') }}</span>
                 </a>
               </div>
               <!-- End Logo -->
@@ -55,7 +55,7 @@
                   <form action="{{ route('login') }}" method="POST" class="row g-3 needs-validation" novalidate>
                     @csrf
                     <div class="col-12">
-                      <label for="email" class="form-label">Username</label>
+                      <label for="email" class="form-label">Email</label>
                       <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend">@</span>
                         <input type="text" name="email" class="form-control" id="yourUsername" required>

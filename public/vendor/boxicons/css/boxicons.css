@@ -944,7 +944,7 @@
   .bxl-microsoft:before {
     content: "\e958";
   }
-  .bxl-microsoft-teams:before {
+  .bxl-microsoft-TeamLabels:before {
     content: "\e959";
   }
   .bxl-nodejs:before {
@@ -1037,7 +1037,7 @@
   .bxl-stack-overflow:before {
     content: "\e977";
   }
-  .bxl-steam:before {
+  .bxl-sTeamLabel:before {
     content: "\e978";
   }
   .bxl-stripe:before {

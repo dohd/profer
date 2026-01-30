@@ -20,10 +20,11 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'role',
-        'name',
+        'team_id',
+        'user_type',
+        'fname',
+        'lname',
         'email',
-        'username',
         'role_id',
         'profile_pic',
         'phone',
@@ -60,5 +61,23 @@ class User extends Authenticatable
     public function setPasswordAttribute($password)
     {
         if ($password) $this->attributes['password'] = Hash::make($password);
+    }
+
+    /**
+     * Model boot
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($instance) {
+            $instance->created_by = auth()->user()->id;
+            $instance->ins = auth()->user()->ins;
+            return $instance;
+        });
+
+        static::addGlobalScope('ins', function ($builder) {
+            // $builder->where('ins', auth()->user()->ins);
+        });
     }
 }

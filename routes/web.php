@@ -1,32 +1,24 @@
 <?php
 
-use App\Http\Controllers\action_plan\ActionPlanController;
 use App\Http\Controllers\age_group\AgeGroupController;
-use App\Http\Controllers\agenda\AgendaController;
-use App\Http\Controllers\case_study\CaseStudyController;
+use App\Http\Controllers\assign_score\AssignScoreController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\budget\BudgetController;
-use App\Http\Controllers\disability\DisabilityController;
-use App\Http\Controllers\file_import\FileImportController;
-use App\Http\Controllers\donor\DonorController;
+use App\Http\Controllers\case_study\CaseStudyController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\log_frame\LogFrameController;
-use App\Http\Controllers\narrative\NarrativeController;
 use App\Http\Controllers\config\ConfigController;
-use App\Http\Controllers\deadline\DeadlineController;
 use App\Http\Controllers\department\DepartmentsController;
 use App\Http\Controllers\dfname\DFNamesController;
 use App\Http\Controllers\dfzone\DFZonesController;
 use App\Http\Controllers\memberlist\MemberListsController;
+use App\Http\Controllers\metric\MetricController;
 use App\Http\Controllers\ministry\MinistriesController;
+use App\Http\Controllers\narrative\NarrativeController;
 use App\Http\Controllers\pdf\PdfController;
-use App\Http\Controllers\prefix\PrefixController;
 use App\Http\Controllers\programme\ProgrammeController;
-use App\Http\Controllers\proposal\ProposalController;
-use App\Http\Controllers\region\RegionController;
 use App\Http\Controllers\report\ReportController;
-use App\Http\Controllers\role\RoleController;
+use App\Http\Controllers\score_card\ScoreCardController;
 use App\Http\Controllers\storage\StorageController;
+use App\Http\Controllers\team\TeamController;
 use App\Http\Controllers\user_profile\UserProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -49,7 +41,42 @@ Route::get('logout', [LoginController::class, 'logout']);
 Route::group(['middleware' => 'auth'], function() {
     // Dashboard
     Route::get('home', [HomeController::class, 'index'])->name('home');
-    Route::get('event_calendar', [HomeController::class, 'event_calendar'])->name('event_calendar');
+
+    // Metrics
+    Route::post('metrics/verified_team_members', [MetricController::class, 'verifiedTeamMembers'])->name('metrics.verified_team_members');
+    Route::post('metrics/approve', [MetricController::class, 'approveMetrics'])->name('metrics.approve');
+    Route::post('metrics/datatable', [MetricController::class, 'metricsDatatable'])->name('metrics.get_data');
+    Route::resource('metrics', MetricController::class);
+
+    // Assign Scores
+    Route::post('assign_scores/load_scores_datatable', [AssignScoreController::class, 'load_scores_datatable'])->name('assign_scores.load_scores_datatable');
+    Route::post('assign_scores/reset_scores', [AssignScoreController::class, 'reset_scores'])->name('assign_scores.reset_scores');
+    Route::post('assign_scores/load_scores', [AssignScoreController::class, 'loadScores'])->name('assign_scores.load_scores');
+    Route::resource('assign_scores', AssignScoreController::class);
+
+    // key Parameters
+    Route::resource('programmes', ProgrammeController::class);
+    Route::resource('score_cards', ScoreCardController::class);
+    Route::resource('dfzones', DFZonesController::class);
+    Route::resource('dfnames', DFNamesController::class);
+    Route::resource('age_groups', AgeGroupController::class);
+    Route::resource('ministries', MinistriesController::class);
+    Route::resource('departments', DepartmentsController::class);
+    // member lists
+    Route::post('memberlists/delete_file', [MemberListsController::class, 'delete_file'])->name('attendances.delete_file');
+    Route::resource('memberlists', MemberListsController::class);
+    // narratives
+    Route::post('narratives/delete_file', [NarrativeController::class, 'delete_file'])->name('narratives.delete_file');
+    Route::post('narratives/narrative_table', [NarrativeController::class, 'narrative_table'])->name('narratives.table');
+    Route::resource('narratives', NarrativeController::class);
+    // case study
+    Route::post('case_studies/delete_image', [CaseStudyController::class, 'delete_image'])->name('case_studies.delete_image');
+    Route::resource('case_studies', CaseStudyController::class);
+
+    // 
+    Route::post('verify_teams', [TeamController::class, 'verifyTeams'])->name('verify_teams');
+    Route::post('verification_teams', [TeamController::class, 'verificationTeams'])->name('verification_teams');
+    Route::resource('teams', TeamController::class);
 
     // User Profiles
     Route::post('user_profiles/delete_profile_pic/{user}', [UserProfileController::class, 'delete_profile_pic'])->name('user_profiles.delete_profile_pic');
@@ -57,89 +84,24 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('user_profiles/active_profile', [UserProfileController::class, 'active_profile'])->name('user_profiles.active_profile');
     Route::resource('user_profiles', UserProfileController::class);
 
-    // Roles
-    Route::resource('roles', RoleController::class);
-
-    // Prefixes
-    Route::resource('prefixes', PrefixController::class);
-
-    // Deadlines
-    Route::resource('deadlines', DeadlineController::class);
-
-    // key Parameters
-    Route::resource('donors', DonorController::class);
-    Route::resource('regions', RegionController::class);
-    Route::resource('disabilities', DisabilityController::class);
-
-    Route::resource('dfzones', DFZonesController::class);
-    Route::resource('dfnames', DFNamesController::class);
-    Route::resource('age_groups', AgeGroupController::class);
-    Route::resource('ministries', MinistriesController::class);
-    Route::resource('departments', DepartmentsController::class);
-
-    // Proposals
-    Route::post('proposals/items', [ProposalController::class, 'proposal_items'])->name('proposals.items');
-    Route::post('proposals/datatable', [ProposalController::class, 'datatable'])->name('proposals.datatable');
-    Route::resource('proposals', ProposalController::class);
-
-    // Budgeting
-    Route::post('budgets/budget_tracker/{budget}', [BudgetController::class, 'budget_tracker'])->name('budgets.budget_tracker');
-    Route::post('budgets/edit_expenses/{budget_expense}', [BudgetController::class, 'edit_expenses'])->name('budgets.edit_expenses');
-    Route::post('budgets/update_expenses/{budget_expense}', [BudgetController::class, 'update_expenses'])->name('budgets.update_expenses');
-    Route::post('budgets/destroy_expenses/{budget_expense}', [BudgetController::class, 'destroy_expenses'])->name('budgets.destroy_expenses');
-    Route::post('budgets/store_expenses', [BudgetController::class, 'store_expenses'])->name('budgets.store_expenses');
-    Route::post('budgets/cost_items', [BudgetController::class, 'cost_items'])->name('budgets.cost_items');
-    Route::post('budgets/proposal_items', [BudgetController::class, 'proposal_items'])->name('budgets.proposal_items');
-    Route::resource('budgets', BudgetController::class);
-
-    // Log Frame
-    Route::post('log_frames/datatable', [LogFrameController::class, 'datatable'])->name('log_frames.datatable');
-    Route::resource('log_frames', LogFrameController::class);
-
-    // Action Plan
-    Route::post('action_plans/cohort/edit', [ActionPlanController::class, 'edit_cohort'])->name('action_plans.edit_cohort');
-    Route::post('action_plans/cohort/update', [ActionPlanController::class, 'update_cohort'])->name('action_plans.update_cohort');
-    Route::post('action_plans/cohort/store', [ActionPlanController::class, 'store_cohort'])->name('action_plans.store_cohort');
-    Route::post('action_plans/cohort/delete', [ActionPlanController::class, 'destroy_cohort'])->name('action_plans.destroy_cohort');
-    Route::post('action_plans/activity/edit', [ActionPlanController::class, 'edit_activity'])->name('action_plans.edit_activity');
-    Route::post('action_plans/activity/update', [ActionPlanController::class, 'update_activity'])->name('action_plans.update_activity');
-    Route::post('action_plans/activity/store', [ActionPlanController::class, 'store_activity'])->name('action_plans.store_activity');
-    Route::post('action_plans/activity/delete', [ActionPlanController::class, 'destroy_activity'])->name('action_plans.destroy_activity');
-    Route::post('action_plans/proposal_items', [ActionPlanController::class, 'proposal_items'])->name('action_plans.proposal_items');
-    Route::post('action_plans/select_activity_items', [ActionPlanController::class, 'select_activity_items'])->name('action_plans.select_activity_items');
-    Route::post('action_plans/select_items', [ActionPlanController::class, 'select_items'])->name('action_plans.select_items');
-    Route::post('action_plans/datatable', [ActionPlanController::class, 'datatable'])->name('action_plans.datatable');
-    Route::resource('action_plans', ActionPlanController::class);
-
-    // Agenda
-    Route::post('agenda/datatable', [AgendaController::class, 'datatable'])->name('agenda.datatable');
-    Route::resource('agenda', AgendaController::class);
-
-    // Attendance
-    Route::post('memberlists/delete_file', [MemberListsController::class, 'delete_file'])->name('attendances.delete_file');
-    Route::resource('memberlists', MemberListsController::class);
-
-    // Activity Narrative
-    Route::post('narratives/delete_file', [NarrativeController::class, 'delete_file'])->name('narratives.delete_file');
-    Route::post('narratives/narrative_table', [NarrativeController::class, 'narrative_table'])->name('narratives.table');
-    Route::resource('narratives', NarrativeController::class);
-
-    // Case Study
-    Route::post('case_studies/delete_image', [CaseStudyController::class, 'delete_image'])->name('case_studies.delete_image');
-    Route::resource('case_studies', CaseStudyController::class);
-
-    // File Import
-    Route::post('file_imports/datatable', [FileImportController::class, 'datatable'])->name('file_imports.datatable');
-    Route::resource('file_imports', FileImportController::class);
-
     // View Reports
-    Route::get('reports/beneficiary_list', [ReportController::class, 'beneficiary_list'])->name('reports.beneficiary_list');
-    Route::get('reports/monthly_meetings', [ReportController::class, 'monthly_meetings'])->name('reports.monthly_meetings');
-    Route::get('reports/narrative_report', [ReportController::class, 'narrative_report'])->name('reports.narrative_report');
-    Route::get('reports/participant_analysis', [ReportController::class, 'participant_analysis'])->name('reports.participant_analysis');
-    Route::post('reports/beneficiary_list_data', [ReportController::class, 'beneficiary_list_data'])->name('reports.beneficiary_list_data');
-    Route::post('reports/narrative_data', [ReportController::class, 'narrative_data'])->name('reports.narrative_data');
-    Route::post('reports/participant_analysis_data', [ReportController::class, 'participant_analysis_data'])->name('reports.participant_analysis_data');
+    Route::get('reports/team/summary_performance', [ReportController::class, 'teamPerformanceSummary'])->name('reports.team_summary_performance');
+    Route::get('reports/team/size_summary', [ReportController::class, 'teamSizeSummary'])->name('reports.team_size_summary');
+    Route::get('reports/team/metric_summary', [ReportController::class, 'metricSummary'])->name('reports.metric_summary');
+    Route::get('reports/monthly_pledge_vs_mission', [ReportController::class, 'monthlyPledgeVsMission'])->name('reports.monthly_pledge_vs_mission');
+    Route::get('reports/team_report_card', [ReportController::class, 'teamReportCard'])->name('reports.team_report_card');
+    Route::get('reports/monthly_pledge', [ReportController::class, 'monthlyPledge'])->name('reports.monthly_pledge');
+    Route::get('reports/score_variance', [ReportController::class, 'scoreVariance'])->name('reports.score_variance');
+    // 
+    Route::post('reports/score_variance', [ReportController::class, 'scoreVariance'])->name('reports.score_variance.post');
+    Route::post('reports/monthly_pledge', [ReportController::class, 'monthlyPledge'])->name('reports.monthly_pledge.post');
+    Route::post('reports/team_report_card', [ReportController::class, 'teamReportCard'])->name('reports.team_report_card.post');
+    Route::post('reports/monthly_pledge_vs_mission', [ReportController::class, 'monthlyPledgeVsMission'])->name('reports.monthly_pledge_vs_mission.post');
+    Route::post('reports/team/metric_summary', [ReportController::class, 'metricSummary'])->name('reports.metric_summary.post');
+    Route::post('reports/team/size_summary', [ReportController::class, 'teamSizeSummary'])->name('reports.team_size_summary.post');
+    Route::post('reports/team/summary_performance', [ReportController::class, 'teamPerformanceSummary'])->name('reports.team_summary_performance.post');
+
+
 
     // PDF Report
     Route::get('pdfs/agenda/{agenda}/{token}', [PdfController::class, 'print_agenda'])->name('pdfs.print_agenda');
@@ -149,6 +111,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('storage/download/{file_params}', [StorageController::class, 'file_download'])->name('storage.file_download');
 
     // Configuration
-    Route::get('clear-cache', [ConfigController::class, 'clear_cache'])->name('config.clear_cache');
-    Route::get('site-down', [ConfigController::class, 'site_down'])->name('config.site_down');
+    Route::post('general_settings', [ConfigController::class, 'generalSettings'])->name('config.general_settings.post');
+    Route::get('general_settings', [ConfigController::class, 'generalSettings'])->name('config.general_settings');
+    Route::get('clear-cache', [ConfigController::class, 'clearCache'])->name('config.clear_cache');
+    Route::get('site-down', [ConfigController::class, 'siteDown'])->name('config.site_down');
 });

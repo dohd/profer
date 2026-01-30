@@ -1,6 +1,5 @@
 @extends('layouts.core')
-
-@section('title', 'View | Testimonials')
+@section('title', 'Study Testimonials')
     
 @section('content')
     @include('case_studies.header')

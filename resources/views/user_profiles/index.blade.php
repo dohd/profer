@@ -12,10 +12,10 @@
                         <thead>
                           <tr>
                             <th>#No</th>
-                            <th>Role</th>
-                            <th width="20%">Name</th>
-                            <th>Phone</th>
+                            <th>Full Name</th>
+                            <th>Telephone</th>
                             <th>Email</th>
+                            <th>Role</th>
                             <th>Status</th>
                             <th>Action</th>
                           </tr>
@@ -24,29 +24,11 @@
                             @foreach ($users as $i => $user)
                                 <tr>
                                     <th scope="row" style="height: {{ count($users) == 1? '80px': '' }}">{{ $i+1 }}</th>
-                                    <td>{{ $user->role ?: @$user->roles()->first()->name }}</td>
-                                    <td>
-                                        <div class="row g-0">
-                                            <div class="col-md-3 col-12">
-                                                <img 
-                                                    src="{{ route('storage.file_render', 'images,user_profiles,' . $user->profile_pic) }}" 
-                                                    onerror="this.onerror=null; this.src='{{ asset('img/profile-img.jpeg') }}'"
-                                                    alt="dp" 
-                                                    class="rounded-circle"
-                                                    width="40" 
-                                                    height="40"
-                                                >
-                                            </div>
-                                            <div class="col-md-9 col-12 pt-1 ps-1">{{ $user->name }}</div>
-                                        </div>
-                                    </td>
+                                    <td>{{ $user->name }}</td>
                                     <td>{{ $user->phone }}</td>
                                     <td>{{ $user->email }}</td>
-                                    <td>
-                                        <span class="badge bg-{{ $user->is_active? 'success' : 'secondary' }} modal-btn" style="cursor:pointer;" role="button" data-bs-toggle="modal" data-bs-target="#status_modal" data-url="{{ route('user_profiles.update', $user) }}">
-                                            {{ $user->is_active? 'Active' : 'Inactive' }} <i class="bi bi-caret-down-fill"></i>
-                                        </span>
-                                    </td>
+                                    <td>{{ ucfirst($user->user_type) }}</td>
+                                    <td>{!! $user->is_active_status_budge !!}</td>
                                     <td>{!! $user->action_buttons !!}</td>
                                 </tr>
                             @endforeach
