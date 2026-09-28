@@ -158,9 +158,9 @@
                                 <div class="kpi-value">
                                     15.3%
                                 </div>
-                                <div class="progress-thin">
+                                <div class="progress-thin progress">
                                     <div class="progress-bar bg-success"
-                                         style="width:67.8%">
+                                         style="width:20%">
                                     </div>
                                 </div>
                             </div>
