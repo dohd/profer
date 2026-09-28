@@ -15,6 +15,7 @@ use App\Http\Controllers\log_frame\LogFrameController;
 use App\Http\Controllers\narrative\NarrativeController;
 use App\Http\Controllers\attendance\AttendanceController;
 use App\Http\Controllers\config\ConfigController;
+use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\deadline\DeadlineController;
 use App\Http\Controllers\pdf\PdfController;
 use App\Http\Controllers\prefix\PrefixController;
@@ -45,6 +46,9 @@ Route::get('/', [LoginController::class, 'index']);
 Route::get('logout', [LoginController::class, 'logout']);
 Route::group(['middleware' => 'auth'], function() {
     // Dashboard
+    Route::get('dashboard/index', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('dashboard/data', [DashboardController::class, 'data'])->name('dashboard.data');
+
     Route::get('home', [HomeController::class, 'index'])->name('home');
     Route::get('event_calendar', [HomeController::class, 'event_calendar'])->name('event_calendar');
 

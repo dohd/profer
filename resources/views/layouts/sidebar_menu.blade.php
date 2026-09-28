@@ -1,6 +1,12 @@
 <aside id="sidebar" class="sidebar">
   <ul class="sidebar-nav" id="sidebar-nav">
     <li class="nav-item">
+      <a class="nav-link" href="{{ route('dashboard') }}">
+        <i class="bi bi-grid"></i> Dashboard &nbsp; <span class="badge bg-warning"><small>New</small></span>        
+      </a>
+    </li>
+
+    <li class="nav-item">
       <a class="nav-link" href="{{ route('home') }}">
         <i class="bi bi-grid"></i>
         <span>Dashboard</span>
